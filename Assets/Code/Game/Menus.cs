@@ -2,8 +2,8 @@
 public partial class GlobalMembers
 {
 	public static short lastsavedpos = -1;
-
-	public static void cmenu(short cm)
+    public static short globalskillsound = -1;
+    public static void cmenu(short cm)
     {
 
     }

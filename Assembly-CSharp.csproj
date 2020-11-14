@@ -77,11 +77,13 @@
     <Compile Include="Assets\Code\Engine\pragmas.cs" />
     <Compile Include="Assets\Code\Engine\tablesdat.cs" />
     <Compile Include="Assets\Code\Game\Actor.cs" />
+    <Compile Include="Assets\Code\Game\Anim.cs" />
     <Compile Include="Assets\Code\Game\DefineConstants.cs" />
     <Compile Include="Assets\Code\Game\Game.cs" />
     <Compile Include="Assets\Code\Game\Gamedef.cs" />
     <Compile Include="Assets\Code\Game\GameEngine.cs" />
     <Compile Include="Assets\Code\Game\Globals.cs" />
+    <Compile Include="Assets\Code\Game\Menus.cs" />
     <Compile Include="Assets\Code\Game\Player.cs" />
     <Compile Include="Assets\Code\Game\Premap.cs" />
     <Compile Include="Assets\Code\Game\Sector.cs" />

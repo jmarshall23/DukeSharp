@@ -11,7 +11,43 @@ public partial class GlobalMembers
     public static int cameradist = 0;
     public static int cameraclock = 0;
 
+    public static string boardfilename = "";
 
+    public static byte[] waterpal = new byte[768];
+    public static byte[] slimepal = new byte[768];
+    public static byte[] titlepal = new byte[768];
+    public static byte[] drealms = new byte[768];
+    public static byte[] endingpal = new byte[768];
+
+    public static void gametextpal(int x, int y, string t, char s, char p)
+    {
+
+    }
+
+    public static void menutext(int x, int y, short s, short p, string t)
+    {
+
+    }
+
+    public static void drawbackground()
+    {
+
+    }
+
+    public static void opendemowrite()
+    {
+
+    }
+
+    public static void dobonus(int bonusonly)
+    {
+
+    }
+
+    public static void flushperms()
+    {
+
+    }
     public static void check_fta_sounds(int i)
     {
 

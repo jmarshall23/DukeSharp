@@ -115,7 +115,7 @@ namespace Build
         private int[] yb1 = new int[MAXWALLSB];
         private int[] xb2 = new int[MAXWALLSB];
         private int[] yb2 = new int[MAXWALLSB];
-        private int pskybits = 0;
+        public int pskybits = 0;
 
         private int globalxshift, globalyshift;
         private int[] smostwall = new int[MAXWALLSB];
@@ -131,7 +131,7 @@ namespace Build
         private int[] tempbufint = new int[256];
 
         private const int MAXPSKYTILES = 256;
-        private short[] pskyoff = new short[MAXPSKYTILES];
+        public short[] pskyoff = new short[MAXPSKYTILES];
 
         private int numhits = 0, numscans = 0, numbunches = 0;
         private int maskwallcnt, smostwallcnt, smostcnt, spritesortcnt;
@@ -146,7 +146,7 @@ namespace Build
 
         private int mirrorsx1, mirrorsx2, mirrorsy1, mirrorsy2;
 
-        public bool[] gotpic = new bool[MAXTILES];
+        public int[] gotpic = new int[MAXTILES];
 
         private int B_LITTLE32(int val)
         {
@@ -198,7 +198,7 @@ namespace Build
         private int frameoffset;
         private int globalorientation, globalpicnum, globalshade;
         private int globalx, globaly, globalx1, globaly1, globalx2, globaly2, globalzd, globalzx, globalz;
-        private int parallaxtype = 2, parallaxyoffs = 0, parallaxyscale = 65536;
+        public int parallaxtype = 2, parallaxyoffs = 0, parallaxyscale = 65536;
 
 		public int lintersect(int x1, int y1, int z1, int x2, int y2, int z2, int x3, int y3, int x4, int y4, ref int intx, ref int inty, ref int intz)
 		{     //p1 to p2 is a line segment
@@ -3104,7 +3104,7 @@ namespace Build
             }
 
             if ((Engine.picanm[globalpicnum] & 192) != 0) globalpicnum += Engine.animateoffs((short)globalpicnum, (short)sectnum);
-            gotpic[globalpicnum] = true;
+            gotpic[globalpicnum] = 1;
             if ((Engine.tilesizx[globalpicnum] <= 0) || (Engine.tilesizy[globalpicnum] <= 0)) return;
 
             if (Engine.waloff[(int)globalpicnum] == null) Engine.loadtile((short)globalpicnum);
@@ -3252,7 +3252,7 @@ namespace Build
 
             tsizx = Engine.tilesizx[globalpicnum];
             tsizy = Engine.tilesizy[globalpicnum];
-            gotpic[globalpicnum] = true;
+            gotpic[globalpicnum] = 1;
             if ((tsizx <= 0) || (tsizy <= 0))
                 return;
             if ((uwal[x1] > Engine._device.ydimen) && (uwal[x2] > Engine._device.ydimen)) return;
@@ -3587,7 +3587,7 @@ namespace Build
             if (globalzd > 0) return;
             globalpicnum = sec.floorpicnum;
             if (globalpicnum >= MAXTILES) globalpicnum = 0;
-            gotpic[globalpicnum] = true;
+            gotpic[globalpicnum] = 1;
             if ((Engine.tilesizx[globalpicnum] <= 0) || (Engine.tilesizy[globalpicnum] <= 0)) return;
             if ((Engine.picanm[globalpicnum] & 192) != 0) globalpicnum += Engine.animateoffs((short)globalpicnum, (short)sectnum);
 
@@ -5075,7 +5075,7 @@ namespace Build
 
             tsizx = Engine.tilesizx[globalpicnum];
             tsizy = Engine.tilesizy[globalpicnum];
-            gotpic[globalpicnum] = true;
+            gotpic[globalpicnum] = 1;
             if ((tsizx <= 0) || (tsizy <= 0)) return;
             if ((uwal[x1] > Engine._device.ydimen) && (uwal[x2] > Engine._device.ydimen)) return;
             if ((dwal[x1] < 0) && (dwal[x2] < 0)) return;

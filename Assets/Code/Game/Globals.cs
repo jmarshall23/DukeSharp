@@ -337,7 +337,7 @@ public class STATUSBARTYPE
     public short curr_weapon;
     public short[] ammo_amount = new short[DefineConstants.MAX_WEAPONS];
     public short holoduke_on;
-    public string gotweapon = new string(new char[DefineConstants.MAX_WEAPONS]);
+    public bool[] gotweapon = new bool[DefineConstants.MAX_WEAPONS];
     public char inven_icon;
     public char jetpack_on;
     public char heat_on;
@@ -363,6 +363,9 @@ public partial class GlobalMembers
 	public static short neartagsector;
 	public static short neartagwall;
 	public static short neartagsprite;
+
+    public static int cachedebug = 0;
+    public static int automapping = 0;
 
 	public static int gc;
 	public static int neartaghitdist;
@@ -475,7 +478,7 @@ public partial class GlobalMembers
 
 	public static string playerreadyflag = new string(new char[DefineConstants.MAXPLAYERS]);
 	public static char ready2send;
-	public static string playerquitflag = new string(new char[DefineConstants.MAXPLAYERS]);
+	public static int[] playerquitflag = new int[DefineConstants.MAXPLAYERS];
 	public static int vel;
 	public static int svel;
 	public static int angvel;

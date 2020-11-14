@@ -32,7 +32,7 @@ namespace Build
             public byte[] memory;
         }
 
-        private static int randomseed = 17;
+        public static int randomseed = 17;
 
         public static int myconnectindex = 0;
 

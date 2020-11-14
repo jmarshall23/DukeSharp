@@ -11,6 +11,11 @@ public partial class GlobalMembers
     public static int numenvsnds = 0;
     public static int NumVoices = 32;
 
+    public static void MUSIC_StopSong()
+    {
+
+    }
+
     public static void spritesound(int index)
     {
 
@@ -62,6 +67,11 @@ public partial class GlobalMembers
     }
 
     public static void clearsoundlocks()
+    {
+
+    }
+
+    public static void playmusic(string s)
     {
 
     }
