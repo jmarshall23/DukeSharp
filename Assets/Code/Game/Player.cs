@@ -3,6 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Build;
 
+public partial class GlobalMembers
+{
+    public static void checkweapons(player_struct p)
+    {
+
+    }
+
+    public static void forceplayerangle(player_struct p)
+    {
+
+    }
+
+    public static short inventory(spritetype s)
+    {
+        return 0;
+    }
+}
+
 public class Player : MonoBehaviour
 {
     public int posx;

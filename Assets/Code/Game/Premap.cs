@@ -10,4 +10,17 @@ public partial class GlobalMembers
     {
 
     }
+    public static void resetweapons(short snum)
+    {
+
+    }
+
+    public static void resetinventory(short snum)
+    {
+
+    }
+
+    public static void pickrandomspot(short snum)
+    {
+    }
 }

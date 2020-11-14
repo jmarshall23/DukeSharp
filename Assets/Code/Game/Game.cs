@@ -8,6 +8,15 @@ using Build;
 public partial class GlobalMembers
 {
     public static int actor_tog = 0;
+    public static int cameradist = 0;
+    public static int cameraclock = 0;
+
+
+    public static void check_fta_sounds(int i)
+    {
+
+    }
+
 
     public static void gameexit(string msg)
     {
@@ -160,6 +169,11 @@ public partial class GlobalMembers
     }
 
     public static void ceilingglass(short i, short sectnum, short n)
+    {
+
+    }
+
+    public static void spriteglass(short i, short n)
     {
 
     }

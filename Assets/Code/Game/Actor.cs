@@ -1894,7 +1894,7 @@ public partial class GlobalMembers
 
 				if (s.xvel != 0)
 				{
-					getglobalz(i);
+					getglobalz((short)i);
 				}
 
 				if (hittype[i].temp_data[0] == 0) //Waiting to check the sector
@@ -3286,7 +3286,7 @@ public partial class GlobalMembers
 					day = s.y;
 					daz = s.z;
 
-					getglobalz(i);
+					getglobalz((short)i);
 					qq = (uint)(((256) << 16) + 64);
 
 					switch (s.picnum)

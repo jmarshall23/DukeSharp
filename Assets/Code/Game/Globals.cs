@@ -408,7 +408,7 @@ public partial class GlobalMembers
 
 	public static int current_menu;
 
-	public static string betaname = new string(new char[80]);
+    public static string betaname = "";
 
     public static string[] level_names = new string[44];
     public static string[] level_file_names = new string[44];
@@ -423,8 +423,8 @@ public partial class GlobalMembers
 	public static short[] soundps = new short[DefineConstants.NUM_SOUNDS];
 	public static short[] soundpe = new short[DefineConstants.NUM_SOUNDS];
 	public static short[] soundvo = new short[DefineConstants.NUM_SOUNDS];
-	public static string soundm = new string(new char[DefineConstants.NUM_SOUNDS]);
-	public static string soundpr = new string(new char[DefineConstants.NUM_SOUNDS]);
+	public static int[] soundm = new int[DefineConstants.NUM_SOUNDS];
+	public static int[] soundpr = new int[DefineConstants.NUM_SOUNDS];
     public static string[] sounds = new string[DefineConstants.NUM_SOUNDS];
 
 	public static short title_zoom;
@@ -480,33 +480,80 @@ public partial class GlobalMembers
 	public static int svel;
 	public static int angvel;
 	public static int horiz;
-	public static int ototalclock;
+    public static int totalclock;
+    public static int ototalclock;
 	public static int respawnactortime = 768;
 	public static int respawnitemtime = 768;
 	public static int groupfile;
 
-	public static int[] script = new int[DefineConstants.MAXSCRIPTSIZE];
-//C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-//ORIGINAL LINE: int *scriptptr;
-	public static int scriptptr;
+	//public static int[] script = new int[DefineConstants.MAXSCRIPTSIZE];
+    //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
+    //ORIGINAL LINE: int *scriptptr;
+    public class DefInt
+    {
+        public int[] buffer = new int[3000];
+        public int bufferpos = 0;
+
+        public static DefInt operator ++(DefInt w)
+        {
+            w.bufferpos++;
+            return w;
+        }
+
+        public static DefInt operator --(DefInt w)
+        {
+            w.bufferpos++;
+            return w;
+        }
+
+        public void Set(int i)
+        {
+            buffer[bufferpos] = i;
+        }
+
+        public int Get()
+        {
+            if (bufferpos >= buffer.Length)
+                return 0;
+
+            return buffer[bufferpos];
+        }
+
+        public int Get(int i)
+        {
+            if (bufferpos + i >= buffer.Length)
+                return 0;
+
+            return buffer[bufferpos + i];
+        }
+
+
+        public int GetPrev()
+        {
+            if (bufferpos - 1 >= buffer.Length)
+                return 0;
+
+            return buffer[bufferpos - 1];
+        }
+    }
+    public static DefInt scriptptr = new DefInt();
 //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
 //ORIGINAL LINE: int *insptr;
 	public static int insptr;
 	public static int[] labelcode;
 	public static int labelcnt;
-//C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-//ORIGINAL LINE: int *actorscrptr[DefineConstants.MAXTILES],*parsing_actor;
-	public static int[] actorscrptr = new int[DefineConstants.MAXTILES];
+    //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
+    //ORIGINAL LINE: int *actorscrptr[DefineConstants.MAXTILES],*parsing_actor;
+    public static int[] actorscrptr;
 //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
 //ORIGINAL LINE: int *parsing_actor;
 	public static int parsing_actor;
-	public static string label;
-	public static string textptr;
-	public static char error;
-	public static char warning;
+	public static byte[] label = new byte[5000];
+	public static int error;
+	public static int warning;
 	public static char killit_flag;
 	public static string music_pointer;
-	public static int[] actortype = new int[DefineConstants.MAXTILES];
+    public static int[] actortype; // = new int[DefineConstants.MAXTILES];
 
 
     public static bool[] KB_KeyDown = new bool[256];
@@ -516,9 +563,9 @@ public partial class GlobalMembers
 	public static char typebuflen;
 	public static string typebuf = new string(new char[41]);
 
-    public static string[] music_fn = new string[4];// this is wrong
+    public static string[,] music_fn = new string[4,64];
 	public static char music_select;
-    public static string[] env_music_fn = new string[4];
+    public static string[] env_music_fn = new string[164];
 	public static char rtsplaying;
 
 
