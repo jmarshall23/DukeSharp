@@ -6,7 +6,7 @@ using Build;
 
 public class GameEngine : MonoBehaviour
 {
-    public Player player;
+    //public Player player;
     public RawImage canvasImage;
 
     public const int TICSPERFRAME = 3;
@@ -211,10 +211,10 @@ public class GameEngine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RunWallAnimations();
-
-        Engine.board.drawrooms(player.posx, player.posy, player.posz, player.ang, 100, player.sectornum);
-        Engine.board.drawmasks();
-        Engine.NextPage();
+        //RunWallAnimations();
+        //
+        //Engine.board.drawrooms(player.posx, player.posy, player.posz, player.ang, 100, player.sectornum);
+        //Engine.board.drawmasks();
+        //Engine.NextPage();
     }
 }

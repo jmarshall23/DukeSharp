@@ -12,7 +12,7 @@ namespace Build
     public class bPalette
     {
         public short numpalookups;
-        private byte[] palette = new byte[768];
+        public byte[] palette = new byte[768];
         public bPalLookup[] _palookup = new bPalLookup[256];
         public byte[] palookup = null;
         public byte[] transluc = new byte[65536];

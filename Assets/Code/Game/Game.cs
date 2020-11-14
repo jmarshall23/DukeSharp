@@ -88,28 +88,9 @@ public partial class GlobalMembers
         return (Engine.FindDistance2D(sx - p.posx, sy - p.posy));
     }
 
-    public static int hits(short i)
+    public static short inventory(spritetype s)
     {
-        int sx = 0;
-        int sy = 0;
-        int sz = 0;
-        int zoff = 0;
-        int sect = 0;
-        short hs = 0;
-        short hw = 0;
-
-        if (Engine.board.sprite[i].picnum == DefineConstants.APLAYER)
-        {
-            zoff = (40 << 8);
-        }
-        else
-        {
-            zoff = 0;
-        }
-
-        Engine.board.hitscan(Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z - zoff, Engine.board.sprite[i].sectnum, Engine.table.sintable[(Engine.board.sprite[i].ang + 512) & 2047], Engine.table.sintable[Engine.board.sprite[i].ang & 2047], 0, ref sect,ref  hw,ref hs, ref sx, ref sy, ref sz, (((256) << 16) + 64));
-
-        return (Engine.FindDistance2D(sx - Engine.board.sprite[i].x, sy - Engine.board.sprite[i].y));
+        return 0;
     }
 
     public static int hitasprite(short i, ref short hitsp)
@@ -185,11 +166,6 @@ public partial class GlobalMembers
     }
 
     public static void lotsofmoney(spritetype x, int y)
-    {
-
-    }
-
-    public static void shoot(int x, int y)
     {
 
     }
