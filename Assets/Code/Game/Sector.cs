@@ -1247,9 +1247,9 @@ public partial class GlobalMembers
     {
         int i;
         int k;
-        int nexti;
-        short[] p = new short[6];
+        int nexti;        
         walltype wal = null;
+        short[] p = new short[6];
 
         for (i = numcyclers - 1; i >= 0; i--)
         {
@@ -2827,7 +2827,7 @@ public partial class GlobalMembers
                         {
                             if (Engine.board.sprite[sn].picnum != DefineConstants.FREEZEBLAST)
                             {
-                                if (actortype[Engine.board.sprite[i].picnum].Length == 0) // jmarshall actortype is wrong.
+                                if (actortype[Engine.board.sprite[i].picnum] == 0) 
                                 {
                                     j = spawn(sn, DefineConstants.JIBS6);
                                     if (Engine.board.sprite[sn].pal == 6)

@@ -251,6 +251,11 @@ namespace Build
             return (int)(((Int64)(eax) << 16) / (Int64)(ebx));
         }
 
+        public static int divscale17(int eax, int ebx)
+        {
+            return (int)(((Int64)(eax) << 17) / (Int64)(ebx));
+        }
+
         public static int divscale18(int eax, int ebx)
         {
             return (int)(((Int64)(eax) << 18) / (Int64)(ebx));
@@ -471,6 +476,11 @@ namespace Build
         public static int klabs(int a) { if (a < 0) return -a; return a; }
         public static int ksgn(int a) { if (a > 0) return 1; if (a < 0) return -1; return 0; }
 
+        public static int sgn(int i1)
+        {
+            return ksgn(i1);
+        }
+
         public static int umin(int a, int b) { if ((int)a < (int)b) return a; return b; }
         public static int umax(int a, int b) { if ((int)a < (int)b) return b; return a; }
         public static int kmin(int a, int b) { if ((int)a < (int)b) return a; return b; }
@@ -482,4 +492,5 @@ namespace Build
         public static int divscale(int eax, int ebx, int ecx) { return (int)(((Int64)(eax) << (byte)(ecx)) / (Int64)(ebx)); }
         //public static int dmulscale(int eax, int edx, int esi, int edi, int ecx) { return (int)((((Int64)(eax) * (Int64)(edx)) + ((Int64)(esi) * (Int64)(edi))) >> (byte)(ecx)); }
     }
+
 }

@@ -609,6 +609,12 @@ namespace Build
             return (deletespritesect(spritenum));
         }
 
+        public int deletesprite(int spritenum)
+        {
+            deletespritestat((short)spritenum);
+            return (deletespritesect((short)spritenum));
+        }
+
         public int setsprite(short spritenum, int newx, int newy, int newz)
         {
             short bad, j, tempsectnum;
@@ -1436,7 +1442,49 @@ namespace Build
             }
         }
 
-        private bool cansee(int x1, int y1, int z1, short sect1, int x2, int y2, int z2, short sect2)
+        public void dragpoint(short pointhighlight, int dax, int day)
+        {
+            short cnt, tempshort;
+
+            wall[pointhighlight].x = dax;
+            wall[pointhighlight].y = day;
+
+            cnt = MAXWALLS;
+            tempshort = pointhighlight;    /* search points CCW */
+            do
+            {
+                if (wall[tempshort].nextwall >= 0)
+                {
+                    tempshort = wall[wall[tempshort].nextwall].point2;
+                    wall[tempshort].x = dax;
+                    wall[tempshort].y = day;
+                }
+                else
+                {
+                    tempshort = pointhighlight;    /* search points CW if not searched all the way around */
+                    do
+                    {
+                        if (wall[lastwall(tempshort)].nextwall >= 0)
+                        {
+                            tempshort = wall[lastwall(tempshort)].nextwall;
+                            wall[tempshort].x = dax;
+                            wall[tempshort].y = day;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        cnt--;
+                    }
+                    while ((tempshort != pointhighlight) && (cnt > 0));
+                    break;
+                }
+                cnt--;
+            }
+            while ((tempshort != pointhighlight) && (cnt > 0));
+        }
+
+        public bool cansee(int x1, int y1, int z1, short sect1, int x2, int y2, int z2, short sect2)
         {
             sectortype sec;
             walltype wal, wal2;
@@ -1488,7 +1536,7 @@ namespace Build
 
                     getzsofslope((short)dasectnum, x, y, ref cz, ref fz);
                     if ((z <= cz) || (z >= fz))
-                        return (0);
+                        return false;
                     getzsofslope((short)nexts, x, y, ref cz, ref fz);
                     if ((z <= cz) || (z >= fz))
                         return (false);
@@ -1504,6 +1552,23 @@ namespace Build
                 if (clipsectorlist[i] == sect2)
                     return true;
             return false;
+        }
+        public void alignflorslope(short dasect, int x, int y, int z)
+        {
+            int i, dax, day;
+            walltype wal;
+
+            wal = wall[sector[dasect].wallptr];
+            dax = wall[wal.point2].x - wal.x;
+            day = wall[wal.point2].y - wal.y;
+
+            i = (y - wal.y) * dax - (x - wal.x) * day;
+            if (i == 0) return;
+            sector[dasect].floorheinum = (short)pragmas.scale((z - sector[dasect].floorz) << 8,
+                                               pragmas.nsqrtasm((uint)(dax * dax + day * day)), i);
+
+            if (sector[dasect].floorheinum == 0) sector[dasect].floorstat &= ~2;
+            else sector[dasect].floorstat |= 2;
         }
 
         private void scansector(short sectnum)
@@ -4207,7 +4272,7 @@ namespace Build
             }
         }
 
-        private int clipinsidebox(int x, int y, short wallnum, int walldist)
+        public int clipinsidebox(int x, int y, short wallnum, int walldist)
         {
             walltype wal;
             int x1, y1, x2, y2, r;

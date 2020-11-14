@@ -67,14 +67,14 @@ public class animwalltype
 
 public class user_defs
 {
-    public char god;
-    public char warp_on;
-    public char cashman;
-    public char eog;
-    public char showallmap;
-    public char show_help;
-    public char scrollmode;
-    public char clipping;
+    public int god;
+    public int warp_on;
+    public int cashman;
+    public int eog;
+    public int showallmap;
+    public int show_help;
+    public int scrollmode;
+    public int clipping;
     public string[] user_name = new string[DefineConstants.MAXPLAYERS];
     public char[,] ridecule = new char[10, 40];
     public char[,] savegame = new char[10, 22];
@@ -282,9 +282,9 @@ public class player_struct
     public char footprintpal;
     public char heat_on;
 
-    public char holster_weapon;
+    public int holster_weapon;
     public char falling_counter;
-    public string gotweapon = new string(new char[DefineConstants.MAX_WEAPONS]);
+    public bool[] gotweapon = new bool[DefineConstants.MAX_WEAPONS];
     public char refresh_inventory;
     public string palette;
 
@@ -295,7 +295,7 @@ public class player_struct
     public char hard_landing;
     public char max_secret_rooms;
     public char secret_rooms;
-    public string pals = new string(new char[3]);
+    public byte[] pals = new byte[3];
     public char max_actors_killed;
     public char actors_killed;
     public char return_to_center;
@@ -506,7 +506,7 @@ public partial class GlobalMembers
 	public static char warning;
 	public static char killit_flag;
 	public static string music_pointer;
-	public static string[] actortype = new string[DefineConstants.MAXTILES];
+	public static int[] actortype = new int[DefineConstants.MAXTILES];
 
 
     public static bool[] KB_KeyDown = new bool[256];

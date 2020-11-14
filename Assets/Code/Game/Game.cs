@@ -7,6 +7,29 @@ using System.Threading.Tasks;
 using Build;
 public partial class GlobalMembers
 {
+    public static int actor_tog = 0;
+
+    public static void gameexit(string msg)
+    {
+        throw new Exception(msg);
+    }
+
+    public static short LocateTheLocator(short n, short sn)
+    {
+        int i;
+
+        i = Engine.board.headspritestat[7];
+        while (i >= 0)
+        {
+            if ((sn == -1 || sn == Engine.board.sprite[i].sectnum) && n == Engine.board.sprite[i].lotag)
+            {
+                return (short)i;
+            }
+            i = Engine.board.nextspritestat[i];
+        }
+        return -1;
+    }
+
     public static int hitawall(player_struct p, ref short hitw)
     {
         int sx = 0;
@@ -131,9 +154,63 @@ public partial class GlobalMembers
         return 0;
     }
 
+    public static short EGS(short whatsect, long s_x, long s_y, long s_z, long s_pn, long s_s, long s_xr, long s_yr, long s_a, long s_ve, long s_zv, long s_ow, long s_ss)
+    {
+        return 0;
+    }
+
     public static void ceilingglass(short i, short sectnum, short n)
     {
 
+    }
+
+    public static int wallswitchcheck(short i)
+    {
+        switch (Engine.board.sprite[i].picnum)
+        {
+            case DefineConstants.HANDPRINTSWITCH:
+            case DefineConstants.HANDPRINTSWITCH + 1:
+            case DefineConstants.ALIENSWITCH:
+            case DefineConstants.ALIENSWITCH + 1:
+            case DefineConstants.MULTISWITCH:
+            case DefineConstants.MULTISWITCH + 1:
+            case DefineConstants.MULTISWITCH + 2:
+            case DefineConstants.MULTISWITCH + 3:
+            case DefineConstants.ACCESSSWITCH:
+            case DefineConstants.ACCESSSWITCH2:
+            case DefineConstants.PULLSWITCH:
+            case DefineConstants.PULLSWITCH + 1:
+            case DefineConstants.HANDSWITCH:
+            case DefineConstants.HANDSWITCH + 1:
+            case DefineConstants.SLOTDOOR:
+            case DefineConstants.SLOTDOOR + 1:
+            case DefineConstants.LIGHTSWITCH:
+            case DefineConstants.LIGHTSWITCH + 1:
+            case DefineConstants.SPACELIGHTSWITCH:
+            case DefineConstants.SPACELIGHTSWITCH + 1:
+            case DefineConstants.SPACEDOORSWITCH:
+            case DefineConstants.SPACEDOORSWITCH + 1:
+            case DefineConstants.FRANKENSTINESWITCH:
+            case DefineConstants.FRANKENSTINESWITCH + 1:
+            case DefineConstants.LIGHTSWITCH2:
+            case DefineConstants.LIGHTSWITCH2 + 1:
+            case DefineConstants.POWERSWITCH1:
+            case DefineConstants.POWERSWITCH1 + 1:
+            case DefineConstants.LOCKSWITCH1:
+            case DefineConstants.LOCKSWITCH1 + 1:
+            case DefineConstants.POWERSWITCH2:
+            case DefineConstants.POWERSWITCH2 + 1:
+            case DefineConstants.DIPSWITCH:
+            case DefineConstants.DIPSWITCH + 1:
+            case DefineConstants.DIPSWITCH2:
+            case DefineConstants.DIPSWITCH2 + 1:
+            case DefineConstants.TECHSWITCH:
+            case DefineConstants.TECHSWITCH + 1:
+            case DefineConstants.DIPSWITCH3:
+            case DefineConstants.DIPSWITCH3 + 1:
+                return 1;
+        }
+        return 0;
     }
 
     public static short badguy(spritetype s)
@@ -180,7 +257,7 @@ public partial class GlobalMembers
             case DefineConstants.ROTATEGUN:
                 return 1;
         }
-        if (actortype[s.picnum].Length != 0)
+        if (actortype[s.picnum] != 0)
         {
             return 1;
         }
@@ -233,7 +310,7 @@ public partial class GlobalMembers
                 return 1;
         }
 
-        if (actortype[pn].Length != 0)
+        if (actortype[pn] != 0)
         {
             return 1;
         }
