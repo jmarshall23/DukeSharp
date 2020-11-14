@@ -1436,6 +1436,76 @@ namespace Build
             }
         }
 
+        private bool cansee(int x1, int y1, int z1, short sect1, int x2, int y2, int z2, short sect2)
+        {
+            sectortype sec;
+            walltype wal, wal2;
+            int i, cnt, nexts, x, y, z, cz = 0, fz = 0, dasectnum, dacnt, danum;
+            int x21, y21, z21, x31, y31, x34, y34, bot, t;
+
+            if ((x1 == x2) && (y1 == y2))
+                return (sect1 == sect2);
+
+            x21 = x2 - x1;
+            y21 = y2 - y1;
+            z21 = z2 - z1;
+
+            clipsectorlist[0] = sect1;
+            danum = 1;
+            for (dacnt = 0; dacnt < danum; dacnt++)
+            {
+                dasectnum = clipsectorlist[dacnt];
+                sec = sector[dasectnum];
+                int ff = 0;
+                for (cnt = sec.wallnum; cnt > 0; cnt--, ff++)
+                {
+                    wal = wall[sec.wallptr + ff];
+
+                    wal2 = wall[wal.point2];
+                    x31 = wal.x - x1;
+                    x34 = wal.x - wal2.x;
+                    y31 = wal.y - y1;
+                    y34 = wal.y - wal2.y;
+
+                    bot = y21 * x34 - x21 * y34;
+                    if (bot <= 0)
+                        continue;
+
+                    t = y21 * x31 - x21 * y31;
+                    if ((uint)t >= (uint)bot)
+                        continue;
+                    t = y31 * x34 - x31 * y34;
+                    if ((uint)t >= (uint)bot)
+                        continue;
+
+                    nexts = wal.nextsector;
+                    if ((nexts < 0) || (wal.cstat & 32) != 0) return false;
+
+                    t = pragmas.divscale24(t, bot);
+                    x = x1 + pragmas.mulscale24(x21, t);
+                    y = y1 + pragmas.mulscale24(y21, t);
+                    z = z1 + pragmas.mulscale24(z21, t);
+
+                    getzsofslope((short)dasectnum, x, y, ref cz, ref fz);
+                    if ((z <= cz) || (z >= fz))
+                        return (0);
+                    getzsofslope((short)nexts, x, y, ref cz, ref fz);
+                    if ((z <= cz) || (z >= fz))
+                        return (false);
+
+                    for (i = danum - 1; i >= 0; i--)
+                        if (clipsectorlist[i] == nexts)
+                            break;
+                    if (i < 0)
+                        clipsectorlist[danum++] = nexts;
+                }
+            }
+            for (i = danum - 1; i >= 0; i--)
+                if (clipsectorlist[i] == sect2)
+                    return true;
+            return false;
+        }
+
         private void scansector(short sectnum)
         {
             walltype wal, wal2;
