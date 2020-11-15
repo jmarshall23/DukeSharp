@@ -20,12 +20,17 @@ public partial class GlobalMembers
     public static byte[] drealms = new byte[768];
     public static byte[] endingpal = new byte[768];
 
-    public static void gametextpal(int x, int y, string t, char s, char p)
+    public static int gametext(int x, int y, string t, int s, int dabits)
     {
-
+        return 0;
     }
 
-    public static void menutext(int x, int y, short s, short p, string t)
+    public static int minitext(int x, int y, string t, int p, int sb)
+    {
+        return 0;
+    }
+
+    public static void gametextpal(int x, int y, string t, char s, char p)
     {
 
     }

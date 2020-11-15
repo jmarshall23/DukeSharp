@@ -77,7 +77,7 @@ public class user_defs
     public int clipping;
     public string[] user_name = new string[DefineConstants.MAXPLAYERS];
     public char[,] ridecule = new char[10, 40];
-    public char[,] savegame = new char[10, 22];
+    public string[] savegame = new string[10];
     public string pwlockout = new string(new char[128]);
     public string rtsname = new string(new char[128]);
     public char overhead_on;
