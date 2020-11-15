@@ -1371,6 +1371,8 @@ public partial class GlobalMembers
 			return 0;
 		}
 
+// jmarshall - knuckles
+/*
 		looking_arc = (short)(pragmas.klabs(ps[snum].look_ang) / 9);
 
 		looking_arc -= (short)((ps[snum].hard_landing << 3));
@@ -1385,8 +1387,8 @@ public partial class GlobalMembers
 		}
 
 		myospal(160 + (sync[snum].avel >> 4) - (ps[snum].look_ang >> 1), looking_arc + 180 - ((ps[snum].horiz - ps[snum].horizoff) >> 4), DefineConstants.CRACKKNUCKLES + knuckle_frames[ps[snum].knuckle_incs >> 1], (sbyte)gs, 4, pal);
-
-		return 1;
+*/
+		return 0;
 	}
 
 
@@ -2679,7 +2681,10 @@ public partial class GlobalMembers
 
 		if (p.cheat_phase <= 0)
 		{
-			sb_snum = (int)sync[snum].bits;
+// jmarshall: sb_snum
+			//sb_snum = (int)sync[snum].bits;
+			sb_snum = 0;
+// jmarshall end
 		}
 		else
 		{
@@ -3132,6 +3137,9 @@ public partial class GlobalMembers
 		{
 			goto HORIZONLY;
 		}
+
+		if (sync[snum] == null)
+			sync[snum] = new input();
 
 		j = pragmas.ksgn(sync[snum].avel);
 		/*

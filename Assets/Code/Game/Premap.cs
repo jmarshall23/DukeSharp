@@ -205,106 +205,106 @@ public partial class GlobalMembers
 		}
 
 		tloadtile(DefineConstants.VIEWSCREEN);
-
-		for (i = DefineConstants.STARTALPHANUM; i < DefineConstants.ENDALPHANUM + 1; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.FOOTPRINTS; i < DefineConstants.FOOTPRINTS + 3; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.BIGALPHANUM; i < DefineConstants.BIGALPHANUM + 82; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.BURNING; i < DefineConstants.BURNING + 14; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.BURNING2; i < DefineConstants.BURNING2 + 14; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.CRACKKNUCKLES; i < DefineConstants.CRACKKNUCKLES + 4; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.FIRSTGUN; i < DefineConstants.FIRSTGUN + 3; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.EXPLOSION2; i < DefineConstants.EXPLOSION2 + 21; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		tloadtile(DefineConstants.BULLETHOLE);
-
-		for (i = DefineConstants.FIRSTGUNRELOAD; i < DefineConstants.FIRSTGUNRELOAD + 8; i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		tloadtile(DefineConstants.FOOTPRINTS);
-
-		for (i = DefineConstants.JIBS1; i < (DefineConstants.JIBS5 + 5); i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.SCRAP1; i < (DefineConstants.SCRAP1 + 19); i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
-
-		for (i = DefineConstants.SMALLSMOKE; i < (DefineConstants.SMALLSMOKE + 4); i++)
-		{
-			if (Engine.waloff[i].memory == null)
-			{
-				tloadtile(i);
-			}
-		}
+// jmarshall caching?
+		//for (i = DefineConstants.STARTALPHANUM; i < DefineConstants.ENDALPHANUM + 1; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.FOOTPRINTS; i < DefineConstants.FOOTPRINTS + 3; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.BIGALPHANUM; i < DefineConstants.BIGALPHANUM + 82; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.BURNING; i < DefineConstants.BURNING + 14; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.BURNING2; i < DefineConstants.BURNING2 + 14; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.CRACKKNUCKLES; i < DefineConstants.CRACKKNUCKLES + 4; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.FIRSTGUN; i < DefineConstants.FIRSTGUN + 3; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.EXPLOSION2; i < DefineConstants.EXPLOSION2 + 21; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//tloadtile(DefineConstants.BULLETHOLE);
+		//
+		//for (i = DefineConstants.FIRSTGUNRELOAD; i < DefineConstants.FIRSTGUNRELOAD + 8; i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//tloadtile(DefineConstants.FOOTPRINTS);
+		//
+		//for (i = DefineConstants.JIBS1; i < (DefineConstants.JIBS5 + 5); i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.SCRAP1; i < (DefineConstants.SCRAP1 + 19); i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
+		//
+		//for (i = DefineConstants.SMALLSMOKE; i < (DefineConstants.SMALLSMOKE + 4); i++)
+		//{
+		//	if (Engine.waloff[i].memory == null)
+		//	{
+		//		tloadtile(i);
+		//	}
+		//}
 	}
 
 	public static char getsound(ushort num)
@@ -986,6 +986,8 @@ public partial class GlobalMembers
 
 		for (i = 0; i < DefineConstants.MAXSPRITES; i++)
 		{
+			if (Engine.board.sprite[i] == null)
+				continue;
 			if (Engine.board.sprite[i].statnum < DefineConstants.MAXSTATUS)
 			{
 				if (Engine.board.sprite[i].picnum == DefineConstants.SECTOREFFECTOR && Engine.board.sprite[i].lotag == 14)
@@ -998,7 +1000,10 @@ public partial class GlobalMembers
 
 		for (i = 0; i < DefineConstants.MAXSPRITES; i++)
 		{
-			if (Engine.board.sprite[i].statnum < DefineConstants.MAXSTATUS)
+            if (Engine.board.sprite[i] == null)
+                continue;
+
+            if (Engine.board.sprite[i].statnum < DefineConstants.MAXSTATUS)
 			{
 				if (Engine.board.sprite[i].picnum == DefineConstants.SECTOREFFECTOR && Engine.board.sprite[i].lotag == 14)
 				{
@@ -1105,7 +1110,9 @@ public partial class GlobalMembers
 				gameexit("\nToo many 'anim' walls (max 512.)");
 			}
 
-            animwall[numanimwalls].tag = 0;
+			animwall[numanimwalls] = new animwalltype();
+
+			animwall[numanimwalls].tag = 0;
             animwall[numanimwalls].wallnum = 0;
 
 			switch (wal.overpicnum)
@@ -1272,14 +1279,15 @@ public partial class GlobalMembers
 	{
 		player_struct p = ps[0];
 		short i;
-
-		if (globalskillsound >= 0)
-		{
-			while (Sound[globalskillsound].@lock >= 200)
-			{
-				;
-			}
-		}
+// jmarshall - global kill sound
+		//if (globalskillsound >= 0)
+		//{
+		//	while (Sound[globalskillsound].@lock >= 200)
+		//	{
+		//		;
+		//	}
+		//}
+// jmarshall end
 		globalskillsound = -1;
 
 		waitforeverybody();
@@ -1319,8 +1327,9 @@ public partial class GlobalMembers
 		ud.player_skill = sk;
 		ud.secretlevel = 0;
 		ud.from_bonus = 0;
-		Engine.board.parallaxyscale = 0;
-
+// jmarshall - isntance checking
+		//Engine.board.parallaxyscale = 0;
+// jmarshall end
 		ud.last_level = -1;
 		lastsavedpos = -1;
 		p.zoom = 768;
@@ -1376,6 +1385,9 @@ public partial class GlobalMembers
 		{
 			for (i = 0; i < DefineConstants.MAXPLAYERS; i++)
 			{
+				if (ps[i] == null)
+					continue;
+
 				aimmode[i] = ps[i].aim_mode;// = StringFunctions.ChangeCharacter(aimmode, i, ps[i].aim_mode);
 				if (ud.multimode > 1 && ud.coop == 1 && ud.last_level >= 0)
 				{
@@ -1455,6 +1467,8 @@ public partial class GlobalMembers
 				firstx = ps[0].posx;
 				firsty = ps[0].posy;
 			}
+
+			po[numplayersprites] = new player_orig();
 
 			po[numplayersprites].ox = s.x;
 			po[numplayersprites].oy = s.y;
@@ -1645,7 +1659,7 @@ public partial class GlobalMembers
 
 			Engine.rotatesprite(320 << 15, 200 << 15, 65536, 0, DefineConstants.LOADSCREEN, 0, 0, 2 + 8 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 
-			if (boardfilename[0] != 0 && ud.level_number == 7 && ud.volume_number == 0)
+			if (boardfilename.Length != 0 && ud.level_number == 7 && ud.volume_number == 0)
 			{
 				menutext(160, 90, 0, 0, "ENTERING USER MAP");
 				gametextpal(160, 90 + 10, boardfilename, (char)14, (char)2);
@@ -1757,7 +1771,7 @@ public partial class GlobalMembers
 
 #if !VOLUMEONE
 
-		if (boardfilename[0] != 0 && ud.m_level_number == 7 && ud.m_volume_number == 0)
+		if (boardfilename.Length != 0 && ud.m_level_number == 7 && ud.m_volume_number == 0)
 		{
 			if (Engine.loadboard(boardfilename, ref ps[0].posx, ref ps[0].posy, ref ps[0].posz, ref ps[0].ang, ref ps[0].cursectnum) == -1)
 			{

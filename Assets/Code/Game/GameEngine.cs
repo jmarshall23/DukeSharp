@@ -72,7 +72,9 @@ public class GameEngine : MonoBehaviour
         else
         {
             GlobalMembers.totalclock = (int)(dukeClock * 120.0f);
-        }        
+        }
+
+        GlobalMembers.faketimerhandler();
 
         GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
         try

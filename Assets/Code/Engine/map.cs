@@ -51,7 +51,7 @@ namespace Build
 
         private short[] sectorborder = new short[256];
         private short sectorbordercnt;
-        public sectortype[] sector = new sectortype[MAXSECTORS];
+        public sectortype[] sector = new sectortype[MAXSECTORS + 1];
         public walltype[] wall = new walltype[MAXWALLS];
         public spritetype[] sprite = new spritetype[MAXSPRITES];
 
@@ -5992,6 +5992,7 @@ namespace Build
             {
                 sector[i] = new sectortype(ref fil);
             }
+            sector[MAXSECTORS] = new sectortype();
 
             // read in the wall sectors
             numwalls = fil.kreadshort();

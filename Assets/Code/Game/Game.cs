@@ -646,8 +646,6 @@ public partial class GlobalMembers
 
 	public static void faketimerhandler()
 	{
-// jmarshall - fake timer handler.
-/*
 		int i;
 		int j;
 		int k;
@@ -656,11 +654,11 @@ public partial class GlobalMembers
 		input osyn;
 		input nsyn;
 
-		if (qe == 0 && (KB_KeyDown[(DefineConstants.sc_LeftControl)] != 0) && (KB_KeyDown[(DefineConstants.sc_LeftAlt)] != 0) && (KB_KeyDown[(DefineConstants.sc_Delete)] != 0))
-		{
-			qe = 1;
-			gameexit("Quick Exit.");
-		}
+		//if (qe == 0 && (KB_KeyDown[(DefineConstants.sc_LeftControl)] != 0) && (KB_KeyDown[(DefineConstants.sc_LeftAlt)] != 0) && (KB_KeyDown[(DefineConstants.sc_Delete)] != 0))
+		//{
+		//	qe = 1;
+		//	gameexit("Quick Exit.");
+		//}
 
 		if ((totalclock < ototalclock + (DefineConstants.TICRATE / 26)) || (ready2send == 0))
 		{
@@ -668,12 +666,13 @@ public partial class GlobalMembers
 		}
 		ototalclock += (DefineConstants.TICRATE / 26);
 
-		getpackets();
-		if (getoutputcirclesize() >= 16)
-		{
-			return;
-		}
-
+// jmarshall - multiplayer
+		//getpackets();
+		//if (getoutputcirclesize() >= 16)
+		//{
+		//	return;
+		//}
+// jmarshall end
 		for (i = connecthead;i >= 0;i = connectpoint2[i])
 		{
 			if (i != myconnectindex)
@@ -691,24 +690,31 @@ public partial class GlobalMembers
 		 avgsvel += loc.svel;
 		 avgavel += loc.avel;
 		 avghorz += loc.horz;
-		 avgbits |= loc.bits;
-		 if ((movefifoend[myconnectindex] & (movesperpacket - 1)) != 0)
-		 {
-			  copybufbyte(inputfifo[(movefifoend[myconnectindex] - 1) & (DefineConstants.MOVEFIFOSIZ - 1)][myconnectindex], inputfifo[movefifoend[myconnectindex] & (DefineConstants.MOVEFIFOSIZ - 1)][myconnectindex], sizeof(input));
-			  movefifoend[myconnectindex]++;
-			  return;
-		 }
-		 nsyn = inputfifo[movefifoend[myconnectindex] & (DefineConstants.MOVEFIFOSIZ - 1)][myconnectindex];
-		 nsyn[0].fvel = avgfvel / movesperpacket;
-		 nsyn[0].svel = avgsvel / movesperpacket;
-		 nsyn[0].avel = avgavel / movesperpacket;
-		 nsyn[0].horz = avghorz / movesperpacket;
-		 nsyn[0].bits = avgbits;
+		 avgbits |= (int)loc.bits;
+		// jmarshall - fake timer handler.
+		//if ((movefifoend[myconnectindex] & (movesperpacket - 1)) != 0)
+		//{
+		//	  copybufbyte(inputfifo[(movefifoend[myconnectindex] - 1) & (DefineConstants.MOVEFIFOSIZ - 1)][myconnectindex], inputfifo[movefifoend[myconnectindex] & (DefineConstants.MOVEFIFOSIZ - 1)][myconnectindex], sizeof(input));
+		//	  movefifoend[myconnectindex]++;
+		//	  return;
+		//}
+		// jmarshall end
+		if (inputfifo[movefifoend[myconnectindex] & (DefineConstants.MOVEFIFOSIZ - 1), myconnectindex] == null)
+			inputfifo[movefifoend[myconnectindex] & (DefineConstants.MOVEFIFOSIZ - 1), myconnectindex] = new input();
+
+		 nsyn = inputfifo[movefifoend[myconnectindex] & (DefineConstants.MOVEFIFOSIZ - 1),myconnectindex];
+		 nsyn.fvel = (short)(avgfvel / movesperpacket);
+		 nsyn.svel = (short)(avgsvel / movesperpacket);
+		 nsyn.avel = (sbyte)(avgavel / movesperpacket);
+		 nsyn.horz = (sbyte)(avghorz / movesperpacket);
+		 nsyn.bits = (uint)avgbits;
 		 avgfvel = avgsvel = avgavel = avghorz = avgbits = 0;
 		 movefifoend[myconnectindex]++;
 
 		 if (numplayers < 2)
 		 {
+			// jmarshall - fake timer handler.
+/*
 			  if (ud.multimode > 1)
 			  {
 				  for (i = connecthead;i >= 0;i = connectpoint2[i])
@@ -724,9 +730,11 @@ public partial class GlobalMembers
 				  }
 				  }
 			  }
+*/
 			  return;
 		 }
-
+// jmarshall - fake timer handler.
+/*
 		for (i = connecthead;i >= 0;i = connectpoint2[i])
 		{
 			if (i != myconnectindex)
@@ -1671,6 +1679,8 @@ public partial class GlobalMembers
 			throw new Exception(" Too many sprites spawned.");
 		}
 
+		hittype[i] = new weaponhit();
+
 		hittype[i].bposx = (short)s_x;
 		hittype[i].bposy = (short)s_y;
 		hittype[i].bposz = (short)s_z;
@@ -1820,6 +1830,8 @@ public partial class GlobalMembers
 		else
 		{
 			i = pn;
+
+			hittype[i] = new weaponhit();
 
 			hittype[i].picnum = Engine.board.sprite[i].picnum;
 			hittype[i].timetosleep = 0;
@@ -2017,13 +2029,13 @@ public partial class GlobalMembers
 				{
 					sp.cstat |= 257;
 				}
-				goto case DefineConstants.DOMELITE;
+				goto case DefineConstants.NUKEBUTTON;
 			case DefineConstants.NUKEBUTTON:
 				if (sp.picnum == DefineConstants.DOMELITE)
 				{
 					sp.cstat |= 257;
 				}
-				goto case DefineConstants.NUKEBUTTON;
+				goto case DefineConstants.JIBS1;
 			case DefineConstants.JIBS1:
 			case DefineConstants.JIBS2:
 			case DefineConstants.JIBS3:
@@ -2777,7 +2789,7 @@ public partial class GlobalMembers
 				break;
 
 			case DefineConstants.WATERDRIP:
-				if (j >= 0 && Engine.board.sprite[j].statnum == 10 || Engine.board.sprite[j].statnum == 1)
+				if (j >= 0 && (Engine.board.sprite[j].statnum == 10 || Engine.board.sprite[j].statnum == 1)) // jmarshall: crash fix j == -1
 				{
 					sp.shade = 32;
 					if (Engine.board.sprite[j].pal != 1)

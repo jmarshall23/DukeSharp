@@ -2244,7 +2244,7 @@ public partial class GlobalMembers
 		genspriteremaps();
 
         ps[myconnectindex] = new player_struct();
-
+        sync[myconnectindex] = new input();
 #if VOLUMEONE
 			if (numplayers > 4 || ud.multimode > 4)
 			{
