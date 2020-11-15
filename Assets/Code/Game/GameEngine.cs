@@ -56,13 +56,34 @@ public class GameEngine : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Escape)] = true;
-        else
+        else if (Input.GetKeyUp(KeyCode.Escape))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Escape)] = false;
 
         if (Input.GetKeyDown(KeyCode.Return))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Return)] = true;
-        else
+        else if (Input.GetKeyUp(KeyCode.Return))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Return)] = false;
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = true;
+        else if (Input.GetKeyUp(KeyCode.UpArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = false;
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_DownArrow)] = true;
+        else if (Input.GetKeyUp(KeyCode.DownArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_DownArrow)] = false;
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftArrow)] = true;
+        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftArrow)] = false;
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_RightArrow)] = true;
+        else if (Input.GetKeyUp(KeyCode.RightArrow))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_RightArrow)] = false;
+
 
         if (GlobalMembers.totalclock == 0)
         {

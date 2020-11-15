@@ -3452,10 +3452,13 @@ public partial class GlobalMembers
 						hittype[i].temp_data[2] = Engine.board.sector[sect].floorz; //Stopping loc
 
 						j = Engine.board.nextsectorneighborz(sect, Engine.board.sector[sect].floorz, -1, -1);
-						hittype[i].temp_data[3] = Engine.board.sector[j].ceilingz;
+						if(j >= 0)
+							hittype[i].temp_data[3] = Engine.board.sector[j].ceilingz;
 
 						j = Engine.board.nextsectorneighborz(sect, Engine.board.sector[sect].ceilingz, 1, 1);
-						hittype[i].temp_data[4] = Engine.board.sector[j].floorz;
+
+						if (j >= 0)
+							hittype[i].temp_data[4] = Engine.board.sector[j].floorz;
 
 						if (numplayers < 2)
 						{

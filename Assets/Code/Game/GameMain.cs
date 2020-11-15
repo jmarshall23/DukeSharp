@@ -888,7 +888,7 @@ public partial class GlobalMembers
 
         for (i = connecthead; i >= 0; i = connectpoint2[i])
         {
-            inputfifo[movefifoplc & (DefineConstants.MOVEFIFOSIZ - 1), i] = sync[i]; // jmarshall: eval
+            sync[i] = inputfifo[movefifoplc & (DefineConstants.MOVEFIFOSIZ - 1), i];
         }
         movefifoplc++;
 

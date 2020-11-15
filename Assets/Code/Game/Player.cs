@@ -2063,16 +2063,14 @@ public partial class GlobalMembers
 
 	public static void getinput(short snum)
 	{
-// jmarshall - input
-/*
 		short j;
 		short daang;
 		// MED
-		ControlInfo info = new ControlInfo();
+		//ControlInfo info = new ControlInfo();
 		int tics;
-		boolean running = new boolean();
+		bool running = false;
 		int turnamount;
-		int keymove;
+		int keymove = 10;
 		int momx;
 		int momy;
 		player_struct p;
@@ -2080,46 +2078,54 @@ public partial class GlobalMembers
 		momx = momy = 0;
 		p = ps[snum];
 
-		CONTROL_GetInput(info);
+		//CONTROL_GetInput(info);
 
-		if ((p.gm & DefineConstants.MODE_MENU) != 0 || (p.gm & DefineConstants.MODE_TYPE) != 0 || (ud.pause_on && !(KB_KeyDown[(DefineConstants.sc_Pause)] != 0)))
+		if ((p.gm & DefineConstants.MODE_MENU) != 0 || (p.gm & DefineConstants.MODE_TYPE) != 0 || (ud.pause_on != 0 && !(KB_KeyDown[(DefineConstants.sc_Pause)] != false)))
 		{
-			loc.fvel = vel = 0;
-			loc.svel = svel = 0;
-			loc.avel = angvel = 0;
-			loc.horz = horiz = 0;
-			loc.bits = (((int)gamequit) << 26);
-			info.dz = info.dyaw = 0;
+			vel = 0;
+			svel = 0;
+			angvel = 0;
+			horiz = 0;
+
+			loc.fvel = 0;
+			loc.svel = 0;
+			loc.avel = 0;
+			loc.horz = 0;
+			loc.bits = (uint)(((int)gamequit) << 26);			
 			return;
 		}
 
 		tics = totalclock - lastcontroltime;
 		lastcontroltime = totalclock;
 
-		if (MouseAiming)
-		{
-			myaimmode = (((gamefunc_Mouse_Aiming) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Mouse_Aiming) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Mouse_Aiming)) & 1));
-		}
-		else
-		{
-			omyaimstat = myaimstat;
-			myaimstat = (((gamefunc_Mouse_Aiming) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Mouse_Aiming) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Mouse_Aiming)) & 1));
-			if (myaimstat > omyaimstat)
-			{
-				myaimmode ^= 1;
-				FTA((short)(44 + myaimmode), p);
-			}
-		}
+// jmarshall - mouse aiming.
+		//if (MouseAiming)
+		//{
+		//	myaimmode = (((gamefunc_Mouse_Aiming) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Mouse_Aiming) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Mouse_Aiming)) & 1));
+		//}
+		//else
+		//{
+		//	omyaimstat = myaimstat;
+		//	myaimstat = (((gamefunc_Mouse_Aiming) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Mouse_Aiming) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Mouse_Aiming)) & 1));
+		//	if (myaimstat > omyaimstat)
+		//	{
+		//		myaimmode ^= 1;
+		//		FTA((short)(44 + myaimmode), p);
+		//	}
+		//}
+// jmarshall end
 
 		if (multiflag == 1)
 		{
 			loc.bits = 1 << 17;
-			loc.bits |= multiwhat << 18;
-			loc.bits |= multipos << 19;
+			loc.bits |= (uint)(multiwhat << 18);
+			loc.bits |= (uint)(multipos << 19);
 			multiflag = 0;
 			return;
 		}
 
+// jmarshall - keys and weapon switch.
+/*
 		loc.bits = (((gamefunc_Jump) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Jump) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Jump)) & 1));
 		loc.bits |= (((gamefunc_Crouch) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Crouch) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Crouch)) & 1)) << 1;
 		loc.bits |= (((gamefunc_Fire) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Fire) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Fire)) & 1)) << 2;
@@ -2203,19 +2209,20 @@ public partial class GlobalMembers
 		loc.bits |= (((gamefunc_Open) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Open) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Open)) & 1)) << 29;
 		loc.bits |= (((gamefunc_Inventory) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Inventory) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Inventory)) & 1)) << 30;
 		loc.bits |= (KB_KeyDown[(DefineConstants.sc_Escape)] != 0) << 31;
-
 		running = (((gamefunc_Run) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Run) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Run)) & 1)) | ud.auto_run;
+*/
 		svel = vel = angvel = horiz = 0;
 
-		if (CONTROL_JoystickEnabled)
-		{
-			if (running != null)
-			{
-				info.dz *= 2;
-			}
-		}
-
-		if ((((gamefunc_Strafe) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Strafe) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Strafe)) & 1)) != 0)
+		//if (CONTROL_JoystickEnabled)
+		//{
+		//	if (running != null)
+		//	{
+		//		info.dz *= 2;
+		//	}
+		//}
+// jmarshall - look and shift
+/*
+		if (KB_KeyDown[DefineConstants.sc_LeftShift])
 		{
 			svel = -info.dyaw / 8;
 		}
@@ -2241,16 +2248,7 @@ public partial class GlobalMembers
 		svel -= info.dx;
 		vel = -info.dz >> 6;
 
-		if (running != null)
-		{
-			turnamount = DefineConstants.NORMALTURN << 1;
-			keymove = DefineConstants.NORMALKEYMOVE << 1;
-		}
-		else
-		{
-			turnamount = DefineConstants.NORMALTURN;
-			keymove = DefineConstants.NORMALKEYMOVE;
-		}
+
 
 		if ((((gamefunc_Strafe) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Strafe) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Strafe)) & 1)) != 0)
 		{
@@ -2294,23 +2292,33 @@ public partial class GlobalMembers
 				turnheldtime = 0;
 			}
 		}
-
-		if ((((gamefunc_Strafe_Left) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Strafe_Left) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Strafe_Left)) & 1)) != 0)
+*/
+		if (running != null)
+		{
+			turnamount = DefineConstants.NORMALTURN << 1;
+			keymove = DefineConstants.NORMALKEYMOVE << 1;
+		}
+		else
+		{
+			turnamount = DefineConstants.NORMALTURN;
+			keymove = DefineConstants.NORMALKEYMOVE;
+		}
+		if (KB_KeyDown[DefineConstants.sc_LeftArrow])
 		{
 			svel += keymove;
 		}
 
-		if ((((gamefunc_Strafe_Right) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Strafe_Right) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Strafe_Right)) & 1)) != 0)
+		if (KB_KeyDown[DefineConstants.sc_RightArrow])
 		{
 			svel += -keymove;
 		}
 
-		if ((((gamefunc_Move_Forward) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Move_Forward) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Move_Forward)) & 1)) != 0)
+		if (KB_KeyDown[DefineConstants.sc_UpArrow])
 		{
 			vel += keymove;
 		}
 
-		if ((((gamefunc_Move_Backward) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Move_Backward) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Move_Backward)) & 1)) != 0)
+		if (KB_KeyDown[DefineConstants.sc_DownArrow])
 		{
 			vel += -keymove;
 		}
@@ -2348,16 +2356,18 @@ public partial class GlobalMembers
 			horiz = DefineConstants.MAXHORIZ;
 		}
 
-		if (ud.scrollmode && ud.overhead_on)
-		{
-			ud.folfvel = vel;
-			ud.folavel = angvel;
-			loc.fvel = 0;
-			loc.svel = 0;
-			loc.avel = 0;
-			loc.horz = 0;
-			return;
-		}
+// jmarshall: automap
+		//if (ud.scrollmode && ud.overhead_on)
+		//{
+		//	ud.folfvel = vel;
+		//	ud.folavel = angvel;
+		//	loc.fvel = 0;
+		//	loc.svel = 0;
+		//	loc.avel = 0;
+		//	loc.horz = 0;
+		//	return;
+		//}
+// jmarshall end
 
 		if (numplayers > 1)
 		{
@@ -2368,21 +2378,19 @@ public partial class GlobalMembers
 			daang = p.ang;
 		}
 
-		momx = mulscale9(vel, Engine.table.sintable[(daang + 2560) & 2047]);
-		momy = mulscale9(vel, Engine.table.sintable[(daang + 2048) & 2047]);
+		momx = pragmas.mulscale9(vel, Engine.table.sintable[(daang + 2560) & 2047]);
+		momy = pragmas.mulscale9(vel, Engine.table.sintable[(daang + 2048) & 2047]);
 
-		momx += mulscale9(svel, Engine.table.sintable[(daang + 2048) & 2047]);
-		momy += mulscale9(svel, Engine.table.sintable[(daang + 1536) & 2047]);
+		momx += pragmas.mulscale9(svel, Engine.table.sintable[(daang + 2048) & 2047]);
+		momy += pragmas.mulscale9(svel, Engine.table.sintable[(daang + 1536) & 2047]);
 
 		momx += fricxv;
 		momy += fricyv;
 
-		loc.fvel = momx;
-		loc.svel = momy;
-		loc.avel = angvel;
-		loc.horz = horiz;
-*/
-// jmarshall end
+		loc.fvel = (short)momx;
+		loc.svel = (short)momy;
+		loc.avel = (sbyte)angvel;
+		loc.horz = (sbyte)horiz;
 	}
 
 

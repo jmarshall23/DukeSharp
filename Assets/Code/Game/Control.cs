@@ -80,6 +80,8 @@ public partial class GlobalMembers
     public static void KB_FlushKeyboardQueue()
     {
         anyKeyDown = false;
+        for (int i = 0; i < KB_KeyDown.Length; i++)
+            KB_KeyDown[i] = false;
     }
 
     public static void CONTROL_DefineFlag(int which, bool toggle)
