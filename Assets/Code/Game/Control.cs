@@ -69,7 +69,7 @@ public enum controltype
 public partial class GlobalMembers
 {
 
-    public static ControlInfo minfo;
+    public static ControlInfo minfo = new ControlInfo();
 
     public static int CONTROL_GetMouseSensitivity()
     {

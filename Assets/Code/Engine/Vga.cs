@@ -13,6 +13,7 @@ namespace Build
     {
         //public Texture2D _texture;
         public int[] Pixels;
+        public int[] PresentedPixels;
 
         public int _width;
         public int _height;
@@ -20,6 +21,7 @@ namespace Build
         public VGATexture2D(int width, int height)
         {            
             Pixels = new int[width * height];
+            PresentedPixels = new int[width * height];
 
             _width = width;
             _height = height;
@@ -27,7 +29,7 @@ namespace Build
 
         public void Present()
         {
-            
+            Array.Copy(Pixels, PresentedPixels, PresentedPixels.Length);
         }
     }
 

@@ -60,10 +60,10 @@ public class GameEngine : MonoBehaviour
         }
         else
         {
-            GlobalMembers.totalclock = (int)(dukeClock * 60.0f);
+            GlobalMembers.totalclock = (int)(dukeClock * 90.0f);
         }        
 
-        GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.Pixels, GCHandleType.Pinned);
+        GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
         try
         {
             IntPtr pointer = handle.AddrOfPinnedObject();
