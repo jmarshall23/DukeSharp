@@ -1573,11 +1573,11 @@ public partial class GlobalMembers
 			Engine.palette.makepalookup((int)look_pos, tempbuf, 0, 0, 0, true);
 		}
 
-		fp.kread<byte>(ref waterpal, fp.Position, 768);
-		fp.kread<byte>(ref slimepal, fp.Position, 768);
-		fp.kread<byte>(ref titlepal, fp.Position, 768);
-		fp.kread<byte>(ref drealms, fp.Position, 768);
-		fp.kread<byte>(ref endingpal, fp.Position, 768);
+		fp.kread<byte>(ref waterpal, 0, 768);
+		fp.kread<byte>(ref slimepal, 0, 768);
+		fp.kread<byte>(ref titlepal, 0, 768);
+		fp.kread<byte>(ref drealms, 0, 768);
+		fp.kread<byte>(ref endingpal, 0, 768);
 
 // jmarshall - palette
 		//palette[765] = palette[766] = palette[767] = 0;
