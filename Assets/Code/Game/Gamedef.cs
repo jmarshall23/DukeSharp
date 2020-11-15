@@ -633,7 +633,7 @@ public partial class GlobalMembers
                 transnum();
                 if (i == labelcnt)
                 {
-                    labelcode[labelcnt++] = scriptptr.bufferpos - 1;
+                    labelcode[labelcnt++] = scriptptr.buffer[scriptptr.bufferpos - 1];
                 }
                 scriptptr.bufferpos -= 2;
                 return 0;
