@@ -1555,6 +1555,8 @@ public partial class GlobalMembers
 		string lookfn = "lookup.dat";
 		int numl = 0;
 
+		Engine.LoadTables();
+
 		fp = Engine.filesystem.kopen4load(lookfn);
 		if (fp != null)
 		{
@@ -1569,7 +1571,7 @@ public partial class GlobalMembers
 		for (j = 0; j < numl; j++)
 		{
 			look_pos = fp.kreadbyte();
-			fp.kread<byte>(ref tempbuf, fp.Position, 256);
+			fp.kread<byte>(ref tempbuf, 0, 256);
 			Engine.palette.makepalookup((int)look_pos, tempbuf, 0, 0, 0, true);
 		}
 

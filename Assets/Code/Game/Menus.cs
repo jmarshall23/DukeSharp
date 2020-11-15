@@ -3841,30 +3841,20 @@ public partial class GlobalMembers
 	public static void palto(int r, int g, int b, int e)
 	{
 		// jmarshall - palette
-		//int i;
-		//string temparray = new string(new char[768]);
-		//
-		//for (i = 0; i < 768; i += 3)
-		//{
-		//	temparray = StringFunctions.ChangeCharacter(temparray, i, ps[myconnectindex].palette[i + 0] + ((((int)r - (int)ps[myconnectindex].palette[i + 0]) * (int)(e & 127)) >> 6));
-		//	temparray = StringFunctions.ChangeCharacter(temparray, i + 1, ps[myconnectindex].palette[i + 1] + ((((int)g - (int)ps[myconnectindex].palette[i + 1]) * (int)(e & 127)) >> 6));
-		//	temparray = StringFunctions.ChangeCharacter(temparray, i + 2, ps[myconnectindex].palette[i + 2] + ((((int)b - (int)ps[myconnectindex].palette[i + 2]) * (int)(e & 127)) >> 6));
-		//}
-		//
-		//// CTW - MODIFICATION
-		///*  if( (e&128) == 0 )
-		//		if ((vidoption != 1) || (vgacompatible == 1)) limitrate();*/
-		//if ((e & 128) == 0)
-		//{
-		//	if ((ScreenMode != 1) || (vgacompatible == 1))
-		//	{
-		//		limitrate();
-		//	}
-		//}
-		//// CTW END - MODIFICATION
-		//
-		//setbrightness(ud.brightness >> 2, temparray);
-		// jmarshall end
+		int i;
+		byte[] temparray = new byte[768];
+
+        for (i = 0; i < 768; i += 3)
+        {
+            temparray[i] =
+                (byte)(ps[myconnectindex].palette[i + 0] + ((((byte)r - (byte)ps[myconnectindex].palette[i + 0]) * (byte)(e & 127)) >> 6));
+            temparray[i + 1] =
+                (byte)(ps[myconnectindex].palette[i + 1] + ((((byte)g - (byte)ps[myconnectindex].palette[i + 1]) * (byte)(e & 127)) >> 6));
+            temparray[i + 2] =
+                (byte)(ps[myconnectindex].palette[i + 2] + ((((byte)b - (byte)ps[myconnectindex].palette[i + 2]) * (byte)(e & 127)) >> 6));
+        }
+
+		Engine.setbrightness(ud.brightness >> 2, temparray);
 	}
 
 

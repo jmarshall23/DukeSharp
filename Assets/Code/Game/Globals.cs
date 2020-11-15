@@ -286,7 +286,7 @@ public class player_struct
     public char falling_counter;
     public bool[] gotweapon = new bool[DefineConstants.MAX_WEAPONS];
     public char refresh_inventory;
-    public byte[] palette = new byte[768];
+    public byte[] palette;
 
     public int toggle_key_flag; // ,select_dir;
     public char knuckle_incs;

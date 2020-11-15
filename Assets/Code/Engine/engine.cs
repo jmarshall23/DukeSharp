@@ -382,6 +382,17 @@ palette:
             _device.SetPalette(dapal);
         }
 
+        public static void setbrightness(int dabrightness, byte[] dapal)
+        {
+            int i, j, k;
+
+            curbrightness = Math.Min(Math.Max((int)dabrightness, 0), 15);
+
+            k = 0;
+            
+            palette.palette = dapal;
+        }
+
         public static void SetPalette(bPalette palette)
         {
             _device.SetPalette(palette);
@@ -532,14 +543,14 @@ palette:
         {
             string path;
             #if UNITY_EDITOR
-            path = Application.dataPath + "/StreamingAssets/";
+            path = GameEngine.AppPath + "/StreamingAssets/";
             #elif UNITY_ANDROID
-            path = "jar:file://"+ Application.dataPath + "!/assets/";
+            path = "jar:file://"+ GameEngine.AppPath + "!/assets/";
             #elif UNITY_IOS
-            path = "file:" + Application.dataPath + "/Raw/";
+            path = "file:" + GameEngine.AppPath + "/Raw/";
             #else
             //Desktop (Mac OS or Windows)
-            path = "file:"+ Application.dataPath + "/StreamingAssets/";
+            path = "file:"+ GameEngine.AppPath + "/StreamingAssets/";
             #endif
             
             return path;

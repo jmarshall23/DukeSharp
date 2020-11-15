@@ -1917,6 +1917,8 @@ public partial class GlobalMembers
 
         ready2send = (char)0;
 
+        ps[myconnectindex].palette = drealms;
+
         KB_FlushKeyboardQueue();
 
         Engine._device.setview(0, 0, Engine.xdim - 1, Engine.ydim - 1);
@@ -1949,7 +1951,9 @@ public partial class GlobalMembers
         }
         ps[myconnectindex].palette = drealms;
         palto(0, 0, 0, 63);
-        Engine.rotatesprite(0, 0, 65536, 0, DefineConstants.DREALMS, 0, 0, 2 + 8 + 16 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+        int width = Engine.xdim - 1;
+        int height = Engine.ydim - 1;
+        Engine.rotatesprite(0, 0, 65536, 0, DefineConstants.DREALMS, 0, 0, 2 + 8 + 16 + 64, 0, 0, width, height);
         Engine.NextPage();
         for (i = 63; i > 0; i -= 7)
         {
@@ -2077,6 +2081,8 @@ public partial class GlobalMembers
 
 		loadefs(DefineConstants.confilename);
 
+        Engine.loadpics("tiles000.art");
+
 //		CONFIG_GetSetupFilename();
 //		CONFIG_ReadSetup();
 //
@@ -2183,13 +2189,14 @@ public partial class GlobalMembers
 
 		Startup();
 
+        Engine._device._palette = new bPalette();
 
-		if (numplayers > 1)
+        if (numplayers > 1)
 		{
 			ud.multimode = numplayers;
 		//	sendlogon();
 		}
-		else if (boardfilename[0] != 0)
+		else if (boardfilename.Length != 0)
 		{
 			ud.m_level_number = 7;
 			ud.m_volume_number = 0;
@@ -2236,21 +2243,23 @@ public partial class GlobalMembers
 		
 		genspriteremaps();
 
+        ps[myconnectindex] = new player_struct();
+
 #if VOLUMEONE
 			if (numplayers > 4 || ud.multimode > 4)
 			{
 				gameexit(" The full version of Duke Nukem 3D supports 5 or more players.");
 			}
 #endif
-// jmarshall - palette
-		//Engine.setbrightness(ud.brightness >> 2, ps[myconnectindex].palette[0]);
-// jmarshall end
-		//if ((KB_KeyDown[(DefineConstants.sc_Escape)] != 0))
-		//{
-		//	gameexit(" ");
-		//}
+        // jmarshall - palette
+        //Engine.setbrightness(ud.brightness >> 2, ps[myconnectindex].palette[0]);
+        // jmarshall end
+        //if ((KB_KeyDown[(DefineConstants.sc_Escape)] != 0))
+        //{
+        //	gameexit(" ");
+        //}
 
-		FX_StopAllSounds();
+        FX_StopAllSounds();
 		clearsoundlocks();
 
 		//if (ud.warp_on > 1 && ud.multimode < 2)

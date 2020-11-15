@@ -11,16 +11,14 @@ namespace Build
 {
     public class VGATexture2D
     {
-        public Texture2D _texture;
+        //public Texture2D _texture;
         public int[] Pixels;
 
-        private int _width;
-
-        private int _height;
+        public int _width;
+        public int _height;
 
         public VGATexture2D(int width, int height)
-        {
-            _texture = new Texture2D(width, height, TextureFormat.BGRA32, false);
+        {            
             Pixels = new int[width * height];
 
             _width = width;
@@ -29,20 +27,7 @@ namespace Build
 
         public void Present()
         {
-            GCHandle handle = GCHandle.Alloc(Pixels, GCHandleType.Pinned);
-            try
-            {
-                IntPtr pointer = handle.AddrOfPinnedObject();
-                _texture.LoadRawTextureData(pointer, _width * _height * 4);
-                _texture.Apply();
-            }
-            finally
-            {
-                if (handle.IsAllocated)
-                {
-                    handle.Free();
-                }
-            }
+            
         }
     }
 
