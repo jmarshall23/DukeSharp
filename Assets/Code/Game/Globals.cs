@@ -594,7 +594,7 @@ public partial class GlobalMembers
 	public static short omyang;
 	public static short mycursectnum;
 	public static short myjumpingcounter;
-	public static short[] frags = new short[DefineConstants.MAXPLAYERS];
+	public static short[,] frags = new short[DefineConstants.MAXPLAYERS, DefineConstants.MAXPLAYERS];
 
 	public static char myjumpingtoggle;
 	public static char myonground;

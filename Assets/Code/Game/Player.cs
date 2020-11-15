@@ -58,7 +58,7 @@ public partial class GlobalMembers
 				shield_damage = (int)(damage * (20 + (Engine.krand() % 30)) / 100);
 				damage -= shield_damage;
 
-				p.shield_amount += shield_damage;
+				p.shield_amount += (short)shield_damage;
 
 				if (p.shield_amount < 0)
 				{
@@ -67,7 +67,7 @@ public partial class GlobalMembers
 				}
 			}
 
-			Engine.board.sprite[p.i].extra = p.last_extra + damage;
+			Engine.board.sprite[p.i].extra = (short)(p.last_extra + damage);
 		}
 	}
 
@@ -78,7 +78,7 @@ public partial class GlobalMembers
 		n = (short)(128 - (Engine.krand() & 255));
 
 		p.horiz += 64;
-		p.return_to_center = 9;
+		p.return_to_center = (char)9;
 		p.look_ang = (short)(n >> 1);
 		p.rotscrnang = (short)(n >> 1);
 	}
@@ -106,7 +106,7 @@ public partial class GlobalMembers
 			x1 += xv;
 			y1 += yv;
 			z1 += zv;
-			updatesector(x1, y1, sect);
+			Engine.board.updatesector(x1, y1, ref sect);
 			if (sect >= 0)
 			{
 				if (Engine.board.sector[sect].lotag == 2)
@@ -140,9 +140,9 @@ public partial class GlobalMembers
             zoff = 0;
         }
 
-        Engine.board.Engine.board.hitscan(Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z - zoff, Engine.board.sprite[i].sectnum, Engine.table.Engine.table.sintable[(Engine.board.sprite[i].ang + 512) & 2047], Engine.table.Engine.table.sintable[Engine.board.sprite[i].ang & 2047], 0, ref sect, ref hw, ref hs, ref sx, ref sy, ref sz, (((256) << 16) + 64));
+        Engine.board.hitscan(Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z - zoff, Engine.board.sprite[i].sectnum, Engine.table.sintable[(Engine.board.sprite[i].ang + 512) & 2047], Engine.table.sintable[Engine.board.sprite[i].ang & 2047], 0, ref sect, ref hw, ref hs, ref sx, ref sy, ref sz, (((256) << 16) + 64));
 
-        return (Engine.Engine.FindDistance2D(sx - Engine.board.sprite[i].x, sy - Engine.board.sprite[i].y));
+        return (Engine.FindDistance2D(sx - Engine.board.sprite[i].x, sy - Engine.board.sprite[i].y));
     }
 
 
@@ -164,26 +164,26 @@ public partial class GlobalMembers
 
     public static int hitawall(player_struct p, ref short hitw)
 	{
-		int sx;
-		int sy;
-		int sz;
-		short sect;
-		short hs;
+		int sx = 0;
+		int sy = 0;
+		int sz = 0;
+		int sect = 0;
+		short hs = 0;
 
-		Engine.board.hitscan(p.posx, p.posy, p.posz, p.cursectnum, Engine.table.sintable[(p.ang + 512) & 2047], Engine.table.sintable[p.ang & 2047], 0, sect, hitw, hs, sx, sy, sz, (((1) << 16) + 1));
+		Engine.board.hitscan(p.posx, p.posy, p.posz, p.cursectnum, Engine.table.sintable[(p.ang + 512) & 2047], Engine.table.sintable[p.ang & 2047], 0, ref sect, ref hitw, ref hs, ref sx, ref sy, ref sz, (((1) << 16) + 1));
 
 		return (Engine.FindDistance2D(sx - p.posx, sy - p.posy));
 	}
 
 	public static short aim(spritetype s, short aang)
 	{
-		char gotshrinker;
-		char gotfreezer;
+		bool gotshrinker;
+		bool gotfreezer;
 		short i;
 		short j;
 		short a;
 		short k;
-		short cans;
+		bool cans;
 		short[] aimstats = { 10, 13, 1, 2 };
 		int dx1;
 		int dy1;
@@ -220,7 +220,7 @@ public partial class GlobalMembers
 			{
 				break;
 			}
-			for (i = headspritestat[aimstats[k]]; i >= 0; i = nextspritestat[i])
+			for (i = (short)Engine.board.headspritestat[aimstats[k]]; i >= 0; i = (short)Engine.board.nextspritestat[i])
 			{
 				if (Engine.board.sprite[i].xrepeat > 0 && Engine.board.sprite[i].extra >= 0 && (Engine.board.sprite[i].cstat & (257 + 32768)) == 257)
 				{
@@ -269,12 +269,15 @@ public partial class GlobalMembers
 						{
 							if ((dy2 * xv) >= (dx2 * yv))
 							{
-								sdist = mulscale(dx3, xv, 14) + mulscale(dy3, yv, 14);
+								sdist = pragmas.mulscale(dx3, xv, 14) + pragmas.mulscale(dy3, yv, 14);
 								if (sdist > 512 && sdist < smax)
 								{
 									if (s.picnum == DefineConstants.APLAYER)
 									{
-										a = (pragmas.klabs(scale(Engine.board.sprite[i].z - s.z, 10, sdist) - (ps[s.yvel].horiz + ps[s.yvel].horizoff - 100)) < 100);
+										if (pragmas.klabs(pragmas.scale(Engine.board.sprite[i].z - s.z, 10, sdist) - (ps[s.yvel].horiz + ps[s.yvel].horizoff - 100)) < 100)
+											a = 1;
+										else
+											a = 0;
 									}
 									else
 									{
@@ -283,14 +286,14 @@ public partial class GlobalMembers
 
 									if (Engine.board.sprite[i].picnum == DefineConstants.ORGANTIC || Engine.board.sprite[i].picnum == DefineConstants.ROTATEGUN)
 									{
-										cans = cansee(Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z, Engine.board.sprite[i].sectnum, s.x, s.y, s.z - (32 << 8), s.sectnum);
+										cans = Engine.board.cansee(Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z, Engine.board.sprite[i].sectnum, s.x, s.y, s.z - (32 << 8), s.sectnum);
 									}
 									else
 									{
-										cans = cansee(Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z - (32 << 8), Engine.board.sprite[i].sectnum, s.x, s.y, s.z - (32 << 8), s.sectnum);
+										cans = Engine.board.cansee(Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z - (32 << 8), Engine.board.sprite[i].sectnum, s.x, s.y, s.z - (32 << 8), s.sectnum);
 									}
 
-									if (a != 0 && cans != 0)
+									if (a != 0 && cans)
 									{
 										smax = sdist;
 										j = i;
@@ -312,7 +315,7 @@ public partial class GlobalMembers
 	public static void shoot(short i, short atwith)
 	{
 		short sect = 0;
-		short hitsect = 0;
+		int hitsect = 0;
 		short hitspr = 0;
 		short hitwall = 0;
 		short l = 0;
@@ -358,7 +361,7 @@ public partial class GlobalMembers
 			sa = s.ang;
 			sx = s.x;
 			sy = s.y;
-			sz = s.z - ((s.yrepeat * tilesizy[s.picnum]) << 1) + (4 << 8);
+			sz = s.z - ((s.yrepeat * Engine.tilesizy[s.picnum]) << 1) + (4 << 8);
 			if (s.picnum != DefineConstants.ROTATEGUN)
 			{
 				sz -= (7 << 8);
@@ -379,14 +382,14 @@ public partial class GlobalMembers
 
 				if (p >= 0)
 				{
-					sa += 64 - (Engine.krand() & 127);
+					sa += (short)(64 - (Engine.krand() & 127));
 				}
 				else
 				{
-					sa += 1024 + 64 - (Engine.krand() & 127);
+					sa += (short)(1024 + 64 - (Engine.krand() & 127));
 				}
-				zvel = 1024 - (Engine.krand() & 2047);
-			//C++ TO C# CONVERTER TODO TASK: C# does not allow fall-through from a non-empty 'case':
+				zvel = (short)(1024 - (Engine.krand() & 2047));
+				goto case DefineConstants.KNEE;
 			case DefineConstants.KNEE:
 				if (atwith == DefineConstants.KNEE)
 				{
@@ -440,13 +443,13 @@ public partial class GlobalMembers
 									{
 										k = spawn(i, atwith);
 										Engine.board.sprite[k].xvel = -12;
-										Engine.board.sprite[k].ang = (short)Engine.getangle(Engine.board.wall[hitwall].x - Engine.board.wall[Engine.board.wall[hitwall].point2].x, Engine.board.wall[hitwall].y - Engine.board.wall[Engine.board.wall[hitwall].point2].y) + 512;
+										Engine.board.sprite[k].ang = (short)(Engine.getangle(Engine.board.wall[hitwall].x - Engine.board.wall[Engine.board.wall[hitwall].point2].x, Engine.board.wall[hitwall].y - Engine.board.wall[Engine.board.wall[hitwall].point2].y) + 512);
 										Engine.board.sprite[k].x = hitx;
 										Engine.board.sprite[k].y = hity;
 										Engine.board.sprite[k].z = hitz;
 										Engine.board.sprite[k].cstat |= (short)(Engine.krand() & 4);
 										ssp(k, (uint)(((1) << 16) + 1));
-										setsprite(k, Engine.board.sprite[k].x, Engine.board.sprite[k].y, Engine.board.sprite[k].z);
+										Engine.board.setsprite(k, Engine.board.sprite[k].x, Engine.board.sprite[k].y, Engine.board.sprite[k].z);
 										if (Engine.board.sprite[i].picnum == DefineConstants.OOZFILTER || Engine.board.sprite[i].picnum == DefineConstants.NEWBEAST)
 										{
 											Engine.board.sprite[k].pal = 6;
@@ -469,7 +472,7 @@ public partial class GlobalMembers
 					if (hitwall >= 0 || hitspr >= 0)
 					{
 						j = EGS(hitsect, hitx, hity, hitz, DefineConstants.KNEE, -15, 0, 0, sa, 32, 0, i, 4);
-						Engine.board.sprite[j].extra += (Engine.krand() & 7);
+						Engine.board.sprite[j].extra += (short)(Engine.krand() & 7);
 						if (p >= 0)
 						{
 							k = spawn(j, DefineConstants.SMALLSMOKE);
@@ -479,7 +482,7 @@ public partial class GlobalMembers
 
 						if (p >= 0 && ps[p].steroids_amount > 0 && ps[p].steroids_amount < 400)
 						{
-							Engine.board.sprite[j].extra += (max_player_health >> 2);
+							Engine.board.sprite[j].extra += (short)(max_player_health >> 2);
 						}
 
 						if (hitspr >= 0 && Engine.board.sprite[hitspr].picnum != DefineConstants.ACCESSSWITCH && Engine.board.sprite[hitspr].picnum != DefineConstants.ACCESSSWITCH2)
@@ -487,7 +490,7 @@ public partial class GlobalMembers
 							checkhitsprite(hitspr, j);
 							if (p >= 0)
 							{
-								checkhitswitch(p, hitspr, 1);
+								checkhitswitch(p, hitspr, (char)1);
 							}
 						}
 
@@ -509,7 +512,7 @@ public partial class GlobalMembers
 								checkhitwall(j, hitwall, hitx, hity, hitz, atwith);
 								if (p >= 0)
 								{
-									checkhitswitch(p, hitwall, 0);
+									checkhitswitch(p, hitwall, (char)0);
 								}
 							}
 						}
@@ -543,7 +546,7 @@ public partial class GlobalMembers
 					j = aim(s, DefineConstants.AUTO_AIM_ANGLE);
 					if (j >= 0)
 					{
-						dal = ((Engine.board.sprite[j].xrepeat * tilesizy[Engine.board.sprite[j].picnum]) << 1) + (5 << 8);
+						dal = ((Engine.board.sprite[j].xrepeat * Engine.tilesizy[Engine.board.sprite[j].picnum]) << 1) + (5 << 8);
 						switch (Engine.board.sprite[j].picnum)
 						{
 							case DefineConstants.GREENSLIME:
@@ -559,26 +562,26 @@ public partial class GlobalMembers
 								break;
 						}
 						zvel = ((Engine.board.sprite[j].z - sz - dal) << 8) / ldist(Engine.board.sprite[ps[p].i], Engine.board.sprite[j]);
-						sa = Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy);
+						sa = (short)Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy);
 					}
 
 					if (atwith == DefineConstants.SHOTSPARK1)
 					{
 						if (j == -1)
 						{
-							sa += 16 - (Engine.krand() & 31);
+							sa += (short)(16 - (Engine.krand() & 31));
 							zvel = (100 - ps[p].horiz - ps[p].horizoff) << 5;
-							zvel += 128 - (Engine.krand() & 255);
+							zvel += (short)(128 - (Engine.krand() & 255));
 						}
 					}
 					else
 					{
-						sa += 16 - (Engine.krand() & 31);
+						sa += (short)(16 - (Engine.krand() & 31));
 						if (j == -1)
 						{
 							zvel = (100 - ps[p].horiz - ps[p].horizoff) << 5;
 						}
-						zvel += 128 - (Engine.krand() & 255);
+						zvel += (short)(128 - (Engine.krand() & 255));
 					}
 					sz -= (2 << 8);
 				}
@@ -589,18 +592,18 @@ public partial class GlobalMembers
 					zvel = ((ps[j].posz - sz) << 8) / (ldist(Engine.board.sprite[ps[j].i], s));
 					if (s.picnum != DefineConstants.BOSS1)
 					{
-						zvel += 128 - (Engine.krand() & 255);
-						sa += 32 - (Engine.krand() & 63);
+						zvel += (short)(128 - (Engine.krand() & 255));
+						sa += (short)(32 - (Engine.krand() & 63));
 					}
 					else
 					{
-						zvel += 128 - (Engine.krand() & 255);
-						sa = Engine.getangle(ps[j].posx - sx, ps[j].posy - sy) + 64 - (Engine.krand() & 127);
+						zvel += (short)(128 - (Engine.krand() & 255));
+						sa = (short)(Engine.getangle(ps[j].posx - sx, ps[j].posy - sy) + 64 - (Engine.krand() & 127));
 					}
 				}
 
 				s.cstat &= ~257;
-				Engine.board.hitscan(sx, sy, sz, sect, Engine.table.sintable[(sa + 512) & 2047], Engine.table.sintable[sa & 2047], zvel << 6, hitsect, hitwall, hitspr, hitx, hity, hitz, (((256) << 16) + 64));
+				Engine.board.hitscan(sx, sy, sz, sect, Engine.table.sintable[(sa + 512) & 2047], Engine.table.sintable[sa & 2047], zvel << 6, ref hitsect, ref hitwall, ref hitspr, ref hitx, ref hity, ref hitz, (((256) << 16) + 64));
 				s.cstat |= 257;
 
 				if (hitsect < 0)
@@ -616,8 +619,8 @@ public partial class GlobalMembers
 				if (p >= 0)
 				{
 					k = EGS(hitsect, hitx, hity, hitz, DefineConstants.SHOTSPARK1, -15, 10, 10, sa, 0, 0, i, 4);
-					Engine.board.sprite[k].extra = *actorscrptr[atwith];
-					Engine.board.sprite[k].extra += (Engine.krand() % 6);
+					Engine.board.sprite[k].extra = (short)scriptptr.buffer[actorscrptr[atwith]]; // jmarshall: con
+					Engine.board.sprite[k].extra += (short)((Engine.krand() % 6));
 
 					if (hitwall == -1 && hitspr == -1)
 					{
@@ -631,7 +634,7 @@ public partial class GlobalMembers
 							}
 							else
 							{
-								checkhitceiling(hitsect);
+								checkhitceiling((short)hitsect);
 							}
 						}
 						spawn(k, DefineConstants.SMALLSMOKE);
@@ -647,7 +650,7 @@ public partial class GlobalMembers
 							Engine.board.sprite[l].z += (4 << 8);
 							Engine.board.sprite[l].xvel = 16;
 							Engine.board.sprite[l].xrepeat = Engine.board.sprite[l].yrepeat = 24;
-							Engine.board.sprite[l].ang += 64 - (Engine.krand() & 127);
+							Engine.board.sprite[l].ang += (short)(64 - (Engine.krand() & 127));
 						}
 						else
 						{
@@ -656,7 +659,7 @@ public partial class GlobalMembers
 
 						if (p >= 0 && (Engine.board.sprite[hitspr].picnum == DefineConstants.DIPSWITCH || Engine.board.sprite[hitspr].picnum == DefineConstants.DIPSWITCH + 1 || Engine.board.sprite[hitspr].picnum == DefineConstants.DIPSWITCH2 || Engine.board.sprite[hitspr].picnum == DefineConstants.DIPSWITCH2 + 1 || Engine.board.sprite[hitspr].picnum == DefineConstants.DIPSWITCH3 || Engine.board.sprite[hitspr].picnum == DefineConstants.DIPSWITCH3 + 1 || Engine.board.sprite[hitspr].picnum == DefineConstants.HANDSWITCH || Engine.board.sprite[hitspr].picnum == DefineConstants.HANDSWITCH + 1))
 						{
-							checkhitswitch(p, hitspr, 1);
+							checkhitswitch(p, hitspr, (char)1);
 							return;
 						}
 					}
@@ -664,13 +667,13 @@ public partial class GlobalMembers
 					{
 						spawn(k, DefineConstants.SMALLSMOKE);
 
-						if (isadoorwall(Engine.board.wall[hitwall].picnum) == 1)
+						if (isadoorwall(Engine.board.wall[hitwall].picnum))
 						{
 							goto SKIPBULLETHOLE;
 						}
 						if (p >= 0 && (Engine.board.wall[hitwall].picnum == DefineConstants.DIPSWITCH || Engine.board.wall[hitwall].picnum == DefineConstants.DIPSWITCH + 1 || Engine.board.wall[hitwall].picnum == DefineConstants.DIPSWITCH2 || Engine.board.wall[hitwall].picnum == DefineConstants.DIPSWITCH2 + 1 || Engine.board.wall[hitwall].picnum == DefineConstants.DIPSWITCH3 || Engine.board.wall[hitwall].picnum == DefineConstants.DIPSWITCH3 + 1 || Engine.board.wall[hitwall].picnum == DefineConstants.HANDSWITCH || Engine.board.wall[hitwall].picnum == DefineConstants.HANDSWITCH + 1))
 						{
-							checkhitswitch(p, hitwall, 0);
+							checkhitswitch(p, hitwall, (char)0);
 							return;
 						}
 
@@ -700,7 +703,7 @@ public partial class GlobalMembers
 											}
 										}
 
-										l = headspritestat[5];
+										l = (short)Engine.board.headspritestat[5];
 										while (l >= 0)
 										{
 											if (Engine.board.sprite[l].picnum == DefineConstants.BULLETHOLE)
@@ -710,11 +713,11 @@ public partial class GlobalMembers
 													goto SKIPBULLETHOLE;
 												}
 											}
-											l = nextspritestat[l];
+											l = (short)Engine.board.nextspritestat[l];
 										}
 										l = spawn(k, DefineConstants.BULLETHOLE);
 										Engine.board.sprite[l].xvel = -1;
-										Engine.board.sprite[l].ang = Engine.getangle(Engine.board.wall[hitwall].x - Engine.board.wall[Engine.board.wall[hitwall].point2].x, Engine.board.wall[hitwall].y - Engine.board.wall[Engine.board.wall[hitwall].point2].y) + 512;
+										Engine.board.sprite[l].ang = (short)(Engine.getangle(Engine.board.wall[hitwall].x - Engine.board.wall[Engine.board.wall[hitwall].point2].x, Engine.board.wall[hitwall].y - Engine.board.wall[Engine.board.wall[hitwall].point2].y) + 512);
 										ssp(l, (uint)(((1) << 16) + 1));
 									}
 								}
@@ -740,7 +743,7 @@ public partial class GlobalMembers
 				else
 				{
 					k = EGS(hitsect, hitx, hity, hitz, DefineConstants.SHOTSPARK1, -15, 24, 24, sa, 0, 0, i, 4);
-					Engine.board.sprite[k].extra = *actorscrptr[atwith];
+					Engine.board.sprite[k].extra = (short)scriptptr.buffer[actorscrptr[atwith]]; // jmarshall: con
 
 					if (hitspr >= 0)
 					{
@@ -808,9 +811,9 @@ public partial class GlobalMembers
 
 					if (j >= 0)
 					{
-						dal = ((Engine.board.sprite[j].xrepeat * tilesizy[Engine.board.sprite[j].picnum]) << 1) - (12 << 8);
+						dal = ((Engine.board.sprite[j].xrepeat * Engine.tilesizy[Engine.board.sprite[j].picnum]) << 1) - (12 << 8);
 						zvel = ((Engine.board.sprite[j].z - sz - dal) * vel) / ldist(Engine.board.sprite[ps[p].i], Engine.board.sprite[j]);
-						sa = Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy);
+						sa = (short)(Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy));
 					}
 					else
 					{
@@ -821,7 +824,7 @@ public partial class GlobalMembers
 				{
 					j = findplayer(s, ref x);
 					//                sa = Engine.getangle(ps[j].oposx-sx,ps[j].oposy-sy);
-					sa += 16 - (Engine.krand() & 31);
+					sa += (short)(16 - (Engine.krand() & 31));
 					zvel = (((ps[j].oposz - sz + (3 << 8))) * vel) / ldist(Engine.board.sprite[ps[j].i], s);
 				}
 
@@ -830,7 +833,8 @@ public partial class GlobalMembers
 				if (atwith == DefineConstants.SPIT)
 				{
 					sizx = 18;
-					sizy = 18,sz -= (10 << 8);
+					sizy = 18;
+					sz -= (10 << 8);
 				}
 				else
 				{
@@ -857,13 +861,14 @@ public partial class GlobalMembers
 
 				if (p >= 0)
 				{
-					sizx = 7,sizy = 7;
+					sizx = 7;
+					sizy = 7;
 				}
 
 				while (scount > 0)
 				{
 					j = EGS(sect, sx, sy, sz, atwith, -127, (sbyte)sizx, (sbyte)sizy, sa, (short)vel, zvel, i, 4);
-					Engine.board.sprite[j].extra += (Engine.krand() & 7);
+					Engine.board.sprite[j].extra += (short)((Engine.krand() & 7));
 
 					if (atwith == DefineConstants.COOLEXPLOSION1)
 					{
@@ -874,7 +879,7 @@ public partial class GlobalMembers
 							Engine.board.sprite[j].xvel = 1024;
 							ssp(j, (uint)(((1) << 16) + 1));
 							Engine.board.sprite[j].xvel = l;
-							Engine.board.sprite[j].ang += 128 - (Engine.krand() & 255);
+							Engine.board.sprite[j].ang += (short)(128 - (Engine.krand() & 255));
 						}
 					}
 
@@ -882,7 +887,7 @@ public partial class GlobalMembers
 					Engine.board.sprite[j].clipdist = 4;
 
 					sa = (short)(s.ang + 32 - (Engine.krand() & 63));
-					zvel = oldzvel + 512 - (Engine.krand() & 1023);
+					zvel = (short)(oldzvel + 512 - (Engine.krand() & 1023));
 
 					scount--;
 				}
@@ -891,7 +896,7 @@ public partial class GlobalMembers
 
 			case DefineConstants.FREEZEBLAST:
 				sz += (3 << 8);
-			//C++ TO C# CONVERTER TODO TASK: C# does not allow fall-through from a non-empty 'case':
+				goto case DefineConstants.RPG;
 			case DefineConstants.RPG:
 
 				if (s.extra >= 0)
@@ -909,11 +914,11 @@ public partial class GlobalMembers
 					j = aim(s, 48);
 					if (j >= 0)
 					{
-						dal = ((Engine.board.sprite[j].xrepeat * tilesizy[Engine.board.sprite[j].picnum]) << 1) + (8 << 8);
+						dal = ((Engine.board.sprite[j].xrepeat * Engine.tilesizy[Engine.board.sprite[j].picnum]) << 1) + (8 << 8);
 						zvel = ((Engine.board.sprite[j].z - sz - dal) * vel) / ldist(Engine.board.sprite[ps[p].i], Engine.board.sprite[j]);
 						if (Engine.board.sprite[j].picnum != DefineConstants.RECON)
 						{
-							sa = Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy);
+							sa = (short)(Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy));
 						}
 					}
 					else
@@ -929,7 +934,7 @@ public partial class GlobalMembers
 				else
 				{
 					j = findplayer(s, ref x);
-					sa = Engine.getangle(ps[j].oposx - sx, ps[j].oposy - sy);
+					sa = (short)(Engine.getangle(ps[j].oposx - sx, ps[j].oposy - sy));
 					if (Engine.board.sprite[i].picnum == DefineConstants.BOSS3)
 					{
 						sz -= (32 << 8);
@@ -960,14 +965,14 @@ public partial class GlobalMembers
 
 				j = EGS(sect, sx + (Engine.table.sintable[(348 + sa + 512) & 2047] / 448), sy + (Engine.table.sintable[(sa + 348) & 2047] / 448), sz - (1 << 8), atwith, 0, 14, 14, sa, (short)vel, zvel, i, 4);
 
-				Engine.board.sprite[j].extra += (Engine.krand() & 7);
+				Engine.board.sprite[j].extra += (short)((Engine.krand() & 7));
 				if (atwith != DefineConstants.FREEZEBLAST)
 				{
 					Engine.board.sprite[j].yvel = l;
 				}
 				else
 				{
-					Engine.board.sprite[j].yvel = numfreezebounces;
+					Engine.board.sprite[j].yvel = (short)(numfreezebounces);
 					Engine.board.sprite[j].xrepeat >>= 1;
 					Engine.board.sprite[j].yrepeat >>= 1;
 					Engine.board.sprite[j].zvel -= (2 << 4);
@@ -996,7 +1001,7 @@ public partial class GlobalMembers
 					{
 						Engine.board.sprite[j].x -= Engine.table.sintable[sa & 2047] / 56;
 						Engine.board.sprite[j].y -= Engine.table.sintable[(sa + 1024 + 512) & 2047] / 56;
-						Engine.board.sprite[j].ang -= 8 + (Engine.krand() & 255) - 128;
+						Engine.board.sprite[j].ang -= (short)(8 + (Engine.krand() & 255) - 128);
 						Engine.board.sprite[j].xrepeat = 24;
 						Engine.board.sprite[j].yrepeat = 24;
 					}
@@ -1010,10 +1015,10 @@ public partial class GlobalMembers
 				else if (ps[p].curr_weapon == DefineConstants.DEVISTATOR_WEAPON)
 				{
 					Engine.board.sprite[j].extra >>= 2;
-					Engine.board.sprite[j].ang += 16 - (Engine.krand() & 31);
-					Engine.board.sprite[j].zvel += 256 - (Engine.krand() & 511);
+					Engine.board.sprite[j].ang += (short)(16 - (Engine.krand() & 31));
+					Engine.board.sprite[j].zvel += (short)(256 - (Engine.krand() & 511));
 
-					if (ps[p].hbomb_hold_delay)
+					if (ps[p].hbomb_hold_delay != 0)
 					{
 						Engine.board.sprite[j].x -= Engine.table.sintable[sa & 2047] / 644;
 						Engine.board.sprite[j].y -= Engine.table.sintable[(sa + 1024 + 512) & 2047] / 644;
@@ -1050,7 +1055,7 @@ public partial class GlobalMembers
 					zvel = 0;
 				}
 
-				Engine.board.hitscan(sx, sy, sz - ps[p].pyoff, sect, Engine.table.sintable[(sa + 512) & 2047], Engine.table.sintable[sa & 2047], zvel << 6, hitsect, hitwall, hitspr, hitx, hity, hitz, (((256) << 16) + 64));
+				Engine.board.hitscan(sx, sy, sz - ps[p].pyoff, sect, Engine.table.sintable[(sa + 512) & 2047], Engine.table.sintable[sa & 2047], zvel << 6, ref hitsect, ref hitwall, ref hitspr, ref hitx, ref hity, ref hitz, (((256) << 16) + 64));
 
 				j = 0;
 				if (hitspr >= 0)
@@ -1085,7 +1090,7 @@ public partial class GlobalMembers
 					Engine.board.sprite[k].xvel = -20;
 					ssp(k, (uint)(((1) << 16) + 1));
 					Engine.board.sprite[k].cstat = 16;
-					hittype[k].temp_data[5] = Engine.board.sprite[k].ang = Engine.getangle(Engine.board.wall[hitwall].x - Engine.board.wall[Engine.board.wall[hitwall].point2].x, Engine.board.wall[hitwall].y - Engine.board.wall[Engine.board.wall[hitwall].point2].y) - 512;
+					hittype[k].temp_data[5] = Engine.board.sprite[k].ang = (short)(Engine.getangle(Engine.board.wall[hitwall].x - Engine.board.wall[Engine.board.wall[hitwall].point2].x, Engine.board.wall[hitwall].y - Engine.board.wall[Engine.board.wall[hitwall].point2].y) - 512);
 
 					if (p >= 0)
 					{
@@ -1124,7 +1129,7 @@ public partial class GlobalMembers
 					j = aim(s, DefineConstants.AUTO_AIM_ANGLE);
 					if (j >= 0)
 					{
-						dal = ((Engine.board.sprite[j].xrepeat * tilesizy[Engine.board.sprite[j].picnum]) << 1) + (5 << 8);
+						dal = ((Engine.board.sprite[j].xrepeat * Engine.tilesizy[Engine.board.sprite[j].picnum]) << 1) + (5 << 8);
 						switch (Engine.board.sprite[j].picnum)
 						{
 							case DefineConstants.GREENSLIME:
@@ -1140,13 +1145,13 @@ public partial class GlobalMembers
 								break;
 						}
 						zvel = ((Engine.board.sprite[j].z - sz - dal) << 8) / (ldist(Engine.board.sprite[ps[p].i], Engine.board.sprite[j]));
-						sa = Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy);
+						sa = (short)(Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy));
 					}
 					else
 					{
-						sa += 16 - (Engine.krand() & 31);
+						sa += (short)(16 - (Engine.krand() & 31));
 						zvel = (100 - ps[p].horiz - ps[p].horizoff) << 5;
-						zvel += 128 - (Engine.krand() & 255);
+						zvel += (short)(128 - (Engine.krand() & 255));
 					}
 
 					sz -= (2 << 8);
@@ -1156,8 +1161,8 @@ public partial class GlobalMembers
 					j = findplayer(s, ref x);
 					sz -= (4 << 8);
 					zvel = ((ps[j].posz - sz) << 8) / (ldist(Engine.board.sprite[ps[j].i], s));
-					zvel += 128 - (Engine.krand() & 255);
-					sa += 32 - (Engine.krand() & 63);
+					zvel += (short)(128 - (Engine.krand() & 255));
+					sa += (short)(32 - (Engine.krand() & 63));
 				}
 
 				k = 0;
@@ -1165,7 +1170,7 @@ public partial class GlobalMembers
 				//            RESHOOTGROW:
 
 				s.cstat &= ~257;
-				Engine.board.hitscan(sx, sy, sz, sect, Engine.table.sintable[(sa + 512) & 2047], Engine.table.sintable[sa & 2047], zvel << 6, hitsect, hitwall, hitspr, hitx, hity, hitz, (((256) << 16) + 64));
+				Engine.board.hitscan(sx, sy, sz, sect, Engine.table.sintable[(sa + 512) & 2047], Engine.table.sintable[sa & 2047], zvel << 6, ref hitsect, ref hitwall, ref hitspr, ref hitx, ref hity, ref hitz, (((256) << 16) + 64));
 
 				s.cstat |= 257;
 
@@ -1179,7 +1184,7 @@ public partial class GlobalMembers
 				{
 					if (zvel < 0 && (Engine.board.sector[hitsect].ceilingstat & 1) == 0)
 					{
-						checkhitceiling(hitsect);
+						checkhitceiling((short)hitsect);
 					}
 				}
 				else if (hitspr >= 0)
@@ -1220,9 +1225,9 @@ public partial class GlobalMembers
 					j = aim(s, DefineConstants.AUTO_AIM_ANGLE);
 					if (j >= 0)
 					{
-						dal = ((Engine.board.sprite[j].xrepeat * tilesizy[Engine.board.sprite[j].picnum]) << 1);
+						dal = ((Engine.board.sprite[j].xrepeat * Engine.tilesizy[Engine.board.sprite[j].picnum]) << 1);
 						zvel = ((Engine.board.sprite[j].z - sz - dal - (4 << 8)) * 768) / (ldist(Engine.board.sprite[ps[p].i], Engine.board.sprite[j]));
-						sa = Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy);
+						sa = (short)(Engine.getangle(Engine.board.sprite[j].x - sx, Engine.board.sprite[j].y - sy));
 					}
 					else
 					{
@@ -1273,7 +1278,7 @@ public partial class GlobalMembers
 			z = 4096 + ((ps[snum].loogcnt + i) << 9);
 			x = (-sync[snum].avel) + (Engine.table.sintable[((ps[snum].loogcnt + i) << 6) & 2047] >> 10);
 
-			rotatesprite((ps[snum].loogiex[i] + x) << 16, (200 + ps[snum].loogiey[i] - y) << 16, z - (i << 8), 256 - a, DefineConstants.LOOGIE, 0, 0, 2, 0, 0, xdim - 1, ydim - 1);
+			Engine.rotatesprite((ps[snum].loogiex[i] + x) << 16, (200 + ps[snum].loogiey[i] - y) << 16, z - (i << 8), (short)(256 - a), DefineConstants.LOOGIE, 0, 0, 2, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 	}
 
@@ -1292,10 +1297,10 @@ public partial class GlobalMembers
 		}
 		if (fisti <= 0)
 		{
-			return 0;
+			return (char)0;
 		}
 
-		looking_arc = pragmas.klabs(ps[snum].look_ang) / 9;
+		looking_arc = (short)(pragmas.klabs(ps[snum].look_ang) / 9);
 
 		fistzoom = 65536 - (Engine.table.sintable[(512 + (fisti << 6)) & 2047] << 2);
 		if (fistzoom > 90612)
@@ -1317,9 +1322,9 @@ public partial class GlobalMembers
 			fistpal = Engine.board.sector[ps[snum].cursectnum].floorpal;
 		}
 
-		rotatesprite((-fisti + 222 + (sync[snum].avel >> 4)) << 16, (looking_arc + fistz) << 16, fistzoom, 0, DefineConstants.FIST, gs, fistpal, 2, 0, 0, xdim - 1, ydim - 1);
+		Engine.rotatesprite((-fisti + 222 + (sync[snum].avel >> 4)) << 16, (looking_arc + fistz) << 16, fistzoom, 0, DefineConstants.FIST, (sbyte)gs, (byte)fistpal, 2, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 
-		return 1;
+		return (char)1;
 	}
 
 	public static char animateknee(short gs, short snum)
@@ -1330,12 +1335,12 @@ public partial class GlobalMembers
 
 		if (ps[snum].knee_incs > 11 || ps[snum].knee_incs == 0 || Engine.board.sprite[ps[snum].i].extra <= 0)
 		{
-			return 0;
+			return (char)0;
 		}
 
-		looking_arc = knee_y[ps[snum].knee_incs] + pragmas.klabs(ps[snum].look_ang) / 9;
+		looking_arc = (short)(knee_y[ps[snum].knee_incs] + pragmas.klabs(ps[snum].look_ang) / 9);
 
-		looking_arc -= (ps[snum].hard_landing << 3);
+		looking_arc -= (short)((ps[snum].hard_landing << 3));
 
 		if (Engine.board.sprite[ps[snum].i].pal == 1)
 		{
@@ -1346,16 +1351,16 @@ public partial class GlobalMembers
 			pal = Engine.board.sector[ps[snum].cursectnum].floorpal;
 			if (pal == 0)
 			{
-				pal = ps[snum].palookup;
+				pal = (short)(ps[snum].palookup);
 			}
 		}
 
 		myospal(105 + (sync[snum].avel >> 4) - (ps[snum].look_ang >> 1) + (knee_y[ps[snum].knee_incs] >> 2), looking_arc + 280 - ((ps[snum].horiz - ps[snum].horizoff) >> 4), DefineConstants.KNEE, (sbyte)gs, 4, pal);
 
-		return 1;
+		return (char)1;
 	}
 
-	public static char animateknuckles(short gs, short snum)
+	public static int animateknuckles(short gs, short snum)
 	{
 		short[] knuckle_frames = { 0, 1, 2, 2, 3, 3, 3, 2, 2, 1, 0 };
 		short looking_arc;
@@ -1366,9 +1371,9 @@ public partial class GlobalMembers
 			return 0;
 		}
 
-		looking_arc = pragmas.klabs(ps[snum].look_ang) / 9;
+		looking_arc = (short)(pragmas.klabs(ps[snum].look_ang) / 9);
 
-		looking_arc -= (ps[snum].hard_landing << 3);
+		looking_arc -= (short)((ps[snum].hard_landing << 3));
 
 		if (Engine.board.sprite[ps[snum].i].pal == 1)
 		{
@@ -1402,22 +1407,22 @@ public partial class GlobalMembers
 			p = Engine.board.sector[ps[snum].cursectnum].floorpal;
 		}
 
-		if (ps[snum].scuba_on)
+		if (ps[snum].scuba_on != 0)
 		{
 			if (ud.screen_size > 4)
 			{
-				rotatesprite(43 << 16, (200 - 8 - (tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 0, DefineConstants.SCUBAMASK, 0, p, 2 + 16, windowx1, windowy1, windowx2, windowy2);
-				rotatesprite((320 - 43) << 16, (200 - 8 - (tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 1024, DefineConstants.SCUBAMASK, 0, p, 2 + 4 + 16, windowx1, windowy1, windowx2, windowy2);
+				Engine.rotatesprite(43 << 16, (200 - 8 - (Engine.tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 0, DefineConstants.SCUBAMASK, 0, (byte)p, 2 + 16, Engine._device.windowx1, Engine._device.windowy1, Engine._device.windowx2, Engine._device.windowy2);
+				Engine.rotatesprite((320 - 43) << 16, (200 - 8 - (Engine.tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 1024, DefineConstants.SCUBAMASK, 0, (byte)p, 2 + 4 + 16, Engine._device.windowx1, Engine._device.windowy1, Engine._device.windowx2, Engine._device.windowy2);
 			}
 			else
 			{
-				rotatesprite(43 << 16, (200 - (tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 0, DefineConstants.SCUBAMASK, 0, p, 2 + 16, windowx1, windowy1, windowx2, windowy2);
-				rotatesprite((320 - 43) << 16, (200 - (tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 1024, DefineConstants.SCUBAMASK, 0, p, 2 + 4 + 16, windowx1, windowy1, windowx2, windowy2);
+				Engine.rotatesprite(43 << 16, (200 - (Engine.tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 0, DefineConstants.SCUBAMASK, 0, (byte)p, 2 + 16, Engine._device.windowx1, Engine._device.windowy1, Engine._device.windowx2, Engine._device.windowy2);
+				Engine.rotatesprite((320 - 43) << 16, (200 - (Engine.tilesizy[DefineConstants.SCUBAMASK]) << 16), 65536, 1024, DefineConstants.SCUBAMASK, 0, (byte)p, 2 + 4 + 16, Engine._device.windowx1, Engine._device.windowy1, Engine._device.windowx2, Engine._device.windowy2);
 			}
 		}
 	}
 
-	public static char animatetip(short gs, short snum)
+	public static int animatetip(short gs, short snum)
 	{
 		short p;
 		short looking_arc;
@@ -1428,8 +1433,8 @@ public partial class GlobalMembers
 			return 0;
 		}
 
-		looking_arc = pragmas.klabs(ps[snum].look_ang) / 9;
-		looking_arc -= (ps[snum].hard_landing << 3);
+		looking_arc = (short)(pragmas.klabs(ps[snum].look_ang) / 9);
+		looking_arc -= (short)((ps[snum].hard_landing << 3));
 
 		if (Engine.board.sprite[ps[snum].i].pal == 1)
 		{
@@ -1450,23 +1455,23 @@ public partial class GlobalMembers
 		return 1;
 	}
 
-	public static char animateaccess(short gs, short snum)
+	public static int animateaccess(short gs, short snum)
 	{
 		short[] access_y = { 0, -8, -16, -32, -64, -84, -108, -108, -108, -108, -108, -108, -108, -108, -108, -108, -96, -72, -64, -32, -16 };
 		short looking_arc;
-		char p;
+		int p;
 
 		if (ps[snum].access_incs == 0 || Engine.board.sprite[ps[snum].i].extra <= 0)
 		{
 			return 0;
 		}
 
-		looking_arc = access_y[ps[snum].access_incs] + pragmas.klabs(ps[snum].look_ang) / 9;
-		looking_arc -= (ps[snum].hard_landing << 3);
+		looking_arc = (short)(access_y[ps[snum].access_incs] + pragmas.klabs(ps[snum].look_ang) / 9);
+		looking_arc -= (short)((ps[snum].hard_landing << 3));
 
 		if (ps[snum].access_spritenum >= 0)
 		{
-			p = Engine.board.sprite[ps[snum].access_spritenum].pal;
+			p = (Engine.board.sprite[ps[snum].access_spritenum].pal);
 		}
 		else
 		{
@@ -1501,17 +1506,15 @@ public partial class GlobalMembers
 		int y1;
 		int x2;
 		char o;
-		char pal;
+		int pal;
 		sbyte gs;
 		player_struct p;
-		//C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-		//ORIGINAL LINE: short *kb;
 		short kb;
 
 		p = ps[snum];
 		kb = p.kickback_pic;
 
-		o = 0;
+		o = (char)0;
 
 		looking_arc = pragmas.klabs(p.look_ang) / 9;
 
@@ -1521,7 +1524,7 @@ public partial class GlobalMembers
 			gs = 24;
 		}
 
-		if (p.newowner >= 0 || ud.camerasprite >= 0 || p.over_shoulder_on > 0 || (Engine.board.sprite[p.i].pal != 1 && Engine.board.sprite[p.i].extra <= 0) || animatefist(gs, snum) || animateknuckles(gs, snum) || animatetip(gs, snum) || animateaccess(gs, snum))
+		if (p.newowner >= 0 || ud.camerasprite >= 0 || p.over_shoulder_on > 0 || (Engine.board.sprite[p.i].pal != 1 && Engine.board.sprite[p.i].extra <= 0) || animatefist(gs, snum) != 0 || animateknuckles(gs, snum) != 0 || animatetip(gs, snum) != 0 || animateaccess(gs, snum) != 0)
 		{
 			return;
 		}
@@ -1586,14 +1589,14 @@ public partial class GlobalMembers
 			{
 				i = Engine.board.sprite[p.i].xvel;
 				looking_arc += 32 - (i >> 1);
-				fistsign += i >> 1;
+				fistsign += (short)(i >> 1);
 			}
 			cw = weapon_xoffset;
 			weapon_xoffset += Engine.table.sintable[(fistsign) & 2047] >> 10;
 			myos(weapon_xoffset + 250 - (p.look_ang >> 1), looking_arc + 258 - (pragmas.klabs(Engine.table.sintable[(fistsign) & 2047] >> 8)), DefineConstants.FIST, gs, o);
 			weapon_xoffset = cw;
 			weapon_xoffset -= Engine.table.sintable[(fistsign) & 2047] >> 10;
-			myos(weapon_xoffset + 40 - (p.look_ang >> 1), looking_arc + 200 + (pragmas.klabs(Engine.table.sintable[(fistsign) & 2047] >> 8)), DefineConstants.FIST, gs, o | 4);
+			myos(weapon_xoffset + 40 - (p.look_ang >> 1), looking_arc + 200 + (pragmas.klabs(Engine.table.sintable[(fistsign) & 2047] >> 8)), DefineConstants.FIST, gs, (char)(o | 4));
 		}
 		else
 		{
@@ -1666,7 +1669,7 @@ public partial class GlobalMembers
 					weapon_xoffset -= Engine.table.sintable[(768 + (kb << 7)) & 2047] >> 11;
 					gun_pos += Engine.table.sintable[(768 + (kb << 7) & 2047)] >> 11;
 
-					if (kb > null)
+					if (kb > 0)
 					{
 						if (kb < 8)
 						{
@@ -1695,7 +1698,7 @@ public partial class GlobalMembers
 						case 1:
 						case 2:
 							myospal(weapon_xoffset + 168 - (p.look_ang >> 1), looking_arc + 201 - gun_pos, DefineConstants.SHOTGUN + 2, -128, o, pal);
-						//C++ TO C# CONVERTER TODO TASK: C# does not allow fall-through from a non-empty 'case':
+							goto case 0;
 						case 0:
 						case 6:
 						case 7:
@@ -1763,14 +1766,14 @@ public partial class GlobalMembers
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
 
-					if (kb > null)
+					if (kb > 0)
 					{
 						gun_pos -= Engine.table.sintable[kb << 7] >> 12;
 					}
 
-					if (kb > null && Engine.board.sprite[p.i].pal != 1)
+					if (kb > 0 && Engine.board.sprite[p.i].pal != 1)
 					{
-						weapon_xoffset += 1 - (rand() & 3);
+						weapon_xoffset += (short)(1 - (Engine.krand() & 3));
 					}
 
 					myospal(weapon_xoffset + 168 - (p.look_ang >> 1), looking_arc + 260 - gun_pos, DefineConstants.CHAINGUN, gs, o, pal);
@@ -1785,18 +1788,18 @@ public partial class GlobalMembers
 								i = 0;
 								if (Engine.board.sprite[p.i].pal != 1)
 								{
-									i = rand() & 7;
+									i = (short)(Engine.krand() & 7);
 								}
 								myospal(i + weapon_xoffset - 4 + 140 - (p.look_ang >> 1), i + looking_arc - (kb >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((kb - 4) / 5), gs, o, pal);
 								if (Engine.board.sprite[p.i].pal != 1)
 								{
-									i = rand() & 7;
+									i = (short)(Engine.krand() & 7);
 								}
 								myospal(i + weapon_xoffset - 4 + 184 - (p.look_ang >> 1), i + looking_arc - (kb >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((kb - 4) / 5), gs, o, pal);
 							}
 							if (kb < 8)
 							{
-								i = rand() & 7;
+								i = (short)(Engine.krand() & 7);
 								myospal(i + weapon_xoffset - 4 + 162 - (p.look_ang >> 1), i + looking_arc - (kb >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((kb - 2) / 5), gs, o, pal);
 								myospal(weapon_xoffset + 178 - (p.look_ang >> 1), looking_arc + 233 - gun_pos, DefineConstants.CHAINGUN + 1 + (kb >> 1), gs, o, pal);
 							}
@@ -1876,7 +1879,7 @@ public partial class GlobalMembers
 
 						if (kb != 0)
 						{
-							char[] throw_frames = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+							int[] throw_frames = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
 							if (kb < 7)
 							{
@@ -1936,9 +1939,9 @@ public partial class GlobalMembers
 
 					if (kb != 0)
 					{
-						char[] cycloidy = { 0, 4, 12, 24, 12, 4, 0 };
+						int[] cycloidy = { 0, 4, 12, 24, 12, 4, 0 };
 
-						i = sgn(kb >> 2);
+						i = pragmas.sgn(kb >> 2);
 
 						if (p.hbomb_hold_delay != 0)
 						{
@@ -1970,12 +1973,12 @@ public partial class GlobalMembers
 
 					if (kb != 0)
 					{
-						char[] cat_frames = { 0, 0, 1, 1, 2, 2 };
+						int[] cat_frames = { 0, 0, 1, 1, 2, 2 };
 
 						if (Engine.board.sprite[p.i].pal != 1)
 						{
-							weapon_xoffset += rand() & 3;
-							looking_arc += rand() & 3;
+							weapon_xoffset += (short)(Engine.krand() & 3);
+							looking_arc += (short)(Engine.krand() & 3);
 						}
 						gun_pos -= 16;
 						myospal(weapon_xoffset + 210 - (p.look_ang >> 1), looking_arc + 261 - gun_pos, DefineConstants.FREEZE + 2, -32, o, pal);
@@ -2019,8 +2022,8 @@ public partial class GlobalMembers
 					{
 						if (Engine.board.sprite[p.i].pal != 1)
 						{
-							weapon_xoffset += rand() & 3;
-							gun_pos += (rand() & 3);
+							weapon_xoffset += (short)(Engine.krand() & 3);
+							gun_pos += (short)(Engine.krand() & 3);
 						}
 
 						if (cw == DefineConstants.GROW_WEAPON)
@@ -2058,7 +2061,8 @@ public partial class GlobalMembers
 
 	public static void getinput(short snum)
 	{
-
+// jmarshall - input
+/*
 		short j;
 		short daang;
 		// MED
@@ -2375,6 +2379,8 @@ public partial class GlobalMembers
 		loc.svel = momy;
 		loc.avel = angvel;
 		loc.horz = horiz;
+*/
+// jmarshall end
 	}
 
 
@@ -2424,7 +2430,7 @@ public partial class GlobalMembers
 			p.crack_time--;
 			if (p.crack_time == 0)
 			{
-				p.knuckle_incs = 1;
+				p.knuckle_incs = (char)1;
 				p.crack_time = 777;
 			}
 		}
@@ -2445,12 +2451,12 @@ public partial class GlobalMembers
 			}
 		}
 
-		if (p.heat_on && p.heat_amount > 0)
+		if (p.heat_on != 0 && p.heat_amount > 0)
 		{
 			p.heat_amount--;
 			if (p.heat_amount == 0)
 			{
-				p.heat_on = 0;
+				p.heat_on = (char)0;
 				checkavailinven(p);
 				spritesound(DefineConstants.NITEVISION_ONOFF, p.i);
 				setpal(p);
@@ -2468,12 +2474,12 @@ public partial class GlobalMembers
 			}
 		}
 
-		if (p.jetpack_on && p.jetpack_amount > 0)
+		if (p.jetpack_on != 0 && p.jetpack_amount > 0)
 		{
 			p.jetpack_amount--;
 			if (p.jetpack_amount <= 0)
 			{
-				p.jetpack_on = 0;
+				p.jetpack_on = (char)0;
 				checkavailinven(p);
 				spritesound(DefineConstants.DUKE_JETPACK_OFF, p.i);
 				stopsound(DefineConstants.DUKE_JETPACK_IDLE);
@@ -2501,36 +2507,36 @@ public partial class GlobalMembers
 			{
 				if (p.access_spritenum >= 0)
 				{
-					checkhitswitch((short)snum, p.access_spritenum, 1);
+					checkhitswitch((short)snum, p.access_spritenum, (char)1);
 					switch (Engine.board.sprite[p.access_spritenum].pal)
 					{
 						case 0:
-							p.got_access &= (0xffff - 0x1);
+							p.got_access &= unchecked((short)((0xffff - 0x1)));
 							break;
 						case 21:
-							p.got_access &= (0xffff - 0x2);
+							p.got_access &= unchecked((short)((0xffff - 0x2)));
 							break;
 						case 23:
-							p.got_access &= (0xffff - 0x4);
+							p.got_access &= unchecked((short)((0xffff - 0x4)));//(0xffff - 0x4);
 							break;
 					}
 					p.access_spritenum = -1;
 				}
 				else
 				{
-					checkhitswitch((short)snum, p.access_wallnum, 0);
+					checkhitswitch((short)snum, p.access_wallnum, (char)0);
 					switch (Engine.board.wall[p.access_wallnum].pal)
 					{
-						case 0:
-							p.got_access &= (0xffff - 0x1);
-							break;
-						case 21:
-							p.got_access &= (0xffff - 0x2);
-							break;
-						case 23:
-							p.got_access &= (0xffff - 0x4);
-							break;
-					}
+                        case 0:
+                            p.got_access &= unchecked((short)((0xffff - 0x1)));
+                            break;
+                        case 21:
+                            p.got_access &= unchecked((short)((0xffff - 0x2)));
+                            break;
+                        case 23:
+                            p.got_access &= unchecked((short)((0xffff - 0x4)));//(0xffff - 0x4);
+                            break;
+                    }
 				}
 			}
 
@@ -2546,8 +2552,8 @@ public partial class GlobalMembers
 		{
 			if (p.scuba_amount > 0)
 			{
-				p.scuba_on = 1;
-				p.inven_icon = 6;
+				p.scuba_on = (char)1;
+				p.inven_icon = (char)6;
 				FTA(76, p);
 			}
 			else
@@ -2566,17 +2572,17 @@ public partial class GlobalMembers
 				}
 			}
 		}
-		else if (p.scuba_amount > 0 && p.scuba_on)
+		else if (p.scuba_amount > 0 && p.scuba_on != 0)
 		{
 			p.scuba_amount--;
 			if (p.scuba_amount == 0)
 			{
-				p.scuba_on = 0;
+				p.scuba_on = (char)0;
 				checkavailinven(p);
 			}
 		}
 
-		if (p.knuckle_incs)
+		if (p.knuckle_incs != 0)
 		{
 			p.knuckle_incs++;
 			if (p.knuckle_incs == 10)
@@ -2585,7 +2591,7 @@ public partial class GlobalMembers
 				{
 					if (snum == screenpeek || ud.coop == 1)
 					{
-						if ((rand() & 1) != 0)
+						if ((Engine.krand() & 1) != 0)
 						{
 							spritesound(DefineConstants.DUKE_CRACK, p.i);
 						}
@@ -2597,14 +2603,14 @@ public partial class GlobalMembers
 				}
 				spritesound(DefineConstants.DUKE_CRACK_FIRST, p.i);
 			}
-			else if (p.knuckle_incs == 22 || (sync[snum].bits & (1 << 2)))
+			else if (p.knuckle_incs == 22 || (sync[snum].bits & (1 << 2)) != 0)
 			{
-				p.knuckle_incs = 0;
+				p.knuckle_incs = (char)0;
 			}
 
-			return 1;
+			return (char)1;
 		}
-		return 0;
+		return (char)0;
 	}
 
 	public static short[] weapon_sprites = { DefineConstants.KNEE, DefineConstants.FIRSTGUNSPRITE, DefineConstants.SHOTGUNSPRITE, DefineConstants.CHAINGUNSPRITE, DefineConstants.RPGSPRITE, DefineConstants.HEAVYHBOMB, DefineConstants.SHRINKERSPRITE, DefineConstants.DEVISTATORSPRITE, DefineConstants.TRIPBOMBSPRITE, DefineConstants.FREEZESPRITE, DefineConstants.HEAVYHBOMB, DefineConstants.SHRINKERSPRITE };
@@ -2646,15 +2652,15 @@ public partial class GlobalMembers
 		int i;
 		int k;
 		int doubvel;
-		int fz;
-		int cz;
-		int hz;
-		int lz;
+		int fz = 0;
+		int cz = 0;
+		int hz = 0;
+		int lz = 0;
 		int truefdist;
 		int x;
 		int y;
-		char shrunk;
-		uint sb_snum;
+		bool shrunk;
+		int sb_snum;
 		short psect;
 		short psectlotag;
 		//C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
@@ -2673,7 +2679,7 @@ public partial class GlobalMembers
 
 		if (p.cheat_phase <= 0)
 		{
-			sb_snum = sync[snum].bits;
+			sb_snum = (int)sync[snum].bits;
 		}
 		else
 		{
@@ -2692,15 +2698,15 @@ public partial class GlobalMembers
 		}
 
 		psectlotag = Engine.board.sector[psect].lotag;
-		p.spritebridge = 0;
+		p.spritebridge = (char)0;
 
 		shrunk = (s.yrepeat < 32);
-		getzrange(p.posx, p.posy, p.posz, psect, cz, hz, fz, lz, 163, (((1) << 16) + 1));
+		Engine.board.getzrange(p.posx, p.posy, p.posz, psect, ref cz, ref hz, ref fz,ref  lz, 163, (((1) << 16) + 1));
 
-		j = getflorzofslope(psect, p.posx, p.posy);
+		j = Engine.board.getflorzofslope(psect, p.posx, p.posy);
 
 		p.truefz = j;
-		p.truecz = getceilzofslope(psect, p.posx, p.posy);
+		p.truecz = Engine.board.getceilzofslope(psect, p.posx, p.posy);
 
 		truefdist = pragmas.klabs(p.posz - j);
 		if ((lz & 49152) == 16384 && psectlotag == 1 && truefdist > (38 << 8) + (16 << 8))
@@ -2714,32 +2720,32 @@ public partial class GlobalMembers
 		p.ohoriz = p.horiz;
 		p.ohorizoff = p.horizoff;
 
-		if (p.aim_mode == 0 && p.on_ground && psectlotag != 2 && (Engine.board.sector[psect].floorstat & 2) != 0)
+		if (p.aim_mode == 0 && p.on_ground != 0 && psectlotag != 2 && (Engine.board.sector[psect].floorstat & 2) != 0)
 		{
 			x = p.posx + (Engine.table.sintable[(p.ang + 512) & 2047] >> 5);
 			y = p.posy + (Engine.table.sintable[p.ang & 2047] >> 5);
 			tempsect = psect;
-			updatesector(x, y, tempsect);
+			Engine.board.updatesector(x, y, ref tempsect);
 			if (tempsect >= 0)
 			{
-				k = getflorzofslope(psect, x, y);
+				k = Engine.board.getflorzofslope(psect, x, y);
 				if (psect == tempsect)
 				{
-					p.horizoff += mulscale16(j - k, 160);
+					p.horizoff += (short)pragmas.mulscale16(j - k, 160);
 				}
-				else if (pragmas.klabs(getflorzofslope(tempsect, x, y) - k) <= (4 << 8))
+				else if (pragmas.klabs(Engine.board.getflorzofslope(tempsect, x, y) - k) <= (4 << 8))
 				{
-					p.horizoff += mulscale16(j - k, 160);
+					p.horizoff += (short)pragmas.mulscale16(j - k, 160);
 				}
 			}
 		}
 		if (p.horizoff > 0)
 		{
-			p.horizoff -= ((p.horizoff >> 3) + 1);
+			p.horizoff -= (short)((p.horizoff >> 3) + 1);
 		}
 		else if (p.horizoff < 0)
 		{
-			p.horizoff += (((-p.horizoff) >> 3) + 1);
+			p.horizoff += (short)(((-p.horizoff) >> 3) + 1);
 		}
 
 		if (hz >= 0 && (hz & 49152) == 49152)
@@ -2760,10 +2766,10 @@ public partial class GlobalMembers
 			if ((Engine.board.sprite[j].cstat & 33) == 33)
 			{
 				psectlotag = 0;
-				p.footprintcount = 0;
-				p.spritebridge = 1;
+				p.footprintcount = (char)0;
+				p.spritebridge = (char)1;
 			}
-			else if (badguy(Engine.board.sprite[j]) && Engine.board.sprite[j].xrepeat > 24 && pragmas.klabs(s.z - Engine.board.sprite[j].z) < (84 << 8))
+			else if (badguy(Engine.board.sprite[j]) != 0 && Engine.board.sprite[j].xrepeat > 24 && pragmas.klabs(s.z - Engine.board.sprite[j].z) < (84 << 8))
 			{
 				j = Engine.getangle(Engine.board.sprite[j].x - p.posx, Engine.board.sprite[j].y - p.posy);
 				p.posxv -= Engine.table.sintable[(j + 512) & 2047] << 4;
@@ -2803,16 +2809,16 @@ public partial class GlobalMembers
 					closedemowrite();
 				}
 				sound(DefineConstants.PIPEBOMB_EXPLODE);
-				p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 64);
-				p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 64);
-				p.pals = StringFunctions.ChangeCharacter(p.pals, 2, 64);
+				p.pals[0] = 64;
+				p.pals[1] = 64;
+				p.pals[2] = 64;
 				p.pals_time = 48;
 			}
 			if (p.fist_incs > 42)
 			{
-				if (p.buttonpalette && ud.from_bonus == 0)
+				if (p.buttonpalette != 0 && ud.from_bonus == 0)
 				{
-					ud.from_bonus = ud.level_number + 1;
+					ud.from_bonus = (short)(ud.level_number + 1);
 					if (ud.secretlevel > 0 && ud.secretlevel < 12)
 					{
 						ud.level_number = ud.secretlevel - 1;
@@ -2821,7 +2827,7 @@ public partial class GlobalMembers
 				}
 				else
 				{
-					if (ud.from_bonus)
+					if (ud.from_bonus != 0)
 					{
 						ud.level_number = ud.from_bonus;
 						ud.m_level_number = ud.level_number;
@@ -2875,7 +2881,7 @@ public partial class GlobalMembers
 				{
 					ps[i].gm = DefineConstants.MODE_EOL;
 				}
-				if (ud.from_bonus)
+				if (ud.from_bonus != 0)
 				{
 					ud.level_number = ud.from_bonus;
 					ud.m_level_number = ud.level_number;
@@ -2920,8 +2926,8 @@ public partial class GlobalMembers
 			p.fta--;
 			if (p.fta == 0)
 			{
-				pub = DefineConstants.NUMPAGES;
-				pus = DefineConstants.NUMPAGES;
+				pub = (char)DefineConstants.NUMPAGES;
+				pus = (char)DefineConstants.NUMPAGES;
 				p.ftq = 0;
 			}
 		}
@@ -2932,9 +2938,11 @@ public partial class GlobalMembers
 			{
 				if (s.pal != 1)
 				{
-					p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 63);
-					p.pals = p.pals.Substring(0, 1);
-					p.pals = p.pals.Substring(0, 2);
+// jmarshall - palette
+					//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 63);
+					//p.pals = p.pals.Substring(0, 1);
+					//p.pals = p.pals.Substring(0, 2);
+// jmarshall end
 					p.pals_time = 63;
 					p.posz -= (16 << 8);
 					s.z -= (16 << 8);
@@ -2950,7 +2958,7 @@ public partial class GlobalMembers
 					p.dead_flag = (short)((512 - ((Engine.krand() & 1) << 10) + (Engine.krand() & 255) - 512) & 2047);
 				}
 
-				p.jetpack_on = 0;
+				p.jetpack_on = (char)0;
 				p.holoduke_on = -1;
 
 				stopsound(DefineConstants.DUKE_JETPACK_IDLE);
@@ -2971,18 +2979,18 @@ public partial class GlobalMembers
 					if (p.frag_ps != snum)
 					{
 						ps[p.frag_ps].frag++;
-						frags[p.frag_ps][snum]++;
+						frags[p.frag_ps,snum]++;
 
 						if (ud.user_name[p.frag_ps][0] != 0)
 						{
 							if (snum == screenpeek)
 							{
-								sprintf(fta_quotes[115][0], "KILLED BY %s", ud.user_name[p.frag_ps][0]);
+								fta_quotes[115] = "KILLED BY " + ud.user_name[p.frag_ps];
 								FTA(115, p);
 							}
 							else
 							{
-								sprintf(fta_quotes[116][0], "KILLED %s", ud.user_name[snum][0]);
+								fta_quotes[116] = "KILLED " + ud.user_name[snum];
 								FTA(116, ps[p.frag_ps]);
 							}
 						}
@@ -2990,12 +2998,12 @@ public partial class GlobalMembers
 						{
 							if (snum == screenpeek)
 							{
-								sprintf(fta_quotes[115][0], "KILLED BY PLAYER %ld", 1 + p.frag_ps);
+								fta_quotes[115] = "KILLED BY PLAYER %ld" + (1 + p.frag_ps);
 								FTA(115, p);
 							}
 							else
 							{
-								sprintf(fta_quotes[116][0], "KILLED PLAYER %ld", 1 + snum);
+								fta_quotes[116] = "KILLED PLAYER " + (1 + snum);
 								FTA(116, ps[p.frag_ps]);
 							}
 						}
@@ -3007,13 +3015,15 @@ public partial class GlobalMembers
 
 					if (myconnectindex == connecthead)
 					{
-						sprintf(tempbuf, "frag %d killed %d\n", p.frag_ps + 1, snum + 1);
-						sendscore(ref tempbuf);
+// jmarshall - send score
+						//sprintf(tempbuf, "frag %d killed %d\n", p.frag_ps + 1, snum + 1);
+						//sendscore(ref tempbuf);
+// jmarshall end
 						//                    printf(tempbuf);
 					}
 
 					p.frag_ps = snum;
-					pus = DefineConstants.NUMPAGES;
+					pus = (char)DefineConstants.NUMPAGES;
 				}
 			}
 
@@ -3032,7 +3042,7 @@ public partial class GlobalMembers
 					s.zvel = -348;
 				}
 
-				clipmove(p.posx, p.posy, p.posz, p.cursectnum, 0, 0, 164, (4 << 8), (4 << 8), (((1) << 16) + 1));
+				Engine.board.clipmove(ref p.posx, ref p.posy, ref p.posz, ref p.cursectnum, 0, 0, 164, (4 << 8), (4 << 8), (((1) << 16) + 1));
 				//            p->bobcounter += 32;
 			}
 
@@ -3045,16 +3055,16 @@ public partial class GlobalMembers
 			p.horiz = 100;
 			p.horizoff = 0;
 
-			updatesector(p.posx, p.posy, p.cursectnum);
+			Engine.board.updatesector(p.posx, p.posy, ref p.cursectnum);
 
-			pushmove(p.posx, p.posy, p.posz, p.cursectnum, 128, (4 << 8), (20 << 8), (((1) << 16) + 1));
+			Engine.board.pushmove(ref p.posx, ref p.posy, ref p.posz, ref p.cursectnum, 128, (4 << 8), (20 << 8), (((1) << 16) + 1));
 
 			if (fz > cz + (16 << 8) && s.pal != 1)
 			{
 				p.rotscrnang = (short)((p.dead_flag + ((fz + p.posz) >> 7)) & 2047);
 			}
 
-			p.on_warping_sector = 0;
+			p.on_warping_sector = (char)0;
 
 			return;
 		}
@@ -3062,7 +3072,7 @@ public partial class GlobalMembers
 		if (p.transporter_hold > 0)
 		{
 			p.transporter_hold--;
-			if (p.transporter_hold == 0 && p.on_warping_sector)
+			if (p.transporter_hold == 0 && p.on_warping_sector != 0)
 			{
 				p.transporter_hold = 2;
 			}
@@ -3097,14 +3107,14 @@ public partial class GlobalMembers
 
 		if (p.rotscrnang > 0)
 		{
-			p.rotscrnang -= ((p.rotscrnang >> 1) + 1);
+			p.rotscrnang -= (short)(((p.rotscrnang >> 1) + 1));
 		}
 		else if (p.rotscrnang < 0)
 		{
-			p.rotscrnang += (((-p.rotscrnang) >> 1) + 1);
+			p.rotscrnang += (short)((((-p.rotscrnang) >> 1) + 1));
 		}
 
-		p.look_ang -= (p.look_ang >> 2);
+		p.look_ang -= (short)((p.look_ang >> 2));
 
 		if ((sb_snum & (1 << 6)) != 0)
 		{
@@ -3123,7 +3133,7 @@ public partial class GlobalMembers
 			goto HORIZONLY;
 		}
 
-		j = ksgn(sync[snum].avel);
+		j = pragmas.ksgn(sync[snum].avel);
 		/*
 		if( j && ud.screen_tilting == 2)
 		{
@@ -3154,8 +3164,8 @@ public partial class GlobalMembers
 			p.weapon_sway = p.bobcounter;
 		}
 
-		s.xvel = ksqrt((p.posx - p.bobposx) * (p.posx - p.bobposx) + (p.posy - p.bobposy) * (p.posy - p.bobposy));
-		if (p.on_ground)
+		s.xvel = (short)pragmas.ksqrt((p.posx - p.bobposx) * (p.posx - p.bobposx) + (p.posy - p.bobposy) * (p.posy - p.bobposy));
+		if (p.on_ground != 0)
 		{
 			p.bobcounter += Engine.board.sprite[p.i].xvel >> 1;
 		}
@@ -3213,7 +3223,7 @@ public partial class GlobalMembers
 					p.poszv = -(256 * 6);
 				}
 			}
-			else if (sb_snum & (1 << 1))
+			else if ((sb_snum & (1 << 1)) != 0)
 			{
 				if (p.poszv < 0)
 				{
@@ -3263,7 +3273,7 @@ public partial class GlobalMembers
 				p.poszv = 0;
 			}
 
-			if (p.scuba_on && (Engine.krand() & 255) < 8)
+			if (p.scuba_on != 0 && (Engine.krand() & 255) < 8)
 			{
 				j = spawn(pi, DefineConstants.WATERBUBBLE);
 				Engine.board.sprite[j].x += Engine.table.sintable[(p.ang + 512 + 64 - (global_random & 128)) & 2047] >> 6;
@@ -3274,12 +3284,12 @@ public partial class GlobalMembers
 			}
 		}
 
-		else if (p.jetpack_on)
+		else if (p.jetpack_on != 0)
 		{
-			p.on_ground = 0;
+			p.on_ground = (char)0;
 			p.jumping_counter = 0;
-			p.hard_landing = 0;
-			p.falling_counter = 0;
+			p.hard_landing = (char)0;
+			p.falling_counter = (char)0;
 
 			p.pycount += 32;
 			p.pycount &= 2047;
@@ -3316,7 +3326,7 @@ public partial class GlobalMembers
 				p.crack_time = 777;
 			}
 
-			if (shrunk == 0 && (psectlotag == 0 || psectlotag == 2))
+			if (shrunk == false && (psectlotag == 0 || psectlotag == 2))
 			{
 				k = 32;
 			}
@@ -3327,7 +3337,7 @@ public partial class GlobalMembers
 
 			if (psectlotag != 2 && p.scuba_on == 1)
 			{
-				p.scuba_on = 0;
+				p.scuba_on = (char)0;
 			}
 
 			if (p.posz > (fz - (k << 8)))
@@ -3349,12 +3359,12 @@ public partial class GlobalMembers
 
 			if (p.scuba_on == 1)
 			{
-				p.scuba_on = 0;
+				p.scuba_on = (char)0;
 			}
 
 			if (psectlotag == 1 && p.spritebridge == 0)
 			{
-				if (shrunk == 0)
+				if (shrunk == false)
 				{
 					i = 34;
 					p.pycount += 32;
@@ -3366,7 +3376,7 @@ public partial class GlobalMembers
 					i = 12;
 				}
 
-				if (shrunk == 0 && truefdist <= (38 << 8))
+				if (shrunk == false && truefdist <= (38 << 8))
 				{
 					if (p.on_ground == 1)
 					{
@@ -3375,14 +3385,14 @@ public partial class GlobalMembers
 							p.dummyplayersprite = spawn(pi, DefineConstants.PLAYERONWATER);
 						}
 
-						p.footprintcount = 6;
+						p.footprintcount = (char)6;
 						if (Engine.board.sector[p.cursectnum].floorpicnum == DefineConstants.FLOORSLIME)
 						{
-							p.footprintpal = 8;
+							p.footprintpal = (char)8;
 						}
 						else
 						{
-							p.footprintpal = 0;
+							p.footprintpal = (char)0;
 						}
 						p.footprintshade = 0;
 					}
@@ -3390,7 +3400,7 @@ public partial class GlobalMembers
 			}
 			else
 			{
-				if (p.footprintcount > 0 && p.on_ground)
+				if (p.footprintcount > 0 && p.on_ground != 0)
 				{
 					if ((Engine.board.sector[p.cursectnum].floorstat & 2) != 2)
 					{
@@ -3427,8 +3437,8 @@ public partial class GlobalMembers
 										j = spawn(pi, DefineConstants.FOOTPRINTS4);
 										break;
 								}
-								Engine.board.sprite[j].pal = p.footprintpal;
-								Engine.board.sprite[j].shade = p.footprintshade;
+								Engine.board.sprite[j].pal = (byte)p.footprintpal;
+								Engine.board.sprite[j].shade = (sbyte)p.footprintshade;
 							}
 						}
 					}
@@ -3437,13 +3447,13 @@ public partial class GlobalMembers
 
 			if (p.posz < (fz - (i << 8))) //falling
 			{
-				if ((sb_snum & 3) == 0 && p.on_ground && (Engine.board.sector[psect].floorstat & 2) != 0 && p.posz >= (fz - (i << 8) - (16 << 8)))
+				if ((sb_snum & 3) == 0 && p.on_ground != 0 && (Engine.board.sector[psect].floorstat & 2) != 0 && p.posz >= (fz - (i << 8) - (16 << 8)))
 				{
 					p.posz = fz - (i << 8);
 				}
 				else
 				{
-					p.on_ground = 0;
+					p.on_ground = (char)0;
 					p.poszv += (gc + 80); // (TICSPERFRAME<<6);
 					if (p.poszv >= (4096 + 2048))
 					{
@@ -3470,13 +3480,15 @@ public partial class GlobalMembers
 							else if (p.falling_counter > 9)
 							{
 								j = p.falling_counter;
-								s.extra -= j - (Engine.krand() & 3);
+								s.extra -= (short)(j - (Engine.krand() & 3));
 								if (s.extra <= 0)
 								{
 									spritesound(DefineConstants.SQUISHED, pi);
-									p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 63);
-									p.pals = p.pals.Substring(0, 1);
-									p.pals = p.pals.Substring(0, 2);
+// jmarshall - palette
+									//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 63);
+									//p.pals = p.pals.Substring(0, 1);
+									//p.pals = p.pals.Substring(0, 2);
+// jmarshall end
 									p.pals_time = 63;
 								}
 								else
@@ -3485,9 +3497,11 @@ public partial class GlobalMembers
 									spritesound(DefineConstants.DUKE_LAND_HURT, pi);
 								}
 
-								p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 16);
-								p.pals = p.pals.Substring(0, 1);
-								p.pals = p.pals.Substring(0, 2);
+// jmarshall - palette
+								//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 16);
+								//p.pals = p.pals.Substring(0, 1);
+								//p.pals = p.pals.Substring(0, 2);
+// jmarshall end
 								p.pals_time = 32;
 							}
 							else if (p.poszv > 2048)
@@ -3501,7 +3515,7 @@ public partial class GlobalMembers
 
 			else
 			{
-				p.falling_counter = 0;
+				p.falling_counter = (char)0;
 				if (p.scream_voice > (int)FX_ERRORS.FX_Ok)
 				{
 					FX_StopSound(p.scream_voice);
@@ -3510,10 +3524,10 @@ public partial class GlobalMembers
 
 				if (psectlotag != 1 && psectlotag != 2 && p.on_ground == 0 && p.poszv > (6144 >> 1))
 				{
-					p.hard_landing = p.poszv >> 10;
+					p.hard_landing = (char)(p.poszv >> 10);
 				}
 
-				p.on_ground = 1;
+				p.on_ground = (char)1;
 
 				if (i == 40)
 				{
@@ -3541,7 +3555,7 @@ public partial class GlobalMembers
 					}
 				}
 
-				p.on_warping_sector = 0;
+				p.on_warping_sector = (char)0;
 
 				if ((sb_snum & 2) != 0)
 				{
@@ -3551,24 +3565,24 @@ public partial class GlobalMembers
 
 				if ((sb_snum & 1) == 0 && p.jumping_toggle == 1)
 				{
-					p.jumping_toggle = 0;
+					p.jumping_toggle = (char)0;
 				}
 
-				else if ((sb_snum & 1) && p.jumping_toggle == 0)
+				else if ((sb_snum & 1) != 0&& p.jumping_toggle == 0)
 				{
 					if (p.jumping_counter == 0)
 					{
 						if ((fz - cz) > (56 << 8))
 						{
 							p.jumping_counter = 1;
-							p.jumping_toggle = 1;
+							p.jumping_toggle = (char)1;
 						}
 					}
 				}
 
 				if (p.jumping_counter != 0 && (sb_snum & 1) == 0)
 				{
-					p.jumping_toggle = 0;
+					p.jumping_toggle = (char)0;
 				}
 			}
 
@@ -3576,7 +3590,7 @@ public partial class GlobalMembers
 			{
 				if ((sb_snum & 1) == 0 && p.jumping_toggle == 1)
 				{
-					p.jumping_toggle = 0;
+					p.jumping_toggle = (char)0;
 				}
 
 				if (p.jumping_counter < (1024 + 256))
@@ -3590,7 +3604,7 @@ public partial class GlobalMembers
 					{
 						p.poszv -= (Engine.table.sintable[(2048 - 128 + p.jumping_counter) & 2047]) / 12;
 						p.jumping_counter += 180;
-						p.on_ground = 0;
+						p.on_ground = (char)0;
 					}
 				}
 				else
@@ -3616,13 +3630,13 @@ public partial class GlobalMembers
 
 		//Do the quick lefts and rights
 
-		if (p.fist_incs != 0 || p.transporter_hold > 2 || p.hard_landing || p.access_incs > 0 || p.knee_incs > 0 || (p.curr_weapon == DefineConstants.TRIPBOMB_WEAPON && kb > 1 && kb < 4))
+		if (p.fist_incs != 0 || p.transporter_hold > 2 || p.hard_landing != 0 || p.access_incs > 0 || p.knee_incs > 0 || (p.curr_weapon == DefineConstants.TRIPBOMB_WEAPON && kb > 1 && kb < 4))
 		{
 			doubvel = 0;
 			p.posxv = 0;
 			p.posyv = 0;
 		}
-		else if (sync[snum].avel) //p->ang += syncangvel * constant
+		else if (sync[snum].avel != 0) //p->ang += syncangvel * constant
 		{ //ENGINE calculates angvel for you
 			int tempang;
 
@@ -3630,11 +3644,11 @@ public partial class GlobalMembers
 
 			if (psectlotag == 2)
 			{
-				p.angvel = (tempang - (tempang >> 3)) * sgn(doubvel);
+				p.angvel = (short)((tempang - (tempang >> 3)) * pragmas.sgn(doubvel));
 			}
 			else
 			{
-				p.angvel = tempang * sgn(doubvel);
+				p.angvel = (short)(tempang * pragmas.sgn(doubvel));
 			}
 
 			p.ang += p.angvel;
@@ -3651,7 +3665,7 @@ public partial class GlobalMembers
 				if (p.boot_amount > 0)
 				{
 					p.boot_amount--;
-					p.inven_icon = 7;
+					p.inven_icon = (char)7;
 					if (p.boot_amount <= 0)
 					{
 						checkavailinven(p);
@@ -3663,9 +3677,11 @@ public partial class GlobalMembers
 					{
 						spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
 					}
-					p.pals = null;
-					p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 8);
-					p.pals = p.pals.Substring(0, 2);
+// jmarshall - palette
+					//p.pals = null;
+					//p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 8);
+					//p.pals = p.pals.Substring(0, 2);
+// jmarshall end
 					p.pals_time = 32;
 					s.extra--;
 				}
@@ -3673,7 +3689,7 @@ public partial class GlobalMembers
 
 			k = 0;
 
-			if (p.on_ground && truefdist <= (38 << 8) + (16 << 8))
+			if (p.on_ground != 0 && truefdist <= (38 << 8) + (16 << 8))
 			{
 				switch (j)
 				{
@@ -3690,11 +3706,13 @@ public partial class GlobalMembers
 								{
 									spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
 								}
-								p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 64);
-								p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 64);
-								p.pals = StringFunctions.ChangeCharacter(p.pals, 2, 64);
+// jmarshall - palette
+								//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 64);
+								//p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 64);
+								//p.pals = StringFunctions.ChangeCharacter(p.pals, 2, 64);
+// jmarsshall end
 								p.pals_time = 32;
-								s.extra -= 1 + (Engine.krand() & 3);
+								s.extra -= (short)(1 + (Engine.krand() & 3));
 								if (Sound[DefineConstants.SHORT_CIRCUIT].num < 1)
 								{
 									spritesound(DefineConstants.SHORT_CIRCUIT, pi);
@@ -3715,11 +3733,13 @@ public partial class GlobalMembers
 								{
 									spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
 								}
-								p.pals = null;
-								p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 8);
-								p.pals = p.pals.Substring(0, 2);
+// jmarshall -palette
+								//p.pals = null;
+								//p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 8);
+								//p.pals = p.pals.Substring(0, 2);
+// jmarshall end
 								p.pals_time = 32;
-								s.extra -= 1 + (Engine.krand() & 3);
+								s.extra -= (short)(1 + (Engine.krand() & 3));
 							}
 						}
 						break;
@@ -3736,11 +3756,13 @@ public partial class GlobalMembers
 								{
 									spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
 								}
-								p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 8);
-								p.pals = p.pals.Substring(0, 1);
-								p.pals = p.pals.Substring(0, 2);
+// jmarshall - palette
+								//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 8);
+								//p.pals = p.pals.Substring(0, 1);
+								//p.pals = p.pals.Substring(0, 2);
+// jmarshall end
 								p.pals_time = 32;
-								s.extra -= 1 + (Engine.krand() & 3);
+								s.extra -= (short)(1 + (Engine.krand() & 3));
 							}
 						}
 						break;
@@ -3758,7 +3780,7 @@ public partial class GlobalMembers
 			}
 		}
 
-		if (p.posxv != 0 || p.posyv != 0 || sync[snum].fvel || sync[snum].svel)
+		if (p.posxv != 0 || p.posyv != 0 || sync[snum].fvel != 0|| sync[snum].svel != 0)
 		{
 			p.crack_time = 777;
 
@@ -3768,7 +3790,7 @@ public partial class GlobalMembers
 			{
 				if (k == 1 || k == 3)
 				{
-					if (p.spritebridge == 0 && p.walking_snd_toggle == 0 && p.on_ground)
+					if (p.spritebridge == 0 && p.walking_snd_toggle == 0 && p.on_ground != 0)
 					{
 						switch (psectlotag)
 						{
@@ -3788,7 +3810,7 @@ public partial class GlobalMembers
 									case DefineConstants.PANNEL1:
 									case DefineConstants.PANNEL2:
 										spritesound(DefineConstants.DUKE_WALKINDUCTS, pi);
-										p.walking_snd_toggle = 1;
+										p.walking_snd_toggle = (char)1;
 										break;
 								}
 								break;
@@ -3797,7 +3819,7 @@ public partial class GlobalMembers
 								{
 									spritesound(DefineConstants.DUKE_ONWATER, pi);
 								}
-								p.walking_snd_toggle = 1;
+								p.walking_snd_toggle = (char)1;
 								break;
 						}
 					}
@@ -3816,34 +3838,34 @@ public partial class GlobalMembers
 			p.posxv += ((sync[snum].fvel * doubvel) << 6);
 			p.posyv += ((sync[snum].svel * doubvel) << 6);
 
-			if ((p.curr_weapon == DefineConstants.KNEE_WEAPON && kb > 10 && p.on_ground) || (p.on_ground && (sb_snum & 2)))
+			if ((p.curr_weapon == DefineConstants.KNEE_WEAPON && kb > 10 && p.on_ground != 0) || (p.on_ground != 0 && (sb_snum & 2) != 0))
 			{
-				p.posxv = mulscale(p.posxv, dukefriction - 0x2000, 16);
-				p.posyv = mulscale(p.posyv, dukefriction - 0x2000, 16);
+				p.posxv = pragmas.mulscale(p.posxv, dukefriction - 0x2000, 16);
+				p.posyv = pragmas.mulscale(p.posyv, dukefriction - 0x2000, 16);
 			}
 			else
 			{
 				if (psectlotag == 2)
 				{
-					p.posxv = mulscale(p.posxv, dukefriction - 0x1400, 16);
-					p.posyv = mulscale(p.posyv, dukefriction - 0x1400, 16);
+					p.posxv = pragmas.mulscale(p.posxv, dukefriction - 0x1400, 16);
+					p.posyv = pragmas.mulscale(p.posyv, dukefriction - 0x1400, 16);
 				}
 				else
 				{
-					p.posxv = mulscale(p.posxv, dukefriction, 16);
-					p.posyv = mulscale(p.posyv, dukefriction, 16);
+					p.posxv = pragmas.mulscale(p.posxv, dukefriction, 16);
+					p.posyv = pragmas.mulscale(p.posyv, dukefriction, 16);
 				}
 			}
 
-			if (Math.Abs(p.posxv) < 2048 && Math.Abs(p.posyv) < 2048)
+			if (Mathf.Abs(p.posxv) < 2048 && Mathf.Abs(p.posyv) < 2048)
 			{
 				p.posxv = p.posyv = 0;
 			}
 
 			if (shrunk)
 			{
-				p.posxv = mulscale16(p.posxv, dukefriction - (dukefriction >> 1) + (dukefriction >> 2));
-				p.posyv = mulscale16(p.posyv, dukefriction - (dukefriction >> 1) + (dukefriction >> 2));
+				p.posxv = pragmas.mulscale16(p.posxv, dukefriction - (dukefriction >> 1) + (dukefriction >> 2));
+				p.posyv = pragmas.mulscale16(p.posyv, dukefriction - (dukefriction >> 1) + (dukefriction >> 2));
 			}
 		}
 
@@ -3867,17 +3889,17 @@ public partial class GlobalMembers
 			k = 1;
 		}
 
-		if (ud.clipping)
+		if (ud.clipping != 0)
 		{
 			j = 0;
 			p.posx += p.posxv >> 14;
 			p.posy += p.posyv >> 14;
-			updatesector(p.posx, p.posy, p.cursectnum);
-			changespritesect(pi, p.cursectnum);
+			Engine.board.updatesector(p.posx, p.posy, ref p.cursectnum);
+			Engine.board.changespritesect(pi, p.cursectnum);
 		}
 		else
 		{
-			j = clipmove(p.posx, p.posy, p.posz, p.cursectnum, p.posxv, p.posyv, 164, (4 << 8), i, (((1) << 16) + 1));
+			j = Engine.board.clipmove(ref p.posx, ref p.posy, ref p.posz, ref p.cursectnum, p.posxv, p.posyv, 164, (4 << 8), i, (((1) << 16) + 1));
 		}
 
 		if (p.jetpack_on == 0 && psectlotag != 2 && psectlotag != 1 && shrunk)
@@ -3894,7 +3916,7 @@ public partial class GlobalMembers
 		{
 			if (s.xvel > 16)
 			{
-				if (psectlotag != 1 && psectlotag != 2 && p.on_ground)
+				if (psectlotag != 1 && psectlotag != 2 && p.on_ground != 0)
 				{
 					p.pycount += 52;
 					p.pycount &= 2047;
@@ -3908,14 +3930,14 @@ public partial class GlobalMembers
 		}
 
 		// RBG***
-		setsprite(pi, p.posx, p.posy, p.posz + (38 << 8));
+		Engine.board.setsprite(pi, p.posx, p.posy, p.posz + (38 << 8));
 
 		if (psectlotag < 3)
 		{
 			psect = s.sectnum;
 			if (ud.clipping == 0 && Engine.board.sector[psect].lotag == 31)
 			{
-				if (Engine.board.sprite[Engine.board.sector[psect].hitag].xvel && hittype[Engine.board.sector[psect].hitag].temp_data[0] == 0)
+				if (Engine.board.sprite[Engine.board.sector[psect].hitag].xvel != 0 && hittype[Engine.board.sector[psect].hitag].temp_data[0] == 0)
 				{
 					quickkill(p);
 					return;
@@ -3923,7 +3945,7 @@ public partial class GlobalMembers
 			}
 		}
 
-		if (truefdist < (38 << 8) && p.on_ground && psectlotag != 1 && shrunk == 0 && Engine.board.sector[p.cursectnum].lotag == 1)
+		if ((truefdist < (38 << 8)) && p.on_ground != 0 && psectlotag != 1 && shrunk == false && Engine.board.sector[p.cursectnum].lotag == 1)
 		{
 			if (Sound[DefineConstants.DUKE_ONWATER].num == 0)
 			{
@@ -3933,12 +3955,15 @@ public partial class GlobalMembers
 
 		if (p.cursectnum != s.sectnum)
 		{
-			changespritesect(pi, p.cursectnum);
+			Engine.board.changespritesect(pi, p.cursectnum);
 		}
 
 		if (ud.clipping == 0)
 		{
-			j = (pushmove(p.posx, p.posy, p.posz, p.cursectnum, 164, (4 << 8), (4 << 8), (((1) << 16) + 1)) < 0 && furthestangle(pi, 8) < 512);
+			if ((Engine.board.pushmove(ref p.posx, ref p.posy, ref p.posz, ref p.cursectnum, 164, (4 << 8), (4 << 8), (((1) << 16) + 1)) < 0 && furthestangle(pi, 8) < 512))
+				j = 1;
+			else
+				j = 0;
 		}
 		else
 		{
@@ -3965,14 +3990,14 @@ public partial class GlobalMembers
 			}
 		}
 
-		if ((sb_snum & (1 << 18)) != 0 || p.hard_landing)
+		if ((sb_snum & (1 << 18)) != 0 || p.hard_landing != 0)
 		{
-			p.return_to_center = 9;
+			p.return_to_center = (char)9;
 		}
 
 		if ((sb_snum & (1 << 13)) != 0)
 		{
-			p.return_to_center = 9;
+			p.return_to_center = (char)9;
 			if ((sb_snum & (1 << 5)) != 0)
 			{
 				p.horiz += 12;
@@ -3980,9 +4005,9 @@ public partial class GlobalMembers
 			p.horiz += 12;
 		}
 
-		else if (sb_snum & (1 << 14))
+		else if ((sb_snum & (1 << 14)) != 0)
 		{
-			p.return_to_center = 9;
+			p.return_to_center = (char)9;
 			if ((sb_snum & (1 << 5)) != 0)
 			{
 				p.horiz -= 12;
@@ -3990,7 +4015,7 @@ public partial class GlobalMembers
 			p.horiz -= 12;
 		}
 
-		else if (sb_snum & (1 << 3))
+		else if ((sb_snum & (1 << 3)) != 0)
 		{
 			if ((sb_snum & (1 << 5)) != 0)
 			{
@@ -3999,7 +4024,7 @@ public partial class GlobalMembers
 			p.horiz += 6;
 		}
 
-		else if (sb_snum & (1 << 4))
+		else if ((sb_snum & (1 << 4)) != 0)
 		{
 			if ((sb_snum & (1 << 5)) != 0)
 			{
@@ -4071,7 +4096,7 @@ public partial class GlobalMembers
 		{
 			p.knee_incs++;
 			p.horiz -= 48;
-			p.return_to_center = 9;
+			p.return_to_center = (char)9;
 			if (p.knee_incs > 15)
 			{
 				p.knee_incs = 0;
@@ -4100,7 +4125,7 @@ public partial class GlobalMembers
 						case DefineConstants.PODFEM1:
 						case DefineConstants.NAKED1:
 						case DefineConstants.STATUE:
-							if (Engine.board.sprite[p.actorsqu].yvel)
+							if (Engine.board.sprite[p.actorsqu].yvel != 0)
 							{
 								operaterespawns(Engine.board.sprite[p.actorsqu].yvel);
 							}
@@ -4112,25 +4137,25 @@ public partial class GlobalMembers
 						quickkill(ps[Engine.board.sprite[p.actorsqu].yvel]);
 						ps[Engine.board.sprite[p.actorsqu].yvel].frag_ps = snum;
 					}
-					else if (badguy(Engine.board.sprite[p.actorsqu]))
+					else if (badguy(Engine.board.sprite[p.actorsqu]) != 0)
 					{
-						deletesprite(p.actorsqu);
+						Engine.board.deletesprite(p.actorsqu);
 						p.actors_killed++;
 					}
 					else
 					{
-						deletesprite(p.actorsqu);
+						Engine.board.deletesprite(p.actorsqu);
 					}
 				}
 				p.actorsqu = -1;
 			}
 			else if (p.actorsqu >= 0)
 			{
-				p.ang += getincangle(p.ang, Engine.getangle(Engine.board.sprite[p.actorsqu].x - p.posx, Engine.board.sprite[p.actorsqu].y - p.posy)) >> 2;
+				p.ang += (short)(getincangle(p.ang, (short)(Engine.getangle(Engine.board.sprite[p.actorsqu].x - p.posx, (short)(Engine.board.sprite[p.actorsqu].y - p.posy)))) >> 2);
 			}
 		}
 
-		if (doincrements(p))
+		if (doincrements(p) != 0)
 		{
 			return;
 		}
@@ -4171,14 +4196,14 @@ public partial class GlobalMembers
 			{
 				return;
 			}
-			p.rapid_fire_hold = 0;
+			p.rapid_fire_hold = (char)0;
 		}
 
 		if (shrunk || p.tipincs != 0 || p.access_incs != 0)
 		{
-			sb_snum &= ~(1 << 2);
+			sb_snum &= ((~(1 << 2)));
 		}
-		else if (shrunk == 0 && (sb_snum & (1 << 2)) && kb == null && p.fist_incs == 0 && p.last_weapon == -1 && (p.weapon_pos == 0 || p.holster_weapon == 1))
+		else if (shrunk == false && (sb_snum & (1 << 2)) != 0 && kb == null && p.fist_incs == 0 && p.last_weapon == -1 && (p.weapon_pos == 0 || p.holster_weapon == 1))
 		{
 
 			p.crack_time = 777;
@@ -4235,14 +4260,14 @@ public partial class GlobalMembers
 					case DefineConstants.TRIPBOMB_WEAPON:
 						if (p.ammo_amount[DefineConstants.TRIPBOMB_WEAPON] > 0)
 						{
-							int sx;
-							int sy;
-							int sz;
-							short sect;
-							short hw;
-							short hitsp;
+							int sx = 0;
+							int sy = 0;
+							int sz = 0;
+							int sect = 0;
+							short hw = 0;
+							short hitsp = 0;
 
-							Engine.board.hitscan(p.posx, p.posy, p.posz, p.cursectnum, Engine.table.sintable[(p.ang + 512) & 2047], Engine.table.sintable[p.ang & 2047], (100 - p.horiz - p.horizoff) * 32, sect, hw, hitsp, sx, sy, sz, (((256) << 16) + 64));
+							Engine.board.hitscan(p.posx, p.posy, p.posz, p.cursectnum, Engine.table.sintable[(p.ang + 512) & 2047], Engine.table.sintable[p.ang & 2047], (100 - p.horiz - p.horizoff) * 32, ref sect, ref hw,ref  hitsp, ref sx, ref sy, ref sz, (((256) << 16) + 64));
 
 							if (sect < 0 || hitsp >= 0)
 							{
@@ -4315,7 +4340,11 @@ public partial class GlobalMembers
 						if (p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON] > 0)
 						{
 							kb = 1;
-							p.hbomb_hold_delay = !p.hbomb_hold_delay;
+							if (p.hbomb_hold_delay == 0)
+								p.hbomb_hold_delay = 1;
+							else
+								p.hbomb_hold_delay = 0;
+
 							spritesound(DefineConstants.CAT_FIRE, pi);
 						}
 						break;
@@ -4338,7 +4367,7 @@ public partial class GlobalMembers
 				}
 			}
 		}
-		else if (kb)
+		else if (kb != 0)
 		{
 			switch (p.curr_weapon)
 			{
@@ -4346,7 +4375,7 @@ public partial class GlobalMembers
 
 					if (kb == 6 && (sb_snum & (1 << 2)) != 0)
 					{
-						p.rapid_fire_hold = 1;
+						p.rapid_fire_hold = (char)1;
 						break;
 					}
 					kb++;
@@ -4354,7 +4383,7 @@ public partial class GlobalMembers
 					{
 						p.ammo_amount[DefineConstants.HANDBOMB_WEAPON]--;
 
-						if (p.on_ground && (sb_snum & 2) != 0)
+						if (p.on_ground != 0 && (sb_snum & 2) != 0)
 						{
 							k = 15;
 							i = ((p.horiz + p.horizoff - 100) * 20);
@@ -4381,16 +4410,16 @@ public partial class GlobalMembers
 							Engine.board.sprite[j].xvel /= 3;
 						}
 
-						p.hbomb_on = 1;
+						p.hbomb_on = (char)1;
 
 					}
-					else if (kb < 12 && (sb_snum & (1 << 2)))
+					else if (kb < 12 && (sb_snum & (1 << 2)) != 0)
 					{
 						p.hbomb_hold_delay++;
 					}
 					else if (kb > 19)
 					{
-						kb = null;
+						kb = 0;
 						p.curr_weapon = DefineConstants.HANDREMOTE_WEAPON;
 						p.last_weapon = -1;
 						p.weapon_pos = 10;
@@ -4405,12 +4434,12 @@ public partial class GlobalMembers
 
 					if (kb == 2)
 					{
-						p.hbomb_on = 0;
+						p.hbomb_on = (char)0;
 					}
 
 					if (kb == 10)
 					{
-						kb = null;
+						kb = 0;
 						if (p.ammo_amount[DefineConstants.HANDBOMB_WEAPON] > 0)
 						{
 							addweapon(p, DefineConstants.HANDBOMB_WEAPON);
@@ -4442,7 +4471,7 @@ public partial class GlobalMembers
 					{
 						if (p.ammo_amount[DefineConstants.PISTOL_WEAPON] <= 0 || (p.ammo_amount[DefineConstants.PISTOL_WEAPON] % 12) != 0)
 						{
-							kb = null;
+							kb = 0;
 							checkavailweapon(p);
 						}
 						else
@@ -4461,7 +4490,7 @@ public partial class GlobalMembers
 
 					if (kb == 27)
 					{
-						kb = null;
+						kb = 0;
 						checkavailweapon(p);
 					}
 
@@ -4509,7 +4538,7 @@ public partial class GlobalMembers
 							p.kickback_pic++;
 							break;
 						case 31:
-							kb = null;
+							kb = 0;
 							return;
 					}
 					break;
@@ -4543,7 +4572,7 @@ public partial class GlobalMembers
 
 							if ((sb_snum & (1 << 2)) == 0)
 							{
-								kb = null;
+								kb = 0;
 								break;
 							}
 						}
@@ -4556,7 +4585,7 @@ public partial class GlobalMembers
 						}
 						else
 						{
-							kb = null;
+							kb = 0;
 						}
 					}
 
@@ -4569,10 +4598,10 @@ public partial class GlobalMembers
 					{
 						if (kb > 3)
 						{
-							kb = null;
+							kb = 0;
 							if (screenpeek == snum)
 							{
-								pus = 1;
+								pus = (char)1;
 							}
 							p.ammo_amount[DefineConstants.GROW_WEAPON]--;
 							shoot(pi, DefineConstants.GROWSPARK);
@@ -4590,7 +4619,7 @@ public partial class GlobalMembers
 					{
 						if (kb > 10)
 						{
-							kb = null;
+							kb = 0;
 
 							p.ammo_amount[DefineConstants.SHRINKER_WEAPON]--;
 							shoot(pi, DefineConstants.SHRINKER);
@@ -4621,7 +4650,7 @@ public partial class GlobalMembers
 						}
 						if (kb > 5)
 						{
-							kb = null;
+							kb = 0;
 						}
 					}
 					break;
@@ -4640,7 +4669,7 @@ public partial class GlobalMembers
 						}
 						if (s.xrepeat < 32)
 						{
-							kb = null;
+							kb = 0;
 							break;
 						}
 					}
@@ -4653,7 +4682,7 @@ public partial class GlobalMembers
 						}
 						else
 						{
-							kb = null;
+							kb = 0;
 						}
 					}
 					break;
@@ -4670,7 +4699,7 @@ public partial class GlobalMembers
 					}
 					if (kb == 16)
 					{
-						kb = null;
+						kb = 0;
 						checkavailweapon(p);
 						p.weapon_pos = -9;
 					}
@@ -4694,7 +4723,7 @@ public partial class GlobalMembers
 						}
 						else
 						{
-							kb = null;
+							kb = 0;
 						}
 					}
 
@@ -4716,7 +4745,7 @@ public partial class GlobalMembers
 					}
 					else if (kb == 20)
 					{
-						kb = null;
+						kb = 0;
 					}
 					break;
 			}
@@ -4727,7 +4756,7 @@ public partial class GlobalMembers
 
 	//UPDATE THIS FILE OVER THE OLD GETSPRITESCORE/COMPUTERGETINPUT FUNCTIONS
 	//C++ TO C# CONVERTER WARNING: The following constructor is declared outside of its associated class:
-	public static getspritescore(int snum, int dapicnum)
+	public static int getspritescore(int snum, int dapicnum)
 	{
 		switch (dapicnum)
 		{
@@ -4955,9 +4984,11 @@ public partial class GlobalMembers
 	public static short[] searchsect = new short[DefineConstants.MAXSECTORS];
 	public static short[] searchparent = new short[DefineConstants.MAXSECTORS];
 	//C++ TO C# CONVERTER TODO TASK: The following statement was not recognized, possibly due to an unrecognized macro:
-	char dashow2dEngine.board.sector[(DefineConstants.MAXSECTORS + 7) >> 3];
+	public static char[] dashow2dsector = new char[(DefineConstants.MAXSECTORS + 7) >> 3];
 	public static void computergetinput(int snum, input syn)
 	{
+// jmarshall - legacy bot code?
+/*
 		int i;
 		int j;
 		int k;
@@ -5014,7 +5045,7 @@ public partial class GlobalMembers
 
 		if ((numframes & 7) == 0)
 		{
-			if (!cansee(x1, y1, z1 - (48 << 8), damysect, x2, y2, z2 - (48 << 8), Engine.board.sprite[ps[goalplayer[snum]].i].sectnum))
+			if (!Engine.board.cansee(x1, y1, z1 - (48 << 8), damysect, x2, y2, z2 - (48 << 8), Engine.board.sprite[ps[goalplayer[snum]].i].sectnum))
 			{
 				goalplayer[snum] = snum;
 			}
@@ -5032,7 +5063,7 @@ public partial class GlobalMembers
 					x2 = Engine.board.sprite[ps[i].i].x;
 					y2 = Engine.board.sprite[ps[i].i].y;
 					z2 = Engine.board.sprite[ps[i].i].z;
-					if (!cansee(x1, y1, z1 - (48 << 8), damysect, x2, y2, z2 - (48 << 8), Engine.board.sprite[ps[i].i].sectnum))
+					if (!Engine.board.cansee(x1, y1, z1 - (48 << 8), damysect, x2, y2, z2 - (48 << 8), Engine.board.sprite[ps[i].i].sectnum))
 					{
 						dist <<= 1;
 					}
@@ -5059,7 +5090,7 @@ public partial class GlobalMembers
 			syn.bits |= (1 << 16);
 		}
 
-		for (j = headspritestat[4]; j >= 0; j = nextspritestat[j])
+		for (j = (short)Engine.board.headspritestat[4]; j >= 0; j = (short)Engine.board.nextspritestat[j])
 		{
 			switch (Engine.board.sprite[j].picnum)
 			{
@@ -5086,7 +5117,7 @@ public partial class GlobalMembers
 				z3 = Engine.board.sprite[j].z;
 				for (l = 0; l <= 8; l++)
 				{
-					if (tmulscale11(x3 - x1, x3 - x1, y3 - y1, y3 - y1, (z3 - z1) >> 4, (z3 - z1) >> 4) < 3072)
+					if (pragmas.tmulscale11(x3 - x1, x3 - x1, y3 - y1, y3 - y1, (z3 - z1) >> 4, (z3 - z1) >> 4) < 3072)
 					{
 						dx = Engine.table.sintable[(Engine.board.sprite[j].ang + 512) & 2047];
 						dy = Engine.table.sintable[Engine.board.sprite[j].ang & 2047];
@@ -5115,7 +5146,7 @@ public partial class GlobalMembers
 			}
 		}
 
-		if ((ps[goalplayer[snum]].dead_flag == 0) && ((cansee(x1, y1, z1, damysect, x2, y2, z2, Engine.board.sprite[ps[goalplayer[snum]].i].sectnum)) || (cansee(x1, y1, z1 - (24 << 8), damysect, x2, y2, z2 - (24 << 8), Engine.board.sprite[ps[goalplayer[snum]].i].sectnum)) || (cansee(x1, y1, z1 - (48 << 8), damysect, x2, y2, z2 - (48 << 8), Engine.board.sprite[ps[goalplayer[snum]].i].sectnum))))
+		if ((ps[goalplayer[snum]].dead_flag == 0) && ((Engine.board.cansee(x1, y1, z1, damysect, x2, y2, z2, Engine.board.sprite[ps[goalplayer[snum]].i].sectnum)) || (Engine.board.cansee(x1, y1, z1 - (24 << 8), damysect, x2, y2, z2 - (24 << 8), Engine.board.sprite[ps[goalplayer[snum]].i].sectnum)) || (Engine.board.cansee(x1, y1, z1 - (48 << 8), damysect, x2, y2, z2 - (48 << 8), Engine.board.sprite[ps[goalplayer[snum]].i].sectnum))))
 		{
 			syn.bits |= (1 << 2);
 
@@ -5387,7 +5418,7 @@ public partial class GlobalMembers
 						{
 							continue;
 						}
-						if (cansee(x1, y1, z1 - (32 << 8), damysect, Engine.board.sprite[j].x, Engine.board.sprite[j].y, Engine.board.sprite[j].z - (4 << 8), i))
+						if (Engine.board.cansee(x1, y1, z1 - (32 << 8), damysect, Engine.board.sprite[j].x, Engine.board.sprite[j].y, Engine.board.sprite[j].z - (4 << 8), i))
 						{
 							goalx[snum] = Engine.board.sprite[j].x;
 							goaly[snum] = Engine.board.sprite[j].y;
@@ -5517,5 +5548,8 @@ public partial class GlobalMembers
 			syn.svel += (y2 - y1) * 2047 / dist;
 			syn.avel = (sbyte)Math.Min(Math.Max((((daang + 1024 - damyang) & 2047) - 1024) >> 3, -127), 127);
 		}
+*/
+// jmarshall end
 	}
+
 }

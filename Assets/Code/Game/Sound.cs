@@ -11,6 +11,29 @@ public partial class GlobalMembers
     public static int numenvsnds = 0;
     public static int NumVoices = 32;
 
+    public enum FX_ERRORS
+    {
+        FX_Warning = -2,
+        FX_Error = -1,
+        FX_Ok = 0,
+        FX_ASSVersion,
+        FX_BlasterError,
+        FX_SoundCardError,
+        FX_InvalidCard,
+        FX_MultiVocError,
+        FX_DPMI_Error
+    }
+
+    public static void testcallback(int index)
+    {
+
+    }
+
+    public static void FX_StopSound(int index)
+    {
+
+    }
+
     public static void MUSIC_StopSong()
     {
 
@@ -21,9 +44,9 @@ public partial class GlobalMembers
 
     }
 
-    public static void spritesound(int index, int spriteindex)
+    public static short spritesound(int index, int spriteindex)
     {
-
+        return 0;
     }
 
     public static void stopsound(int index)

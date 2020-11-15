@@ -75,19 +75,6 @@ public partial class GlobalMembers
         return -1;
     }
 
-    public static int hitawall(player_struct p, ref short hitw)
-    {
-        int sx = 0;
-        int sy = 0;
-        int sz = 0;
-        int sect = 0;
-        short hs = 0;
-
-        Engine.board.hitscan(p.posx, p.posy, p.posz, p.cursectnum, Engine.table.sintable[(p.ang + 512) & 2047], Engine.table.sintable[p.ang & 2047], 0, ref sect, ref hitw, ref hs, ref sx, ref sy, ref sz, (((1) << 16) + 1));
-
-        return (Engine.FindDistance2D(sx - p.posx, sy - p.posy));
-    }
-
     public static short inventory(spritetype s)
     {
         return 0;
@@ -175,9 +162,25 @@ public partial class GlobalMembers
         return 0;
     }
 
+    public static short EGS(int whatsect, int s_x, int s_y, int s_z, short s_pn, int s_s, int s_xr, int s_yr, int s_a, int s_ve, int s_zv, int s_ow, int s_ss)
+    {
+        return 0;
+    }
+
+
+    public static void myospal(int x, int y, int tilenum, int shade, int orientation, int p)
+    {
+        
+    }
+
     public static short EGS(short whatsect, long s_x, long s_y, long s_z, long s_pn, long s_s, long s_xr, long s_yr, long s_a, long s_ve, long s_zv, long s_ow, long s_ss)
     {
         return 0;
+    }
+
+    public static void myos(int x, int y, short tilenum, sbyte shade, char orientation)
+    {
+
     }
 
     public static void ceilingglass(short i, short sectnum, short n)
@@ -186,6 +189,11 @@ public partial class GlobalMembers
     }
 
     public static void spriteglass(short i, short n)
+    {
+
+    }
+
+    public static void closedemowrite()
     {
 
     }
