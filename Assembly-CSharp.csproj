@@ -83,12 +83,14 @@
     <Compile Include="Assets\Code\Game\Game.cs" />
     <Compile Include="Assets\Code\Game\GameEngine.cs" />
     <Compile Include="Assets\Code\Game\Gamedef.cs" />
+    <Compile Include="Assets\Code\Game\GameMain.cs" />
     <Compile Include="Assets\Code\Game\Globals.cs" />
     <Compile Include="Assets\Code\Game\Menus.cs" />
     <Compile Include="Assets\Code\Game\Player.cs" />
     <Compile Include="Assets\Code\Game\Premap.cs" />
     <Compile Include="Assets\Code\Game\Sector.cs" />
     <Compile Include="Assets\Code\Game\Sound.cs" />
+    <Compile Include="Assets\Code\Game\Ui.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

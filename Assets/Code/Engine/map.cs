@@ -47,7 +47,7 @@ namespace Build
 
         private int[] lastx = new int[VgaDevice.MAXYDIM];
 
-        private spritetype[] tsprite = new spritetype[MAXSPRITESONSCREEN];
+        public spritetype[] tsprite = new spritetype[MAXSPRITESONSCREEN];
 
         private short[] sectorborder = new short[256];
         private short sectorbordercnt;
@@ -134,7 +134,7 @@ namespace Build
         public short[] pskyoff = new short[MAXPSKYTILES];
 
         private int numhits = 0, numscans = 0, numbunches = 0;
-        private int maskwallcnt, smostwallcnt, smostcnt, spritesortcnt;
+        public int maskwallcnt, smostwallcnt, smostcnt, spritesortcnt;
         private int[] maskwall = new int[MAXWALLSB];
 
         private int palookupoffse = 0;
@@ -6318,6 +6318,33 @@ namespace Build
         public spritetype()
         {
 
+        }
+
+        public void Copy(spritetype t)
+        {
+            x = t.x;
+            y = t.y;
+            z = t.z;
+            cstat = t.cstat;
+            picnum = t.picnum;
+            shade = t.shade;
+            pal = t.pal;
+            clipdist = t.clipdist;
+            filler = t.filler;
+            xrepeat = t.xrepeat;
+            yrepeat = t.yrepeat;
+            xoffset = t.xoffset;
+            yoffset = t.yoffset;
+            sectnum = t.sectnum;
+            statnum = t.statnum;
+            ang = t.ang;
+            owner = t.owner;
+            xvel = t.xvel;
+            yvel = t.yvel;
+            zvel = t.zvel;
+            lotag = t.lotag;
+            hitag = t.hitag;
+            extra = t.extra;
         }
 
         public void Write(ref System.IO.BinaryWriter writer)

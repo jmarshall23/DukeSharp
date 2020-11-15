@@ -1,4 +1,6 @@
-﻿using Build;
+﻿using System;
+using Build;
+using UnityEngine;
 public partial class GlobalMembers
 {
 	public static void updateinterpolations() //Stick at beginning of domovethings
@@ -881,10 +883,10 @@ public partial class GlobalMembers
 		}
 	}
 
-	public static void lotsofmoney(spritetype s, short n)
+	public static void lotsofmoney(spritetype s, int n)
 	{
-		short i;
-		short j;
+		int i;
+		int j;
 		for (i = n; i > 0; i--)
 		{
 			j = EGS(s.sectnum, s.x, s.y, (int)(s.z - (Engine.krand() % (47 << 8))), DefineConstants.MONEY, -32, 8, 8, (short)(Engine.krand() & 2047), 0, 0, 0, 5);
@@ -892,10 +894,10 @@ public partial class GlobalMembers
 		}
 	}
 
-	public static void lotsofmail(spritetype s, short n)
+	public static void lotsofmail(spritetype s, int n)
 	{
-		short i;
-		short j;
+		int i;
+		int j;
 		for (i = n; i > 0; i--)
 		{
 			j = EGS(s.sectnum, s.x, s.y, (int)(s.z - (Engine.krand() % (47 << 8))), DefineConstants.MAIL, -32, 8, 8, (short)(Engine.krand() & 2047), 0, 0, 0, 5);
@@ -6656,7 +6658,7 @@ public partial class GlobalMembers
 
 					if (s.owner == -1)
 					{
-						gameexit("Could not find any locators for SE# 6 and 14 with a hitag of " + t[3]);
+						throw new Exception("Could not find any locators for SE# 6 and 14 with a hitag of " + t[3]);
 					}
 
 					j = ldist(Engine.board.sprite[s.owner], s);

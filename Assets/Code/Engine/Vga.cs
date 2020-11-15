@@ -236,7 +236,7 @@ namespace Build
         //
         // setaspect
         //
-        private void setaspect(int daxrange, int daaspect)
+        public void setaspect(int daxrange, int daaspect)
         {
             viewingrange = daxrange;
             viewingrangerecip = pragmas.divscale32( 1, daxrange);

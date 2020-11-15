@@ -24,6 +24,21 @@ public partial class GlobalMembers
         FX_DPMI_Error
     }
 
+    public static void pan3dsound()
+    {
+
+    }
+
+    public static void intomenusounds()
+    {
+
+    }
+
+    public static void PlayMusic(string song)
+    {
+
+    }
+
     public static void testcallback(int index)
     {
 

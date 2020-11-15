@@ -276,6 +276,10 @@ namespace Build
             return (int)(((Int64)(eax) << 21) / (Int64)(ebx));
         }
 
+        public static int divscale22(int eax, int ebx)
+        {
+            return (int)(((Int64)(eax) << 22) / (Int64)(ebx));
+        }
         public static int divscale24(int eax, int ebx)
         {
             return (int)(((Int64)(eax) << 24) / (Int64)(ebx));

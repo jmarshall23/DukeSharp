@@ -80,4 +80,14 @@ public partial class GlobalMembers
     {
 
     }
+
+    public static void CONTROL_DefineFlag(int which, bool toggle)
+    {
+
+    }
+
+    public static int KB_KeyWaiting()
+    {
+        return 0;
+    }
 }

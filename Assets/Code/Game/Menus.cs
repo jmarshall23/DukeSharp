@@ -3838,7 +3838,7 @@ public partial class GlobalMembers
 		}
 	}
 
-	public static void palto(char r, char g, char b, int e)
+	public static void palto(int r, int g, int b, int e)
 	{
 		// jmarshall - palette
 		//int i;
