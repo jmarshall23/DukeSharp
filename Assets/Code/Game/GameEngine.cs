@@ -52,6 +52,17 @@ public class GameEngine : MonoBehaviour
     void Update()
     {
         dukeClock += Time.deltaTime;
+        GlobalMembers.anyKeyDown = Input.anyKeyDown;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_Escape)] = true;
+        else
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_Escape)] = false;
+
+        if (Input.GetKeyDown(KeyCode.Return))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_Return)] = true;
+        else
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_Return)] = false;
 
         if (GlobalMembers.totalclock == 0)
         {
@@ -60,7 +71,7 @@ public class GameEngine : MonoBehaviour
         }
         else
         {
-            GlobalMembers.totalclock = (int)(dukeClock * 90.0f);
+            GlobalMembers.totalclock = (int)(dukeClock * 120.0f);
         }        
 
         GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);

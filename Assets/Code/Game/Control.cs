@@ -1,4 +1,5 @@
 ﻿using Build;
+using UnityEngine;
 
 
 //***************************************************************************
@@ -68,7 +69,7 @@ public enum controltype
 
 public partial class GlobalMembers
 {
-
+    public static bool anyKeyDown = false;
     public static ControlInfo minfo = new ControlInfo();
 
     public static int CONTROL_GetMouseSensitivity()
@@ -78,7 +79,7 @@ public partial class GlobalMembers
 
     public static void KB_FlushKeyboardQueue()
     {
-
+        anyKeyDown = false;
     }
 
     public static void CONTROL_DefineFlag(int which, bool toggle)
@@ -88,6 +89,9 @@ public partial class GlobalMembers
 
     public static int KB_KeyWaiting()
     {
+        if (anyKeyDown)
+            return 1;
+
         return 0;
     }
 }
