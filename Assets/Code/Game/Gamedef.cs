@@ -18,10 +18,16 @@ public partial class GlobalMembers
     internal static int[] g_t;
     internal static spritetype g_sp;
 
-    internal class DefString
+    internal struct DefString
     {
         public string buffer;
-        public int bufferpos = 0;
+        public int bufferpos;
+
+        public DefString(int t)
+        {
+            buffer = "";
+            bufferpos = 0;
+        }
 
         public static DefString operator ++(DefString w)
         {
@@ -36,11 +42,19 @@ public partial class GlobalMembers
 
         public bool IsAlpha()
         {
-            return char.IsLetter(buffer[bufferpos]);
+            if (bufferpos >= buffer.Length)
+                return false;
+
+            char c = buffer[bufferpos];
+            return char.IsLetter(buffer[bufferpos]) || c == '{' || c == '}' || c == '/' || c == '*' || c == '-' || c == '_' || c == '.' || IsNumber();
         }
         public bool IsAlpha(int indx)
         {
-            return char.IsLetter(buffer[bufferpos + indx]);
+            if (bufferpos + indx >= buffer.Length)
+                return false;
+
+            char c = buffer[bufferpos + indx];
+            return char.IsLetter(buffer[bufferpos + indx]) || c == '{' || c == '}' || c == '/' || c == '*' || c == '-' || c == '_' || c == '.' || IsNumber();
         }
 
         public char Get()
@@ -68,7 +82,7 @@ public partial class GlobalMembers
         }
     }
 
-    internal static DefString textptr = new DefString();
+    internal static DefString textptr = new DefString(1);
 
 
     public static string[] keyw = { "definelevelname", "actor", "addammo", "ifrnd", "enda", "ifcansee", "ifhitweapon", "action", "ifpdistl", "ifpdistg", "else", "strength", "break", "shoot", "palfrom", "sound", "fall", "state", "ends", "define", "//", "ifai", "killit", "addweapon", "ai", "addphealth", "ifdead", "ifsquished", "sizeto", "{", "}", "spawn", "move", "ifwasweapon", "ifaction", "ifactioncount", "resetactioncount", "debris", "pstomp", "/*", "cstat", "ifmove", "resetplayer", "ifonwater", "ifinwater", "ifcanshoottarget", "ifcount", "resetcount", "addinventory", "ifactornotstayput", "hitradius", "ifp", "count", "ifactor", "music", "include", "ifstrength", "definesound", "guts", "ifspawnedby", "gamestartup", "wackplayer", "ifgapzl", "ifhitspace", "ifoutside", "ifmultiplayer", "operate", "ifinspace", "debug", "endofgame", "ifbulletnear", "ifrespawn", "iffloordistl", "ifceilingdistl", "spritepal", "ifpinventory", "betaname", "cactor", "ifphealthl", "definequote", "quote", "ifinouterspace", "ifnotmoving", "respawnhitag", "tip", "ifspritepal", "money", "soundonce", "addkills", "stopsound", "ifawayfromwall", "ifcanseetarget", "globalsound", "lotsofglass", "ifgotweaponce", "getlastpal", "pkick", "mikesnd", "useractor", "sizeat", "addstrength", "cstator", "mail", "paper", "tossweapon", "sleeptime", "nullop", "definevolumename", "defineskillname", "ifnosounds", "clipdist", "ifangdiffl" };
@@ -243,6 +257,9 @@ public partial class GlobalMembers
         i = 0;
         while (ispecial(textptr.Get()) == 0)
         {
+            if ((labelcnt << 6) + i >= label.Length)
+                throw new Exception("Labelcnt too high!");
+
             label[(labelcnt << 6) + i++] = (byte)textptr.Get();
             textptr++;
         }
@@ -253,7 +270,7 @@ public partial class GlobalMembers
     public static int keyword()
     {
         int i;        
-        DefString temptextptr = new DefString();
+        DefString temptextptr = new DefString(1);
 
         temptextptr.buffer = textptr.buffer;
         temptextptr.bufferpos = textptr.bufferpos;
@@ -276,7 +293,7 @@ public partial class GlobalMembers
         }
         tempbuf[i] = 0;
 
-        string t = Encoding.UTF8.GetString(tempbuf, 0, tempbuf.Length);
+        string t = Encoding.UTF8.GetString(tempbuf, 0, i);
         for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
         {            
             if (t == keyw[i])
@@ -307,7 +324,7 @@ public partial class GlobalMembers
         }
 
         l = 0;
-        DefString temptextptr = new DefString();
+        DefString temptextptr = new DefString(1);
         temptextptr.buffer = textptr.buffer;
         temptextptr.bufferpos = textptr.bufferpos;
 
@@ -321,7 +338,7 @@ public partial class GlobalMembers
         }
         tempbuf[l] = 0;
 
-        string t = Encoding.UTF8.GetString(tempbuf, 0, tempbuf.Length);
+        string t = Encoding.UTF8.GetString(tempbuf, 0, l);
         for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
         {
             if (t == keyw[i])
@@ -337,32 +354,34 @@ public partial class GlobalMembers
 
         if (tempbuf[0] == '{' && tempbuf[1] != 0)
         {
-            Debug.Log("  * ERROR!(L%ld) Expecting a SPACE or CR between '{' and '%s'.\n");
+            Engine.Printf("  * ERROR!(L%ld) Expecting a SPACE or CR between '{' and '%s'.\n");
         }
         else if (tempbuf[0] == '}' && tempbuf[1] != 0)
         {
-            Debug.Log("  * ERROR!(L%ld) Expecting a SPACE or CR between '}' and '%s'.\n");
+            Engine.Printf("  * ERROR!(L%ld) Expecting a SPACE or CR between '}' and '%s'.\n");
         }
         else if (tempbuf[0] == '/' && tempbuf[1] == '/' && tempbuf[2] != 0)
         {
-            Debug.Log("  * ERROR!(L%ld) Expecting a SPACE between '//' and '%s'.\n");
+            Engine.Printf("  * ERROR!(L%ld) Expecting a SPACE between '//' and '%s'.\n");
         }
         else if (tempbuf[0] == '/' && tempbuf[1] == '*' && tempbuf[2] != 0)
         {
-            Debug.Log("  * ERROR!(L%ld) Expecting a SPACE between '/*' and '%s'.\n");
+            Engine.Printf("  * ERROR!(L%ld) Expecting a SPACE between '/*' and '%s'.\n");
         }
         else if (tempbuf[0] == '*' && tempbuf[1] == '/' && tempbuf[2] != 0)
         {
-            Debug.Log("  * ERROR!(L%ld) Expecting a SPACE between '*/' and '%s'.\n");
+            Engine.Printf("  * ERROR!(L%ld) Expecting a SPACE between '*/' and '%s'.\n");
         }
         else
         {
-            Debug.Log("  * ERROR!(L%ld) Expecting key word, but found '%s'.\n");
+            Engine.Printf("  * ERROR!(L%ld) Expecting key word, but found " + t + "\n");
         }
 
         error++;
         return -1;
     }
+
+
 
     public static void transnum()
     {
@@ -383,7 +402,7 @@ public partial class GlobalMembers
         }
 
 
-        DefString temptextptr = new DefString();
+        DefString temptextptr = new DefString(1);
         temptextptr.buffer = textptr.buffer;
         temptextptr.bufferpos = textptr.bufferpos;
 
@@ -397,15 +416,15 @@ public partial class GlobalMembers
         }
         tempbuf[l] = 0;
 
-        string label1 = Encoding.UTF8.GetString(label, (labelcnt << 6), label.Length);
-        string t = Encoding.UTF8.GetString(tempbuf, 0, tempbuf.Length);
+        string label1 = GetLabelStr(labelcnt << 6); //Encoding.UTF8.GetString(label, (labelcnt << 6), l);
+        string t = Encoding.UTF8.GetString(tempbuf, 0, l);
 
         for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
         {
             if (label1 == keyw[i])
             {
                 error++;
-                Debug.Log("  * ERROR!(L%ld) Symbol '%s' is a key word.\n");
+                Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n");
                 textptr.bufferpos += l;
             }
         }
@@ -413,6 +432,7 @@ public partial class GlobalMembers
 
         for (i = 0; i < labelcnt; i++)
         {
+            label1 = GetLabelStr(i << 6);
             if (t == label1)
             {
                 scriptptr.Set(labelcode[i]);
@@ -424,13 +444,24 @@ public partial class GlobalMembers
 
         if (!textptr.IsNumber() && textptr.Get() != '-')
         {
-            Debug.Log("  * ERROR!(L%ld) Parameter '%s' is undefined.\n");
+            Engine.Printf("  * ERROR!(L%ld) Parameter " + t + " is undefined.\n");
             error++;
             textptr.bufferpos += l;
             return;
         }
 
-        scriptptr.Set(Convert.ToInt32(new string(textptr.Get(), 1)));
+        string num = "";
+        for(int d = 0; d < l; d++)
+        {
+            num += textptr.buffer[textptr.bufferpos + d];
+        }
+
+        int value;
+        if (!int.TryParse(num, out value)) {
+            throw new Exception("Try parse failed?");
+        }
+
+        scriptptr.Set(value);
         scriptptr++;
 
         textptr.bufferpos += l;
@@ -438,12 +469,26 @@ public partial class GlobalMembers
 
     internal static string GetLabelStr(int index)
     {
-        return Encoding.UTF8.GetString(label, index, label.Length);
+        int l = 0;
+        for(int i = index; i < label.Length; i++)
+        {
+            if (label[i] == '\0')
+                break;
+            l++;
+        }
+        return Encoding.UTF8.GetString(label, index, l);
     }
 
     internal static string GetTempStr()
     {
-        return Encoding.UTF8.GetString(tempbuf, 0, tempbuf.Length);
+        int l = 0;
+        for (int i = 0; i < tempbuf.Length; i++)
+        {
+            if (tempbuf[l] == '\0')
+                break;
+            l++;
+        }
+        return Encoding.UTF8.GetString(tempbuf, 0, l);
     }
 
     public static int parsecommand()
@@ -453,7 +498,7 @@ public partial class GlobalMembers
         int k;
         int tempscrptr;
         int done;
-        DefString origtptr = new DefString();
+        DefString origtptr = new DefString(1);
         int temp_ifelse_check;
         int tw;
         short temp_line_number;
@@ -483,7 +528,7 @@ public partial class GlobalMembers
                     }
                     if (textptr.Get() == 0)
                     {
-                        Debug.Log("  * ERROR!(L%ld) Found '/*' with no '*/'.\n");
+                        Engine.Printf("  * ERROR!(L%ld) Found '/*' with no '*/'.\n");
                         error++;
                         return 0;
                     }
@@ -510,7 +555,7 @@ public partial class GlobalMembers
                     if (GetLabelStr(labelcnt << 6) == keyw[i])
                     {
                         error++;
-                        Debug.Log("  * ERROR!(L%ld) Symbol '%s' is a key word.\n");
+                        Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n");
                         return 0;
                     }
                 }
@@ -526,7 +571,7 @@ public partial class GlobalMembers
 
                 if (j == labelcnt)
                 {
-                    Debug.Log("  * ERROR!(L%ld) State '%s' not found.\n");
+                    Engine.Printf("  * ERROR!(L%ld) State '%s' not found.\n");
                     error++;
                 }
                 scriptptr++;
@@ -543,19 +588,19 @@ public partial class GlobalMembers
             case 18:
                 if (parsing_state == 0)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Found 'ends' with no 'state'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found 'ends' with no 'state'.\n", line_number);
                     error++;
                 }
                 {
                     //            else
                     if (num_squigilly_brackets > 0)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Found more '{' than '}' before 'ends'.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Found more '{' than '}' before 'ends'.\n", line_number);
                         error++;
                     }
                     if (num_squigilly_brackets < 0)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Found more '}' than '{' before 'ends'.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Found more '}' than '{' before 'ends'.\n", line_number);
                         error++;
                     }
                     parsing_state = 0;
@@ -570,7 +615,7 @@ public partial class GlobalMembers
                     if (GetLabelStr(labelcnt << 6) == keyw[i])
                     {
                         error++;
-                        //Debug.Log("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                        //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
                         return 0;
                     }
                 }
@@ -580,7 +625,7 @@ public partial class GlobalMembers
                     if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
                     {
                         warning++;
-                        //Debug.Log("  * WARNING.(L%ld) Duplicate definition '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                        //Engine.Printf("  * WARNING.(L%ld) Duplicate definition '%s' ignored.\n", line_number, label + (labelcnt << 6));
                         break;
                     }
                 }
@@ -640,7 +685,7 @@ public partial class GlobalMembers
                         if (GetLabelStr(labelcnt << 6) == keyw[i])
                         {
                             error++;
-                            //Debug.Log("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
                             return 0;
                         }
                     }
@@ -650,7 +695,7 @@ public partial class GlobalMembers
                         if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
                         {
                             warning++;
-                            //Debug.Log("  * WARNING.(L%ld) Duplicate move '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * WARNING.(L%ld) Duplicate move '%s' ignored.\n", line_number, label + (labelcnt << 6));
                             break;
                         }
                     }
@@ -766,26 +811,27 @@ public partial class GlobalMembers
                     }
                 }
                 j = 0;
-                while (textptr.IsAlpha(j))
+                while (textptr.IsAlpha())
                 {
                     tempbuf[j] = (byte)textptr.Get();
                     textptr++;
                     j++;
                 }
                 tempbuf[j] = 0;
-                
-                fp = Engine.filesystem.kopen4load(GetTempStr());
+
+                string tstr = GetTempStr();
+                fp = Engine.filesystem.kopen4load(tstr);
                 if (fp == null)
                 {
                     error++;
-                    throw new Exception("Could not find include file " + GetTempStr());
-                    //Debug.Log("  * ERROR!(L%ld) Could not find '%s'.\n", line_number, label + (labelcnt << 6));
+                    throw new Exception("Could not find include file " + tstr);
+                    //Engine.Printf("  * ERROR!(L%ld) Could not find '%s'.\n", line_number, label + (labelcnt << 6));
                     return 0;
                 }
 
                 j = fp.Length;
 
-                Debug.Log("Including: " + GetTempStr());
+                Engine.Printf("Including: " + tstr);
 
                 temp_line_number = line_number;
                 line_number = 1;
@@ -825,7 +871,7 @@ public partial class GlobalMembers
                         if (GetLabelStr(labelcnt << 6) == keyw[i])
                         {
                             error++;
-                            //Debug.Log("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
                             return 0;
                         }
                     }
@@ -835,7 +881,7 @@ public partial class GlobalMembers
                         if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
                         {
                             warning++;
-                            //Debug.Log("  * WARNING.(L%ld) Duplicate ai '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * WARNING.(L%ld) Duplicate ai '%s' ignored.\n", line_number, label + (labelcnt << 6));
                             break;
                         }
                     }
@@ -893,7 +939,7 @@ public partial class GlobalMembers
                         if (GetLabelStr(labelcnt << 6) == keyw[i])
                         {
                             error++;
-                            //Debug.Log("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
                             return 0;
                         }
                     }
@@ -903,7 +949,7 @@ public partial class GlobalMembers
                         if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
                         {
                             warning++;
-                            //Debug.Log("  * WARNING.(L%ld) Duplicate action '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * WARNING.(L%ld) Duplicate action '%s' ignored.\n", line_number, label + (labelcnt << 6));
                             break;
                         }
                     }
@@ -932,13 +978,13 @@ public partial class GlobalMembers
             case 1:
                 if (parsing_state != 0)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Found 'actor' within 'state'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found 'actor' within 'state'.\n", line_number);
                     error++;
                 }
 
                 if (parsing_actor != 0)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Found 'actor' within 'actor'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found 'actor' within 'actor'.\n", line_number);
                     error++;
                 }
 
@@ -987,13 +1033,13 @@ public partial class GlobalMembers
 
                 if (parsing_state != 0)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Found 'useritem' within 'state'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found 'useritem' within 'state'.\n", line_number);
                     error++;
                 }
 
                 if (parsing_actor != 0)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Found 'useritem' within 'actor'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found 'useritem' within 'actor'.\n", line_number);
                     error++;
                 }
 
@@ -1007,6 +1053,11 @@ public partial class GlobalMembers
 
                 transnum();
                 scriptptr--;
+
+                int ii = scriptptr.Get();
+                if (ii <= 0 || ii >= actortype.Length)
+                    throw new Exception("actortype out of range!");
+
                 actorscrptr[scriptptr.Get()] = parsing_actor;
                 actortype[scriptptr.Get()] = j;
 
@@ -1097,7 +1148,7 @@ public partial class GlobalMembers
                 {
                     scriptptr--;
                     error++;
-                    //Debug.Log("  * ERROR!(L%ld) Found 'else' with no 'if'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found 'else' with no 'if'.\n", line_number);
                 }
 
                 return 0;
@@ -1190,7 +1241,7 @@ public partial class GlobalMembers
                 num_squigilly_brackets--;
                 if (num_squigilly_brackets < 0)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Found more '}' than '{'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found more '}' than '{'.\n", line_number);
                     error++;
                 }
                 return 1;
@@ -1236,7 +1287,7 @@ public partial class GlobalMembers
                     i++;
                     if (i >= 32)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Volume name exceeds character size limit of 32.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Volume name exceeds character size limit of 32.\n", line_number);
                         error++;
                         while (textptr.Get() != 0x0a)
                         {
@@ -1267,7 +1318,7 @@ public partial class GlobalMembers
                     i++;
                     if (i >= 32)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Skill name exceeds character size limit of 32.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Skill name exceeds character size limit of 32.\n", line_number);
                         error++;
                         while (textptr.Get() != 0x0a)
                         {
@@ -1301,7 +1352,7 @@ public partial class GlobalMembers
                     i++;
                     if (i > 127)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Level file name exceeds character size limit of 128.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Level file name exceeds character size limit of 128.\n", line_number);
                         error++;
                         while (textptr.Get() != ' ')
                         {
@@ -1343,7 +1394,7 @@ public partial class GlobalMembers
                     i++;
                     if (i >= 32)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Level name exceeds character size limit of 32.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Level name exceeds character size limit of 32.\n", line_number);
                         error++;
                         while (textptr.Get() != 0x0a)
                         {
@@ -1361,7 +1412,7 @@ public partial class GlobalMembers
                 k = scriptptr.GetPrev(); // * (scriptptr - 1);
                 if (k >= DefineConstants.NUMOFFIRSTTIMEACTIVE)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Quote amount exceeds limit of %ld characters.\n", line_number, DefineConstants.NUMOFFIRSTTIMEACTIVE);
+                    //Engine.Printf("  * ERROR!(L%ld) Quote amount exceeds limit of %ld characters.\n", line_number, DefineConstants.NUMOFFIRSTTIMEACTIVE);
                     error++;
                 }
                 scriptptr--;
@@ -1379,7 +1430,7 @@ public partial class GlobalMembers
                     i++;
                     if (i >= 64)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Quote exceeds character size limit of 64.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Quote exceeds character size limit of 64.\n", line_number);
                         error++;
                         while (textptr.Get() != 0x0a)
                         {
@@ -1396,7 +1447,7 @@ public partial class GlobalMembers
                 k = scriptptr.GetPrev(); // * (scriptptr - 1);
                 if (k >= DefineConstants.NUM_SOUNDS)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Exceeded sound limit of %ld.\n", line_number, DefineConstants.NUM_SOUNDS);
+                    //Engine.Printf("  * ERROR!(L%ld) Exceeded sound limit of %ld.\n", line_number, DefineConstants.NUM_SOUNDS);
                     error++;
                 }
                 scriptptr--;
@@ -1415,7 +1466,7 @@ public partial class GlobalMembers
                     if (i >= 13)
                     {
                         //puts(sounds[k]);
-                        //Debug.Log("  * ERROR!(L%ld) Sound filename exceeded limit of 13 characters.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Sound filename exceeded limit of 13 characters.\n", line_number);
                         error++;
                         while (textptr.Get() != ' ')
                         {
@@ -1446,14 +1497,14 @@ public partial class GlobalMembers
             case 4:
                 if (parsing_actor == 0)
                 {
-                    //Debug.Log("  * ERROR!(L%ld) Found 'enda' without defining 'actor'.\n", line_number);
+                    //Engine.Printf("  * ERROR!(L%ld) Found 'enda' without defining 'actor'.\n", line_number);
                     error++;
                 }
                 {
                     //            else
                     if (num_squigilly_brackets > 0)
                     {
-                        //Debug.Log("  * ERROR!(L%ld) Found more '{' than '}' before 'enda'.\n", line_number);
+                        //Engine.Printf("  * ERROR!(L%ld) Found more '{' than '}' before 'enda'.\n", line_number);
                         error++;
                     }
                     parsing_actor = 0;
@@ -1611,7 +1662,7 @@ public partial class GlobalMembers
         // jmarshall: not used
     }
 
-    public static void loadefs(ref string filenam, ref string mptr)
+    public static void loadefs(string filenam)
     {
         int i;
         int fs;
@@ -1651,7 +1702,7 @@ public partial class GlobalMembers
         }
         else
         {
-            Debug.Log("Compiling: " + filenam);
+            Engine.Printf("Compiling: " + filenam);
 
             fs = fp.Length;
 
@@ -1660,8 +1711,8 @@ public partial class GlobalMembers
         }
 
         //textptr.buffer[fs - 2] = (char)0; // jmarshall
-        actorscrptr = new int[DefineConstants.MAXTILES];
-        actortype = new int[DefineConstants.MAXTILES];
+        actorscrptr = new int[DefineConstants.MAXTILES * 10];
+        actortype = new int[DefineConstants.MAXTILES * 10];
 
         //clearbuf(actorscrptr, DefineConstants.MAXSPRITES, 0);
         //clearbufbyte(actortype, DefineConstants.MAXSPRITES, 0);
@@ -1679,7 +1730,7 @@ public partial class GlobalMembers
 
         if ((warning | error) != 0)
         {
-            Debug.Log("Found " + warning + "warning(s), " + error + "error(s).\n");
+            Engine.Printf("Found " + warning + "warning(s), " + error + "error(s).\n");
         }
 
         // jmarshall
@@ -1756,7 +1807,7 @@ public partial class GlobalMembers
         else
         {
             total_lines += line_number;
-            Debug.Log("Code: " + labelcnt + "labels");
+            Engine.Printf("Code: " + labelcnt + "labels");
         }
     }
 
@@ -2811,7 +2862,7 @@ public partial class GlobalMembers
                 break;
             case 68:
                 insptr++;
-                Debug.Log(scriptptr.buffer[insptr]);
+                //Engine.Printf(scriptptr.buffer[insptr]);
                 insptr++;
                 break;
             case 69:

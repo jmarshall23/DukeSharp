@@ -492,10 +492,16 @@ public partial class GlobalMembers
 	//public static int[] script = new int[DefineConstants.MAXSCRIPTSIZE];
     //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
     //ORIGINAL LINE: int *scriptptr;
-    public class DefInt
+    public struct DefInt
     {
-        public int[] buffer = new int[3000];
-        public int bufferpos = 0;
+        public int[] buffer;
+        public int bufferpos;
+
+        public DefInt(int t)
+        {
+            buffer = new int[3000];
+            bufferpos = 0;
+        }
 
         public static DefInt operator ++(DefInt w)
         {
@@ -505,12 +511,15 @@ public partial class GlobalMembers
 
         public static DefInt operator --(DefInt w)
         {
-            w.bufferpos++;
+            w.bufferpos--;
             return w;
         }
 
         public void Set(int i)
         {
+            if (bufferpos >= buffer.Length)
+                throw new System.Exception("Set on DefInit exceeds bounds");
+
             buffer[bufferpos] = i;
         }
 
@@ -539,11 +548,11 @@ public partial class GlobalMembers
             return buffer[bufferpos - 1];
         }
     }
-    public static DefInt scriptptr = new DefInt();
+    public static DefInt scriptptr = new DefInt(1);
 //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
 //ORIGINAL LINE: int *insptr;
 	public static int insptr;
-	public static int[] labelcode;
+	public static int[] labelcode = new int[3000];
 	public static int labelcnt;
     //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
     //ORIGINAL LINE: int *actorscrptr[DefineConstants.MAXTILES],*parsing_actor;
@@ -551,7 +560,7 @@ public partial class GlobalMembers
 //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
 //ORIGINAL LINE: int *parsing_actor;
 	public static int parsing_actor;
-	public static byte[] label = new byte[5000];
+	public static byte[] label = new byte[125000];
 	public static int error;
 	public static int warning;
 	public static char killit_flag;

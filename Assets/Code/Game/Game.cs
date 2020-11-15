@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using UnityEngine;
 using Build;
 public partial class GlobalMembers
 {
@@ -350,5 +351,24 @@ public partial class GlobalMembers
         }
 
         return 0;
+    }
+
+    public static void Startup()
+    {
+        loadefs(DefineConstants.confilename);
+    }
+
+    public static void DukeMain(string commandLine)
+    {
+        Debug.Log("Duke Nukem 3D 1.4 - Atomic Edition");
+        Debug.Log("Copyright (c) 1996 3D Realms Entertainment");
+
+        // Load in the game data.
+        Engine.initgroupfile("duke3d.grp");
+
+        ud.multimode = 1;
+        ud.last_level = -1;
+
+        Startup();
     }
 }

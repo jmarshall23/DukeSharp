@@ -1431,6 +1431,7 @@ internal static class DefineConstants
 #endif
 	public const int IDFSIZE = 479985668;
 	public const string IDFILENAME = "DUKE3D.IDF";
+	public const string confilename = "GAME.CON";
 	public const int TIMERUPDATESIZ = 32;
 	public const int MAXUSERQUOTES = 4;
 	public const int AVERAGEFRAMES = 16;

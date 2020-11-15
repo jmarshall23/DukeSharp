@@ -246,9 +246,19 @@ namespace Build
             return _reader.ReadInt16();
         }
 
+        public ushort kreadushort()
+        {
+            return _reader.ReadUInt16();
+        }
+
         public int kreadint()
         {
             return _reader.ReadInt32();
+        }
+
+        public uint kreaduint()
+        {
+            return _reader.ReadUInt32();
         }
 
         public void kreadshort(out short val)
