@@ -14,6 +14,7 @@ namespace Build
         //public Texture2D _texture;
         public int[] Pixels;
         public int[] PresentedPixels;
+        public Mutex mut = new Mutex();
 
         public int _width;
         public int _height;
@@ -29,7 +30,9 @@ namespace Build
 
         public void Present()
         {
+            mut.WaitOne();
             Array.Copy(Pixels, PresentedPixels, PresentedPixels.Length);
+            mut.ReleaseMutex();
         }
     }
 

@@ -97,6 +97,8 @@ public class GameEngine : MonoBehaviour
 
         GlobalMembers.faketimerhandler();
 
+        Engine._device._screenbuffer.mut.WaitOne();
+
         GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
         try
         {
@@ -111,5 +113,7 @@ public class GameEngine : MonoBehaviour
                 handle.Free();
             }
         }
+
+        Engine._device._screenbuffer.mut.ReleaseMutex();
     }
 }
