@@ -1930,7 +1930,7 @@ public partial class GlobalMembers
 
         MUSIC_StopSong();
 
-#if VOLUMEALL
+#if !DEMO
 
 		if (KB_KeyWaiting() == null && nomorelogohack == 0)
 		{
@@ -1940,8 +1940,8 @@ public partial class GlobalMembers
 			KB_FlushKeyboardQueue();
 		}
 
-		clearview(0);
-		nextpage();
+		Engine.clearview();
+        Engine.NextPage();
 #endif
 
         PlayMusic(env_music_fn[0]);
@@ -2345,7 +2345,7 @@ public partial class GlobalMembers
 						ud.eog = 0;
 						if (ud.multimode < 2)
 						{
-//#if !VOLUMEALL
+//#if DEMO
 //							doorders();
 //#endif
 							ps[myconnectindex].gm = DefineConstants.MODE_MENU;

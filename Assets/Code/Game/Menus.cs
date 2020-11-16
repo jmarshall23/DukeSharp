@@ -1348,10 +1348,10 @@ public partial class GlobalMembers
 	}
 
 	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
-	//ORIGINAL LINE: #define SHX(X) 0
+	//ORIGINAL LINE: #define SHX
 	// ((x==X)*(-sh))
 	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
-	//ORIGINAL LINE: #define PHX(X) 0
+	//ORIGINAL LINE: #define PHX
 	// ((x==X)?1:2)
 	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
 	//ORIGINAL LINE: #define MWIN(X) Engine.rotatesprite( 320<<15,200<<15,X,0,MENUSCREEN,-16,0,10+64,0,0,Engine.xdim-1,Engine.ydim-1)
@@ -2203,10 +2203,10 @@ public partial class GlobalMembers
 					menutext(c, 67 + 16 + 16, (-4), (-4), "LOAD GAME");
 				}
 
-#if !VOLUMEALL
+#if DEMO
 				menutext(c, 67 + 16 + 16 + 16, (-5), (-5), "HOW TO ORDER");
 #else
-				menutext(c, 67 + 16 + 16 + 16, (X) 0(-5), (X) 0(-5), "HELP");
+				menutext(c, 67 + 16 + 16 + 16, (-5), (-5), "HELP");
 #endif
 				menutext(c, 67 + 16 + 16 + 16 + 16, (-6), (-6), "CREDITS");
 
@@ -2306,10 +2306,10 @@ public partial class GlobalMembers
 				}
 
 				menutext(c, 67 + 16 + 16 + 16, (-5), (-5), "OPTIONS");
-#if !VOLUMEALL
+#if DEMO
 				menutext(c, 67 + 16 + 16 + 16 + 16, (-6), (-6), "HOW TO ORDER");
 #else
-				menutext(c, 67 + 16 + 16 + 16 + 16, (X) 0(-6), (X) 0(-6), " HELP");
+				menutext(c, 67 + 16 + 16 + 16 + 16, (-6), (-6), " HELP");
 #endif
 				if (numplayers > 1)
 				{
@@ -2325,8 +2325,8 @@ public partial class GlobalMembers
 			case 100:
 				Engine.rotatesprite(160 << 16, 19 << 16, 65536, 0, DefineConstants.MENUBAR, 16, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 				menutext(160, 24, 0, 0, "SELECT AN EPISODE");
-#if PLUTOPAK
-				if (boardfilename[0])
+#if !DEMO
+				if (boardfilename.Length > 0)
 				{
 					x = (short)probe(160, 60, 20, 5);
 				}
@@ -2399,20 +2399,20 @@ public partial class GlobalMembers
 
 				c = 80;
 #if VOLUMEONE
-				menutext(160, 60 + 20, (X) 0(-3), 1, volume_names[1]);
-				menutext(160, 60 + 20 + 20, (X) 0(-4), 1, volume_names[2]);
-#if PLUTOPAK
-				menutext(160, 60 + 20 + 20, (X) 0(-5), 1, volume_names[3]);
+				menutext(160, 60 + 20, (-3), 1, volume_names[1]);
+				menutext(160, 60 + 20 + 20, (-4), 1, volume_names[2]);
+#if !DEMO
+				menutext(160, 60 + 20 + 20, (-5), 1, volume_names[3]);
 #endif
 #else
 				menutext(160, 60 + 20, (-3), (-3), volume_names[1]);
 				menutext(160, 60 + 20 + 20, (-4), (-4), volume_names[2]);
-#if PLUTOPAK
-				menutext(160, 60 + 20 + 20 + 20, (X) 0(-5), (X) 0(-5), volume_names[3]);
-				if (boardfilename[0])
+#if !DEMO
+				menutext(160, 60 + 20 + 20 + 20, (-5), (-5), volume_names[3]);
+				if (boardfilename.Length > 0)
 				{
 
-					menutext(160, 60 + 20 + 20 + 20 + 20, (X) 0(-6), (X) 0(-6), "USER MAP");
+					menutext(160, 60 + 20 + 20 + 20 + 20, (-6), (-6), "USER MAP");
 					gametextpal(160, 60 + 20 + 20 + 20 + 20 + 3, boardfilename, 16 + (Engine.table.sintable[(totalclock << 4) & 2047]>>11), 2);
 				}
 #else
@@ -2650,7 +2650,7 @@ public partial class GlobalMembers
 #if !AUSTRALIA
 				menutext(c, 31 + 15 + 15 + 15 + 15 + 15 + 15 + 15 + 15, (-9), (-9), "PARENTAL LOCK");
 #else
-				menutext(c, 31 + 15 + 15 + 15 + 15 + 15 + 15 + 15 + 15, (X) 0(-9), 1, "PARENTAL LOCK");
+				menutext(c, 31 + 15 + 15 + 15 + 15 + 15 + 15 + 15 + 15, (-9), 1, "PARENTAL LOCK");
 #endif
 				if ((ps[myconnectindex].gm & DefineConstants.MODE_GAME) != 0 && ud.m_recstat != 1)
 				{
@@ -3066,7 +3066,7 @@ public partial class GlobalMembers
 				*/
 				break;
 
-#if !VOLUMEALL
+#if DEMO
 			//C++ TO C# CONVERTER TODO TASK: C# does not allow fall-through from a non-empty 'case':
 			case 400:
 			case 401:
@@ -3160,7 +3160,7 @@ public partial class GlobalMembers
 
 				c = (short)(320 >> 1);
 
-				if ((KB_KeyDown[(DefineConstants.sc_LeftArrow)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_4)] != 0) || (KB_KeyDown[(DefineConstants.sc_UpArrow)] != 0) || (KB_KeyDown[(DefineConstants.sc_PgUp)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_8)] != 0))
+				if ((KB_KeyDown[(DefineConstants.sc_LeftArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_4)] != false) || (KB_KeyDown[(DefineConstants.sc_UpArrow)] != false || (KB_KeyDown[(DefineConstants.sc_PgUp)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_8)] != false)))
 				{
 					{
 						KB_KeyDown[(DefineConstants.sc_LeftArrow)] = (!(1 == 1));
@@ -3185,7 +3185,7 @@ public partial class GlobalMembers
 						current_menu = 401;
 					}
 				}
-				else if ((KB_KeyDown[(DefineConstants.sc_PgDn)] != 0) || (KB_KeyDown[(DefineConstants.sc_Return)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_Enter)] != 0) || (KB_KeyDown[(DefineConstants.sc_RightArrow)] != 0) || (KB_KeyDown[(DefineConstants.sc_DownArrow)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_2)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_9)] != 0) || (KB_KeyDown[(DefineConstants.sc_Space)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_6)] != 0))
+				else if ((KB_KeyDown[(DefineConstants.sc_PgDn)] != false) || (KB_KeyDown[(DefineConstants.sc_Return)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_Enter)] != false) || (KB_KeyDown[(DefineConstants.sc_RightArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_DownArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_2)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_9)] != false) || (KB_KeyDown[(DefineConstants.sc_Space)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_6)] != false))
 				{
 					{
 						KB_KeyDown[(DefineConstants.sc_PgDn)] = (!(1 == 1));
@@ -3222,7 +3222,7 @@ public partial class GlobalMembers
 					}
 				}
 
-				if ((KB_KeyDown[(DefineConstants.sc_Escape)] != 0))
+				if ((KB_KeyDown[(DefineConstants.sc_Escape)] != false))
 				{
 					if ((ps[myconnectindex].gm & DefineConstants.MODE_GAME) != 0)
 					{
@@ -3522,7 +3522,7 @@ public partial class GlobalMembers
 					case 1:
 #if !VOLUMEONE
 						ud.m_volume_number++;
-#if PLUTOPAK
+#if !DEMO
 						if (ud.m_volume_number > 3)
 						{
 							ud.m_volume_number = 0;
@@ -3606,16 +3606,18 @@ public partial class GlobalMembers
 						break;
 
 					case 6:
-#if VOLUMEALL
+#if !DEMO
 						if (boardfilename[0] == 0)
 						{
 							break;
 						}
 
 						tempbuf[0] = 5;
-						tempbuf[1] = ud.m_level_number = 7;
-						tempbuf[2] = ud.m_volume_number = 0;
-						tempbuf[3] = ud.m_player_skill + 1;
+						tempbuf[1] = 7;
+						ud.m_level_number = 7;
+						tempbuf[2] = 0;
+						ud.m_volume_number = 0;
+						tempbuf[3] = (byte)(ud.m_player_skill + 1);
 
 						ud.level_number = ud.m_level_number;
 						ud.volume_number = ud.m_volume_number;
@@ -3640,13 +3642,13 @@ public partial class GlobalMembers
 
 						ud.m_respawn_inventory = 1;
 
-						tempbuf[4] = ud.m_monsters_off;
-						tempbuf[5] = ud.m_respawn_monsters;
-						tempbuf[6] = ud.m_respawn_items;
-						tempbuf[7] = ud.m_respawn_inventory;
-						tempbuf[8] = ud.m_coop;
-						tempbuf[9] = ud.m_marker;
-						tempbuf[10] = ud.m_ffire;
+						tempbuf[4] = (byte)ud.m_monsters_off;
+						tempbuf[5] = (byte)ud.m_respawn_monsters;
+						tempbuf[6] = (byte)ud.m_respawn_items;
+						tempbuf[7] = (byte)ud.m_respawn_inventory;
+						tempbuf[8] = (byte)ud.m_coop;
+						tempbuf[9] = (byte)ud.m_marker;
+						tempbuf[10] = (byte)ud.m_ffire;
 
 						for (c = connecthead;c >= 0;c = connectpoint2[c])
 						{
@@ -3655,12 +3657,12 @@ public partial class GlobalMembers
 
 							if (c != myconnectindex)
 							{
-								sendpacket(c,tempbuf,11);
+								//sendpacket(c,tempbuf,11);
 							}
 						}
 
-						newgame(ud.m_volume_number, ud.m_level_number, ud.m_player_skill + 1);
-						enterlevel(DefineConstants.MODE_GAME);
+						newgame((char)ud.m_volume_number, (char)ud.m_level_number, (char)(ud.m_player_skill + 1));
+						enterlevel((char)DefineConstants.MODE_GAME);
 
 						return;
 #endif
@@ -3781,7 +3783,7 @@ public partial class GlobalMembers
 				string s = "EPISODE " + ud.m_volume_number + 1;
 #if VOLUMEONE
 				sprintf(tempbuf,"EPISODE %ld",ud.m_volume_number + 1);
-				menutext(c, 57 + 16 - 9, (X) 0(-3), 1, tempbuf);
+				menutext(c, 57 + 16 - 9, (-3), 1, tempbuf);
 #else
 				
 				menutext(c, 57 + 16 - 9, (-3), (-3), s);
@@ -3793,7 +3795,7 @@ public partial class GlobalMembers
 				menutext(c, 57 + 16 + 16 - 9, (-4), (-4), s);
 #else
 				sprintf(tempbuf,"LEVEL %ld",ud.m_level_number + 1);
-				menutext(c, 57 + 16 + 16 - 9, (X) 0(-4), 1, tempbuf);
+				menutext(c, 57 + 16 + 16 - 9, (-4), 1, tempbuf);
 #endif
 				menutext(c, 57 + 16 + 16 + 16 - 9, (-5), (-5), "MONSTERS");
 
@@ -3815,11 +3817,14 @@ public partial class GlobalMembers
 					menutext(c, 57 + 16 + 16 + 16 + 16 + 16 - 9, (-6), 1, "FR. FIRE");
 				}
 
-#if VOLUMEALL
-				menutext(c, 57 + 16 + 16 + 16 + 16 + 16 + 16 - 9, (X) 0(-7), boardfilename[0] == 0, "USER MAP");
+#if !DEMO
+				short __rr = 0;
+				if (boardfilename.Length > 0)
+					__rr = 1;
+				menutext(c, 57 + 16 + 16 + 16 + 16 + 16 + 16 - 9, (-7), __rr, "USER MAP");
 				if (boardfilename[0] != 0)
 				{
-					gametext(c + 70 + 44, 57 + 16 + 16 + 16 + 16 + 16, ref boardfilename, 0, (short)(2 + 8 + 16));
+					gametext(c + 70 + 44, 57 + 16 + 16 + 16 + 16 + 16, boardfilename, 0, (short)(2 + 8 + 16));
 				}
 #else
 				menutext(c, 57 + 16 + 16 + 16 + 16 + 16 + 16 - 9, (-7), 1, "USER MAP");

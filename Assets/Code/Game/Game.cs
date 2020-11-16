@@ -4851,7 +4851,7 @@ public partial class GlobalMembers
 	{
 		short i;
 
-#if !VOLUMEALL
+#if DEMO
 		setview(0,0,Engine.xdim - 1,Engine.ydim - 1);
 		flushperms();
 		ps[myconnectindex].palette = palette;
@@ -5790,7 +5790,7 @@ public partial class GlobalMembers
 							{
 								short volnume;
 								short levnume;
-#if VOLUMEALL
+#if !DEMO
 								volnume = cheatbuf[6] - '0';
 								levnume = (cheatbuf[7] - '0') * 10 + (cheatbuf[8] - '0');
 #else
@@ -5808,7 +5808,7 @@ public partial class GlobalMembers
 									return;
 								}
 #endif
-#if PLUTOPAK
+#if !DEMO
 								if (volnume > 4)
 								{
 									ps[myconnectindex].cheat_phase = 0;
@@ -6253,7 +6253,7 @@ public partial class GlobalMembers
 					if (i == 5 && ps[myconnectindex].fta > 0 && ps[myconnectindex].ftq == 26)
 					{
 						music_select++;
-#if VOLUMEALL
+#if !DEMO
 						if (music_select == 44)
 						{
 							music_select = 0;
@@ -6994,7 +6994,7 @@ public partial class GlobalMembers
 							break;
 						case 'j':
 						case 'J':
-#if VOLUMEALL
+#if !DEMO
 #if AUSTRALIA
 			printf("Duke Nukem 3D (AUSSIE FULL VERSION) v%s\n",DefineConstants.VERSION);
 #else
