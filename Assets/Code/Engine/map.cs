@@ -1600,7 +1600,9 @@ namespace Build
                         xs = spr.x - globalposx; ys = spr.y - globalposy;
                         if ((spr.cstat & 48) != 0 || (xs * cosglobalang + ys * singlobalang > 0))
                         {
-                            tsprite[spritesortcnt] = spr;
+                            if (tsprite[spritesortcnt] == null)
+                                tsprite[spritesortcnt] = new spritetype();
+                            tsprite[spritesortcnt].Copy(spr);
                             // jv - non direct copy it?
                             //copybufbyte(spr,&tsprite[spritesortcnt],sizeof(spritetype));
                             tsprite[spritesortcnt++].owner = (short)z;
