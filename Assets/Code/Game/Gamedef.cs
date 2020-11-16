@@ -2501,7 +2501,7 @@ public partial class GlobalMembers
                 break;
             case 24:
                 insptr++;
-                g_t[5] = scriptptr.buffer[insptr];
+                g_t[5] = insptr;
                 g_t[4] = scriptptr.buffer[g_t[5]]; // Action
                 g_t[1] = scriptptr.buffer[g_t[5] + 4]; // move
                 g_sp.hitag = (short)scriptptr.buffer[g_t[5] + 8]; // Ai
@@ -3015,7 +3015,7 @@ public partial class GlobalMembers
                 break;
             case 21:
                 insptr++;
-                parseifelse(g_t[5] == (short)scriptptr.buffer[insptr]);
+                parseifelse(scriptptr.buffer[g_t[5]] == (short)scriptptr.buffer[insptr]);
                 break;
             case 34:
                 insptr++;
