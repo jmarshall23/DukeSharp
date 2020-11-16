@@ -1725,8 +1725,17 @@ public partial class GlobalMembers
         line_number = 1;
         total_lines = 0;
 
+        scriptptr.bufferpos = 1;
+
         passone(); //Tokenize
         //*script = (int)scriptptr;
+
+// jmarshall - debugging
+        //int[] debug_actorscript = new int[actorscrptr.Length];
+        //for(int d = 0;  d < actorscrptr.Length; d++)
+        //{
+        //    debug_actorscript[d] = scriptptr.buffer[actorscrptr[d]];
+        //}
 
         if ((warning | error) != 0)
         {

@@ -49,7 +49,7 @@ public class input
     public uint bits;
 }
 
-public class SAMPLE
+public struct SAMPLE
 {
     public string ptr;
     //C++ TO C# CONVERTER TODO TASK: 'volatile' has a different meaning in C#:
