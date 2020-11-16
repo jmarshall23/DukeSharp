@@ -2305,12 +2305,12 @@ public partial class GlobalMembers
 		}
 		if (KB_KeyDown[DefineConstants.sc_LeftArrow])
 		{
-			svel += keymove;
+			angvel -= turnamount;
 		}
 
 		if (KB_KeyDown[DefineConstants.sc_RightArrow])
 		{
-			svel += -keymove;
+			angvel += turnamount;
 		}
 
 		if (KB_KeyDown[DefineConstants.sc_UpArrow])
