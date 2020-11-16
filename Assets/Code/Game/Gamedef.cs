@@ -2968,7 +2968,7 @@ public partial class GlobalMembers
 
                     tempscrptr = insptr + 2;
 
-                    insptr = insptr + 1; // (scriptptr.buffer[insptr + 1]); // jmarshall 
+                    insptr = (scriptptr.buffer[insptr + 1]); // jmarshall 
                     while (true)
                     {
                         if (parse() != 0)
