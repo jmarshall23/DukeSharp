@@ -1,4 +1,5 @@
 ﻿using Build;
+using UnityEngine;
 public partial class GlobalMembers
 {
 
@@ -162,11 +163,10 @@ public partial class GlobalMembers
     //C++ TO C# CONVERTER TODO TASK: Pointer arithmetic is detected on the parameter 't', so pointers on this parameter are left unchanged:
     public static int gametextpart(int x, int y, string t, char s, int p)
     {
-        /*
-        short ac;
+        int ac;
         short newx;
         short cnt;
-        char centre;
+        bool centre;
         string oldt;
 
         centre = (x == (320 >> 1));
@@ -176,22 +176,21 @@ public partial class GlobalMembers
 
         if (centre)
         {
-            while (*t)
+            for(int i = 0; i < t.Length; i++)
             {
                 if (cnt == p)
                 {
                     break;
                 }
 
-                if (*t == 32)
+                if (t[i] == 32)
                 {
                     newx += 5;
-                    t = t.Substring(1);
                     continue;
                 }
                 else
                 {
-                    ac = *t - '!' + DefineConstants.STARTALPHANUM;
+                    ac = t[i] - '!' + DefineConstants.STARTALPHANUM;
                 }
 
                 if (ac < DefineConstants.STARTALPHANUM || ac > DefineConstants.ENDALPHANUM)
@@ -200,7 +199,6 @@ public partial class GlobalMembers
                 }
 
                 newx += Engine.tilesizx[ac];
-                t = t.Substring(1);
                 cnt++;
 
             }
@@ -210,17 +208,16 @@ public partial class GlobalMembers
         }
 
         cnt = 0;
-        while (*t)
-        {
-            if (*t == 32)
+		for (int i = 0; i < t.Length; i++)
+		{
+            if (t[i] == 32)
             {
                 x += 5;
-                t = t.Substring(1);
                 continue;
             }
             else
             {
-                ac = *t - '!' + DefineConstants.STARTALPHANUM;
+                ac = t[i] - '!' + DefineConstants.STARTALPHANUM;
             }
 
             if (ac < DefineConstants.STARTALPHANUM || ac > DefineConstants.ENDALPHANUM)
@@ -230,107 +227,96 @@ public partial class GlobalMembers
 
             if (cnt == p)
             {
-                Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, s, 1, 2 + 8 + 16, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+                Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, (sbyte)s, 1, 2 + 8 + 16, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
                 break;
             }
             else
             {
-                Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, s, 0, 2 + 8 + 16, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+                Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, (sbyte)s, 0, 2 + 8 + 16, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
             }
 
             x += Engine.tilesizx[ac];
 
-            t = t.Substring(1);
             cnt++;
         }
-        */
+
         return 0;
     }
 
     //C++ TO C# CONVERTER TODO TASK: Pointer arithmetic is detected on the parameter 't', so pointers on this parameter are left unchanged:
     public static int minitext(int x, int y, string t, int p, int sb)
     {
-/*
-        short ac;
+        int ac;
 
-        while (*t)
+		t = t.ToUpper();
+
+        for(int i = 0; i < t.Length; i++)
         {
-            *t = toupper(*t);
-            if (*t == 32)
+            if (t[i] == 32)
             {
                 x += 5;
-                t = t.Substring(1);
                 continue;
             }
             else
             {
-                ac = *t - '!' + DefineConstants.MINIFONT;
+                ac = t[i] - '!' + DefineConstants.MINIFONT;
             }
 
-            Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, 0, p, sb, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+            Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, 0, (byte)p,(byte) sb, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
             x += 4; // Engine.tilesizx[ac]+1;
-
-            t = t.Substring(1);
-   }
+		 }
         return (x);
-*/
-return 0;
+
      
     }
 
     //C++ TO C# CONVERTER TODO TASK: Pointer arithmetic is detected on the parameter 't', so pointers on this parameter are left unchanged:
     public static int minitextshade(int x, int y, string t, char s, char p, char sb)
     {
-/*
-        short ac;
+		 int ac;
 
-        while (*t)
+        t = t.ToUpper();
+
+        for (int i = 0; i < t.Length; i++)
         {
-            *t = toupper(*t);
-            if (*t == 32)
+            if (t[i] == 32)
             {
                 x += 5;
-                t = t.Substring(1);
                 continue;
             }
             else
             {
-                ac = *t - '!' + DefineConstants.MINIFONT;
+                ac = t[i] - '!' + DefineConstants.MINIFONT;
             }
 
-            Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, s, p, sb, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+            Engine.rotatesprite(x << 16, y << 16, 65536, 0, ac, 0, (byte)p, (byte)sb, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
             x += 4; // Engine.tilesizx[ac]+1;
-
-            t = t.Substring(1);
         }
         return (x);
-*/
-return 0;
     }
 
-	public static void invennum(int x, int y, char num1, char ha, char sbits)
+	public static void invennum(int x, int y, char num1, int ha, int sbits)
 	{
-		/*
 		//char[] dabuf = {0, '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
 		//sprintf(dabuf,"%ld",num1);
-		string dabuf = num1;
+		string dabuf = "";
+		dabuf += (char)num1;
 
 		if (num1 > 99)
 		{
-			Engine.rotatesprite((x - 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[2] - '0', ha, 0, sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x - 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, (byte)sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, (byte)sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[2] - '0', (sbyte)ha, 0, (byte)sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else if (num1 > 9)
 		{
-			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, (byte)sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, (byte)sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else
 		{
-			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, (byte)sbits, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
-		*/
 	}
 
 #if VOLUMEONE
@@ -344,14 +330,12 @@ return 0;
 #endif
 
 
-	public static void weaponnum(short ind, int x, int y, int num1, int num2, char ha)
+	public static void weaponnum(short ind, int x, int y, int num1, int num2, int ha)
 	{
-		/*
-		char[] dabuf = { 0, '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0' };
-
-		Engine.rotatesprite((x - 7) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + ind + 1, ha - 10, 7, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-		Engine.rotatesprite((x - 3) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 10, ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-		Engine.rotatesprite((x + 9) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 11, ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		string dabuf = "";
+		Engine.rotatesprite((x - 7) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + ind + 1, (sbyte)(ha - 10), 7, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		Engine.rotatesprite((x - 3) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 10, (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		Engine.rotatesprite((x + 9) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 11, (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 
 		if (num1 > 99)
 		{
@@ -361,203 +345,222 @@ return 0;
 		{
 			num2 = 99;
 		}
-
-		sprintf(dabuf, "%ld", num1);
-		if (num1 > 9)
+		
+		dabuf = "";
+        dabuf += num1;
+        if (num1 > 9)
 		{
-			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else
 		{
-			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 
-		sprintf(dabuf, "%ld", num2);
-		if (num2 > 9)
+        dabuf = "";
+        dabuf += num2;
+        if (num2 > 9)
 		{
-			Engine.rotatesprite((x + 13) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 17) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 13) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 17) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else
 		{
-			Engine.rotatesprite((x + 13) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 13) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
-		*/
+
 	}
 
-	public static void weaponnum999(char ind, int x, int y, int num1, int num2, char ha)
+	public static void weaponnum999(int ind, int x, int y, int num1, int num2, int ha)
 	{
-		/*
-		char[] dabuf = { 0, '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0' };
+		string dabuf = "";
+		Engine.rotatesprite((x - 7) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + ind + 1, (sbyte)(ha - 10), 7, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		Engine.rotatesprite((x - 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 10, (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		Engine.rotatesprite((x + 13) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 11, (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 
-		Engine.rotatesprite((x - 7) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + ind + 1, ha - 10, 7, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-		Engine.rotatesprite((x - 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 10, ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-		Engine.rotatesprite((x + 13) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + 11, ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-
-		sprintf(dabuf, "%ld", num1);
-		if (num1 > 99)
+        dabuf = "";
+        dabuf += num1;
+        if (num1 > 99)
 		{
-			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 8) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[2] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 8) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[2] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else if (num1 > 9)
 		{
-			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 8) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 4) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 8) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else
 		{
-			Engine.rotatesprite((x + 8) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 8) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 
-		sprintf(dabuf, "%ld", num2);
-		if (num2 > 99)
+        dabuf = "";
+        dabuf += num2;
+        if (num2 > 99)
 		{
-			Engine.rotatesprite((x + 17) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 21) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 25) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[2] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 17) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 21) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 25) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[2] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else if (num2 > 9)
 		{
-			Engine.rotatesprite((x + 17) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			Engine.rotatesprite((x + 21) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 17) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 21) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[1] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
 		else
 		{
-			Engine.rotatesprite((x + 25) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			Engine.rotatesprite((x + 25) << 16, y << 16, 65536, 0, DefineConstants.THREEBYFIVE + dabuf[0] - '0', (sbyte)ha, 0, 10 + 128, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 		}
-		*/
+
 	}
 
 
 	//REPLACE FULLY
 	public static void weapon_amounts(player_struct p, int x, int y, int u)
 	{
-		/*
 		int cw;
-
-		cw = p.curr_weapon;
-
-		if ((u & 4) != 0)
-		{
-			if (u != 0xffffffff)
+		int[] temp_got_weapons = new int[DefineConstants.MAX_WEAPONS];
+		int[] temp_got_weapons2 = new int[DefineConstants.MAX_WEAPONS];
+		for (int i = 0; i < temp_got_weapons.Length; i++)
+        {
+			if (p.gotweapon[i])
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(96, Engine.xdim, 320), scale(178, Engine.ydim, 200), scale(96 + 12, Engine.xdim, 320) - 1, scale(178 + 6, Engine.ydim, 200) - 1);
-			};
-			weaponnum999(DefineConstants.PISTOL_WEAPON, x, y, p.ammo_amount[DefineConstants.PISTOL_WEAPON], max_ammo_amount[DefineConstants.PISTOL_WEAPON], 12 - 20 * (cw == DefineConstants.PISTOL_WEAPON));
-		}
-		if ((u & 8) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(96, Engine.xdim, 320), scale(184, Engine.ydim, 200), scale(96 + 12, Engine.xdim, 320) - 1, scale(184 + 6, Engine.ydim, 200) - 1);
-			};
-			weaponnum999(DefineConstants.SHOTGUN_WEAPON, x, y + 6, p.ammo_amount[DefineConstants.SHOTGUN_WEAPON], max_ammo_amount[DefineConstants.SHOTGUN_WEAPON], (!p.gotweapon[DefineConstants.SHOTGUN_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.SHOTGUN_WEAPON));
-		}
-		if ((u & 16) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(96, Engine.xdim, 320), scale(190, Engine.ydim, 200), scale(96 + 12, Engine.xdim, 320) - 1, scale(190 + 6, Engine.ydim, 200) - 1);
-			};
-			weaponnum999(DefineConstants.CHAINGUN_WEAPON, x, y + 12, p.ammo_amount[DefineConstants.CHAINGUN_WEAPON], max_ammo_amount[DefineConstants.CHAINGUN_WEAPON], (!p.gotweapon[DefineConstants.CHAINGUN_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.CHAINGUN_WEAPON));
-		}
-		if ((u & 32) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(135, Engine.xdim, 320), scale(178, Engine.ydim, 200), scale(135 + 8, Engine.xdim, 320) - 1, scale(178 + 6, Engine.ydim, 200) - 1);
-			};
-			weaponnum(DefineConstants.RPG_WEAPON, x + 39, y, p.ammo_amount[DefineConstants.RPG_WEAPON], max_ammo_amount[DefineConstants.RPG_WEAPON], (!p.gotweapon[DefineConstants.RPG_WEAPON] * 9) + 12 - 19 * (cw == DefineConstants.RPG_WEAPON));
-		}
-		if ((u & 64) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(135, Engine.xdim, 320), scale(184, Engine.ydim, 200), scale(135 + 8, Engine.xdim, 320) - 1, scale(184 + 6, Engine.ydim, 200) - 1);
-			};
-			weaponnum(DefineConstants.HANDBOMB_WEAPON, x + 39, y + 6, p.ammo_amount[DefineConstants.HANDBOMB_WEAPON], max_ammo_amount[DefineConstants.HANDBOMB_WEAPON], (((!p.ammo_amount[DefineConstants.HANDBOMB_WEAPON]) | (!p.gotweapon[DefineConstants.HANDBOMB_WEAPON])) * 9) + 12 - 19 * ((cw == DefineConstants.HANDBOMB_WEAPON) || (cw == DefineConstants.HANDREMOTE_WEAPON)));
-		}
-		if ((u & 128) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(135, Engine.xdim, 320), scale(190, Engine.ydim, 200), scale(135 + 8, Engine.xdim, 320) - 1, scale(190 + 6, Engine.ydim, 200) - 1);
-			};
-
-#if VOLUMEONE
-			 orderweaponnum(DefineConstants.SHRINKER_WEAPON, x + 39, y + 12, p.ammo_amount[DefineConstants.SHRINKER_WEAPON], max_ammo_amount[DefineConstants.SHRINKER_WEAPON], (!p.gotweapon[DefineConstants.SHRINKER_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.SHRINKER_WEAPON));
-#else
-			if ((p.subweapon & (1 << DefineConstants.GROW_WEAPON)) != 0)
-			{
-				weaponnum(DefineConstants.SHRINKER_WEAPON, x + 39, y + 12, p.ammo_amount[DefineConstants.GROW_WEAPON], max_ammo_amount[DefineConstants.GROW_WEAPON], (!p.gotweapon[DefineConstants.GROW_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.GROW_WEAPON));
+				temp_got_weapons[i] = 1;
+				temp_got_weapons2[i] = 0;
 			}
 			else
 			{
-				weaponnum(DefineConstants.SHRINKER_WEAPON, x + 39, y + 12, p.ammo_amount[DefineConstants.SHRINKER_WEAPON], max_ammo_amount[DefineConstants.SHRINKER_WEAPON], (!p.gotweapon[DefineConstants.SHRINKER_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.SHRINKER_WEAPON));
+				temp_got_weapons[i] = 0;
+				temp_got_weapons2[i] = 1;
 			}
-#endif
-		}
-		if ((u & 256) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(166, Engine.xdim, 320), scale(178, Engine.ydim, 200), scale(166 + 8, Engine.xdim, 320) - 1, scale(178 + 6, Engine.ydim, 200) - 1);
-			};
-
-#if VOLUMEONE
-			orderweaponnum(DefineConstants.DEVISTATOR_WEAPON, x + 70, y, p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON], max_ammo_amount[DefineConstants.DEVISTATOR_WEAPON], (!p.gotweapon[DefineConstants.DEVISTATOR_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.DEVISTATOR_WEAPON));
-#else
-			weaponnum(DefineConstants.DEVISTATOR_WEAPON, x + 70, y, p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON], max_ammo_amount[DefineConstants.DEVISTATOR_WEAPON], (!p.gotweapon[DefineConstants.DEVISTATOR_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.DEVISTATOR_WEAPON));
-#endif
-		}
-		if ((u & 512) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(166, Engine.xdim, 320), scale(184, Engine.ydim, 200), scale(166 + 8, Engine.xdim, 320) - 1, scale(184 + 6, Engine.ydim, 200) - 1);
-			};
-#if VOLUMEONE
-			 orderweaponnum(DefineConstants.TRIPBOMB_WEAPON, x + 70, y + 6, p.ammo_amount[DefineConstants.TRIPBOMB_WEAPON], max_ammo_amount[DefineConstants.TRIPBOMB_WEAPON], (!p.gotweapon[DefineConstants.TRIPBOMB_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.TRIPBOMB_WEAPON));
-#else
-			weaponnum(DefineConstants.TRIPBOMB_WEAPON, x + 70, y + 6, p.ammo_amount[DefineConstants.TRIPBOMB_WEAPON], max_ammo_amount[DefineConstants.TRIPBOMB_WEAPON], (!p.gotweapon[DefineConstants.TRIPBOMB_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.TRIPBOMB_WEAPON));
-#endif
 		}
 
-		if ((u & 65536) != 0)
-		{
-			if (u != 0xffffffff)
-			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(166, Engine.xdim, 320), scale(190, Engine.ydim, 200), scale(166 + 8, Engine.xdim, 320) - 1, scale(190 + 6, Engine.ydim, 200) - 1);
-			};
-#if VOLUMEONE
-			orderweaponnum(-1, x + 70, y + 12, p.ammo_amount[DefineConstants.FREEZE_WEAPON], max_ammo_amount[DefineConstants.FREEZE_WEAPON], (!p.gotweapon[DefineConstants.FREEZE_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.FREEZE_WEAPON));
-#else
-			weaponnum(-1, x + 70, y + 12, p.ammo_amount[DefineConstants.FREEZE_WEAPON], max_ammo_amount[DefineConstants.FREEZE_WEAPON], (!p.gotweapon[DefineConstants.FREEZE_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.FREEZE_WEAPON));
-#endif
-		}
-		*/
-	}
+        cw = p.curr_weapon;
 
-	public static void digitalnumber(int x, int y, int n, char s, char cs)
+        if ((u & 4) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
+            };
+            weaponnum999(DefineConstants.PISTOL_WEAPON, x, y, p.ammo_amount[DefineConstants.PISTOL_WEAPON], max_ammo_amount[DefineConstants.PISTOL_WEAPON], (char)(12 - 20 * ((cw == DefineConstants.PISTOL_WEAPON) ? 1 : 0)));
+        }
+        if ((u & 8) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(184, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(184 + 6, Engine.ydim, 200) - 1);
+            };
+            weaponnum999(DefineConstants.SHOTGUN_WEAPON, x, y + 6, p.ammo_amount[DefineConstants.SHOTGUN_WEAPON], max_ammo_amount[DefineConstants.SHOTGUN_WEAPON], (char)((temp_got_weapons2[DefineConstants.SHOTGUN_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.SHOTGUN_WEAPON) ? 1 : 0)));
+        }
+        if ((u & 16) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(190 + 6, Engine.ydim, 200) - 1);
+            };
+            weaponnum999(DefineConstants.CHAINGUN_WEAPON, x, y + 12, p.ammo_amount[DefineConstants.CHAINGUN_WEAPON], max_ammo_amount[DefineConstants.CHAINGUN_WEAPON], (char)((temp_got_weapons2[DefineConstants.CHAINGUN_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.CHAINGUN_WEAPON) ? 1 : 0)));
+        }
+        if ((u & 32) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(135, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(135 + 8, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
+            };
+            weaponnum(DefineConstants.RPG_WEAPON, x + 39, y, p.ammo_amount[DefineConstants.RPG_WEAPON], max_ammo_amount[DefineConstants.RPG_WEAPON], (char)((temp_got_weapons2[DefineConstants.RPG_WEAPON] * 9) + 12 - 19 * ((cw == DefineConstants.RPG_WEAPON) ? 1 : 0)));
+        }
+        if ((u & 64) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(135, Engine.xdim, 320), pragmas.scale(184, Engine.ydim, 200), pragmas.scale(135 + 8, Engine.xdim, 320) - 1, pragmas.scale(184 + 6, Engine.ydim, 200) - 1);
+            };
+			int _ammo1 = p.ammo_amount[DefineConstants.HANDBOMB_WEAPON];
+			if (_ammo1 == 0)
+				_ammo1 = temp_got_weapons2[DefineConstants.HANDBOMB_WEAPON];
+
+
+			weaponnum(DefineConstants.HANDBOMB_WEAPON, x + 39, y + 6, p.ammo_amount[DefineConstants.HANDBOMB_WEAPON], max_ammo_amount[DefineConstants.HANDBOMB_WEAPON], (_ammo1 * 9) + 12 - 19 * (((cw == DefineConstants.HANDBOMB_WEAPON) || (cw == DefineConstants.HANDREMOTE_WEAPON))  ? 1 : 0));
+        }
+        if ((u & 128) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(135, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(135 + 8, Engine.xdim, 320) - 1, pragmas.scale(190 + 6, Engine.ydim, 200) - 1);
+            };
+
+#if VOLUMEONE
+			 orderweaponnum(DefineConstants.SHRINKER_WEAPON, x + 39, y + 12, p.ammo_amount[DefineConstants.SHRINKER_WEAPON], max_ammo_amount[DefineConstants.SHRINKER_WEAPON], (temp_got_weapons2[DefineConstants.SHRINKER_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.SHRINKER_WEAPON));
+#else
+            if ((p.subweapon & (1 << DefineConstants.GROW_WEAPON)) != 0)
+            {
+                weaponnum(DefineConstants.SHRINKER_WEAPON, x + 39, y + 12, p.ammo_amount[DefineConstants.GROW_WEAPON], max_ammo_amount[DefineConstants.GROW_WEAPON], (temp_got_weapons2[DefineConstants.GROW_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.GROW_WEAPON) ? 1 : 0));
+            }
+            else
+            {
+                weaponnum(DefineConstants.SHRINKER_WEAPON, x + 39, y + 12, p.ammo_amount[DefineConstants.SHRINKER_WEAPON], max_ammo_amount[DefineConstants.SHRINKER_WEAPON], (temp_got_weapons2[DefineConstants.SHRINKER_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.SHRINKER_WEAPON) ? 1 : 0));
+            }
+#endif
+        }
+        if ((u & 256) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(166, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(166 + 8, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
+            };
+
+#if VOLUMEONE
+			orderweaponnum(DefineConstants.DEVISTATOR_WEAPON, x + 70, y, p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON], max_ammo_amount[DefineConstants.DEVISTATOR_WEAPON], (temp_got_weapons2[DefineConstants.DEVISTATOR_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.DEVISTATOR_WEAPON));
+#else
+            weaponnum(DefineConstants.DEVISTATOR_WEAPON, x + 70, y, p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON], max_ammo_amount[DefineConstants.DEVISTATOR_WEAPON], (temp_got_weapons2[DefineConstants.DEVISTATOR_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.DEVISTATOR_WEAPON) ? 1 : 0));
+#endif
+        }
+        if ((u & 512) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(166, Engine.xdim, 320), pragmas.scale(184, Engine.ydim, 200), pragmas.scale(166 + 8, Engine.xdim, 320) - 1, pragmas.scale(184 + 6, Engine.ydim, 200) - 1);
+            };
+#if VOLUMEONE
+			 orderweaponnum(DefineConstants.TRIPBOMB_WEAPON, x + 70, y + 6, p.ammo_amount[DefineConstants.TRIPBOMB_WEAPON], max_ammo_amount[DefineConstants.TRIPBOMB_WEAPON], (temp_got_weapons2[DefineConstants.TRIPBOMB_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.TRIPBOMB_WEAPON));
+#else
+            weaponnum(DefineConstants.TRIPBOMB_WEAPON, x + 70, y + 6, p.ammo_amount[DefineConstants.TRIPBOMB_WEAPON], max_ammo_amount[DefineConstants.TRIPBOMB_WEAPON], (temp_got_weapons2[DefineConstants.TRIPBOMB_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.TRIPBOMB_WEAPON) ? 1 : 0));
+#endif
+        }
+
+        if ((u & 65536) != 0)
+        {
+            if (u != 0xffffffff)
+            {
+                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(166, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(166 + 8, Engine.xdim, 320) - 1, pragmas.scale(190 + 6, Engine.ydim, 200) - 1);
+            };
+#if VOLUMEONE
+			orderweaponnum(-1, x + 70, y + 12, p.ammo_amount[DefineConstants.FREEZE_WEAPON], max_ammo_amount[DefineConstants.FREEZE_WEAPON], (temp_got_weapons2[DefineConstants.FREEZE_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.FREEZE_WEAPON));
+#else
+            weaponnum(-1, x + 70, y + 12, p.ammo_amount[DefineConstants.FREEZE_WEAPON], max_ammo_amount[DefineConstants.FREEZE_WEAPON], (temp_got_weapons2[DefineConstants.FREEZE_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.FREEZE_WEAPON) ? 1 : 0));
+#endif
+        }
+    }
+
+    public static void digitalnumber(int x, int y, int n, int s, int cs)
 	{
-		/*
-		short i;
-		short j;
-		short k;
-		short p;
-		short c;
-		string b = new string(new char[10]);
+		int i;
+		int j;
+		int k;
+		int p;
+		int c;
+		string b = "";
 
-		ltoa(n, b, 10);
-		i = strlen(b);
+		b += n;
+		i = b.Length;
 		j = 0;
 
 		for (k = 0; k < i; k++)
 		{
-			p = DefineConstants.DIGITALNUM + *(b.Substring(k)) - '0';
+			p = DefineConstants.DIGITALNUM + b[k] - '0';
 			j += Engine.tilesizx[p] + 1;
 		}
 		c = (short)(x - (j >> 1));
@@ -565,11 +568,10 @@ return 0;
 		j = 0;
 		for (k = 0; k < i; k++)
 		{
-			p = DefineConstants.DIGITALNUM + *(b.Substring(k)) - '0';
-			Engine.rotatesprite((c + j) << 16, y << 16, 65536, 0, p, s, 0, cs, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+			p = DefineConstants.DIGITALNUM + b[k] - '0';
+			Engine.rotatesprite((c + j) << 16, y << 16, 65536, 0, p, (sbyte)s, 0, (byte)cs, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 			j += Engine.tilesizx[p] + 1;
 		}
-		*/
 	}
 
 	/*
@@ -591,45 +593,44 @@ return 0;
 	  */
 	public static void displayinventory(player_struct p)
 	{
-		/*
-		short n;
+		int n;
 		short j;
 		short xoff;
 		short y;
 
 		j = xoff = 0;
 
-		n = (short)((p.jetpack_amount > 0) << 3);
+		n = (short)((p.jetpack_amount > 0) ? 1 : 0 << 3);
 		if ((n & 8) != 0)
 		{
 			j++;
 		}
-		n |= (p.scuba_amount > 0) << 5;
+		n |= (p.scuba_amount > 0) ? 1 : 0 << 5;
 		if ((n & 32) != 0)
 		{
 			j++;
 		}
-		n |= (p.steroids_amount > 0) << 1;
+		n |= (p.steroids_amount > 0) ? 1 : 0 << 1;
 		if ((n & 2) != 0)
 		{
 			j++;
 		}
-		n |= (p.holoduke_amount > 0) << 2;
+		n |= (p.holoduke_amount > 0) ? 1 : 0 << 2;
 		if ((n & 4) != 0)
 		{
 			j++;
 		}
-		n |= (p.firstaid_amount > 0);
+		n |= (p.firstaid_amount > 0) ? 1 : 0;
 		if ((n & 1) != 0)
 		{
 			j++;
 		}
-		n |= (p.heat_amount > 0) << 4;
+		n |= (p.heat_amount > 0) ? 1 : 0 << 4;
 		if ((n & 16) != 0)
 		{
 			j++;
 		}
-		n |= (p.boot_amount > 0) << 6;
+		n |= (p.boot_amount > 0) ? 1 : 0 << 6;
 		if ((n & 64) != 0)
 		{
 			j++;
@@ -699,14 +700,12 @@ return 0;
 
 			j++;
 		}
-		*/
 	}
 
 
 
 	public static void displayfragbar()
 	{
-		/*
 		short i;
 		short j;
 
@@ -736,16 +735,16 @@ return 0;
 
 		for (i = connecthead; i >= 0; i = connectpoint2[i])
 		{
-			minitext(21 + (73 * (i & 3)), 2 + ((i & 28) << 1), ud.user_name[i][0], sprite[ps[i].i].pal, 2 + 8 + 16 + 128);
-			sprintf(tempbuf, "%d", ps[i].frag - ps[i].fraggedself);
-			minitext(17 + 50 + (73 * (i & 3)), 2 + ((i & 28) << 1), tempbuf, sprite[ps[i].i].pal, 2 + 8 + 16 + 128);
+			minitext(21 + (73 * (i & 3)), 2 + ((i & 28) << 1), ud.user_name[i], Engine.board.sprite[ps[i].i].pal, 2 + 8 + 16 + 128);
+			//sprintf(tempbuf, "%d", ps[i].frag - ps[i].fraggedself);
+			string s = "";
+			s += (int)ps[i].frag - ps[i].fraggedself;
+			minitext(17 + 50 + (73 * (i & 3)), 2 + ((i & 28) << 1), s, Engine.board.sprite[ps[i].i].pal, 2 + 8 + 16 + 128);
 		}
-		*/
 	}
 
 	public static void coolgaugetext(short snum)
 	{
-		/*
 		player_struct p;
 		int i;
 		int j;
@@ -771,15 +770,16 @@ return 0;
 			}
 		}
 
-		ss = ud.screen_size;
-		if (ss < 4)
-		{
-			return;
-		}
+		//ss = ud.screen_size;
+		//if (ss < 4)
+		//{
+		//	return;
+		//}
+		ss = 4;
 
 		if (ud.multimode > 1 && ud.coop != 1)
 		{
-			if (pus)
+			if (pus != 0)
 			{
 				displayfragbar();
 			}
@@ -803,15 +803,15 @@ return 0;
 			}
 		}
 
-		if (ss == 4) //DRAW MINI STATUS BAR:
+	//	if (ss == 4) //DRAW MINI STATUS BAR:
 		{
 			Engine.rotatesprite(5 << 16, (200 - 28) << 16, 65536, 0, DefineConstants.HEALTHBOX, 0, 21, 10 + 16, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-			if (p.inven_icon)
+			if (p.inven_icon != 0)
 			{
 				Engine.rotatesprite(69 << 16, (200 - 30) << 16, 65536, 0, DefineConstants.INVENTORYBOX, 0, 21, 10 + 16, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 			}
 
-			if (sprite[p.i].pal == 1 && p.last_extra < 2)
+			if (Engine.board.sprite[p.i].pal == 1 && p.last_extra < 2)
 			{
 				digitalnumber(20, 200 - 17, 1, -16, 10 + 16);
 			}
@@ -833,10 +833,10 @@ return 0;
 			digitalnumber(53, 200 - 17, p.ammo_amount[i], -16, 10 + 16);
 
 			o = 158;
-			permbit = 0;
-			if (p.inven_icon)
+			permbit = (char)0;
+			if (p.inven_icon != 0)
 			{
-				switch (p.inven_icon)
+				switch ((int)p.inven_icon)
 				{
 					case 1:
 						i = DefineConstants.FIRSTAID_ICON;
@@ -865,13 +865,13 @@ return 0;
 				}
 				if (i >= 0)
 				{
-					Engine.rotatesprite((231 - o) << 16, (200 - 21) << 16, 65536, 0, i, 0, 0, 10 + 16 + permbit, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+					Engine.rotatesprite((231 - o) << 16, (200 - 21) << 16, 65536, 0, i, 0, 0, (byte)(10 + 16 + permbit), 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 				}
 
 				minitext(292 - 30 - o, 190, "%", 6, 10 + 16 + permbit);
 
-				j = 0x80000000;
-				switch (p.inven_icon)
+				j = unchecked((int)0x80000000);
+				switch ((int)p.inven_icon)
 				{
 					case 1:
 						i = p.firstaid_amount;
@@ -917,10 +917,10 @@ return 0;
 
 		//DRAW/UPDATE FULL STATUS BAR:
 
-		if (pus)
+		if (pus != 0)
 		{
-			pus = 0;
-			u = 0xffffffff;
+			pus = (char)0;
+			u = unchecked((int)0xffffffff);
 		}
 		else
 		{
@@ -1060,7 +1060,7 @@ return 0;
 		if (u == 0xffffffff)
 		{
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(0, Engine.xdim, 320), scale(0, Engine.ydim, 200), scale(320, Engine.xdim, 320) - 1, scale(200, Engine.ydim, 200) - 1);
+				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(0, Engine.xdim, 320), pragmas.scale(0, Engine.ydim, 200), pragmas.scale(320, Engine.xdim, 320) - 1, pragmas.scale(200, Engine.ydim, 200) - 1);
 			};
 			if (ud.multimode > 1 && ud.coop != 1)
 			{
@@ -1073,9 +1073,9 @@ return 0;
 			{
 				if (u != 0xffffffff)
 				{
-					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(276, Engine.xdim, 320), scale(183, Engine.ydim, 200), scale(299, Engine.xdim, 320) - 1, scale(193, Engine.ydim, 200) - 1);
+					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(276, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(299, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 				};
-				digitalnumber(287, 200 - 17, Math.Max(p.frag - p.fraggedself, 0), -16, 10 + 16 + 128);
+				digitalnumber(287, 200 - 17, Mathf.Max(p.frag - p.fraggedself, 0), -16, 10 + 16 + 128);
 			}
 		}
 		else
@@ -1084,7 +1084,7 @@ return 0;
 			{
 				if (u != 0xffffffff)
 				{
-					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(275, Engine.xdim, 320), scale(182, Engine.ydim, 200), scale(299, Engine.xdim, 320) - 1, scale(194, Engine.ydim, 200) - 1);
+					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(275, Engine.xdim, 320), pragmas.scale(182, Engine.ydim, 200), pragmas.scale(299, Engine.xdim, 320) - 1, pragmas.scale(194, Engine.ydim, 200) - 1);
 				};
 				if ((p.got_access & 4) != 0)
 				{
@@ -1109,9 +1109,9 @@ return 0;
 		{
 			if (u != 0xffffffff)
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(20, Engine.xdim, 320), scale(183, Engine.ydim, 200), scale(43, Engine.xdim, 320) - 1, scale(193, Engine.ydim, 200) - 1);
+				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(20, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(43, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 			};
-			if (sprite[p.i].pal == 1 && p.last_extra < 2)
+			if (Engine.board.sprite[p.i].pal == 1 && p.last_extra < 2)
 			{
 				digitalnumber(32, 200 - 17, 1, -16, 10 + 16 + 128);
 			}
@@ -1124,7 +1124,7 @@ return 0;
 		{
 			if (u != 0xffffffff)
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(52, Engine.xdim, 320), scale(183, Engine.ydim, 200), scale(75, Engine.xdim, 320) - 1, scale(193, Engine.ydim, 200) - 1);
+				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(52, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(75, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 			};
 			digitalnumber(64, 200 - 17, p.shield_amount, -16, 10 + 16 + 128);
 		}
@@ -1133,7 +1133,7 @@ return 0;
 		{
 			if (u != 0xffffffff)
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(196, Engine.xdim, 320), scale(183, Engine.ydim, 200), scale(219, Engine.xdim, 320) - 1, scale(193, Engine.ydim, 200) - 1);
+				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(196, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(219, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 			};
 			if (p.curr_weapon != DefineConstants.KNEE_WEAPON)
 			{
@@ -1156,24 +1156,24 @@ return 0;
 				if ((u & (2048 + 4096)) != 0)
 				{
 					{
-						Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(231, Engine.xdim, 320), scale(179, Engine.ydim, 200), scale(265, Engine.xdim, 320) - 1, scale(197, Engine.ydim, 200) - 1);
+						Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(231, Engine.xdim, 320), pragmas.scale(179, Engine.ydim, 200), pragmas.scale(265, Engine.xdim, 320) - 1, pragmas.scale(197, Engine.ydim, 200) - 1);
 					};
 				}
 				else
 				{
 					{
-						Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(250, Engine.xdim, 320), scale(190, Engine.ydim, 200), scale(261, Engine.xdim, 320) - 1, scale(195, Engine.ydim, 200) - 1);
+						Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(250, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(261, Engine.xdim, 320) - 1, pragmas.scale(195, Engine.ydim, 200) - 1);
 					};
 				}
 			}
-			if (p.inven_icon)
+			if (p.inven_icon != 0)
 			{
 				o = 0;
-				permbit = 128;
+				permbit = (char)128;
 
 				if ((u & (2048 + 4096)) != 0)
 				{
-					switch (p.inven_icon)
+					switch ((int)p.inven_icon)
 					{
 						case 1:
 							i = DefineConstants.FIRSTAID_ICON;
@@ -1197,7 +1197,7 @@ return 0;
 							i = DefineConstants.BOOT_ICON;
 							break;
 					}
-					Engine.rotatesprite((231 - o) << 16, (200 - 21) << 16, 65536, 0, i, 0, 0, 10 + 16 + permbit, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+					Engine.rotatesprite((231 - o) << 16, (200 - 21) << 16, 65536, 0, i, 0, 0, (byte)(10 + 16 + permbit), 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 					minitext(292 - 30 - o, 190, "%", 6, 10 + 16 + permbit);
 					if (p.inven_icon >= 6)
 					{
@@ -1206,7 +1206,7 @@ return 0;
 				}
 				if ((u & (2048 + 4096)) != 0)
 				{
-					switch (p.inven_icon)
+					switch ((int)p.inven_icon)
 					{
 						case 3:
 							j = p.holoduke_on;
@@ -1218,7 +1218,7 @@ return 0;
 							j = p.heat_on;
 							break;
 						default:
-							j = 0x80000000;
+							j = unchecked((int)0x80000000);
 							break;
 					}
 					if (j > 0)
@@ -1232,7 +1232,7 @@ return 0;
 				}
 				if ((u & 8192) != 0)
 				{
-					switch (p.inven_icon)
+					switch ((int)p.inven_icon)
 					{
 						case 1:
 							i = p.firstaid_amount;
@@ -1260,6 +1260,5 @@ return 0;
 				}
 			}
 		}
-		*/
 	}
 }

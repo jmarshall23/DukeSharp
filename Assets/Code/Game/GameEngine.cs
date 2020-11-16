@@ -50,8 +50,7 @@ public class GameEngine : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        dukeClock += Time.deltaTime;
+    {        
         GlobalMembers.anyKeyDown = Input.anyKeyDown;
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -92,6 +91,7 @@ public class GameEngine : MonoBehaviour
         }
         else
         {
+            dukeClock += Time.deltaTime;
             GlobalMembers.totalclock = (int)(dukeClock * 120.0f);
         }
 
