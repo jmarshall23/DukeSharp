@@ -564,7 +564,8 @@ public partial class GlobalMembers
                 {
                     if (GetLabelStr(j << 6) == GetLabelStr(labelcnt << 6))
                     {
-                        scriptptr.Set(scriptptr.buffer[labelcode[j]]);
+                        int code = labelcode[j];
+                        scriptptr.Set(code);
                         break;
                     }
                 }
@@ -1197,8 +1198,7 @@ public partial class GlobalMembers
             case 82:
             case 90:
             case 91:
-            case 109:
-
+            case 109:                
                 if (tw == 51)
                 {
                     j = 0;
@@ -2325,7 +2325,7 @@ public partial class GlobalMembers
         }
 
         //    if(*it == 1668249134L) gameexit("\nERR");
-        //Engine.Printf("Executing command: " + scriptptr.buffer[insptr]);
+        Engine.Printf("Executing command: " + scriptptr.buffer[insptr]);
         switch (scriptptr.buffer[insptr])
         {
             case 3:
@@ -3667,7 +3667,7 @@ public partial class GlobalMembers
                 parseifelse(j == DefineConstants.NUM_SOUNDS);
                 break;
             default:
-            //    Engine.Printf("Unknown command!");
+                Engine.Printf("Unknown command!");
                 killit_flag = (char)1;
                 break;
         }
