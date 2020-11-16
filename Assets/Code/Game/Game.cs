@@ -1679,7 +1679,8 @@ public partial class GlobalMembers
 			throw new Exception(" Too many sprites spawned.");
 		}
 
-		hittype[i] = new weaponhit();
+		if(hittype[i] == null)
+			hittype[i] = new weaponhit();
 
 		hittype[i].bposx = (short)s_x;
 		hittype[i].bposy = (short)s_y;
@@ -1728,9 +1729,9 @@ public partial class GlobalMembers
 		if (actorscrptr[s_pn] != 0)
 		{
 			s.extra = (short)scriptptr.buffer[actorscrptr[s_pn]];
-			hittype[i].temp_data[4] = scriptptr.buffer[actorscrptr[s_pn + 1]]; //*(actorscrptr[s_pn] + 1);
-			hittype[i].temp_data[1] = scriptptr.buffer[actorscrptr[s_pn + 2]]; //* (actorscrptr[s_pn] + 2);
-			s.hitag = (short)scriptptr.buffer[actorscrptr[s_pn + 3]]; //*(actorscrptr[s_pn] + 3);
+			hittype[i].temp_data[4] = scriptptr.buffer[actorscrptr[s_pn] + 1]; //*(actorscrptr[s_pn] + 1);
+			hittype[i].temp_data[1] = scriptptr.buffer[actorscrptr[s_pn] + 2]; //* (actorscrptr[s_pn] + 2);
+			s.hitag = (short)scriptptr.buffer[actorscrptr[s_pn] + 3]; //*(actorscrptr[s_pn] + 3);
 		}
 		else
 		{
@@ -1902,11 +1903,11 @@ public partial class GlobalMembers
 			if (actorscrptr[s] != 0)
 			{
 				Engine.board.sprite[i].extra = (short)scriptptr.buffer[actorscrptr[s]];
-				hittype[i].temp_data[4] = (short)scriptptr.buffer[actorscrptr[s + 1]];
-				hittype[i].temp_data[1] = (short)scriptptr.buffer[actorscrptr[s + 2]];
+				hittype[i].temp_data[4] = (short)scriptptr.buffer[actorscrptr[s] + 1];
+				hittype[i].temp_data[1] = (short)scriptptr.buffer[actorscrptr[s] + 2];
 				if (scriptptr.buffer[actorscrptr[s + 3]] != 0 && Engine.board.sprite[i].hitag == 0)
 				{
-					Engine.board.sprite[i].hitag = (short)scriptptr.buffer[actorscrptr[s + 3]];
+					Engine.board.sprite[i].hitag = (short)scriptptr.buffer[actorscrptr[s] + 3];
 				}
 			}
 			else
@@ -4446,9 +4447,9 @@ public partial class GlobalMembers
 
 					if (ps[p].newowner > -1)
 					{
-						t4 = (short)scriptptr.buffer[actorscrptr[DefineConstants.APLAYER] + 1];
+						t4 = (short)actorscrptr[DefineConstants.APLAYER] + 1;
 						t3 = 0;
-						t1 = (short)scriptptr.buffer[actorscrptr[DefineConstants.APLAYER] + 2];
+						t1 = (short)actorscrptr[DefineConstants.APLAYER] + 2;
 					}
 
 					if (ud.camerasprite == -1 && ps[p].newowner == -1)
@@ -4561,9 +4562,9 @@ public partial class GlobalMembers
 
 			if (actorscrptr[s.picnum] != 0)
 			{
-				if (t4 != 0)
+				if (scriptptr.buffer[t4] != 0)
 				{
-					l = (int)(t4 + 8);
+					l = scriptptr.buffer[(t4 + 8)];
 
 					switch (l)
 					{
@@ -4620,7 +4621,7 @@ public partial class GlobalMembers
 							break;
 					}
 
-					t.picnum += (short)(k + ((int)t4) + l * t3);
+					t.picnum += (short)(k + (scriptptr.buffer[t4]) + l * t3);
 
 					if (l > 0)
 					{

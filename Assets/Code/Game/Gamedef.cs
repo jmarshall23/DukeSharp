@@ -2325,7 +2325,7 @@ public partial class GlobalMembers
         }
 
         //    if(*it == 1668249134L) gameexit("\nERR");
-
+        //Engine.Printf("Executing command: " + scriptptr.buffer[insptr]);
         switch (scriptptr.buffer[insptr])
         {
             case 3:
@@ -2502,9 +2502,9 @@ public partial class GlobalMembers
             case 24:
                 insptr++;
                 g_t[5] = scriptptr.buffer[insptr];
-                g_t[4] = (int)(g_t[5]); // Action
-                g_t[1] = (int)(g_t[5] + 4); // move
-                g_sp.hitag = (short)((int)(g_t[5] + 8)); // Ai
+                g_t[4] = scriptptr.buffer[g_t[5]]; // Action
+                g_t[1] = scriptptr.buffer[g_t[5] + 4]; // move
+                g_sp.hitag = (short)scriptptr.buffer[g_t[5] + 8]; // Ai
                 g_t[0] = g_t[2] = g_t[3] = 0;
                 if ((g_sp.hitag & DefineConstants.random_angle) != 0)
                 {
@@ -2968,7 +2968,7 @@ public partial class GlobalMembers
 
                     tempscrptr = insptr + 2;
 
-                    insptr = (scriptptr.buffer[insptr + 1]);
+                    insptr = insptr + 1; // (scriptptr.buffer[insptr + 1]); // jmarshall 
                     while (true)
                     {
                         if (parse() != 0)
@@ -3667,6 +3667,7 @@ public partial class GlobalMembers
                 parseifelse(j == DefineConstants.NUM_SOUNDS);
                 break;
             default:
+            //    Engine.Printf("Unknown command!");
                 killit_flag = (char)1;
                 break;
         }
@@ -3706,7 +3707,7 @@ public partial class GlobalMembers
             return;
         }
 
-        insptr = 4 + (actorscrptr[g_sp.picnum]);
+        insptr = 4 +(actorscrptr[g_sp.picnum]); 
 
         killit_flag = (char)0;
 
@@ -3723,13 +3724,13 @@ public partial class GlobalMembers
         if (g_t[4] != 0)
         {
             g_sp.lotag += (DefineConstants.TICRATE / 26);
-            if (g_sp.lotag > (int)(g_t[4] + 16))
+            if (g_sp.lotag > scriptptr.buffer[g_t[4] + 16])
             {
                 g_t[2]++;
                 g_sp.lotag = 0;
-                g_t[3] += (int)(g_t[4] + 12);
+                g_t[3] += scriptptr.buffer[(g_t[4] + 12)];
             }
-            if (pragmas.klabs(g_t[3]) >= pragmas.klabs((int)(g_t[4] + 4) * (int)(g_t[4] + 12)))
+            if (pragmas.klabs(g_t[3]) >= pragmas.klabs(scriptptr.buffer[(g_t[4] + 4)] * scriptptr.buffer[(g_t[4] + 12)]))
             {
                 g_t[3] = 0;
             }
