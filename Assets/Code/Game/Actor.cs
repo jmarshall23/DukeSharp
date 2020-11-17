@@ -30,6 +30,9 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 using System;
 using Build;
 using UnityEngine;
+
+#pragma warning disable 0168
+#pragma warning disable 0129
 public partial class GlobalMembers
 {
 	public static void updateinterpolations() //Stick at beginning of domovethings

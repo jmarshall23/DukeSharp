@@ -30,6 +30,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 using Build;
 using UnityEngine;
 
+#pragma warning disable 0168
 public partial class GlobalMembers
 {
     static bool in_menu = false;

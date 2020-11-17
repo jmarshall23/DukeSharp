@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#pragma warning disable 0168
+#pragma warning disable 0219
+
 namespace Build
 {
     public static class Engine

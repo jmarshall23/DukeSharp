@@ -35,6 +35,8 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 using Build;
+
+#pragma warning disable 0168
 public partial class GlobalMembers
 {
    
