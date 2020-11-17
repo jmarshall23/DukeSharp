@@ -77,6 +77,7 @@
     <Compile Include="Assets\Code\Engine\tablesdat.cs" />
     <Compile Include="Assets\Code\Game\Actor.cs" />
     <Compile Include="Assets\Code\Game\Anim.cs" />
+    <Compile Include="Assets\Code\Game\ConScriptActions.cs" />
     <Compile Include="Assets\Code\Game\Control.cs" />
     <Compile Include="Assets\Code\Game\DefineConstants.cs" />
     <Compile Include="Assets\Code\Game\Game.cs" />
