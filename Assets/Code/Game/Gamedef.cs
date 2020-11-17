@@ -284,16 +284,15 @@ public partial class GlobalMembers
         }
 
         i = 0;
+        label[(labelcnt)] = "";
         while (ispecial(textptr.Get()) == 0)
         {
-            if ((labelcnt << 6) + i >= label.Length)
+            if ((labelcnt) + i >= label.Length)
                 throw new Exception("Labelcnt too high!");
 
-            label[(labelcnt << 6) + i++] = (byte)textptr.Get();
+            label[(labelcnt)] += (char)textptr.Get();
             textptr++;
         }
-
-        label[(labelcnt << 6) + i] = 0;
     }
 
     public static int keyword()
@@ -445,7 +444,7 @@ public partial class GlobalMembers
         }
         tempbuf[l] = 0;
 
-        string label1 = GetLabelStr(labelcnt << 6); //Encoding.UTF8.GetString(label, (labelcnt << 6), l);
+        string label1 = GetLabelStr(labelcnt); //Encoding.UTF8.GetString(label, (labelcnt), l);
         string t = Encoding.UTF8.GetString(tempbuf, 0, l);
 
         for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
@@ -461,7 +460,7 @@ public partial class GlobalMembers
 
         for (i = 0; i < labelcnt; i++)
         {
-            label1 = GetLabelStr(i << 6);
+            label1 = GetLabelStr(i);
             if (t == label1)
             {
                 scriptptr.Set(labelcode[i]);
@@ -498,14 +497,7 @@ public partial class GlobalMembers
 
     internal static string GetLabelStr(int index)
     {
-        int l = 0;
-        for(int i = index; i < label.Length; i++)
-        {
-            if (label[i] == '\0')
-                break;
-            l++;
-        }
-        return Encoding.UTF8.GetString(label, index, l);
+        return label[index];
     }
 
     internal static string GetTempStr()
@@ -581,7 +573,7 @@ public partial class GlobalMembers
 
                 for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
                 {
-                    if (GetLabelStr(labelcnt << 6) == keyw[i])
+                    if (GetLabelStr(labelcnt) == keyw[i])
                     {
                         error++;
                         Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n");
@@ -591,7 +583,7 @@ public partial class GlobalMembers
 
                 for (j = 0; j < labelcnt; j++)
                 {
-                    if (GetLabelStr(j << 6) == GetLabelStr(labelcnt << 6))
+                    if (GetLabelStr(j) == GetLabelStr(labelcnt))
                     {
                         int code = labelcode[j];
                         scriptptr.Set(code);
@@ -642,20 +634,20 @@ public partial class GlobalMembers
 
                 for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
                 {
-                    if (GetLabelStr(labelcnt << 6) == keyw[i])
+                    if (GetLabelStr(labelcnt) == keyw[i])
                     {
                         error++;
-                        //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                        //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt));
                         return 0;
                     }
                 }
 
                 for (i = 0; i < labelcnt; i++)
                 {
-                    if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
+                    if (GetLabelStr(labelcnt) == GetLabelStr(i))
                     {
                         warning++;
-                        //Engine.Printf("  * WARNING.(L%ld) Duplicate definition '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                        //Engine.Printf("  * WARNING.(L%ld) Duplicate definition '%s' ignored.\n", line_number, label + (labelcnt));
                         break;
                     }
                 }
@@ -712,20 +704,20 @@ public partial class GlobalMembers
 
                     for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
                     {
-                        if (GetLabelStr(labelcnt << 6) == keyw[i])
+                        if (GetLabelStr(labelcnt) == keyw[i])
                         {
                             error++;
-                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt));
                             return 0;
                         }
                     }
 
                     for (i = 0; i < labelcnt; i++)
                     {
-                        if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
+                        if (GetLabelStr(labelcnt) == GetLabelStr(i))
                         {
                             warning++;
-                            //Engine.Printf("  * WARNING.(L%ld) Duplicate move '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * WARNING.(L%ld) Duplicate move '%s' ignored.\n", line_number, label + (labelcnt));
                             break;
                         }
                     }
@@ -855,7 +847,7 @@ public partial class GlobalMembers
                 {
                     error++;
                     throw new Exception("Could not find include file " + tstr);
-                    //Engine.Printf("  * ERROR!(L%ld) Could not find '%s'.\n", line_number, label + (labelcnt << 6));
+                    //Engine.Printf("  * ERROR!(L%ld) Could not find '%s'.\n", line_number, label + (labelcnt));
                     return 0;
                 }
 
@@ -898,20 +890,20 @@ public partial class GlobalMembers
 
                     for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
                     {
-                        if (GetLabelStr(labelcnt << 6) == keyw[i])
+                        if (GetLabelStr(labelcnt) == keyw[i])
                         {
                             error++;
-                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt));
                             return 0;
                         }
                     }
 
                     for (i = 0; i < labelcnt; i++)
                     {
-                        if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
+                        if (GetLabelStr(labelcnt) == GetLabelStr(i))
                         {
                             warning++;
-                            //Engine.Printf("  * WARNING.(L%ld) Duplicate ai '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * WARNING.(L%ld) Duplicate ai '%s' ignored.\n", line_number, label + (labelcnt));
                             break;
                         }
                     }
@@ -966,20 +958,20 @@ public partial class GlobalMembers
 
                     for (i = 0; i < DefineConstants.NUMKEYWORDS; i++)
                     {
-                        if (GetLabelStr(labelcnt << 6) == keyw[i])
+                        if (GetLabelStr(labelcnt) == keyw[i])
                         {
                             error++;
-                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * ERROR!(L%ld) Symbol '%s' is a key word.\n", line_number, label + (labelcnt));
                             return 0;
                         }
                     }
 
                     for (i = 0; i < labelcnt; i++)
                     {
-                        if (GetLabelStr(labelcnt << 6) == GetLabelStr(i << 6))
+                        if (GetLabelStr(labelcnt) == GetLabelStr(i))
                         {
                             warning++;
-                            //Engine.Printf("  * WARNING.(L%ld) Duplicate action '%s' ignored.\n", line_number, label + (labelcnt << 6));
+                            //Engine.Printf("  * WARNING.(L%ld) Duplicate action '%s' ignored.\n", line_number, label + (labelcnt));
                             break;
                         }
                     }

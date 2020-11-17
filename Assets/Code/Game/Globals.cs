@@ -526,12 +526,27 @@ public partial class GlobalMembers
     public struct DefInt
     {
         public int[] buffer;
-        public int bufferpos;
+        public int _bufferpos;
+
+        public int bufferpos
+        {
+            get
+            {
+                return _bufferpos;
+            }
+
+            set
+            {
+                if (value < 0)
+                    throw new System.Exception("BufferPos Invalid!");
+                _bufferpos = value;
+            }
+        }
 
         public DefInt(int t)
         {
             buffer = new int[3000];
-            bufferpos = 0;
+            _bufferpos = 0;
         }
 
         public static DefInt operator ++(DefInt w)
@@ -591,7 +606,7 @@ public partial class GlobalMembers
 //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
 //ORIGINAL LINE: int *parsing_actor;
 	public static int parsing_actor;
-	public static byte[] label = new byte[125000];
+	public static string[] label = new string[5000];
 	public static int error;
 	public static int warning;
 	public static char killit_flag;
