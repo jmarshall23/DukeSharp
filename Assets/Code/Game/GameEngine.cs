@@ -89,7 +89,7 @@ public class GameEngine : MonoBehaviour
 
         if (GlobalMembers.totalclock == 0)
         {
-            dukeClock = 0.0f;
+            dukeClock = 1.0f;
             GlobalMembers.totalclock = 1;
         }
         else
