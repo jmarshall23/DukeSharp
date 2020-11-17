@@ -1351,7 +1351,57 @@ public partial class GlobalMembers
 		return 0;
 	}
 
+    public static short badguy(spritetype2 s)
+    {
 
+        switch (s.picnum)
+        {
+            case DefineConstants.SHARK:
+            case DefineConstants.RECON:
+            case DefineConstants.DRONE:
+            case DefineConstants.LIZTROOPONTOILET:
+            case DefineConstants.LIZTROOPJUSTSIT:
+            case DefineConstants.LIZTROOPSTAYPUT:
+            case DefineConstants.LIZTROOPSHOOT:
+            case DefineConstants.LIZTROOPJETPACK:
+            case DefineConstants.LIZTROOPDUCKING:
+            case DefineConstants.LIZTROOPRUNNING:
+            case DefineConstants.LIZTROOP:
+            case DefineConstants.OCTABRAIN:
+            case DefineConstants.COMMANDER:
+            case DefineConstants.COMMANDERSTAYPUT:
+            case DefineConstants.PIGCOP:
+            case DefineConstants.EGG:
+            case DefineConstants.PIGCOPSTAYPUT:
+            case DefineConstants.PIGCOPDIVE:
+            case DefineConstants.LIZMAN:
+            case DefineConstants.LIZMANSPITTING:
+            case DefineConstants.LIZMANFEEDING:
+            case DefineConstants.LIZMANJUMP:
+            case DefineConstants.ORGANTIC:
+            case DefineConstants.BOSS1:
+            case DefineConstants.BOSS2:
+            case DefineConstants.BOSS3:
+            case DefineConstants.BOSS4:
+            case DefineConstants.GREENSLIME:
+            case DefineConstants.GREENSLIME + 1:
+            case DefineConstants.GREENSLIME + 2:
+            case DefineConstants.GREENSLIME + 3:
+            case DefineConstants.GREENSLIME + 4:
+            case DefineConstants.GREENSLIME + 5:
+            case DefineConstants.GREENSLIME + 6:
+            case DefineConstants.GREENSLIME + 7:
+            case DefineConstants.RAT:
+            case DefineConstants.ROTATEGUN:
+                return 1;
+        }
+        if (actortype[s.picnum] != 0)
+        {
+            return 1;
+        }
+
+        return 0;
+    }
     public static short badguypic(short pn)
 	{
 
@@ -3952,7 +4002,7 @@ public partial class GlobalMembers
 		int t3;
 		int t4;
 		spritetype s;
-		spritetype t;
+		spritetype2 t;
 
 		for (j = 0; j < Engine.board.spritesortcnt; j++)
 		{

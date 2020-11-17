@@ -236,6 +236,15 @@ public partial class GlobalMembers
         return (Engine.FindDistance2D(vx, vy) + 1);
     }
 
+    public static int ldist(spritetype s1, spritetype2 s2)
+    {
+        int vx;
+        int vy;
+        vx = s1.x - s2.x;
+        vy = s1.y - s2.y;
+        return (Engine.FindDistance2D(vx, vy) + 1);
+    }
+
     public static int dist(spritetype s1, spritetype s2)
     {
         int vx;

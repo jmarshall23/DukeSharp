@@ -18,6 +18,16 @@ namespace Build
             {
                 m = new int[] { 0xff, 0xff00, 0xff0000, (int)0xff000000 };
             }
+
+            for(int i = 0; i < sprite.Length; i++)
+            {
+                sprite[i] = new spritetype();                
+            }
+
+            for (int i = 0; i < tsprite.Length; i++)
+            {
+                tsprite[i] = new spritetype2();
+            } 
         }
 
         public const int MAXSECTORS = 1024;
@@ -47,7 +57,7 @@ namespace Build
 
         private int[] lastx = new int[VgaDevice.MAXYDIM];
 
-        public spritetype[] tsprite = new spritetype[MAXSPRITESONSCREEN];
+        public spritetype2[] tsprite = new spritetype2[MAXSPRITESONSCREEN];
 
         private short[] sectorborder = new short[256];
         private short sectorbordercnt;
@@ -529,10 +539,6 @@ namespace Build
             if (headspritestat[statnum] >= 0)
                 prevspritestat[headspritestat[statnum]] = blanktouse;
             headspritestat[statnum] = blanktouse;
-            // jv
-            if (sprite[blanktouse] == null)
-                sprite[blanktouse] = new spritetype();
-            // jv end
             sprite[blanktouse].statnum = statnum;
 
             return (blanktouse);
@@ -1596,6 +1602,10 @@ namespace Build
                 for (z = headspritesect[sectnum]; z >= 0; z = nextspritesect[z])
                 {
                     spr = sprite[z];
+// jmarshall: hack not sure why we need this yet?
+                    if (spr.picnum == 1405)
+                        continue;
+
                     if ((((spr.cstat & 0x8000) == 0) || (showinvisibility)) &&
                           (spr.xrepeat > 0) && (spr.yrepeat > 0) &&
                           (spritesortcnt < MAXSPRITESONSCREEN))
@@ -1603,8 +1613,6 @@ namespace Build
                         xs = spr.x - globalposx; ys = spr.y - globalposy;
                         if ((spr.cstat & 48) != 0 || (xs * cosglobalang + ys * singlobalang > 0))
                         {
-                            if (tsprite[spritesortcnt] == null)
-                                tsprite[spritesortcnt] = new spritetype();
                             tsprite[spritesortcnt].Copy(spr);
                             // jv - non direct copy it?
                             //copybufbyte(spr,&tsprite[spritesortcnt],sizeof(spritetype));
@@ -2032,7 +2040,7 @@ namespace Build
         //
         private void drawsprite(int snum)
         {
-            spritetype tspr;
+            spritetype2 tspr;
             sectortype sec;
             int x;
             int startum, startdm, sectnum, xb, yp, cstat;
@@ -4915,7 +4923,7 @@ namespace Build
             }
         }
 
-        private bool spritewallfront(spritetype s, int w)
+        private bool spritewallfront(spritetype2 s, int w)
         {
             walltype wal;
             int x1, y1;
@@ -4959,7 +4967,7 @@ namespace Build
                     for (l = i; l >= 0; l -= gap)
                     {
                         if (vissprites[l].y <= vissprites[l + gap].y) break;
-                        pragmas.swaplong<spritetype>(ref tsprite[l], ref tsprite[l + gap]);
+                        pragmas.swaplong<spritetype2>(ref tsprite[l], ref tsprite[l + gap]);
                         pragmas.swaplong<VisSprite_t>(ref vissprites[l], ref vissprites[l + gap]);
                     }
 
@@ -4989,14 +4997,14 @@ namespace Build
                         for (l = i; l < k; l++)
                             if (pragmas.klabs(vissprites[k].z - globalposz) < pragmas.klabs(vissprites[l].z - globalposz))
                             {
-                                pragmas.swaplong<spritetype>(ref tsprite[k], ref tsprite[l]);
+                                pragmas.swaplong<spritetype2>(ref tsprite[k], ref tsprite[l]);
                                 pragmas.swaplong<VisSprite_t>(ref vissprites[k], ref vissprites[l]);
                             }
                     for (k = i + 1; k < j; k++)
                         for (l = i; l < k; l++)
                             if (tsprite[k].statnum < tsprite[l].statnum)
                             {
-                                pragmas.swaplong<spritetype>(ref tsprite[k], ref tsprite[l]);
+                                pragmas.swaplong<spritetype2>(ref tsprite[k], ref tsprite[l]);
                                 pragmas.swaplong<VisSprite_t>(ref vissprites[k], ref vissprites[l]);
                             }
                 }
@@ -6010,7 +6018,7 @@ namespace Build
             numsprites = fil.kreadshort();
             for (int i = 0; i < numsprites; i++)
             {
-                sprite[i] = new spritetype(ref fil);
+                sprite[i].Read(ref fil);
                 // sprite[i].sectnum = MAXSECTORS;
                 // sprite[i].statnum = MAXSTATUS;
             }
@@ -6381,7 +6389,7 @@ namespace Build
             writer.Write(extra);
         }
 
-        public spritetype(ref kFile file)
+        public void Read(ref kFile file)
         {
             x = file.kreadint();
             y = file.kreadint();
@@ -6407,6 +6415,77 @@ namespace Build
             lotag = file.kreadshort();
             hitag = file.kreadshort();
             extra = file.kreadshort();
+        }
+    };
+
+    public struct spritetype2
+    {
+        public int x, y, z;
+        public short cstat, picnum;
+        public sbyte shade;
+        public byte pal, clipdist, filler;
+        public byte xrepeat, yrepeat;
+        public sbyte xoffset, yoffset;
+        public short sectnum, statnum;
+        public short ang, owner, xvel, yvel, zvel;
+        public short lotag, hitag, extra;
+
+        // jv
+        public object obj;
+        // jv end
+
+        public void Copy(spritetype t)
+        {
+            x = t.x;
+            y = t.y;
+            z = t.z;
+            cstat = t.cstat;
+            picnum = t.picnum;
+            shade = t.shade;
+            pal = t.pal;
+            clipdist = t.clipdist;
+            filler = t.filler;
+            xrepeat = t.xrepeat;
+            yrepeat = t.yrepeat;
+            xoffset = t.xoffset;
+            yoffset = t.yoffset;
+            sectnum = t.sectnum;
+            statnum = t.statnum;
+            ang = t.ang;
+            owner = t.owner;
+            xvel = t.xvel;
+            yvel = t.yvel;
+            zvel = t.zvel;
+            lotag = t.lotag;
+            hitag = t.hitag;
+            extra = t.extra;
+        }
+
+        public void Copy(spritetype2 t)
+        {
+            x = t.x;
+            y = t.y;
+            z = t.z;
+            cstat = t.cstat;
+            picnum = t.picnum;
+            shade = t.shade;
+            pal = t.pal;
+            clipdist = t.clipdist;
+            filler = t.filler;
+            xrepeat = t.xrepeat;
+            yrepeat = t.yrepeat;
+            xoffset = t.xoffset;
+            yoffset = t.yoffset;
+            sectnum = t.sectnum;
+            statnum = t.statnum;
+            ang = t.ang;
+            owner = t.owner;
+            xvel = t.xvel;
+            yvel = t.yvel;
+            zvel = t.zvel;
+            lotag = t.lotag;
+            hitag = t.hitag;
+            extra = t.extra;
         }
     };
     #endregion
