@@ -183,7 +183,13 @@ namespace Build
                     if (ch != 255)
                     {
                         //Engine._device.SetScreenPixel(p, gtrans[(p/*p.memory*/<< 8) + Engine.palette.palookup[ch + gpalpos] + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[p/*.memory*/+ (Engine.palette.palookup[ch + gpalpos] << 8) + gtranspos]];
+                        int c = p/*.memory*/+ (Engine.palette.palookup[ch + gpalpos] << 8) + gtranspos; // jmarshall: out of bounds check.
+                        if (c < gtrans.Length)
+                        {
+                            int d = gtrans[c];
+                            if (d < Engine._device._palette._palettebuffer.Length)
+                                Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[d];
+                        }
                     }
 			        p += bpl;
                     vplc += (uint)vinc;
