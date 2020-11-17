@@ -1511,10 +1511,8 @@ public partial class GlobalMembers
 		int pal;
 		sbyte gs;
 		player_struct p;
-		short kb;
 
 		p = ps[snum];
-		kb = p.kickback_pic;
 
 		o = (char)0;
 
@@ -1605,7 +1603,7 @@ public partial class GlobalMembers
 			switch (cw)
 			{
 				case DefineConstants.KNEE_WEAPON:
-					if (kb > null)
+					if (p.kickback_pic > null)
 					{
 						if (Engine.board.sprite[p.i].pal == 1)
 						{
@@ -1620,7 +1618,7 @@ public partial class GlobalMembers
 							}
 						}
 
-						if (kb < 5 || kb > 9)
+						if (p.kickback_pic < 5 || p.kickback_pic > 9)
 						{
 							myospal(weapon_xoffset + 220 - (p.look_ang >> 1), looking_arc + 250 - gun_pos, DefineConstants.KNEE, gs, o, pal);
 						}
@@ -1644,17 +1642,17 @@ public partial class GlobalMembers
 					weapon_xoffset += 8;
 					gun_pos -= 10;
 
-					if (kb > 6)
+					if (p.kickback_pic > 6)
 					{
-						looking_arc += (kb << 3);
+						looking_arc += (p.kickback_pic << 3);
 					}
-					else if (kb < 4)
+					else if (p.kickback_pic < 4)
 					{
 						myospal(weapon_xoffset + 142 - (p.look_ang >> 1), looking_arc + 234 - gun_pos, DefineConstants.HANDHOLDINGLASER + 3, gs, o, pal);
 					}
 
-					myospal(weapon_xoffset + 130 - (p.look_ang >> 1), looking_arc + 249 - gun_pos, DefineConstants.HANDHOLDINGLASER + (kb >> 2), gs, o, pal);
-					myospal(weapon_xoffset + 152 - (p.look_ang >> 1), looking_arc + 249 - gun_pos, DefineConstants.HANDHOLDINGLASER + (kb >> 2), gs, o | 4, pal);
+					myospal(weapon_xoffset + 130 - (p.look_ang >> 1), looking_arc + 249 - gun_pos, DefineConstants.HANDHOLDINGLASER + (p.kickback_pic >> 2), gs, o, pal);
+					myospal(weapon_xoffset + 152 - (p.look_ang >> 1), looking_arc + 249 - gun_pos, DefineConstants.HANDHOLDINGLASER + (p.kickback_pic >> 2), gs, o | 4, pal);
 
 					break;
 
@@ -1668,14 +1666,14 @@ public partial class GlobalMembers
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
 
-					weapon_xoffset -= Engine.table.sintable[(768 + (kb << 7)) & 2047] >> 11;
-					gun_pos += Engine.table.sintable[(768 + (kb << 7) & 2047)] >> 11;
+					weapon_xoffset -= Engine.table.sintable[(768 + (p.kickback_pic << 7)) & 2047] >> 11;
+					gun_pos += Engine.table.sintable[(768 + (p.kickback_pic << 7) & 2047)] >> 11;
 
-					if (kb > 0)
+					if (p.kickback_pic > 0)
 					{
-						if (kb < 8)
+						if (p.kickback_pic < 8)
 						{
-							myospal(weapon_xoffset + 164, (looking_arc << 1) + 176 - gun_pos, DefineConstants.RPGGUN + (kb >> 1), gs, o, pal);
+							myospal(weapon_xoffset + 164, (looking_arc << 1) + 176 - gun_pos, DefineConstants.RPGGUN + (p.kickback_pic >> 1), gs, o, pal);
 						}
 					}
 
@@ -1695,7 +1693,7 @@ public partial class GlobalMembers
 
 					weapon_xoffset -= 8;
 
-					switch (kb)
+					switch (p.kickback_pic)
 					{
 						case 1:
 						case 2:
@@ -1714,12 +1712,12 @@ public partial class GlobalMembers
 						case 10:
 						case 11:
 						case 12:
-							if (kb > 1 && kb < 5)
+							if (p.kickback_pic > 1 && p.kickback_pic < 5)
 							{
 								gun_pos -= 40;
 								weapon_xoffset += 20;
 
-								myospal(weapon_xoffset + 178 - (p.look_ang >> 1), looking_arc + 194 - gun_pos, DefineConstants.SHOTGUN + 1 + (((kb) - 1) >> 1), -128, o, pal);
+								myospal(weapon_xoffset + 178 - (p.look_ang >> 1), looking_arc + 194 - gun_pos, DefineConstants.SHOTGUN + 1 + (((p.kickback_pic) - 1) >> 1), -128, o, pal);
 							}
 
 							myospal(weapon_xoffset + 158 - (p.look_ang >> 1), looking_arc + 220 - gun_pos, DefineConstants.SHOTGUN + 3, gs, o, pal);
@@ -1768,42 +1766,42 @@ public partial class GlobalMembers
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
 
-					if (kb > 0)
+					if (p.kickback_pic > 0)
 					{
-						gun_pos -= Engine.table.sintable[kb << 7] >> 12;
+						gun_pos -= Engine.table.sintable[p.kickback_pic << 7] >> 12;
 					}
 
-					if (kb > 0 && Engine.board.sprite[p.i].pal != 1)
+					if (p.kickback_pic > 0 && Engine.board.sprite[p.i].pal != 1)
 					{
 						weapon_xoffset += (short)(1 - (Engine.krand() & 3));
 					}
 
 					myospal(weapon_xoffset + 168 - (p.look_ang >> 1), looking_arc + 260 - gun_pos, DefineConstants.CHAINGUN, gs, o, pal);
-					switch (kb)
+					switch (p.kickback_pic)
 					{
 						case 0:
 							myospal(weapon_xoffset + 178 - (p.look_ang >> 1), looking_arc + 233 - gun_pos, DefineConstants.CHAINGUN + 1, gs, o, pal);
 							break;
 						default:
-							if (kb > 4 && kb < 12)
+							if (p.kickback_pic > 4 && p.kickback_pic < 12)
 							{
 								i = 0;
 								if (Engine.board.sprite[p.i].pal != 1)
 								{
 									i = (short)(Engine.krand() & 7);
 								}
-								myospal(i + weapon_xoffset - 4 + 140 - (p.look_ang >> 1), i + looking_arc - (kb >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((kb - 4) / 5), gs, o, pal);
+								myospal(i + weapon_xoffset - 4 + 140 - (p.look_ang >> 1), i + looking_arc - (p.kickback_pic >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((p.kickback_pic - 4) / 5), gs, o, pal);
 								if (Engine.board.sprite[p.i].pal != 1)
 								{
 									i = (short)(Engine.krand() & 7);
 								}
-								myospal(i + weapon_xoffset - 4 + 184 - (p.look_ang >> 1), i + looking_arc - (kb >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((kb - 4) / 5), gs, o, pal);
+								myospal(i + weapon_xoffset - 4 + 184 - (p.look_ang >> 1), i + looking_arc - (p.kickback_pic >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((p.kickback_pic - 4) / 5), gs, o, pal);
 							}
-							if (kb < 8)
+							if (p.kickback_pic < 8)
 							{
 								i = (short)(Engine.krand() & 7);
-								myospal(i + weapon_xoffset - 4 + 162 - (p.look_ang >> 1), i + looking_arc - (kb >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((kb - 2) / 5), gs, o, pal);
-								myospal(weapon_xoffset + 178 - (p.look_ang >> 1), looking_arc + 233 - gun_pos, DefineConstants.CHAINGUN + 1 + (kb >> 1), gs, o, pal);
+								myospal(i + weapon_xoffset - 4 + 162 - (p.look_ang >> 1), i + looking_arc - (p.kickback_pic >> 1) + 208 - gun_pos, DefineConstants.CHAINGUN + 5 + ((p.kickback_pic - 2) / 5), gs, o, pal);
+								myospal(weapon_xoffset + 178 - (p.look_ang >> 1), looking_arc + 233 - gun_pos, DefineConstants.CHAINGUN + 1 + (p.kickback_pic >> 1), gs, o, pal);
 							}
 							else
 							{
@@ -1822,46 +1820,46 @@ public partial class GlobalMembers
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
 
-					if (kb < 5)
+					if (p.kickback_pic < 5)
 					{
 						short[] kb_frames = { 0, 1, 2, 0, 0 };
 						short l;
 
 						l = (short)(195 - 12 + weapon_xoffset);
 
-						if (kb == 2)
+						if (p.kickback_pic == 2)
 						{
 							l -= 3;
 						}
-						myospal((l - (p.look_ang >> 1)), (looking_arc + 244 - gun_pos), DefineConstants.FIRSTGUN + kb_frames[kb], gs, 2, pal);
+						myospal((l - (p.look_ang >> 1)), (looking_arc + 244 - gun_pos), DefineConstants.FIRSTGUN + kb_frames[p.kickback_pic], gs, 2, pal);
 					}
 					else
 					{
-						if (kb < 10)
+						if (p.kickback_pic < 10)
 						{
 							myospal(194 - (p.look_ang >> 1), looking_arc + 230 - gun_pos, DefineConstants.FIRSTGUN + 4, gs, o, pal);
 						}
-						else if (kb < 15)
+						else if (p.kickback_pic < 15)
 						{
-							myospal(244 - (kb << 3) - (p.look_ang >> 1), looking_arc + 130 - gun_pos + (kb << 4), DefineConstants.FIRSTGUN + 6, gs, o, pal);
+							myospal(244 - (p.kickback_pic << 3) - (p.look_ang >> 1), looking_arc + 130 - gun_pos + (p.kickback_pic << 4), DefineConstants.FIRSTGUN + 6, gs, o, pal);
 							myospal(224 - (p.look_ang >> 1), looking_arc + 220 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
 						}
-						else if (kb < 20)
+						else if (p.kickback_pic < 20)
 						{
-							myospal(124 + (kb << 1) - (p.look_ang >> 1), looking_arc + 430 - gun_pos - (kb << 3), DefineConstants.FIRSTGUN + 6, gs, o, pal);
+							myospal(124 + (p.kickback_pic << 1) - (p.look_ang >> 1), looking_arc + 430 - gun_pos - (p.kickback_pic << 3), DefineConstants.FIRSTGUN + 6, gs, o, pal);
 							myospal(224 - (p.look_ang >> 1), looking_arc + 220 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
 						}
-						else if (kb < 23)
+						else if (p.kickback_pic < 23)
 						{
 							myospal(184 - (p.look_ang >> 1), looking_arc + 235 - gun_pos, DefineConstants.FIRSTGUN + 8, gs, o, pal);
 							myospal(224 - (p.look_ang >> 1), looking_arc + 210 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
 						}
-						else if (kb < 25)
+						else if (p.kickback_pic < 25)
 						{
 							myospal(164 - (p.look_ang >> 1), looking_arc + 245 - gun_pos, DefineConstants.FIRSTGUN + 8, gs, o, pal);
 							myospal(224 - (p.look_ang >> 1), looking_arc + 220 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
 						}
-						else if (kb < 27)
+						else if (p.kickback_pic < 27)
 						{
 							myospal(194 - (p.look_ang >> 1), looking_arc + 235 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
 						}
@@ -1879,24 +1877,24 @@ public partial class GlobalMembers
 							pal = Engine.board.sector[p.cursectnum].floorpal;
 						}
 
-						if (kb != 0)
+						if (p.kickback_pic != 0)
 						{
 							int[] throw_frames = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
-							if (kb < 7)
+							if (p.kickback_pic < 7)
 							{
-								gun_pos -= 10 * kb; //D
+								gun_pos -= 10 * p.kickback_pic; //D
 							}
-							else if (kb < 12)
+							else if (p.kickback_pic < 12)
 							{
-								gun_pos += 20 * (kb - 10); //U
+								gun_pos += 20 * (p.kickback_pic - 10); //U
 							}
-							else if (kb < 20)
+							else if (p.kickback_pic < 20)
 							{
-								gun_pos -= 9 * (kb - 14); //D
+								gun_pos -= 9 * (p.kickback_pic - 14); //D
 							}
 
-							myospal(weapon_xoffset + 190 - (p.look_ang >> 1), looking_arc + 250 - gun_pos, DefineConstants.HANDTHROW + throw_frames[kb], gs, o, pal);
+							myospal(weapon_xoffset + 190 - (p.look_ang >> 1), looking_arc + 250 - gun_pos, DefineConstants.HANDTHROW + throw_frames[p.kickback_pic], gs, o, pal);
 						}
 						else
 						{
@@ -1919,9 +1917,9 @@ public partial class GlobalMembers
 
 						weapon_xoffset = -48;
 
-						if (kb != 0)
+						if (p.kickback_pic != 0)
 						{
-							myospal(weapon_xoffset + 150 - (p.look_ang >> 1), looking_arc + 258 - gun_pos, DefineConstants.HANDREMOTE + remote_frames[kb], gs, o, pal);
+							myospal(weapon_xoffset + 150 - (p.look_ang >> 1), looking_arc + 258 - gun_pos, DefineConstants.HANDREMOTE + remote_frames[p.kickback_pic], gs, o, pal);
 						}
 						else
 						{
@@ -1939,20 +1937,20 @@ public partial class GlobalMembers
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
 
-					if (kb != 0)
+					if (p.kickback_pic != 0)
 					{
 						int[] cycloidy = { 0, 4, 12, 24, 12, 4, 0 };
 
-						i = pragmas.sgn(kb >> 2);
+						i = pragmas.sgn(p.kickback_pic >> 2);
 
 						if (p.hbomb_hold_delay != 0)
 						{
-							myospal((cycloidy[kb] >> 1) + weapon_xoffset + 268 - (p.look_ang >> 1), cycloidy[kb] + looking_arc + 238 - gun_pos, DefineConstants.DEVISTATOR + i, -32, o, pal);
+							myospal((cycloidy[p.kickback_pic] >> 1) + weapon_xoffset + 268 - (p.look_ang >> 1), cycloidy[p.kickback_pic] + looking_arc + 238 - gun_pos, DefineConstants.DEVISTATOR + i, -32, o, pal);
 							myospal(weapon_xoffset + 30 - (p.look_ang >> 1), looking_arc + 240 - gun_pos, DefineConstants.DEVISTATOR, gs, o | 4, pal);
 						}
 						else
 						{
-							myospal(-(cycloidy[kb] >> 1) + weapon_xoffset + 30 - (p.look_ang >> 1), cycloidy[kb] + looking_arc + 240 - gun_pos, DefineConstants.DEVISTATOR + i, -32, o | 4, pal);
+							myospal(-(cycloidy[p.kickback_pic] >> 1) + weapon_xoffset + 30 - (p.look_ang >> 1), cycloidy[p.kickback_pic] + looking_arc + 240 - gun_pos, DefineConstants.DEVISTATOR + i, -32, o | 4, pal);
 							myospal(weapon_xoffset + 268 - (p.look_ang >> 1), looking_arc + 238 - gun_pos, DefineConstants.DEVISTATOR, gs, o, pal);
 						}
 					}
@@ -1973,7 +1971,7 @@ public partial class GlobalMembers
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
 
-					if (kb != 0)
+					if (p.kickback_pic != 0)
 					{
 						int[] cat_frames = { 0, 0, 1, 1, 2, 2 };
 
@@ -1984,7 +1982,7 @@ public partial class GlobalMembers
 						}
 						gun_pos -= 16;
 						myospal(weapon_xoffset + 210 - (p.look_ang >> 1), looking_arc + 261 - gun_pos, DefineConstants.FREEZE + 2, -32, o, pal);
-						myospal(weapon_xoffset + 210 - (p.look_ang >> 1), looking_arc + 235 - gun_pos, DefineConstants.FREEZE + 3 + cat_frames[kb % 6], -32, o, pal);
+						myospal(weapon_xoffset + 210 - (p.look_ang >> 1), looking_arc + 235 - gun_pos, DefineConstants.FREEZE + 3 + cat_frames[p.kickback_pic % 6], -32, o, pal);
 					}
 					else
 					{
@@ -2005,7 +2003,7 @@ public partial class GlobalMembers
 					{
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
-					if (kb == null)
+					if (p.kickback_pic == null)
 					{
 						if (cw == DefineConstants.GROW_WEAPON)
 						{
@@ -2030,14 +2028,14 @@ public partial class GlobalMembers
 
 						if (cw == DefineConstants.GROW_WEAPON)
 						{
-							myospal(weapon_xoffset + 184 - (p.look_ang >> 1), looking_arc + 240 - gun_pos, DefineConstants.SHRINKER + 3 + (kb & 3), -32, o, 2);
+							myospal(weapon_xoffset + 184 - (p.look_ang >> 1), looking_arc + 240 - gun_pos, DefineConstants.SHRINKER + 3 + (p.kickback_pic & 3), -32, o, 2);
 
 							myospal(weapon_xoffset + 188 - (p.look_ang >> 1), looking_arc + 240 - gun_pos, DefineConstants.SHRINKER - 1, gs, o, pal);
 
 						}
 						else
 						{
-							myospal(weapon_xoffset + 184 - (p.look_ang >> 1), looking_arc + 240 - gun_pos, DefineConstants.SHRINKER + 3 + (kb & 3), -32, o, 0);
+							myospal(weapon_xoffset + 184 - (p.look_ang >> 1), looking_arc + 240 - gun_pos, DefineConstants.SHRINKER + 3 + (p.kickback_pic & 3), -32, o, 0);
 
 							myospal(weapon_xoffset + 188 - (p.look_ang >> 1), looking_arc + 240 - gun_pos, DefineConstants.SHRINKER + 1, gs, o, pal);
 						}
@@ -2673,9 +2671,6 @@ public partial class GlobalMembers
 		int sb_snum;
 		short psect;
 		short psectlotag;
-		//C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-		//ORIGINAL LINE: short *kb;
-		short kb;
 		short tempsect;
 		short pi;
 		player_struct p;
@@ -2684,8 +2679,6 @@ public partial class GlobalMembers
 		p = ps[snum];
 		pi = p.i;
 		s = Engine.board.sprite[pi];
-
-		kb = p.kickback_pic;
 
 		if (p.cheat_phase <= 0)
 		{
@@ -3646,7 +3639,7 @@ public partial class GlobalMembers
 
 		//Do the quick lefts and rights
 
-		if (p.fist_incs != 0 || p.transporter_hold > 2 || p.hard_landing != 0 || p.access_incs > 0 || p.knee_incs > 0 || (p.curr_weapon == DefineConstants.TRIPBOMB_WEAPON && kb > 1 && kb < 4))
+		if (p.fist_incs != 0 || p.transporter_hold > 2 || p.hard_landing != 0 || p.access_incs > 0 || p.knee_incs > 0 || (p.curr_weapon == DefineConstants.TRIPBOMB_WEAPON && p.kickback_pic > 1 && p.kickback_pic < 4))
 		{
 			doubvel = 0;
 			p.posxv = 0;
@@ -3854,7 +3847,7 @@ public partial class GlobalMembers
 			p.posxv += ((sync[snum].fvel * doubvel) << 6);
 			p.posyv += ((sync[snum].svel * doubvel) << 6);
 
-			if ((p.curr_weapon == DefineConstants.KNEE_WEAPON && kb > 10 && p.on_ground != 0) || (p.on_ground != 0 && (sb_snum & 2) != 0))
+			if ((p.curr_weapon == DefineConstants.KNEE_WEAPON && p.kickback_pic > 10 && p.on_ground != 0) || (p.on_ground != 0 && (sb_snum & 2) != 0))
 			{
 				p.posxv = pragmas.mulscale(p.posxv, dukefriction - 0x2000, 16);
 				p.posyv = pragmas.mulscale(p.posyv, dukefriction - 0x2000, 16);
@@ -4183,7 +4176,7 @@ public partial class GlobalMembers
 				if (p.last_weapon >= 0)
 				{
 					p.weapon_pos = 10;
-					//                if(p->curr_weapon == KNEE_WEAPON) *kb = 1;
+					//                if(p->curr_weapon == KNEE_WEAPON) *p.kickback_pic = 1;
 					p.last_weapon = -1;
 				}
 				else if (p.holster_weapon == 0)
@@ -4219,7 +4212,7 @@ public partial class GlobalMembers
 		{
 			sb_snum &= ((~(1 << 2)));
 		}
-		else if (shrunk == false && (sb_snum & (1 << 2)) != 0 && kb == null && p.fist_incs == 0 && p.last_weapon == -1 && (p.weapon_pos == 0 || p.holster_weapon == 1))
+		else if (shrunk == false && (sb_snum & (1 << 2)) != 0 && p.kickback_pic == null && p.fist_incs == 0 && p.last_weapon == -1 && (p.weapon_pos == 0 || p.holster_weapon == 1))
 		{
 
 			p.crack_time = 777;
@@ -4241,19 +4234,19 @@ public partial class GlobalMembers
 						p.hbomb_hold_delay = 0;
 						if (p.ammo_amount[DefineConstants.HANDBOMB_WEAPON] > 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 						}
 						break;
 					case DefineConstants.HANDREMOTE_WEAPON:
 						p.hbomb_hold_delay = 0;
-						kb = 1;
+						p.kickback_pic = 1;
 						break;
 
 					case DefineConstants.PISTOL_WEAPON:
 						if (p.ammo_amount[DefineConstants.PISTOL_WEAPON] > 0)
 						{
 							p.ammo_amount[DefineConstants.PISTOL_WEAPON]--;
-							kb = 1;
+							p.kickback_pic = 1;
 						}
 						break;
 
@@ -4261,14 +4254,14 @@ public partial class GlobalMembers
 					case DefineConstants.CHAINGUN_WEAPON:
 						if (p.ammo_amount[DefineConstants.CHAINGUN_WEAPON] > 0) // && p->random_club_frame == 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 						}
 						break;
 
 					case DefineConstants.SHOTGUN_WEAPON:
 						if (p.ammo_amount[DefineConstants.SHOTGUN_WEAPON] > 0 && p.random_club_frame == 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 						}
 						break;
 #if !VOLUMEONE
@@ -4321,7 +4314,7 @@ public partial class GlobalMembers
 									{
 										p.posz = p.oposz;
 										p.poszv = 0;
-										kb = 1;
+										p.kickback_pic = 1;
 									}
 								}
 							}
@@ -4334,13 +4327,13 @@ public partial class GlobalMembers
 						{
 							if (p.ammo_amount[DefineConstants.GROW_WEAPON] > 0)
 							{
-								kb = 1;
+								p.kickback_pic = 1;
 								spritesound(DefineConstants.EXPANDERSHOOT, pi);
 							}
 						}
 						else if (p.ammo_amount[DefineConstants.SHRINKER_WEAPON] > 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 							spritesound(DefineConstants.SHRINKER_FIRE, pi);
 						}
 						break;
@@ -4348,14 +4341,14 @@ public partial class GlobalMembers
 					case DefineConstants.FREEZE_WEAPON:
 						if (p.ammo_amount[DefineConstants.FREEZE_WEAPON] > 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 							spritesound(DefineConstants.CAT_FIRE, pi);
 						}
 						break;
 					case DefineConstants.DEVISTATOR_WEAPON:
 						if (p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON] > 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 							if (p.hbomb_hold_delay == 0)
 								p.hbomb_hold_delay = 1;
 							else
@@ -4370,32 +4363,32 @@ public partial class GlobalMembers
 					case DefineConstants.RPG_WEAPON:
 						if (p.ammo_amount[DefineConstants.RPG_WEAPON] > 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 						}
 						break;
 
 					case DefineConstants.KNEE_WEAPON:
 						if (p.quick_kick == 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 						}
 						break;
 				}
 			}
 		}
-		else if (kb != 0)
+		else if (p.kickback_pic != 0)
 		{
 			switch (p.curr_weapon)
 			{
 				case DefineConstants.HANDBOMB_WEAPON:
 
-					if (kb == 6 && (sb_snum & (1 << 2)) != 0)
+					if (p.kickback_pic == 6 && (sb_snum & (1 << 2)) != 0)
 					{
 						p.rapid_fire_hold = (char)1;
 						break;
 					}
-					kb++;
-					if (kb == 12)
+					p.kickback_pic++;
+					if (p.kickback_pic == 12)
 					{
 						p.ammo_amount[DefineConstants.HANDBOMB_WEAPON]--;
 
@@ -4429,13 +4422,13 @@ public partial class GlobalMembers
 						p.hbomb_on = (char)1;
 
 					}
-					else if (kb < 12 && (sb_snum & (1 << 2)) != 0)
+					else if (p.kickback_pic < 12 && (sb_snum & (1 << 2)) != 0)
 					{
 						p.hbomb_hold_delay++;
 					}
-					else if (kb > 19)
+					else if (p.kickback_pic > 19)
 					{
-						kb = 0;
+						p.kickback_pic = 0;
 						p.curr_weapon = DefineConstants.HANDREMOTE_WEAPON;
 						p.last_weapon = -1;
 						p.weapon_pos = 10;
@@ -4446,16 +4439,16 @@ public partial class GlobalMembers
 
 				case DefineConstants.HANDREMOTE_WEAPON:
 
-					kb++;
+					p.kickback_pic++;
 
-					if (kb == 2)
+					if (p.kickback_pic == 2)
 					{
 						p.hbomb_on = (char)0;
 					}
 
-					if (kb == 10)
+					if (p.kickback_pic == 10)
 					{
-						kb = 0;
+						p.kickback_pic = 0;
 						if (p.ammo_amount[DefineConstants.HANDBOMB_WEAPON] > 0)
 						{
 							addweapon(p, DefineConstants.HANDBOMB_WEAPON);
@@ -4468,7 +4461,7 @@ public partial class GlobalMembers
 					break;
 
 				case DefineConstants.PISTOL_WEAPON:
-					if (kb == 1)
+					if (p.kickback_pic == 1)
 					{
 						shoot(pi, DefineConstants.SHOTSPARK1);
 						spritesound(DefineConstants.PISTOL_FIRE, pi);
@@ -4476,23 +4469,23 @@ public partial class GlobalMembers
 						lastvisinc = totalclock + 32;
 						p.visibility = 0;
 					}
-					else if (kb == 2)
+					else if (p.kickback_pic == 2)
 					{
 						spawn(pi, DefineConstants.SHELL);
 					}
 
-					kb++;
+					p.kickback_pic++;
 
-					if (kb >= 5)
+					if (p.kickback_pic >= 5)
 					{
 						if (p.ammo_amount[DefineConstants.PISTOL_WEAPON] <= 0 || (p.ammo_amount[DefineConstants.PISTOL_WEAPON] % 12) != 0)
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 							checkavailweapon(p);
 						}
 						else
 						{
-							switch (kb)
+							switch (p.kickback_pic)
 							{
 								case 5:
 									spritesound(DefineConstants.EJECT_CLIP, pi);
@@ -4504,9 +4497,9 @@ public partial class GlobalMembers
 						}
 					}
 
-					if (kb == 27)
+					if (p.kickback_pic == 27)
 					{
-						kb = 0;
+						p.kickback_pic = 0;
 						checkavailweapon(p);
 					}
 
@@ -4514,9 +4507,9 @@ public partial class GlobalMembers
 
 				case DefineConstants.SHOTGUN_WEAPON:
 
-					kb++;
+					p.kickback_pic++;
 
-					if (kb == 4)
+					if (p.kickback_pic == 4)
 					{
 						shoot(pi, DefineConstants.SHOTGUN);
 						shoot(pi, DefineConstants.SHOTGUN);
@@ -4534,7 +4527,7 @@ public partial class GlobalMembers
 						p.visibility = 0;
 					}
 
-					switch (kb)
+					switch (p.kickback_pic)
 					{
 						case 13:
 							checkavailweapon(p);
@@ -4554,22 +4547,22 @@ public partial class GlobalMembers
 							p.kickback_pic++;
 							break;
 						case 31:
-							kb = 0;
+							p.kickback_pic = 0;
 							return;
 					}
 					break;
 
 				case DefineConstants.CHAINGUN_WEAPON:
 
-					kb++;
+					p.kickback_pic++;
 
-					if ((kb) <= 12)
+					if ((p.kickback_pic) <= 12)
 					{
-						if (((kb) % 3) == 0)
+						if (((p.kickback_pic) % 3) == 0)
 						{
 							p.ammo_amount[DefineConstants.CHAINGUN_WEAPON]--;
 
-							if (((kb) % 3) == 0)
+							if (((p.kickback_pic) % 3) == 0)
 							{
 								j = spawn(pi, DefineConstants.SHELL);
 
@@ -4588,20 +4581,20 @@ public partial class GlobalMembers
 
 							if ((sb_snum & (1 << 2)) == 0)
 							{
-								kb = 0;
+								p.kickback_pic = 0;
 								break;
 							}
 						}
 					}
-					else if (kb > 10)
+					else if (p.kickback_pic > 10)
 					{
 						if ((sb_snum & (1 << 2)) != 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 						}
 						else
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 						}
 					}
 
@@ -4612,9 +4605,9 @@ public partial class GlobalMembers
 
 					if (p.curr_weapon == DefineConstants.GROW_WEAPON)
 					{
-						if (kb > 3)
+						if (p.kickback_pic > 3)
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 							if (screenpeek == snum)
 							{
 								pus = (char)1;
@@ -4628,14 +4621,14 @@ public partial class GlobalMembers
 						}
 						else
 						{
-							kb++;
+							p.kickback_pic++;
 						}
 					}
 					else
 					{
-						if (kb > 10)
+						if (p.kickback_pic > 10)
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 
 							p.ammo_amount[DefineConstants.SHRINKER_WEAPON]--;
 							shoot(pi, DefineConstants.SHRINKER);
@@ -4646,17 +4639,17 @@ public partial class GlobalMembers
 						}
 						else
 						{
-							kb++;
+							p.kickback_pic++;
 						}
 					}
 					break;
 
 				case DefineConstants.DEVISTATOR_WEAPON:
-					if (kb != 0)
+					if (p.kickback_pic != 0)
 					{
-						kb++;
+						p.kickback_pic++;
 
-						if ((kb & 1) != 0)
+						if ((p.kickback_pic & 1) != 0)
 						{
 							p.visibility = 0;
 							lastvisinc = totalclock + 32;
@@ -4664,18 +4657,18 @@ public partial class GlobalMembers
 							p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON]--;
 							checkavailweapon(p);
 						}
-						if (kb > 5)
+						if (p.kickback_pic > 5)
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 						}
 					}
 					break;
 				case DefineConstants.FREEZE_WEAPON:
 
-					if (kb < 4)
+					if (p.kickback_pic < 4)
 					{
-						kb++;
-						if (kb == 3)
+						p.kickback_pic++;
+						if (p.kickback_pic == 3)
 						{
 							p.ammo_amount[DefineConstants.FREEZE_WEAPON]--;
 							p.visibility = 0;
@@ -4685,7 +4678,7 @@ public partial class GlobalMembers
 						}
 						if (s.xrepeat < 32)
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 							break;
 						}
 					}
@@ -4693,53 +4686,53 @@ public partial class GlobalMembers
 					{
 						if ((sb_snum & (1 << 2)) != 0)
 						{
-							kb = 1;
+							p.kickback_pic = 1;
 							spritesound(DefineConstants.CAT_FIRE, pi);
 						}
 						else
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 						}
 					}
 					break;
 
 				case DefineConstants.TRIPBOMB_WEAPON:
-					if (kb < 4)
+					if (p.kickback_pic < 4)
 					{
 						p.posz = p.oposz;
 						p.poszv = 0;
-						if (kb == 3)
+						if (p.kickback_pic == 3)
 						{
 							shoot(pi, DefineConstants.HANDHOLDINGLASER);
 						}
 					}
-					if (kb == 16)
+					if (p.kickback_pic == 16)
 					{
-						kb = 0;
+						p.kickback_pic = 0;
 						checkavailweapon(p);
 						p.weapon_pos = -9;
 					}
 					else
 					{
-						kb++;
+						p.kickback_pic++;
 					}
 					break;
 				case DefineConstants.KNEE_WEAPON:
-					kb++;
+					p.kickback_pic++;
 
-					if (kb == 7)
+					if (p.kickback_pic == 7)
 					{
 						shoot(pi, DefineConstants.KNEE);
 					}
-					else if (kb == 14)
+					else if (p.kickback_pic == 14)
 					{
 						if ((sb_snum & (1 << 2)) != 0)
 						{
-							kb = (short)(1 + (Engine.krand() & 3));
+							p.kickback_pic = (short)(1 + (Engine.krand() & 3));
 						}
 						else
 						{
-							kb = 0;
+							p.kickback_pic = 0;
 						}
 					}
 
@@ -4750,8 +4743,8 @@ public partial class GlobalMembers
 					break;
 
 				case DefineConstants.RPG_WEAPON:
-					kb++;
-					if (kb == 4)
+					p.kickback_pic++;
+					if (p.kickback_pic == 4)
 					{
 						p.ammo_amount[DefineConstants.RPG_WEAPON]--;
 						lastvisinc = totalclock + 32;
@@ -4759,9 +4752,9 @@ public partial class GlobalMembers
 						shoot(pi, DefineConstants.RPG);
 						checkavailweapon(p);
 					}
-					else if (kb == 20)
+					else if (p.kickback_pic == 20)
 					{
-						kb = 0;
+						p.kickback_pic = 0;
 					}
 					break;
 			}
