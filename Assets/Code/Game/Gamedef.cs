@@ -44,7 +44,7 @@ public partial class GlobalMembers
     internal static short g_i;
     internal static short g_p;
     internal static int g_x;
-    internal static int[] g_t;
+    internal static scripttemp g_t;
     internal static spritetype g_sp;
 
     internal struct DefString
@@ -3044,7 +3044,7 @@ public partial class GlobalMembers
                 break;
             case 21:
                 insptr++;
-                parseifelse(scriptptr.buffer[g_t[5]] == (short)scriptptr.buffer[insptr]);
+                parseifelse(g_t[5] == (short)scriptptr.buffer[insptr]);
                 break;
             case 34:
                 insptr++;
@@ -3696,7 +3696,7 @@ public partial class GlobalMembers
                 parseifelse(j == DefineConstants.NUM_SOUNDS);
                 break;
             default:
-             //   Engine.Printf("Unknown command!");
+                throw new Exception("Unknown command!");
                 killit_flag = (char)1;
                 break;
         }
@@ -3750,6 +3750,7 @@ public partial class GlobalMembers
             return;
         }
 
+        g_t.inScriptExecute = true;
         if (g_t[4] != 0)
         {
             g_sp.lotag += (DefineConstants.TICRATE / 26);
@@ -3764,11 +3765,12 @@ public partial class GlobalMembers
                 g_t[3] = 0;
             }
         }
-
+        
         do
         {
             done = (char)parse();
         } while (done == 0);
+        g_t.inScriptExecute = false;
 
         if (killit_flag == 1)
         {

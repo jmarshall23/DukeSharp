@@ -4017,7 +4017,7 @@ public partial class GlobalMembers
 		int x = 09;
 		int m = 09;
 		int l = 09;
-		int[] t;
+		scripttemp t;
 		short a = 0;
 		short i = 0;
 		short j = 0;
@@ -5615,7 +5615,7 @@ public partial class GlobalMembers
 		short p = 0;
 		int l = 0;
 		int x = 0;
-		int[] t;
+		scripttemp t;
 		spritetype s;
 
 		i = (short)Engine.board.headspritestat[5];
@@ -6379,7 +6379,7 @@ public partial class GlobalMembers
 		int x = 0;
 		int st = 0;
 		int j = 0;
-		int[] t;
+		scripttemp t;
 		short i = 0;
 		short k = 0;
 		short nexti = 0;

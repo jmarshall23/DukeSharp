@@ -301,6 +301,37 @@ public class player_struct
     public char return_to_center;
 }
 
+public class scripttemp
+{
+    public int[] temp_data = new int[6];
+    public bool[] script_execute = new bool[6];
+    public bool inScriptExecute = false;
+
+    public int this[int index]
+    {
+        get
+        {
+            if (index == 0 || script_execute[index] == false)
+                return temp_data[index];
+
+            if (index >= temp_data.Length) 
+                throw new System.Exception("scripttemp out of bounds!");
+
+            if (temp_data[index] >= GlobalMembers.scriptptr.buffer.Length)
+                return 0;
+
+            return GlobalMembers.scriptptr.buffer[temp_data[index]];
+        }
+        set
+        {
+            if (inScriptExecute)
+                script_execute[index] = true;
+            else
+                script_execute[index] = false;
+            temp_data[index] = value;
+        }
+    }
+}
 
 public class weaponhit
 {
@@ -321,7 +352,7 @@ public class weaponhit
     public int bposx;
     public int bposy;
     public int bposz;
-    public int[] temp_data = new int[6];
+    public scripttemp temp_data = new scripttemp();
 }
 
 
