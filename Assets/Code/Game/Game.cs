@@ -1729,8 +1729,8 @@ public partial class GlobalMembers
 		if (actorscrptr[s_pn] != 0)
 		{
 			s.extra = (short)scriptptr.buffer[actorscrptr[s_pn]];
-			hittype[i].temp_data[4] = actorscrptr[s_pn + 1]; //*(actorscrptr[s_pn] + 1);
-            hittype[i].temp_data[1] = actorscrptr[s_pn + 2]; //* (actorscrptr[s_pn] + 2);
+			hittype[i].temp_data[4] = (short)(actorscrptr[s_pn] + 1); //*(actorscrptr[s_pn] + 1);
+            hittype[i].temp_data[1] = (short)(actorscrptr[s_pn] + 2); //* (actorscrptr[s_pn] + 2);
 			s.hitag = (short)(actorscrptr[s_pn + 3]); //*(actorscrptr[s_pn] + 3);
 		}
 		else
@@ -4625,7 +4625,7 @@ public partial class GlobalMembers
 // jmarshall - animation crash.
 					//t.picnum += (short)(k + (scriptptr.buffer[t4]) + l * t3);
 
-					if (l > 0)
+					if (l > 0) 
 					{
 						while (Engine.tilesizx[t.picnum] == 0 && t.picnum > 0)
 						{

@@ -2502,8 +2502,8 @@ public partial class GlobalMembers
             case 24:
                 insptr++;
                 g_t[5] = insptr;
-                g_t[4] = scriptptr.buffer[g_t[5]]; // Action
-                g_t[1] = scriptptr.buffer[g_t[5] + 4]; // move
+                g_t[4] = g_t[5]; // Action
+                g_t[1] = g_t[5] + 4; // move
                 g_sp.hitag = (short)scriptptr.buffer[g_t[5] + 8]; // Ai
                 g_t[0] = g_t[2] = g_t[3] = 0;
                 if ((g_sp.hitag & DefineConstants.random_angle) != 0)
@@ -2516,7 +2516,7 @@ public partial class GlobalMembers
                 insptr++;
                 g_t[2] = 0;
                 g_t[3] = 0;
-                g_t[4] = scriptptr.buffer[insptr];
+                g_t[4] = insptr;
                 insptr++;
                 break;
 
@@ -2992,7 +2992,7 @@ public partial class GlobalMembers
             case 32:
                 g_t[0] = 0;
                 insptr++;
-                g_t[1] = (short)scriptptr.buffer[insptr];
+                g_t[1] = scriptptr.buffer[insptr];
                 insptr++;
                 g_sp.hitag = (short)scriptptr.buffer[insptr];
                 insptr++;
@@ -3087,7 +3087,7 @@ public partial class GlobalMembers
                 break;
             case 41:
                 insptr++;
-                parseifelse(g_t[1] == (short)scriptptr.buffer[insptr]);
+                parseifelse(scriptptr.buffer[g_t[1]] == (short)scriptptr.buffer[insptr]);
                 break;
             case 42:
                 insptr++;
