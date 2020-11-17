@@ -1729,9 +1729,9 @@ public partial class GlobalMembers
 		if (actorscrptr[s_pn] != 0)
 		{
 			s.extra = (short)scriptptr.buffer[actorscrptr[s_pn]];
-			hittype[i].temp_data[4] = scriptptr.buffer[actorscrptr[s_pn] + 1]; //*(actorscrptr[s_pn] + 1);
-			hittype[i].temp_data[1] = scriptptr.buffer[actorscrptr[s_pn] + 2]; //* (actorscrptr[s_pn] + 2);
-			s.hitag = (short)scriptptr.buffer[actorscrptr[s_pn] + 3]; //*(actorscrptr[s_pn] + 3);
+			hittype[i].temp_data[4] = actorscrptr[s_pn + 1]; //*(actorscrptr[s_pn] + 1);
+            hittype[i].temp_data[1] = actorscrptr[s_pn + 2]; //* (actorscrptr[s_pn] + 2);
+			s.hitag = (short)(actorscrptr[s_pn + 3]); //*(actorscrptr[s_pn] + 3);
 		}
 		else
 		{
@@ -4066,6 +4066,8 @@ public partial class GlobalMembers
 		{ //is the perfect time to animate sprites
 			t = Engine.board.tsprite[j];
 			i = t.owner;
+			if (i == -1)
+				continue;
 			s = Engine.board.sprite[i];
 
 			switch (s.picnum)
@@ -4620,8 +4622,8 @@ public partial class GlobalMembers
 							k = 0;
 							break;
 					}
-
-					t.picnum += (short)(k + (scriptptr.buffer[t4]) + l * t3);
+// jmarshall - animation crash.
+					//t.picnum += (short)(k + (scriptptr.buffer[t4]) + l * t3);
 
 					if (l > 0)
 					{

@@ -2325,7 +2325,7 @@ public partial class GlobalMembers
         }
 
         //    if(*it == 1668249134L) gameexit("\nERR");
-        Engine.Printf("Executing command: " + scriptptr.buffer[insptr]);
+        //Engine.Printf("Executing command: " + scriptptr.buffer[insptr]);
         switch (scriptptr.buffer[insptr])
         {
             case 3:
@@ -3667,7 +3667,7 @@ public partial class GlobalMembers
                 parseifelse(j == DefineConstants.NUM_SOUNDS);
                 break;
             default:
-                Engine.Printf("Unknown command!");
+             //   Engine.Printf("Unknown command!");
                 killit_flag = (char)1;
                 break;
         }
