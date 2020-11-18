@@ -2121,279 +2121,279 @@ else
         }
     }
     GlobalMembers.ConActions.ConAction ABURGERROTS = new GlobalMembers.ConActions.ConAction(0, 1, 5);
-    private void A_notenemy()
+    private void A_DUKEBURGER()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_MOP()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_BROOM()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_WETFLOOR()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_DESKLAMP()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_HATRACK()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_GUNPOWDERBARREL()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_COFFEEMACHINE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_TEDDYBEAR()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_TOPSECRET()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_ROBOTMOUSE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_MAN()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_MAN2()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_WOMAN()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PIRATE1A()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PIRATE2A()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PIRATE3A()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PIRATE4A()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PIRATE5A()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PIRATE6A()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_ROBOTPIRATE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PIRATEHALF()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_CHESTOFGOLD()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_ROBOTDOG()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_ROBOTDOG2()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_PLEASEWAIT()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT1()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT2()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT3()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT4()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT5()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT6()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT7()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT8()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT9()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT10()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT11()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT12()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT13()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT14()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT15()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT16()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT17()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT18()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT19()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FOODOBJECT20()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_JOLLYMEAL()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_GUMBALLMACHINE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_GUMBALLMACHINEBROKE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_POLICELIGHTPOLE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_CLOCK()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_MAILBAG()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FEATHEREDCHICKEN()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_SKINNEDCHICKEN()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_HEADLAMP()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_DOLPHIN1()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_DOLPHIN2()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_SNAKEP()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_DONUTS()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_GAVALS()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_GAVALS2()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_CUPS()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_DONUTS2()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_FLOORBASKET()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_METER()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_DESKPHONE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_MACE()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_SHOPPINGCART()
     {
         breakobject();
     }
-    private void A_notenemy()
+    private void A_COFFEEMUG()
     {
         breakobject();
     }
@@ -3718,11 +3718,11 @@ else
         else
             GlobalMembers.ConActions.killit();
     }
-    private void A_notenemy()
+    private void A_FIRE()
     {
         firestate();
     }
-    private void A_notenemy()
+    private void A_FIRE2()
     {
         firestate();
     }
@@ -8502,7 +8502,7 @@ else
     GlobalMembers.ConActions.MoveAction CANNONBALL3 = new GlobalMembers.ConActions.MoveAction(512, 20);
     GlobalMembers.ConActions.MoveAction CANNONBALL4 = new GlobalMembers.ConActions.MoveAction(512, 40);
     GlobalMembers.ConActions.MoveAction CANNONBALL5 = new GlobalMembers.ConActions.MoveAction(512, 80);
-    private void A_notenemy()
+    private void A_CANNONBALL()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -8571,7 +8571,7 @@ else
     public const int CANNONBALLS = 1818;
     public const int CANNONBALLSSTRENGTH = 10;
     GlobalMembers.ConActions.MoveAction CANNONBALLSVEL = new GlobalMembers.ConActions.MoveAction();
-    private void A_notenemy()
+    private void A_CANNONBALLS()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -8595,7 +8595,7 @@ else
     GlobalMembers.ConActions.ConAction ACANNONWAIT = new GlobalMembers.ConActions.ConAction(0, 1, 7, 1, 1);
     GlobalMembers.ConActions.ConAction ACANNONSHOOTING = new GlobalMembers.ConActions.ConAction(0, 1, 7, 1, 1);
     GlobalMembers.ConActions.MoveAction CANNONSTOP = new GlobalMembers.ConActions.MoveAction();
-    private void A_enemy()
+    private void A_CANNON()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -8640,7 +8640,7 @@ else
                         return;
             }
     }
-    private void A_notenemy()
+    private void A_HOTMEAT()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -8663,7 +8663,7 @@ else
             GlobalMembers.ConActions.spawn(WATERDRIP);
     }
     GlobalMembers.ConActions.ConAction ASPEAKERBROKE = new GlobalMembers.ConActions.ConAction(1);
-    private void A_notenemy()
+    private void A_SPEAKER()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -8683,7 +8683,7 @@ else
     }
     GlobalMembers.ConActions.ConAction ALAVABUBBLE = new GlobalMembers.ConActions.ConAction();
     GlobalMembers.ConActions.ConAction ALAVABUBBLEANIM = new GlobalMembers.ConActions.ConAction(0, 5, 1, 1, 16);
-    private void A_notenemy()
+    private void A_LAVABUBBLE()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -8717,7 +8717,7 @@ else
     GlobalMembers.ConActions.ConAction ATANKDEAD = new GlobalMembers.ConActions.ConAction(0, 1, 7, 1, 1);
     GlobalMembers.ConActions.MoveAction TANKFORWARD = new GlobalMembers.ConActions.MoveAction(100);
     GlobalMembers.ConActions.MoveAction TANKSTOP = new GlobalMembers.ConActions.MoveAction();
-    private void A_enemy()
+    private void A_TANK()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -9027,7 +9027,7 @@ else
     GlobalMembers.ConActions.ConAction ANEWBEASTFALL = new GlobalMembers.ConActions.ConAction(90, 1, 5);
     GlobalMembers.ConActions.ConAction ANEWBEASTFROZEN = new GlobalMembers.ConActions.ConAction(10, 1, 5);
     GlobalMembers.ConActions.ConAction ANEWBEASTHANG = new GlobalMembers.ConActions.ConAction(0, 1, 5);
-    private void A_enemy()
+    private void A_NEWBEASTHANG()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -9053,7 +9053,7 @@ else
                 }
     }
     GlobalMembers.ConActions.ConAction ANEWBEASTHANGDEAD = new GlobalMembers.ConActions.ConAction(-1, 1, 5);
-    private void A_enemy()
+    private void A_NEWBEASTHANGDEAD()
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
@@ -9389,10 +9389,10 @@ else
         if (GlobalMembers.ConActions.ifcount(13))
             GlobalMembers.ConActions.Ai(AINEWBEASTGETENEMY);
     }
-    private void A_enemystayput()
+    private void A_NEWBEASTSTAYPUT()
     {
     }
-    private void A_enemy()
+    private void A_NEWBEASTJUMP()
     {
     }
     private void newbeastcode()
@@ -9505,7 +9505,7 @@ else
         if (GlobalMembers.ConActions.ifhitweapon())
             checknewbeasthit();
     }
-    private void A_enemy()
+    private void A_NEWBEAST()
     {
         GlobalMembers.ConActions.fall();
         if (GlobalMembers.ConActions.ifaction(0))
@@ -10086,212 +10086,212 @@ else
         GlobalMembers.ConActions.definesound(BELLSND, "sbell1a.voc", 0, 0, 255, 2, 0);
         GlobalMembers.ConActions.definesound(GOAWAY, "goaway.voc", 0, 0, 4, 0, 0);
         GlobalMembers.ConActions.definesound(JOKE, "joke.voc", 0, 0, 128, 0, 0);
-        GlobalMembers.ConActions.RegisterActor(A_SPACESHUTTLE, SPACESHUTTLE, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_SATELLITE, SATELLITE, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_SHARK, SHARK, SHARKSTRENGTH, ASHARKCRUZING, SHARKVELS, randomangle, geth);
-        GlobalMembers.ConActions.RegisterActor(A_BLIMP, BLIMP, 1);
-        GlobalMembers.ConActions.RegisterActor(A_RUBBERCAN, RUBBERCAN, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, DUKEBURGER, PIRATEGALSTRENGTH, ABURGERROTS);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, MOP, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, BROOM, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, WETFLOOR, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, DESKLAMP, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, HATRACK, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, GUNPOWDERBARREL, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, COFFEEMACHINE, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, TEDDYBEAR, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, TOPSECRET, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, ROBOTMOUSE, ROBOTMOUSESTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, MAN, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, MAN2, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, WOMAN, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PIRATE1A, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PIRATE2A, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PIRATE3A, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PIRATE4A, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PIRATE5A, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PIRATE6A, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, ROBOTPIRATE, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PIRATEHALF, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, CHESTOFGOLD, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, ROBOTDOG, PIRATEGALSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, ROBOTDOG2, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, PLEASEWAIT);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT1, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT2, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT3, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT4, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT5, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT6, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT7, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT8, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT9, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT10, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT11, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT12, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT13, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT14, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT15, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT16, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT17, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT18, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT19, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FOODOBJECT20, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, JOLLYMEAL, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, GUMBALLMACHINE, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, GUMBALLMACHINEBROKE, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, POLICELIGHTPOLE, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, CLOCK, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, MAILBAG, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FEATHEREDCHICKEN, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, SKINNEDCHICKEN, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, HEADLAMP, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, DOLPHIN1, DOLPHINSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, DOLPHIN2, DOLPHINSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, SNAKEP, MEDIUMSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, DONUTS, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, GAVALS, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, GAVALS2, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, CUPS, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, DONUTS2, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FLOORBASKET, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, METER, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, DESKPHONE, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, MACE, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, SHOPPINGCART, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, COFFEEMUG, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_EXPLODINGBARREL, EXPLODINGBARREL, 26);
-        GlobalMembers.ConActions.RegisterActor(A_BURNING, BURNING, WEAK, BURNING_FLAME);
-        GlobalMembers.ConActions.RegisterActor(A_BURNING2, BURNING2, WEAK, BURNING_FLAME);
-        GlobalMembers.ConActions.RegisterActor(A_TOILETWATER, TOILETWATER, 0, TOILETWATERFRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_HORSEONSIDE, HORSEONSIDE, WEAKEST);
-        GlobalMembers.ConActions.RegisterActor(A_WOODENHORSE, WOODENHORSE, WEAK, WOODENHORSEFRAME);
-        GlobalMembers.ConActions.RegisterActor(A_STEAM, STEAM, 0, STEAMFRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_CEILINGSTEAM, CEILINGSTEAM, 0, STEAMFRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_WATERBUBBLEMAKER, WATERBUBBLEMAKER, 0, 0, randomangle);
-        GlobalMembers.ConActions.RegisterActor(A_WATERBUBBLE, WATERBUBBLE, 0, BUBBLE, BUBMOVE, getv, geth, randomangle);
-        GlobalMembers.ConActions.RegisterActor(A_SMALLSMOKE, SMALLSMOKE, 0, SMOKEFRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_NUKEBARRELDENTED, NUKEBARRELDENTED, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_NUKEBARRELLEAKED, NUKEBARRELLEAKED, WEAK);
-        GlobalMembers.ConActions.RegisterActor(A_NUKEBARREL, NUKEBARREL, MEDIUMSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_FIREBARREL, FIREBARREL);
-        GlobalMembers.ConActions.RegisterActor(A_FIREVASE, FIREVASE);
-        GlobalMembers.ConActions.RegisterActor(A_SHRINKEREXPLOSION, SHRINKEREXPLOSION, 0, SHRINKERFRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_EXPLOSION2, EXPLOSION2, 1, EXPLOSION_FRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_EXPLOSION2BOT, EXPLOSION2BOT, 1, EXPLOSION_FRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_FLOORFLAME, FLOORFLAME, 0, FFLAME_FR);
-        GlobalMembers.ConActions.RegisterActor(A_ROTATEGUN, ROTATEGUN, ROTTURRETSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_FORCERIPPLE, FORCERIPPLE, 0, RIP_F);
-        GlobalMembers.ConActions.RegisterActor(A_TRANSPORTERSTAR, TRANSPORTERSTAR, 0, TRANSFOWARD);
-        GlobalMembers.ConActions.RegisterActor(A_TRANSPORTERBEAM, TRANSPORTERBEAM, 0, BEAMFOWARD);
-        GlobalMembers.ConActions.RegisterActor(A_STEROIDS, STEROIDS);
-        GlobalMembers.ConActions.RegisterActor(A_BOOTS, BOOTS);
-        GlobalMembers.ConActions.RegisterActor(A_HEATSENSOR, HEATSENSOR);
-        GlobalMembers.ConActions.RegisterActor(A_SHIELD, SHIELD);
-        GlobalMembers.ConActions.RegisterActor(A_AIRTANK, AIRTANK);
-        GlobalMembers.ConActions.RegisterActor(A_HOLODUKE, HOLODUKE, 0, HOLODUKE_FRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_JETPACK, JETPACK);
-        GlobalMembers.ConActions.RegisterActor(A_ACCESSCARD, ACCESSCARD);
-        GlobalMembers.ConActions.RegisterActor(A_AMMO, AMMO);
-        GlobalMembers.ConActions.RegisterActor(A_FREEZEAMMO, FREEZEAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_SHOTGUNAMMO, SHOTGUNAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_AMMOLOTS, AMMOLOTS);
-        GlobalMembers.ConActions.RegisterActor(A_CRYSTALAMMO, CRYSTALAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_GROWAMMO, GROWAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_BATTERYAMMO, BATTERYAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_DEVISTATORAMMO, DEVISTATORAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_RPGAMMO, RPGAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_HBOMBAMMO, HBOMBAMMO);
-        GlobalMembers.ConActions.RegisterActor(A_RPGSPRITE, RPGSPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_SHOTGUNSPRITE, SHOTGUNSPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_SIXPAK, SIXPAK);
-        GlobalMembers.ConActions.RegisterActor(A_COLA, COLA);
-        GlobalMembers.ConActions.RegisterActor(A_ATOMICHEALTH, ATOMICHEALTH);
-        GlobalMembers.ConActions.RegisterActor(A_FIRSTAID, FIRSTAID);
-        GlobalMembers.ConActions.RegisterActor(A_FIRSTGUNSPRITE, FIRSTGUNSPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_TRIPBOMBSPRITE, TRIPBOMBSPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_CHAINGUNSPRITE, CHAINGUNSPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_SHRINKERSPRITE, SHRINKERSPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_FREEZESPRITE, FREEZESPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_DEVISTATORSPRITE, DEVISTATORSPRITE);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FIRE, WEAK, 0, FIREVELS);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, FIRE2, WEAK, 0, FIREVELS);
-        GlobalMembers.ConActions.RegisterActor(A_FECES, FECES);
-        GlobalMembers.ConActions.RegisterActor(A_FEM1, FEM1, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM2, FEM2, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM3, FEM3, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM4, FEM4, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM5, FEM5, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM6, FEM6, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM7, FEM7, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM8, FEM8, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM9, FEM9, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_FEM10, FEM10, TOUGH, FEMANIMATESLOW);
-        GlobalMembers.ConActions.RegisterActor(A_TOUGHGAL, TOUGHGAL, MANWOMANSTRENGTH, TOUGHGALANIM);
-        GlobalMembers.ConActions.RegisterActor(A_NAKED1, NAKED1, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_PODFEM1, PODFEM1, TOUGH, FEMANIMATE);
-        GlobalMembers.ConActions.RegisterActor(A_BLOODYPOLE, BLOODYPOLE, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_STATUEFLASH, STATUEFLASH);
-        GlobalMembers.ConActions.RegisterActor(A_STATUE, STATUE);
-        GlobalMembers.ConActions.RegisterActor(A_MIKE, MIKE);
-        GlobalMembers.ConActions.RegisterActor(A_BLOOD, BLOOD, 0, BLOODFRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_EGG, EGG, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_KNEE, KNEE, KNEE_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_SPIT, SPIT, SPIT_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_CHAINGUN, CHAINGUN, CHAINGUN_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_SHOTGUN, SHOTGUN, SHOTGUN_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_FIRELASER, FIRELASER, FIRELASER_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_HEAVYHBOMB, HEAVYHBOMB, HANDBOMB_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_BOUNCEMINE, BOUNCEMINE, BOUNCEMINE_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_MORTER, MORTER, MORTER_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_SHRINKSPARK, SHRINKSPARK, SHRINKER_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_GROWSPARK, GROWSPARK, GROWSPARK_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_RPG, RPG, RPG_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_FREEZEBLAST, FREEZEBLAST, FREEZETHROWER_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_DEVISTATORBLAST, DEVISTATORBLAST, FREEZETHROWER_WEAPON_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_COOLEXPLOSION1, COOLEXPLOSION1, COOL_EXPLOSION_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_TRIPBOMB, TRIPBOMB, TRIPBOMB_STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_SHOTSPARK1, SHOTSPARK1, PISTOL_WEAPON_STRENGTH, WEAP2FRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_DUKELYINGDEAD, DUKELYINGDEAD, 0, PLYINGFRAMES);
-        GlobalMembers.ConActions.RegisterActor(A_APLAYER, APLAYER, MAXPLAYERHEALTH, PSTAND, 0, 0);
-        GlobalMembers.ConActions.RegisterActor(A_ORGANTIC, ORGANTIC, TURRETSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPJETPACK, LIZTROOPJETPACK, TROOPSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPDUCKING, LIZTROOPDUCKING, TROOPSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPSHOOT, LIZTROOPSHOOT, TROOPSTRENGTH, ATROOPSTAND);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPSTAYPUT, LIZTROOPSTAYPUT, TROOPSTRENGTH, ATROOPSTAYSTAND);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPRUNNING, LIZTROOPRUNNING, TROOPSTRENGTH, ATROOPSTAND);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPONTOILET, LIZTROOPONTOILET, TROOPSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPJUSTSIT, LIZTROOPJUSTSIT, TROOPSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_LIZTROOP, LIZTROOP, TROOPSTRENGTH, ATROOPSTAND);
-        GlobalMembers.ConActions.RegisterActor(A_LIZMANSTAYPUT, LIZMANSTAYPUT, LIZSTRENGTH, ai, AILIZGETENEMY, cactor, LIZMAN);
-        GlobalMembers.ConActions.RegisterActor(A_LIZMANSPITTING, LIZMANSPITTING, LIZSTRENGTH, ai, AILIZSPIT, cactor, LIZMAN);
-        GlobalMembers.ConActions.RegisterActor(A_LIZMANJUMP, LIZMANJUMP, LIZSTRENGTH, ai, AILIZJUMPENEMY, cactor, LIZMAN);
-        GlobalMembers.ConActions.RegisterActor(A_LIZMAN, LIZMAN, LIZSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_DRONE, DRONE, DRONESTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_OCTABRAINSTAYPUT, OCTABRAINSTAYPUT, OCTASTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_OCTABRAIN, OCTABRAIN, OCTASTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_PIGCOPDIVE, PIGCOPDIVE, PIGCOPSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_PIGCOPSTAYPUT, PIGCOPSTAYPUT, PIGCOPSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_PIGCOP, PIGCOP, PIGCOPSTRENGTH, APIGSTAND);
-        GlobalMembers.ConActions.RegisterActor(A_BOSS1STAYPUT, BOSS1STAYPUT, BOSS1STRENGTH, cactor, BOSS1);
-        GlobalMembers.ConActions.RegisterActor(A_BOSS1, BOSS1, BOSS1STRENGTH, fall);
-        GlobalMembers.ConActions.RegisterActor(A_BOSS2, BOSS2, BOSS2STRENGTH, fall);
-        GlobalMembers.ConActions.RegisterActor(A_BOSS3, BOSS3, BOSS3STRENGTH, fall);
-        GlobalMembers.ConActions.RegisterActor(A_COMMANDERSTAYPUT, COMMANDERSTAYPUT, COMMANDERSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_COMMANDER, COMMANDER, COMMANDERSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, CANNONBALL, CANNONBALLSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, CANNONBALLS, CANNONBALLSSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_enemy, enemy, CANNON, CANNONSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, HOTMEAT, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, SPEAKER);
-        GlobalMembers.ConActions.RegisterActor(A_notenemy, notenemy, LAVABUBBLE);
-        GlobalMembers.ConActions.RegisterActor(A_enemy, enemy, TANK, TANKSTRENGTH, fall);
-        GlobalMembers.ConActions.RegisterActor(A_BOSS4STAYPUT, BOSS4STAYPUT, BOSS4STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_BOSS4, BOSS4, BOSS4STRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_enemy, enemy, NEWBEASTHANG, NEWBEASTSTRENGTH);
-        GlobalMembers.ConActions.RegisterActor(A_enemy, enemy, NEWBEASTHANGDEAD, TOUGH);
-        GlobalMembers.ConActions.RegisterActor(A_enemystayput, enemystayput, NEWBEASTSTAYPUT, NEWBEASTSTRENGTH, ai, AINEWBEASTGETENEMY, cstator, 257, cactor, NEWBEAST);
-        GlobalMembers.ConActions.RegisterActor(A_enemy, enemy, NEWBEASTJUMP, NEWBEASTSTRENGTH, ai, AINEWBEASTJUMPENEMY, cstator, 257, cactor, NEWBEAST);
-        GlobalMembers.ConActions.RegisterActor(A_enemy, enemy, NEWBEAST, NEWBEASTSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_SPACESHUTTLE, SPACESHUTTLE, enemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_SATELLITE, SATELLITE, enemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_SHARK, SHARK, enemy, SHARKSTRENGTH, ASHARKCRUZING, SHARKVELS, randomangle, geth);
+        GlobalMembers.ConActions.RegisterActor(A_BLIMP, BLIMP, enemy, 1);
+        GlobalMembers.ConActions.RegisterActor(A_RUBBERCAN, RUBBERCAN, enemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_DUKEBURGER, DUKEBURGER, notenemy, PIRATEGALSTRENGTH, ABURGERROTS);
+        GlobalMembers.ConActions.RegisterActor(A_MOP, MOP, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_BROOM, BROOM, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_WETFLOOR, WETFLOOR, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_DESKLAMP, DESKLAMP, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_HATRACK, HATRACK, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_GUNPOWDERBARREL, GUNPOWDERBARREL, notenemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_COFFEEMACHINE, COFFEEMACHINE, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_TEDDYBEAR, TEDDYBEAR, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_TOPSECRET, TOPSECRET, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_ROBOTMOUSE, ROBOTMOUSE, notenemy, ROBOTMOUSESTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_MAN, MAN, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_MAN2, MAN2, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_WOMAN, WOMAN, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIRATE1A, PIRATE1A, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIRATE2A, PIRATE2A, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIRATE3A, PIRATE3A, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIRATE4A, PIRATE4A, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIRATE5A, PIRATE5A, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIRATE6A, PIRATE6A, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_ROBOTPIRATE, ROBOTPIRATE, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIRATEHALF, PIRATEHALF, notenemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_CHESTOFGOLD, CHESTOFGOLD, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_ROBOTDOG, ROBOTDOG, notenemy, PIRATEGALSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_ROBOTDOG2, ROBOTDOG2, notenemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_PLEASEWAIT, PLEASEWAIT, notenemy);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT1, FOODOBJECT1, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT2, FOODOBJECT2, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT3, FOODOBJECT3, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT4, FOODOBJECT4, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT5, FOODOBJECT5, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT6, FOODOBJECT6, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT7, FOODOBJECT7, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT8, FOODOBJECT8, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT9, FOODOBJECT9, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT10, FOODOBJECT10, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT11, FOODOBJECT11, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT12, FOODOBJECT12, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT13, FOODOBJECT13, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT14, FOODOBJECT14, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT15, FOODOBJECT15, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT16, FOODOBJECT16, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT17, FOODOBJECT17, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT18, FOODOBJECT18, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT19, FOODOBJECT19, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FOODOBJECT20, FOODOBJECT20, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_JOLLYMEAL, JOLLYMEAL, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_GUMBALLMACHINE, GUMBALLMACHINE, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_GUMBALLMACHINEBROKE, GUMBALLMACHINEBROKE, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_POLICELIGHTPOLE, POLICELIGHTPOLE, notenemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_CLOCK, CLOCK, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_MAILBAG, MAILBAG, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FEATHEREDCHICKEN, FEATHEREDCHICKEN, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_SKINNEDCHICKEN, SKINNEDCHICKEN, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_HEADLAMP, HEADLAMP, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_DOLPHIN1, DOLPHIN1, notenemy, DOLPHINSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_DOLPHIN2, DOLPHIN2, notenemy, DOLPHINSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_SNAKEP, SNAKEP, notenemy, MEDIUMSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_DONUTS, DONUTS, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_GAVALS, GAVALS, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_GAVALS2, GAVALS2, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_CUPS, CUPS, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_DONUTS2, DONUTS2, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_FLOORBASKET, FLOORBASKET, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_METER, METER, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_DESKPHONE, DESKPHONE, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_MACE, MACE, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_SHOPPINGCART, SHOPPINGCART, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_COFFEEMUG, COFFEEMUG, notenemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_EXPLODINGBARREL, EXPLODINGBARREL, enemy, 26);
+        GlobalMembers.ConActions.RegisterActor(A_BURNING, BURNING, enemy, WEAK, BURNING_FLAME);
+        GlobalMembers.ConActions.RegisterActor(A_BURNING2, BURNING2, enemy, WEAK, BURNING_FLAME);
+        GlobalMembers.ConActions.RegisterActor(A_TOILETWATER, TOILETWATER, enemy, 0, TOILETWATERFRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_HORSEONSIDE, HORSEONSIDE, enemy, WEAKEST);
+        GlobalMembers.ConActions.RegisterActor(A_WOODENHORSE, WOODENHORSE, enemy, WEAK, WOODENHORSEFRAME);
+        GlobalMembers.ConActions.RegisterActor(A_STEAM, STEAM, enemy, 0, STEAMFRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_CEILINGSTEAM, CEILINGSTEAM, enemy, 0, STEAMFRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_WATERBUBBLEMAKER, WATERBUBBLEMAKER, enemy, 0, 0, randomangle);
+        GlobalMembers.ConActions.RegisterActor(A_WATERBUBBLE, WATERBUBBLE, enemy, 0, BUBBLE, BUBMOVE, getv, geth, randomangle);
+        GlobalMembers.ConActions.RegisterActor(A_SMALLSMOKE, SMALLSMOKE, enemy, 0, SMOKEFRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_NUKEBARRELDENTED, NUKEBARRELDENTED, enemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_NUKEBARRELLEAKED, NUKEBARRELLEAKED, enemy, WEAK);
+        GlobalMembers.ConActions.RegisterActor(A_NUKEBARREL, NUKEBARREL, enemy, MEDIUMSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_FIREBARREL, FIREBARREL, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_FIREVASE, FIREVASE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_SHRINKEREXPLOSION, SHRINKEREXPLOSION, enemy, 0, SHRINKERFRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_EXPLOSION2, EXPLOSION2, enemy, 1, EXPLOSION_FRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_EXPLOSION2BOT, EXPLOSION2BOT, enemy, 1, EXPLOSION_FRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_FLOORFLAME, FLOORFLAME, enemy, 0, FFLAME_FR);
+        GlobalMembers.ConActions.RegisterActor(A_ROTATEGUN, ROTATEGUN, enemy, ROTTURRETSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_FORCERIPPLE, FORCERIPPLE, enemy, 0, RIP_F);
+        GlobalMembers.ConActions.RegisterActor(A_TRANSPORTERSTAR, TRANSPORTERSTAR, enemy, 0, TRANSFOWARD);
+        GlobalMembers.ConActions.RegisterActor(A_TRANSPORTERBEAM, TRANSPORTERBEAM, enemy, 0, BEAMFOWARD);
+        GlobalMembers.ConActions.RegisterActor(A_STEROIDS, STEROIDS, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_BOOTS, BOOTS, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_HEATSENSOR, HEATSENSOR, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_SHIELD, SHIELD, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_AIRTANK, AIRTANK, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_HOLODUKE, HOLODUKE, enemy, 0, HOLODUKE_FRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_JETPACK, JETPACK, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_ACCESSCARD, ACCESSCARD, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_AMMO, AMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_FREEZEAMMO, FREEZEAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_SHOTGUNAMMO, SHOTGUNAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_AMMOLOTS, AMMOLOTS, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_CRYSTALAMMO, CRYSTALAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_GROWAMMO, GROWAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_BATTERYAMMO, BATTERYAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_DEVISTATORAMMO, DEVISTATORAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_RPGAMMO, RPGAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_HBOMBAMMO, HBOMBAMMO, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_RPGSPRITE, RPGSPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_SHOTGUNSPRITE, SHOTGUNSPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_SIXPAK, SIXPAK, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_COLA, COLA, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_ATOMICHEALTH, ATOMICHEALTH, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_FIRSTAID, FIRSTAID, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_FIRSTGUNSPRITE, FIRSTGUNSPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_TRIPBOMBSPRITE, TRIPBOMBSPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_CHAINGUNSPRITE, CHAINGUNSPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_SHRINKERSPRITE, SHRINKERSPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_FREEZESPRITE, FREEZESPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_DEVISTATORSPRITE, DEVISTATORSPRITE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_FIRE, FIRE, notenemy, WEAK, 0, FIREVELS);
+        GlobalMembers.ConActions.RegisterActor(A_FIRE2, FIRE2, notenemy, WEAK, 0, FIREVELS);
+        GlobalMembers.ConActions.RegisterActor(A_FECES, FECES, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_FEM1, FEM1, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM2, FEM2, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM3, FEM3, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM4, FEM4, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM5, FEM5, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM6, FEM6, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM7, FEM7, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM8, FEM8, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM9, FEM9, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_FEM10, FEM10, enemy, TOUGH, FEMANIMATESLOW);
+        GlobalMembers.ConActions.RegisterActor(A_TOUGHGAL, TOUGHGAL, enemy, MANWOMANSTRENGTH, TOUGHGALANIM);
+        GlobalMembers.ConActions.RegisterActor(A_NAKED1, NAKED1, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_PODFEM1, PODFEM1, enemy, TOUGH, FEMANIMATE);
+        GlobalMembers.ConActions.RegisterActor(A_BLOODYPOLE, BLOODYPOLE, enemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_STATUEFLASH, STATUEFLASH, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_STATUE, STATUE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_MIKE, MIKE, enemy);
+        GlobalMembers.ConActions.RegisterActor(A_BLOOD, BLOOD, enemy, 0, BLOODFRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_EGG, EGG, enemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_KNEE, KNEE, enemy, KNEE_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_SPIT, SPIT, enemy, SPIT_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_CHAINGUN, CHAINGUN, enemy, CHAINGUN_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_SHOTGUN, SHOTGUN, enemy, SHOTGUN_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_FIRELASER, FIRELASER, enemy, FIRELASER_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_HEAVYHBOMB, HEAVYHBOMB, enemy, HANDBOMB_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_BOUNCEMINE, BOUNCEMINE, enemy, BOUNCEMINE_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_MORTER, MORTER, enemy, MORTER_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_SHRINKSPARK, SHRINKSPARK, enemy, SHRINKER_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_GROWSPARK, GROWSPARK, enemy, GROWSPARK_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_RPG, RPG, enemy, RPG_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_FREEZEBLAST, FREEZEBLAST, enemy, FREEZETHROWER_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_DEVISTATORBLAST, DEVISTATORBLAST, enemy, FREEZETHROWER_WEAPON_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_COOLEXPLOSION1, COOLEXPLOSION1, enemy, COOL_EXPLOSION_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_TRIPBOMB, TRIPBOMB, enemy, TRIPBOMB_STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_SHOTSPARK1, SHOTSPARK1, enemy, PISTOL_WEAPON_STRENGTH, WEAP2FRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_DUKELYINGDEAD, DUKELYINGDEAD, enemy, 0, PLYINGFRAMES);
+        GlobalMembers.ConActions.RegisterActor(A_APLAYER, APLAYER, enemy, MAXPLAYERHEALTH, PSTAND, 0, 0);
+        GlobalMembers.ConActions.RegisterActor(A_ORGANTIC, ORGANTIC, enemy, TURRETSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPJETPACK, LIZTROOPJETPACK, enemy, TROOPSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPDUCKING, LIZTROOPDUCKING, enemy, TROOPSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPSHOOT, LIZTROOPSHOOT, enemy, TROOPSTRENGTH, ATROOPSTAND);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPSTAYPUT, LIZTROOPSTAYPUT, enemy, TROOPSTRENGTH, ATROOPSTAYSTAND);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPRUNNING, LIZTROOPRUNNING, enemy, TROOPSTRENGTH, ATROOPSTAND);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPONTOILET, LIZTROOPONTOILET, enemy, TROOPSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOPJUSTSIT, LIZTROOPJUSTSIT, enemy, TROOPSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_LIZTROOP, LIZTROOP, enemy, TROOPSTRENGTH, ATROOPSTAND);
+        GlobalMembers.ConActions.RegisterActor(A_LIZMANSTAYPUT, LIZMANSTAYPUT, enemy, LIZSTRENGTH, ai, AILIZGETENEMY, cactor, LIZMAN);
+        GlobalMembers.ConActions.RegisterActor(A_LIZMANSPITTING, LIZMANSPITTING, enemy, LIZSTRENGTH, ai, AILIZSPIT, cactor, LIZMAN);
+        GlobalMembers.ConActions.RegisterActor(A_LIZMANJUMP, LIZMANJUMP, enemy, LIZSTRENGTH, ai, AILIZJUMPENEMY, cactor, LIZMAN);
+        GlobalMembers.ConActions.RegisterActor(A_LIZMAN, LIZMAN, enemy, LIZSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_DRONE, DRONE, enemy, DRONESTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_OCTABRAINSTAYPUT, OCTABRAINSTAYPUT, enemy, OCTASTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_OCTABRAIN, OCTABRAIN, enemy, OCTASTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIGCOPDIVE, PIGCOPDIVE, enemy, PIGCOPSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIGCOPSTAYPUT, PIGCOPSTAYPUT, enemy, PIGCOPSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_PIGCOP, PIGCOP, enemy, PIGCOPSTRENGTH, APIGSTAND);
+        GlobalMembers.ConActions.RegisterActor(A_BOSS1STAYPUT, BOSS1STAYPUT, enemy, BOSS1STRENGTH, cactor, BOSS1);
+        GlobalMembers.ConActions.RegisterActor(A_BOSS1, BOSS1, enemy, BOSS1STRENGTH, fall);
+        GlobalMembers.ConActions.RegisterActor(A_BOSS2, BOSS2, enemy, BOSS2STRENGTH, fall);
+        GlobalMembers.ConActions.RegisterActor(A_BOSS3, BOSS3, enemy, BOSS3STRENGTH, fall);
+        GlobalMembers.ConActions.RegisterActor(A_COMMANDERSTAYPUT, COMMANDERSTAYPUT, enemy, COMMANDERSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_COMMANDER, COMMANDER, enemy, COMMANDERSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_CANNONBALL, CANNONBALL, notenemy, CANNONBALLSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_CANNONBALLS, CANNONBALLS, notenemy, CANNONBALLSSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_CANNON, CANNON, enemy, CANNONSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_HOTMEAT, HOTMEAT, notenemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_SPEAKER, SPEAKER, notenemy);
+        GlobalMembers.ConActions.RegisterActor(A_LAVABUBBLE, LAVABUBBLE, notenemy);
+        GlobalMembers.ConActions.RegisterActor(A_TANK, TANK, enemy, TANKSTRENGTH, fall);
+        GlobalMembers.ConActions.RegisterActor(A_BOSS4STAYPUT, BOSS4STAYPUT, enemy, BOSS4STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_BOSS4, BOSS4, enemy, BOSS4STRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_NEWBEASTHANG, NEWBEASTHANG, enemy, NEWBEASTSTRENGTH);
+        GlobalMembers.ConActions.RegisterActor(A_NEWBEASTHANGDEAD, NEWBEASTHANGDEAD, enemy, TOUGH);
+        GlobalMembers.ConActions.RegisterActor(A_NEWBEASTSTAYPUT, NEWBEASTSTAYPUT, enemystayput, NEWBEASTSTRENGTH, ai, AINEWBEASTGETENEMY, cstator, 257, cactor, NEWBEAST);
+        GlobalMembers.ConActions.RegisterActor(A_NEWBEASTJUMP, NEWBEASTJUMP, enemy, NEWBEASTSTRENGTH, ai, AINEWBEASTJUMPENEMY, cstator, 257, cactor, NEWBEAST);
+        GlobalMembers.ConActions.RegisterActor(A_NEWBEAST, NEWBEAST, enemy, NEWBEASTSTRENGTH);
     }
 }

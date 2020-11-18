@@ -231,7 +231,7 @@ namespace Conport
                         if (inState == false)
                         {
                             inState = true;
-                            con_construct_code += "GlobalMembers.ConActions.RegisterActor(A_" + name + "," + name;
+                            con_construct_code += "GlobalMembers.ConActions.RegisterActor(A_" + name + "," + name + ", enemy";
                             while (_tokens[currentToken] != "NEWLINE" && _tokens[currentToken] != "enda" && _tokens[currentToken] != "state")
                             {
                                 con_construct_code += ",";
@@ -255,11 +255,12 @@ namespace Conport
                     },
                     ["useractor"] = () =>
                     {
+                        string aitype = token;
                         string name = token;
 
                         inState = true;
 
-                        con_construct_code += "GlobalMembers.ConActions.RegisterActor(A_" + name + "," + name;
+                        con_construct_code += "GlobalMembers.ConActions.RegisterActor(A_" + name + "," + name + ", " + aitype;
                         while (_tokens[currentToken] != "NEWLINE" && _tokens[currentToken] != "enda" && _tokens[currentToken] != "state")
                         {
                             con_construct_code += ",";
