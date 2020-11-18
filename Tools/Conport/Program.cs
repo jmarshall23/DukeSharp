@@ -211,18 +211,26 @@ namespace Conport
                     ["action"] = () =>
                     {
                         string name = token;
-                        con_code += "GlobalMembers.ConActions.ConAction " + name + " = new GlobalMembers.ConActions.ConAction(";
-                        while (_tokens[currentToken] != "NEWLINE")
+
+                        if (inState == false)
                         {
-                            con_code += _tokens[currentToken];
+                            con_code += "GlobalMembers.ConActions.ConAction " + name + " = new GlobalMembers.ConActions.ConAction(";
+                            while (_tokens[currentToken] != "NEWLINE")
+                            {
+                                con_code += _tokens[currentToken];
 
-                            if (_tokens[currentToken + 1] != "NEWLINE")
-                                con_code += ",";
+                                if (_tokens[currentToken + 1] != "NEWLINE")
+                                    con_code += ",";
 
-                            currentToken++;
+                                currentToken++;
+                            }
+
+                            con_code += ");\n";
                         }
-
-                        con_code += ");\n";
+                        else
+                        {
+                            con_code += "\tGlobalMembers.ConActions.SetAction(" + name + ");\n";
+                        }
                     },
                     ["actor"] = () =>
                     {

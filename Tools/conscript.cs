@@ -1469,7 +1469,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifaction(ASHARKSHRUNK))
         {
             if (GlobalMembers.ConActions.ifcount(SHRUNKDONECOUNT))
-                GlobalMembers.ConActions.ConAction ASHARKCRUZING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ASHARKCRUZING);
             else
             if (GlobalMembers.ConActions.ifcount(SHRUNKCOUNT))
                 GlobalMembers.ConActions.sizeto(60, 60);
@@ -1481,7 +1481,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifaction(ASHARKGROW))
         {
             if (GlobalMembers.ConActions.ifcount(SHRUNKDONECOUNT))
-                GlobalMembers.ConActions.ConAction ASHARKCRUZING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ASHARKCRUZING);
             else
             if (GlobalMembers.ConActions.ifcount(SHRUNKCOUNT))
                 GlobalMembers.ConActions.sizeto(24, 24);
@@ -1497,7 +1497,7 @@ internal class ConScript
                     GlobalMembers.ConActions.pkick();
             if (GlobalMembers.ConActions.ifcount(THAWTIME))
             {
-                GlobalMembers.ConActions.ConAction ASHARKFLEE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ASHARKFLEE);
                 GlobalMembers.ConActions.getlastpal();
                 return;
             }
@@ -1522,7 +1522,7 @@ internal class ConScript
             if (GlobalMembers.ConActions.ifcount(16))
                 if (GlobalMembers.ConActions.ifrnd(48))
                 {
-                    GlobalMembers.ConActions.ConAction ASHARKCRUZING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASHARKCRUZING);
                     GlobalMembers.ConActions.Move(SHARKVELS, randomangle, geth);
                 }
         }
@@ -1534,7 +1534,7 @@ internal class ConScript
                     if (GlobalMembers.ConActions.ifrnd(2))
                         if (GlobalMembers.ConActions.ifcanshoottarget())
                         {
-                            GlobalMembers.ConActions.ConAction ASHARKATACK = new GlobalMembers.ConActions.ConAction();
+                            GlobalMembers.ConActions.SetAction(ASHARKATACK);
                             GlobalMembers.ConActions.Move(SHARKFASTVELS, faceplayerslow, getv,break);
                         }
             if (GlobalMembers.ConActions.ifcount(32))
@@ -1559,7 +1559,7 @@ internal class ConScript
                         GlobalMembers.ConActions.palfrom(32, 32);
                         GlobalMembers.ConActions.addphealth(SHARKBITESTRENGTH);
                     }
-                    GlobalMembers.ConActions.ConAction ASHARKFLEE = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASHARKFLEE);
                     GlobalMembers.ConActions.Move(SHARKFLEEVELS, fleeenemy);
                 }
             }
@@ -1568,7 +1568,7 @@ internal class ConScript
             {
                 if (GlobalMembers.ConActions.ifcount(32))
                 {
-                    GlobalMembers.ConActions.ConAction ASHARKCRUZING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASHARKCRUZING);
                     GlobalMembers.ConActions.Move(SHARKVELS, randomangle, geth);
                 }
             }
@@ -1576,7 +1576,7 @@ internal class ConScript
             if (GlobalMembers.ConActions.ifcount(48))
                 if (GlobalMembers.ConActions.ifrnd(2))
                 {
-                    GlobalMembers.ConActions.ConAction ASHARKCRUZING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASHARKCRUZING);
                     GlobalMembers.ConActions.Move(SHARKFASTVELS, randomangle, geth);
                 }
         }
@@ -1588,7 +1588,7 @@ internal class ConScript
                 {
                     GlobalMembers.ConActions.Move(0);
                     GlobalMembers.ConActions.cstat(0);
-                    GlobalMembers.ConActions.ConAction ASHARKGROW = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASHARKGROW);
                     GlobalMembers.ConActions.sound(ACTOR_GROWING);
                     return;
                 }
@@ -1597,7 +1597,7 @@ internal class ConScript
                 {
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.strength(0);
-                    GlobalMembers.ConActions.ConAction ASHARKFROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASHARKFROZEN);
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                 }
                 else
@@ -1612,7 +1612,7 @@ internal class ConScript
             {
                 if (GlobalMembers.ConActions.ifwasweapon(SHRINKSPARK))
                 {
-                    GlobalMembers.ConActions.ConAction ASHARKSHRUNK = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASHARKSHRUNK);
                     GlobalMembers.ConActions.sound(ACTOR_SHRINKING);
                     GlobalMembers.ConActions.Move(0);
                     return;
@@ -1638,7 +1638,7 @@ internal class ConScript
         GlobalMembers.ConActions.sound(PIPEBOMB_EXPLODE);
         if (GlobalMembers.ConActions.ifrespawn())
         {
-            GlobalMembers.ConActions.ConAction BLIMPWAITTORESPAWN = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(BLIMPWAITTORESPAWN);
             GlobalMembers.ConActions.count(0);
             GlobalMembers.ConActions.cstat(32768);
         }
@@ -1651,7 +1651,7 @@ internal class ConScript
         {
             if (GlobalMembers.ConActions.ifcount(BLIMPRESPAWNTIME))
             {
-                GlobalMembers.ConActions.ConAction 0 = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(0);
                 GlobalMembers.ConActions.cstat(0);
             }
             return;
@@ -1694,7 +1694,7 @@ internal class ConScript
             if (GlobalMembers.ConActions.ifactioncount(16))
             {
                 GlobalMembers.ConActions.strength(0);
-                GlobalMembers.ConActions.ConAction ANULLACTION = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ANULLACTION);
                 return;
             }
         }
@@ -1710,7 +1710,7 @@ internal class ConScript
                 GlobalMembers.ConActions.killit();
             }
             else
-                GlobalMembers.ConActions.ConAction RUBCANDENT = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(RUBCANDENT);
         }
     }
     private void toughgalspeech()
@@ -1746,7 +1746,7 @@ internal class ConScript
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
-            GlobalMembers.ConActions.ConAction ANULLACTION = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANULLACTION);
             GlobalMembers.ConActions.cstator(257);
             if (GlobalMembers.ConActions.ifactor(ROBOTMOUSE))
                 GlobalMembers.ConActions.clipdist(64);
@@ -2423,7 +2423,7 @@ else
             return;
         }
         if (GlobalMembers.ConActions.ifhitweapon())
-            GlobalMembers.ConActions.ConAction EXPBARRELFRAME = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(EXPBARRELFRAME);
     }
     GlobalMembers.ConActions.ConAction BURNING_FLAME = new GlobalMembers.ConActions.ConAction(0, 12, 1, 1, 2);
     GlobalMembers.ConActions.MoveAction BURNING_VELS = new GlobalMembers.ConActions.MoveAction();
@@ -2521,7 +2521,7 @@ else
     private void A_HORSEONSIDE()
     {
         GlobalMembers.ConActions.cactor(WOODENHORSE);
-        GlobalMembers.ConActions.ConAction WOODENFALLFRAME = new GlobalMembers.ConActions.ConAction();
+        GlobalMembers.ConActions.SetAction(WOODENFALLFRAME);
     }
     private void A_WOODENHORSE()
     {
@@ -2535,7 +2535,7 @@ else
                 GlobalMembers.ConActions.killit();
             }
             else
-                GlobalMembers.ConActions.ConAction WOODENFALLFRAME = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(WOODENFALLFRAME);
         }
     }
     private void steamcode()
@@ -2611,11 +2611,11 @@ else
             if (GlobalMembers.ConActions.ifonwater())
             {
                 if (GlobalMembers.ConActions.iffloordistl(8))
-                    GlobalMembers.ConActions.ConAction CRACKEDBUBBLE = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(CRACKEDBUBBLE);
             }
             else
             if (GlobalMembers.ConActions.ifactioncount(40))
-                GlobalMembers.ConActions.ConAction CRACKEDBUBBLE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(CRACKEDBUBBLE);
         }
     }
     GlobalMembers.ConActions.MoveAction SMOKEVEL = new GlobalMembers.ConActions.MoveAction(8, -16);
@@ -2649,12 +2649,12 @@ else
     private void A_NUKEBARRELDENTED()
     {
         GlobalMembers.ConActions.cactor(NUKEBARREL);
-        GlobalMembers.ConActions.ConAction BARREL_DENTED = new GlobalMembers.ConActions.ConAction();
+        GlobalMembers.ConActions.SetAction(BARREL_DENTED);
     }
     private void A_NUKEBARRELLEAKED()
     {
         GlobalMembers.ConActions.cactor(NUKEBARREL);
-        GlobalMembers.ConActions.ConAction BARREL_DENTED2 = new GlobalMembers.ConActions.ConAction();
+        GlobalMembers.ConActions.SetAction(BARREL_DENTED2);
     }
     private void random_ooz()
     {
@@ -2691,21 +2691,21 @@ else
                 GlobalMembers.ConActions.sound(VENT_BUST);
                 if (GlobalMembers.ConActions.ifrnd(128))
                     GlobalMembers.ConActions.spawn(BLOODPOOL);
-                GlobalMembers.ConActions.ConAction BARREL_DENTING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(BARREL_DENTING);
             }
             else
             {
                 if (GlobalMembers.ConActions.ifaction(0))
-                    GlobalMembers.ConActions.ConAction BARREL_DENTED = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(BARREL_DENTED);
                 else
                 if (GlobalMembers.ConActions.ifaction(BARREL_DENTED))
                 {
-                    GlobalMembers.ConActions.ConAction BARREL_DENTED2 = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(BARREL_DENTED2);
                     GlobalMembers.ConActions.spawn(BLOODPOOL);
                 }
                 else
                 if (GlobalMembers.ConActions.ifaction(BARREL_DENTED2))
-                    GlobalMembers.ConActions.ConAction BARREL_DENTING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(BARREL_DENTING);
             }
         }
     }
@@ -2770,12 +2770,12 @@ else
             if (GlobalMembers.ConActions.ifpdistl(1024))
                 GlobalMembers.ConActions.hitradius(1024, WEAKEST, WEAKEST, WEAKEST, WEAKEST);
             if (GlobalMembers.ConActions.ifactioncount(16))
-                GlobalMembers.ConActions.ConAction FFLAME = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FFLAME);
         }
         if (GlobalMembers.ConActions.ifaction(FFLAME))
             if (GlobalMembers.ConActions.ifrnd(4))
             {
-                GlobalMembers.ConActions.ConAction FFLAME_FR = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FFLAME_FR);
                 GlobalMembers.ConActions.sound(CAT_FIRE);
                 GlobalMembers.ConActions.resetactioncount();
             }
@@ -2788,7 +2788,7 @@ else
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
-            GlobalMembers.ConActions.ConAction ASATSHOOTING = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ASATSHOOTING);
             GlobalMembers.ConActions.Move(TURRVEL, faceplayer);
         }
         else
@@ -2796,7 +2796,7 @@ else
         {
             if (GlobalMembers.ConActions.ifactioncount(32))
             {
-                GlobalMembers.ConActions.ConAction ASATWAIT = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ASATWAIT);
                 GlobalMembers.ConActions.Move(TURRVEL, faceplayer);
             }
         }
@@ -2806,7 +2806,7 @@ else
             if (GlobalMembers.ConActions.ifactioncount(12))
                 if (GlobalMembers.ConActions.ifrnd(32))
                 {
-                    GlobalMembers.ConActions.ConAction ASATWAIT = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ASATWAIT);
                     GlobalMembers.ConActions.Move(0);
                 }
             if (GlobalMembers.ConActions.ifcount(32))
@@ -2846,7 +2846,7 @@ else
                     if (GlobalMembers.ConActions.ifp(palive))
                         if (GlobalMembers.ConActions.ifcansee())
                         {
-                            GlobalMembers.ConActions.ConAction ASATSHOOTING = new GlobalMembers.ConActions.ConAction();
+                            GlobalMembers.ConActions.SetAction(ASATSHOOTING);
                             GlobalMembers.ConActions.Move(TURRVEL, faceplayer);
                         }
         }
@@ -2862,7 +2862,7 @@ else
             }
             else
             {
-                GlobalMembers.ConActions.ConAction ASATNSPIN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ASATNSPIN);
                 GlobalMembers.ConActions.debris(SCRAP1, 4);
             }
             GlobalMembers.ConActions.Move(0);
@@ -2881,7 +2881,7 @@ else
         if (GlobalMembers.ConActions.ifaction(TRANSFOWARD))
         {
             if (GlobalMembers.ConActions.ifactioncount(6))
-                GlobalMembers.ConActions.ConAction TRANSBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(TRANSBACK);
         }
         else
         if (GlobalMembers.ConActions.ifactioncount(6))
@@ -3667,7 +3667,7 @@ else
         if (GlobalMembers.ConActions.ifaction(0))
             if (GlobalMembers.ConActions.ifrnd(16))
             {
-                GlobalMembers.ConActions.ConAction FIRE_FRAMES = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FIRE_FRAMES);
                 GlobalMembers.ConActions.cstator(128);
             }
         GlobalMembers.ConActions.sleeptime(300);
@@ -3817,7 +3817,7 @@ else
         {
             if (GlobalMembers.ConActions.ifcount(SHRUNKDONECOUNT))
             {
-                GlobalMembers.ConActions.ConAction FEMANIMATE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FEMANIMATE);
                 GlobalMembers.ConActions.cstat(257);
             }
             else
@@ -3851,26 +3851,26 @@ else
         if (GlobalMembers.ConActions.ifaction(FEMDANCE1))
         {
             if (GlobalMembers.ConActions.ifactioncount(2))
-                GlobalMembers.ConActions.ConAction FEMDANCE2 = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FEMDANCE2);
         }
         else
         if (GlobalMembers.ConActions.ifaction(FEMDANCE2))
         {
             if (GlobalMembers.ConActions.ifactioncount(8))
-                GlobalMembers.ConActions.ConAction FEMDANCE3 = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FEMDANCE3);
         }
         else
         if (GlobalMembers.ConActions.ifaction(FEMDANCE3))
         {
             if (GlobalMembers.ConActions.ifactioncount(2))
-                GlobalMembers.ConActions.ConAction FEMANIMATE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FEMANIMATE);
         }
         else
         if (GlobalMembers.ConActions.ifaction(FEMFROZEN1))
         {
             if (GlobalMembers.ConActions.ifcount(THAWTIME))
             {
-                GlobalMembers.ConActions.ConAction FEMANIMATE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(FEMANIMATE);
                 GlobalMembers.ConActions.getlastpal();
             }
             else
@@ -3908,12 +3908,12 @@ else
             if (GlobalMembers.ConActions.ifcount(THAWTIME))
             {
                 if (GlobalMembers.ConActions.ifactor(TOUGHGAL))
-                    GlobalMembers.ConActions.ConAction TOUGHGALANIM = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(TOUGHGALANIM);
                 else
                 if (GlobalMembers.ConActions.ifactor(FEM10))
-                    GlobalMembers.ConActions.ConAction FEMANIMATESLOW = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(FEMANIMATESLOW);
                 else
-                    GlobalMembers.ConActions.ConAction FEMANIMATE = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(FEMANIMATE);
                 GlobalMembers.ConActions.getlastpal();
             }
             else
@@ -3958,7 +3958,7 @@ else
                     GlobalMembers.ConActions.cstat(0);
                     GlobalMembers.ConActions.Move(0);
                     GlobalMembers.ConActions.sound(ACTOR_GROWING);
-                    GlobalMembers.ConActions.ConAction FEMGROW = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(FEMGROW);
                     return;
                 }
                 else
@@ -3967,30 +3967,30 @@ else
                     if (GlobalMembers.ConActions.ifaction(FEMSHRUNK))
                         return;
                     if (GlobalMembers.ConActions.ifactor(NAKED1))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
                     if (GlobalMembers.ConActions.ifactor(FEM5))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
                     if (GlobalMembers.ConActions.ifactor(FEM6))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
                     if (GlobalMembers.ConActions.ifactor(FEM8))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
                     if (GlobalMembers.ConActions.ifactor(FEM9))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
                     if (GlobalMembers.ConActions.ifactor(FEM10))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
                     if (GlobalMembers.ConActions.ifactor(TOUGHGAL))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
                     if (GlobalMembers.ConActions.ifactor(PODFEM1))
-                        GlobalMembers.ConActions.ConAction FEMFROZEN2 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN2);
                     else
-                        GlobalMembers.ConActions.ConAction FEMFROZEN1 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMFROZEN1);
                     GlobalMembers.ConActions.Move(0);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.strength(0);
@@ -4055,7 +4055,7 @@ else
                 {
                     GlobalMembers.ConActions.sound(ACTOR_SHRINKING);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction FEMSHRUNK = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(FEMSHRUNK);
                     GlobalMembers.ConActions.cstat(0);
                     return;
                 }
@@ -4094,7 +4094,7 @@ else
                     else
                         GlobalMembers.ConActions.soundonce(DUKE_TIP2);
                     if (GlobalMembers.ConActions.ifactor(FEM1))
-                        GlobalMembers.ConActions.ConAction FEMDANCE1 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(FEMDANCE1);
                 }
     }
     private void toughgaltalk()
@@ -4243,26 +4243,26 @@ else
             {
                 if (GlobalMembers.ConActions.ifrnd(128))
                 {
-                    GlobalMembers.ConActions.ConAction EGGWAIT = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(EGGWAIT);
                     GlobalMembers.ConActions.Move(0);
                 }
                 else
                 {
                     GlobalMembers.ConActions.sound(SLIM_HATCH);
-                    GlobalMembers.ConActions.ConAction EGGOPEN1 = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(EGGOPEN1);
                 }
             }
         }
         else
         if (GlobalMembers.ConActions.ifaction(EGGOPEN1))
             if (GlobalMembers.ConActions.ifactioncount(4))
-                GlobalMembers.ConActions.ConAction EGGOPEN2 = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(EGGOPEN2);
             else
             if (GlobalMembers.ConActions.ifaction(EGGOPEN2))
                 if (GlobalMembers.ConActions.ifactioncount(4))
                 {
                     GlobalMembers.ConActions.spawn(GREENSLIME);
-                    GlobalMembers.ConActions.ConAction EGGOPEN3 = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(EGGOPEN3);
                 }
                 else
                 if (GlobalMembers.ConActions.ifaction(EGGGROW))
@@ -4275,7 +4275,7 @@ else
                 {
                     if (GlobalMembers.ConActions.ifcount(THAWTIME))
                     {
-                        GlobalMembers.ConActions.ConAction 0 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(0);
                         GlobalMembers.ConActions.getlastpal();
                     }
                     else
@@ -4315,7 +4315,7 @@ else
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction EGGFROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(EGGFROZEN);
                     GlobalMembers.ConActions.strength(0);
                     return;
                 }
@@ -4325,7 +4325,7 @@ else
                     GlobalMembers.ConActions.cstat(0);
                     GlobalMembers.ConActions.Move(0);
                     GlobalMembers.ConActions.sound(ACTOR_GROWING);
-                    GlobalMembers.ConActions.ConAction EGGGROW = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(EGGGROW);
                     return;
                 }
                 GlobalMembers.ConActions.addkills(1);
@@ -4338,7 +4338,7 @@ else
             {
                 GlobalMembers.ConActions.Move(0);
                 GlobalMembers.ConActions.sound(ACTOR_SHRINKING);
-                GlobalMembers.ConActions.ConAction EGGSHRUNK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(EGGSHRUNK);
                 return;
             }
             if (GlobalMembers.ConActions.ifwasweapon(GROWSPARK))
@@ -4353,7 +4353,7 @@ else
                     if (GlobalMembers.ConActions.ifaction(EGGSHRUNK))
                         return;
                     GlobalMembers.ConActions.sound(SLIM_HATCH);
-                    GlobalMembers.ConActions.ConAction EGGOPEN1 = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(EGGOPEN1);
                 }
         }
     }
@@ -4519,31 +4519,31 @@ else
     private void check_pstandard()
     {
         if (GlobalMembers.ConActions.ifp(pwalking))
-            GlobalMembers.ConActions.ConAction PWALK = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PWALK);
         else
         if (GlobalMembers.ConActions.ifp(pkicking))
-            GlobalMembers.ConActions.ConAction PAKICKING = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PAKICKING);
         else
         if (GlobalMembers.ConActions.ifp(pwalkingback))
-            GlobalMembers.ConActions.ConAction PWALKBACK = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PWALKBACK);
         else
         if (GlobalMembers.ConActions.ifp(prunning))
-            GlobalMembers.ConActions.ConAction PRUN = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PRUN);
         else
         if (GlobalMembers.ConActions.ifp(prunningback))
-            GlobalMembers.ConActions.ConAction PRUNBACK = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PRUNBACK);
         else
         if (GlobalMembers.ConActions.ifp(pjumping))
-            GlobalMembers.ConActions.ConAction PJUMPING = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PJUMPING);
         else
         if (GlobalMembers.ConActions.ifp(pducking))
-            GlobalMembers.ConActions.ConAction PDUCKING = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PDUCKING);
     }
     GlobalMembers.ConActions.MoveAction PGROWINGPOP = new GlobalMembers.ConActions.MoveAction();
     private void A_APLAYER()
     {
         if (GlobalMembers.ConActions.ifaction(0))
-            GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PSTAND);
         if (GlobalMembers.ConActions.ifaction(PFROZEN))
         {
             GlobalMembers.ConActions.cstat(257);
@@ -4571,7 +4571,7 @@ else
                 GlobalMembers.ConActions.quote(13);
                 if (GlobalMembers.ConActions.ifhitspace())
                 {
-                    GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PSTAND);
                     GlobalMembers.ConActions.resetplayer();
                 }
                 return;
@@ -4581,7 +4581,7 @@ else
                 GlobalMembers.ConActions.getlastpal();
                 GlobalMembers.ConActions.strength(1);
                 GlobalMembers.ConActions.Move(0);
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             }
             else
             if (GlobalMembers.ConActions.ifactioncount(FROZENDRIPTIME))
@@ -4603,7 +4603,7 @@ else
                     GlobalMembers.ConActions.quote(13);
                     if (GlobalMembers.ConActions.ifhitspace())
                     {
-                        GlobalMembers.ConActions.ConAction 0 = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(0);
                         GlobalMembers.ConActions.resetplayer();
                     }
                     return;
@@ -4660,7 +4660,7 @@ else
                 GlobalMembers.ConActions.quote(13);
                 if (GlobalMembers.ConActions.ifhitspace())
                 {
-                    GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PSTAND);
                     GlobalMembers.ConActions.spawn(DUKELYINGDEAD);
                     GlobalMembers.ConActions.resetplayer();
                 }
@@ -4671,7 +4671,7 @@ else
                 if (GlobalMembers.ConActions.ifactioncount(5))
                 {
                     GlobalMembers.ConActions.spawn(BLOODPOOL);
-                    GlobalMembers.ConActions.ConAction PLYINGDEAD = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PLYINGDEAD);
                 }
                 else
                 if (GlobalMembers.ConActions.ifactioncount(1))
@@ -4684,7 +4684,7 @@ else
                 if (GlobalMembers.ConActions.ifhitspace())
                 {
                     GlobalMembers.ConActions.resetplayer();
-                    GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PSTAND);
                 }
                 return;
             }
@@ -4692,7 +4692,7 @@ else
             {
                 if (GlobalMembers.ConActions.ifactioncount(5))
                 {
-                    GlobalMembers.ConActions.ConAction PEXPLODEAD = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PEXPLODEAD);
                     GlobalMembers.ConActions.spawn(BLOODPOOL);
                 }
                 return;
@@ -4704,19 +4704,19 @@ else
                 GlobalMembers.ConActions.sound(SQUISHED);
                 GlobalMembers.ConActions.sound(DUKE_DEAD);
                 GlobalMembers.ConActions.cstat(32768);
-                GlobalMembers.ConActions.ConAction PLYINGDEAD = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PLYINGDEAD);
             }
             else
             {
                 if (GlobalMembers.ConActions.ifinwater())
                 {
-                    GlobalMembers.ConActions.ConAction PLYINGDEAD = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PLYINGDEAD);
                     GlobalMembers.ConActions.spawn(WATERBUBBLE);
                     GlobalMembers.ConActions.spawn(WATERBUBBLE);
                 }
                 else
                 {
-                    GlobalMembers.ConActions.ConAction PEXPLODE = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PEXPLODE);
                     standard_pjibs();
                     GlobalMembers.ConActions.cstat(32768);
                     GlobalMembers.ConActions.sound(SQUISHED);
@@ -4785,7 +4785,7 @@ else
                 if (GlobalMembers.ConActions.ifwasweapon(GROWSPARK))
                 {
                     GlobalMembers.ConActions.palfrom(48, 48);
-                    GlobalMembers.ConActions.ConAction PGROWING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PGROWING);
                     GlobalMembers.ConActions.count(0);
                     GlobalMembers.ConActions.Move(0);
                     GlobalMembers.ConActions.sound(ACTOR_GROWING);
@@ -4845,7 +4845,7 @@ else
                 headhitstate();
                 GlobalMembers.ConActions.sound(DUKE_GRUNT);
                 if (GlobalMembers.ConActions.ifp(pstanding))
-                    GlobalMembers.ConActions.ConAction PFLINTCHING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PFLINTCHING);
             }
             if (GlobalMembers.ConActions.ifwasweapon(RPG))
             {
@@ -4898,7 +4898,7 @@ else
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction PFROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PFROZEN);
                     return;
                 }
             }
@@ -4910,7 +4910,7 @@ else
                 GlobalMembers.ConActions.palfrom(32, 32);
             if (GlobalMembers.ConActions.ifdead())
             {
-                GlobalMembers.ConActions.ConAction PTHROWNBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PTHROWNBACK);
                 GlobalMembers.ConActions.tossweapon();
             }
             random_wall_jibs();
@@ -4919,7 +4919,7 @@ else
         if (GlobalMembers.ConActions.ifaction(PFLINTCHING))
         {
             if (GlobalMembers.ConActions.ifactioncount(2))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             return;
         }
         if (GlobalMembers.ConActions.ifinwater())
@@ -4927,11 +4927,11 @@ else
             if (GlobalMembers.ConActions.ifaction(PTREDWATER))
             {
                 if (GlobalMembers.ConActions.ifp(pwalking, prunning))
-                    GlobalMembers.ConActions.ConAction PSWIMMINGGO = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PSWIMMINGGO);
             }
             else
             if (GlobalMembers.ConActions.ifp(pstanding, pwalkingback, prunningback))
-                GlobalMembers.ConActions.ConAction PTREDWATER = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PTREDWATER);
             else
             {
                 if (GlobalMembers.ConActions.ifaction(PSWIMMING))
@@ -4939,22 +4939,22 @@ else
                     if (GlobalMembers.ConActions.ifrnd(4))
                         GlobalMembers.ConActions.spawn(WATERBUBBLE);
                     if (GlobalMembers.ConActions.ifactioncount(4))
-                        GlobalMembers.ConActions.ConAction PSWIMMINGWAIT = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(PSWIMMINGWAIT);
                 }
                 else
                 if (GlobalMembers.ConActions.ifaction(PSWIMMINGWAIT))
                 {
                     if (GlobalMembers.ConActions.ifactioncount(2))
-                        GlobalMembers.ConActions.ConAction PSWIMMINGGO = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(PSWIMMINGGO);
                 }
                 else
                 if (GlobalMembers.ConActions.ifaction(PSWIMMINGGO))
                 {
                     if (GlobalMembers.ConActions.ifactioncount(2))
-                        GlobalMembers.ConActions.ConAction PSWIMMING = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(PSWIMMING);
                 }
                 else
-                    GlobalMembers.ConActions.ConAction PTREDWATER = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PTREDWATER);
             }
             if (GlobalMembers.ConActions.ifrnd(4))
                 GlobalMembers.ConActions.spawn(WATERBUBBLE);
@@ -4969,26 +4969,26 @@ else
                     GlobalMembers.ConActions.resetactioncount();
             }
             else
-                GlobalMembers.ConActions.ConAction PJPHOUVER = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PJPHOUVER);
             return;
         }
         else
         {
             if (GlobalMembers.ConActions.ifaction(PTREDWATER))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             if (GlobalMembers.ConActions.ifaction(PSWIMMING))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             if (GlobalMembers.ConActions.ifaction(PSWIMMINGWAIT))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             if (GlobalMembers.ConActions.ifaction(PSWIMMINGGO))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             if (GlobalMembers.ConActions.ifaction(PJPHOUVER))
-                GlobalMembers.ConActions.ConAction PFALLING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PFALLING);
         }
         if (GlobalMembers.ConActions.ifaction(PFALLING))
         {
             if (GlobalMembers.ConActions.ifp(ponground))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             else
             {
                 if (GlobalMembers.ConActions.ifp(pfalling))
@@ -5002,18 +5002,18 @@ else
             if (GlobalMembers.ConActions.ifgapzl(48))
             {
                 if (GlobalMembers.ConActions.ifp(pwalking, pwalkingback, prunning, prunningback))
-                    GlobalMembers.ConActions.ConAction PCRAWLING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PCRAWLING);
             }
             else
             if (GlobalMembers.ConActions.ifp(pducking))
             {
                 if (GlobalMembers.ConActions.ifp(pwalking, pwalkingback, prunning, prunningback))
-                    GlobalMembers.ConActions.ConAction PCRAWLING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PCRAWLING);
             }
             else
             {
                 if (GlobalMembers.ConActions.ifp(pstanding))
-                    GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PSTAND);
                 else
                     check_pstandard();
             }
@@ -5024,37 +5024,37 @@ else
             if (GlobalMembers.ConActions.ifgapzl(48))
             {
                 if (GlobalMembers.ConActions.ifp(pstanding))
-                    GlobalMembers.ConActions.ConAction PCRAWLING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PCRAWLING);
             }
             else
             if (GlobalMembers.ConActions.ifp(pducking))
             {
                 if (GlobalMembers.ConActions.ifp(pstanding))
-                    GlobalMembers.ConActions.ConAction PDUCKING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PDUCKING);
             }
             else
             {
                 if (GlobalMembers.ConActions.ifp(pstanding))
-                    GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PSTAND);
                 else
                     check_pstandard();
             }
         }
         else
         if (GlobalMembers.ConActions.ifgapzl(48))
-            GlobalMembers.ConActions.ConAction PDUCKING = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PDUCKING);
         else
         if (GlobalMembers.ConActions.ifaction(PJUMPING))
         {
             if (GlobalMembers.ConActions.ifp(ponground))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             else
             if (GlobalMembers.ConActions.ifactioncount(4))
                 if (GlobalMembers.ConActions.ifp(pfalling))
-                    GlobalMembers.ConActions.ConAction PFALLING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(PFALLING);
         }
         if (GlobalMembers.ConActions.ifp(pfalling))
-            GlobalMembers.ConActions.ConAction PFALLING = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(PFALLING);
         else
         if (GlobalMembers.ConActions.ifaction(PSTAND))
             check_pstandard();
@@ -5062,95 +5062,95 @@ else
         if (GlobalMembers.ConActions.ifaction(PAKICKING))
         {
             if (GlobalMembers.ConActions.ifactioncount(2))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             return;
         }
         else
         if (GlobalMembers.ConActions.ifaction(PWALK))
         {
             if (GlobalMembers.ConActions.ifp(pfalling))
-                GlobalMembers.ConActions.ConAction PFALLING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PFALLING);
             else
             if (GlobalMembers.ConActions.ifp(pstanding))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             else
             if (GlobalMembers.ConActions.ifp(prunning))
-                GlobalMembers.ConActions.ConAction PRUN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PRUN);
             else
             if (GlobalMembers.ConActions.ifp(pwalkingback))
-                GlobalMembers.ConActions.ConAction PWALKBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PWALKBACK);
             else
             if (GlobalMembers.ConActions.ifp(prunningback))
-                GlobalMembers.ConActions.ConAction PRUNBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PRUNBACK);
             else
             if (GlobalMembers.ConActions.ifp(pjumping))
-                GlobalMembers.ConActions.ConAction PJUMPING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PJUMPING);
             else
             if (GlobalMembers.ConActions.ifp(pducking))
-                GlobalMembers.ConActions.ConAction PDUCKING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PDUCKING);
         }
         else
         if (GlobalMembers.ConActions.ifaction(PRUN))
         {
             if (GlobalMembers.ConActions.ifp(pstanding))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             else
             if (GlobalMembers.ConActions.ifp(pwalking))
-                GlobalMembers.ConActions.ConAction PWALK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PWALK);
             else
             if (GlobalMembers.ConActions.ifp(pwalkingback))
-                GlobalMembers.ConActions.ConAction PWALKBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PWALKBACK);
             else
             if (GlobalMembers.ConActions.ifp(prunningback))
-                GlobalMembers.ConActions.ConAction PRUNBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PRUNBACK);
             else
             if (GlobalMembers.ConActions.ifp(pjumping))
-                GlobalMembers.ConActions.ConAction PJUMPING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PJUMPING);
             else
             if (GlobalMembers.ConActions.ifp(pducking))
-                GlobalMembers.ConActions.ConAction PDUCKING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PDUCKING);
         }
         else
         if (GlobalMembers.ConActions.ifaction(PWALKBACK))
         {
             if (GlobalMembers.ConActions.ifp(pstanding))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             else
             if (GlobalMembers.ConActions.ifp(pwalking))
-                GlobalMembers.ConActions.ConAction PWALK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PWALK);
             else
             if (GlobalMembers.ConActions.ifp(prunning))
-                GlobalMembers.ConActions.ConAction PRUN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PRUN);
             else
             if (GlobalMembers.ConActions.ifp(prunningback))
-                GlobalMembers.ConActions.ConAction PRUNBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PRUNBACK);
             else
             if (GlobalMembers.ConActions.ifp(pjumping))
-                GlobalMembers.ConActions.ConAction PJUMPING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PJUMPING);
             else
             if (GlobalMembers.ConActions.ifp(pducking))
-                GlobalMembers.ConActions.ConAction PDUCKING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PDUCKING);
         }
         else
         if (GlobalMembers.ConActions.ifaction(PRUNBACK))
         {
             if (GlobalMembers.ConActions.ifp(pstanding))
-                GlobalMembers.ConActions.ConAction PSTAND = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PSTAND);
             else
             if (GlobalMembers.ConActions.ifp(pwalking))
-                GlobalMembers.ConActions.ConAction PWALK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PWALK);
             else
             if (GlobalMembers.ConActions.ifp(prunning))
-                GlobalMembers.ConActions.ConAction PRUN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PRUN);
             else
             if (GlobalMembers.ConActions.ifp(pwalkingback))
-                GlobalMembers.ConActions.ConAction PWALKBACK = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PWALKBACK);
             else
             if (GlobalMembers.ConActions.ifp(pjumping))
-                GlobalMembers.ConActions.ConAction PJUMPING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PJUMPING);
             else
             if (GlobalMembers.ConActions.ifp(pducking))
-                GlobalMembers.ConActions.ConAction PDUCKING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(PDUCKING);
         }
     }
     private void A_ORGANTIC()
@@ -5270,7 +5270,7 @@ else
     if (GlobalMembers.ConActions.ifawayfromwall())
                             {
                                 GlobalMembers.ConActions.spawn(TRANSPORTERSTAR);
-                                GlobalMembers.ConActions.ConAction ATROOPREAPPEAR = new GlobalMembers.ConActions.ConAction();
+                                GlobalMembers.ConActions.SetAction(ATROOPREAPPEAR);
                                 GlobalMembers.ConActions.Move(0);
                                 return;
                             }
@@ -5283,7 +5283,7 @@ else
             {
                 GlobalMembers.ConActions.spawn(TRANSPORTERSTAR);
                 GlobalMembers.ConActions.sound(TELEPORTER);
-                GlobalMembers.ConActions.ConAction ATROOPWALKING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATROOPWALKING);
                 GlobalMembers.ConActions.Move(TROOPWALKVELS, faceplayer);
                 GlobalMembers.ConActions.cstat(32768);
             }
@@ -5300,7 +5300,7 @@ else
         if (GlobalMembers.ConActions.ifaction(ATROOPABOUTHIDE))
             if (GlobalMembers.ConActions.ifactioncount(2))
             {
-                GlobalMembers.ConActions.ConAction ATROOPHIDE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATROOPHIDE);
                 GlobalMembers.ConActions.cstat(0);
             }
     }
@@ -5334,7 +5334,7 @@ else
                                                     else
                                                     {
                                                         GlobalMembers.ConActions.Move(TROOPRUNVELS, seekplayer);
-                                                        GlobalMembers.ConActions.ConAction ATROOPRUNNING = new GlobalMembers.ConActions.ConAction();
+                                                        GlobalMembers.ConActions.SetAction(ATROOPRUNNING);
                                                     }
                                         }
                                     }
@@ -5415,7 +5415,7 @@ else
                 if (GlobalMembers.ConActions.ifp(palive))
                 {
                     if (GlobalMembers.ConActions.ifrnd(128))
-                        GlobalMembers.ConActions.ConAction ATROOPDUCKSHOOT = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(ATROOPDUCKSHOOT);
                 }
                 else
                 if (GlobalMembers.ConActions.ifmove(DONTGETUP))
@@ -5535,7 +5535,7 @@ else
                 rf();
                 GlobalMembers.ConActions.strength(0);
                 GlobalMembers.ConActions.Move(TROOPSTOPPED);
-                GlobalMembers.ConActions.ConAction ATROOPDEAD = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATROOPDEAD);
             }
             return;
         }
@@ -5543,7 +5543,7 @@ else
         {
             rf();
             GlobalMembers.ConActions.Move(0);
-            GlobalMembers.ConActions.ConAction ATROOPDYING = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ATROOPDYING);
         }
     }
     private void checktroophit()
@@ -5554,7 +5554,7 @@ else
             GlobalMembers.ConActions.sound(PRED_DYING);
             GlobalMembers.ConActions.cstat(0);
             GlobalMembers.ConActions.strength(0);
-            GlobalMembers.ConActions.ConAction ATROOPSUFFERDEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ATROOPSUFFERDEAD);
             return;
         }
         if (GlobalMembers.ConActions.ifdead())
@@ -5564,7 +5564,7 @@ else
                 GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                 GlobalMembers.ConActions.spritepal(1);
                 GlobalMembers.ConActions.Move(0);
-                GlobalMembers.ConActions.ConAction ATROOPFROZEN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATROOPFROZEN);
                 GlobalMembers.ConActions.strength(0);
                 return;
             }
@@ -5603,10 +5603,10 @@ else
                         GlobalMembers.ConActions.spawn(BLOODPOOL);
                         GlobalMembers.ConActions.strength(0);
                         GlobalMembers.ConActions.Move(0);
-                        GlobalMembers.ConActions.ConAction ATROOPSUFFERING = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(ATROOPSUFFERING);
                         return;
                     }
-                GlobalMembers.ConActions.ConAction ATROOPDYING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATROOPDYING);
                 return;
             }
         }
@@ -5625,7 +5625,7 @@ else
             else
             if (GlobalMembers.ConActions.iffloordistl(32))
                 if (GlobalMembers.ConActions.ifrnd(96))
-                    GlobalMembers.ConActions.ConAction ATROOPFLINTCH = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ATROOPFLINTCH);
         }
     }
     private void troopjetpackstate()
@@ -5653,7 +5653,7 @@ else
         if (GlobalMembers.ConActions.ifcount(48))
             if (GlobalMembers.ConActions.ifcansee())
             {
-                GlobalMembers.ConActions.ConAction ATROOPJETPACKILL = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATROOPJETPACKILL);
                 GlobalMembers.ConActions.Move(TROOPJETPACKILLVELS);
             }
     }
@@ -5679,7 +5679,7 @@ else
                 GlobalMembers.ConActions.stopsound(LIZARD_BEG);
                 GlobalMembers.ConActions.cstat(0);
                 GlobalMembers.ConActions.strength(0);
-                GlobalMembers.ConActions.ConAction ATROOPSUFFERDEAD = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATROOPSUFFERDEAD);
                 return;
             }
         }
@@ -5807,12 +5807,12 @@ else
                 if (GlobalMembers.ConActions.ifrnd(64))
                 {
                     GlobalMembers.ConActions.resetcount();
-                    GlobalMembers.ConActions.ConAction ATROOPPLAYDEAD = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ATROOPPLAYDEAD);
                 }
                 else
                 {
                     GlobalMembers.ConActions.soundonce(PRED_DYING);
-                    GlobalMembers.ConActions.ConAction ATROOPDEAD = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ATROOPDEAD);
                 }
             }
         }
@@ -6194,7 +6194,7 @@ else
                 GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                 GlobalMembers.ConActions.spritepal(1);
                 GlobalMembers.ConActions.Move(0);
-                GlobalMembers.ConActions.ConAction ALIZFROZEN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ALIZFROZEN);
                 GlobalMembers.ConActions.strength(0);
                 return;
             }
@@ -6261,7 +6261,7 @@ else
         }
         else
         if (GlobalMembers.ConActions.ifactioncount(3))
-            GlobalMembers.ConActions.ConAction ALIZFALL = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ALIZFALL);
     }
     private void lizdyingstate()
     {
@@ -6291,7 +6291,7 @@ else
                 if (GlobalMembers.ConActions.iffloordistl(8))
                     GlobalMembers.ConActions.sound(THUD);
                 GlobalMembers.ConActions.Move(LIZSTOP);
-                GlobalMembers.ConActions.ConAction ALIZLYINGDEAD = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ALIZLYINGDEAD);
             }
     }
     private void lizdodgestate()
@@ -6680,7 +6680,7 @@ else
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction AOCTAFROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(AOCTAFROZEN);
                     GlobalMembers.ConActions.strength(0);
                     return;
                 }
@@ -6750,7 +6750,7 @@ else
             if (GlobalMembers.ConActions.ifrnd(64))
                 GlobalMembers.ConActions.spawn(BLOODPOOL);
             GlobalMembers.ConActions.Move(OCTASTOPPED);
-            GlobalMembers.ConActions.ConAction AOCTADEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(AOCTADEAD);
             return;
         }
         else
@@ -6990,7 +6990,7 @@ else
 else
     if (GlobalMembers.ConActions.ifcount(24))
                     {
-                        GlobalMembers.ConActions.ConAction APIGCOCK = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(APIGCOCK);
                         GlobalMembers.ConActions.sound(SHOTGUN_COCK);
                     }
             if (GlobalMembers.ConActions.ifcount(48))
@@ -7015,7 +7015,7 @@ else
 else
     if (GlobalMembers.ConActions.ifcount(59))
                     {
-                        GlobalMembers.ConActions.ConAction APIGCOCK = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(APIGCOCK);
                         GlobalMembers.ConActions.sound(SHOTGUN_COCK);
                     }
             if (GlobalMembers.ConActions.ifcount(72))
@@ -7032,7 +7032,7 @@ else
             }
             if (GlobalMembers.ConActions.ifaction(APIGCOCK))
                 if (GlobalMembers.ConActions.ifactioncount(2))
-                    GlobalMembers.ConActions.ConAction APIGSHOOT = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(APIGSHOOT);
         }
 else
             GlobalMembers.ConActions.Ai(AIPIGSEEKENEMY);
@@ -7116,7 +7116,7 @@ else
             if (GlobalMembers.ConActions.ifp(palive))
             {
                 GlobalMembers.ConActions.resetcount();
-                GlobalMembers.ConActions.ConAction APIGDIVESHOOT = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(APIGDIVESHOOT);
             }
     }
     private void checkpighitstate()
@@ -7141,7 +7141,7 @@ else
                 GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                 GlobalMembers.ConActions.spritepal(1);
                 GlobalMembers.ConActions.Move(0);
-                GlobalMembers.ConActions.ConAction APIGFROZEN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(APIGFROZEN);
                 GlobalMembers.ConActions.strength(0);
                 return;
             }
@@ -7184,7 +7184,7 @@ else
             if (GlobalMembers.ConActions.ifrnd(64))
             {
                 GlobalMembers.ConActions.Ai(AIPIGDIVING);
-                GlobalMembers.ConActions.ConAction APIGDIVESHOOT = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(APIGDIVESHOOT);
             }
         }
     }
@@ -7207,7 +7207,7 @@ else
             rf();
             if (GlobalMembers.ConActions.iffloordistl(8))
                 GlobalMembers.ConActions.sound(THUD);
-            GlobalMembers.ConActions.ConAction APIGDEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(APIGDEAD);
             GlobalMembers.ConActions.Move(PIGSTOPPED);
             return;
         }
@@ -7215,7 +7215,7 @@ else
     private void A_PIGCOPDIVE()
     {
         GlobalMembers.ConActions.Ai(AIPIGDIVING);
-        GlobalMembers.ConActions.ConAction APIGDIVESHOOT = new GlobalMembers.ConActions.ConAction();
+        GlobalMembers.ConActions.SetAction(APIGDIVESHOOT);
         GlobalMembers.ConActions.cactor(PIGCOP);
     }
     private void A_PIGCOPSTAYPUT()
@@ -7468,7 +7468,7 @@ else
         {
             if (GlobalMembers.ConActions.iffloordistl(8))
                 GlobalMembers.ConActions.sound(THUD);
-            GlobalMembers.ConActions.ConAction ABOSS1DEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ABOSS1DEAD);
             GlobalMembers.ConActions.cstat(0);
             if (GlobalMembers.ConActions.ifspritepal(0))
                 GlobalMembers.ConActions.endofgame(52);
@@ -7527,7 +7527,7 @@ else
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction ABOSS1FROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ABOSS1FROZEN);
                     GlobalMembers.ConActions.strength(0);
                     return;
                 }
@@ -7540,7 +7540,7 @@ else
         {
             if (GlobalMembers.ConActions.ifrnd(32))
             {
-                GlobalMembers.ConActions.ConAction BOSS1FLINTCH = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(BOSS1FLINTCH);
                 GlobalMembers.ConActions.Move(0);
             }
             if (GlobalMembers.ConActions.ifspritepal(0))
@@ -7789,7 +7789,7 @@ else
         {
             if (GlobalMembers.ConActions.iffloordistl(8))
                 GlobalMembers.ConActions.sound(THUD);
-            GlobalMembers.ConActions.ConAction ABOSS2DEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ABOSS2DEAD);
             GlobalMembers.ConActions.cstat(0);
             if (GlobalMembers.ConActions.ifspritepal(0))
                 GlobalMembers.ConActions.endofgame(52);
@@ -7844,7 +7844,7 @@ else
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction ABOSS2FROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ABOSS2FROZEN);
                     GlobalMembers.ConActions.strength(0);
                     return;
                 }
@@ -7859,7 +7859,7 @@ else
             {
                 if (GlobalMembers.ConActions.ifrnd(32))
                 {
-                    GlobalMembers.ConActions.ConAction BOSS2FLINTCH = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(BOSS2FLINTCH);
                     GlobalMembers.ConActions.Move(0);
                 }
                 else
@@ -8084,7 +8084,7 @@ else
         {
             if (GlobalMembers.ConActions.iffloordistl(8))
                 GlobalMembers.ConActions.sound(THUD);
-            GlobalMembers.ConActions.ConAction ABOSS3DEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ABOSS3DEAD);
             GlobalMembers.ConActions.cstat(0);
             if (GlobalMembers.ConActions.ifspritepal(0))
                 GlobalMembers.ConActions.endofgame(52);
@@ -8104,7 +8104,7 @@ else
                 }
             if (GlobalMembers.ConActions.ifactioncount(3))
             {
-                GlobalMembers.ConActions.ConAction ABOSS3LOBBING = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ABOSS3LOBBING);
                 GlobalMembers.ConActions.resetcount();
             }
         }
@@ -8128,7 +8128,7 @@ else
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction ABOSS3FROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ABOSS3FROZEN);
                     GlobalMembers.ConActions.strength(0);
                     return;
                 }
@@ -8142,7 +8142,7 @@ else
         {
             if (GlobalMembers.ConActions.ifrnd(32))
             {
-                GlobalMembers.ConActions.ConAction BOSS3FLINTCH = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(BOSS3FLINTCH);
                 GlobalMembers.ConActions.Move(0);
             }
             if (GlobalMembers.ConActions.ifspritepal(0))
@@ -8262,7 +8262,7 @@ else
                     GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                     GlobalMembers.ConActions.spritepal(1);
                     GlobalMembers.ConActions.Move(0);
-                    GlobalMembers.ConActions.ConAction ACOMMFROZEN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ACOMMFROZEN);
                     GlobalMembers.ConActions.strength(0);
                     return;
                 }
@@ -8486,7 +8486,7 @@ else
                     if (GlobalMembers.ConActions.iffloordistl(8))
                         GlobalMembers.ConActions.sound(THUD);
                     GlobalMembers.ConActions.cstat(0);
-                    GlobalMembers.ConActions.ConAction ACOMMDEAD = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ACOMMDEAD);
                 }
         }
         else
@@ -8508,7 +8508,7 @@ else
         {
             GlobalMembers.ConActions.sizeat(32, 32);
             GlobalMembers.ConActions.cstat(257);
-            GlobalMembers.ConActions.ConAction ANULLACTION = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANULLACTION);
         }
         if (GlobalMembers.ConActions.ifactioncount(46))
         {
@@ -8576,7 +8576,7 @@ else
         if (GlobalMembers.ConActions.ifaction(0))
         {
             GlobalMembers.ConActions.cstator(257);
-            GlobalMembers.ConActions.ConAction ANULLACTION = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANULLACTION);
         }
         if (GlobalMembers.ConActions.ifhitweapon())
         {
@@ -8599,13 +8599,13 @@ else
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
-            GlobalMembers.ConActions.ConAction ACANNONWAIT = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ACANNONWAIT);
         }
         else
         if (GlobalMembers.ConActions.ifaction(ACANNONSHOOTING))
         {
             GlobalMembers.ConActions.spawn(CANNONBALL);
-            GlobalMembers.ConActions.ConAction ACANNONWAIT = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ACANNONWAIT);
         }
         else
         if (GlobalMembers.ConActions.ifaction(ACANNONWAIT))
@@ -8613,7 +8613,7 @@ else
             if (GlobalMembers.ConActions.ifactioncount(64))
             {
                 if (GlobalMembers.ConActions.ifrnd(128))
-                    GlobalMembers.ConActions.ConAction ACANNONSHOOTING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ACANNONSHOOTING);
                 else
                     GlobalMembers.ConActions.resetactioncount();
             }
@@ -8644,7 +8644,7 @@ else
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
-            GlobalMembers.ConActions.ConAction ANULLACTION = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANULLACTION);
             GlobalMembers.ConActions.cstat(257);
         }
         if (GlobalMembers.ConActions.ifhitweapon())
@@ -8671,7 +8671,7 @@ else
             {
                 GlobalMembers.ConActions.stopsound(STORE_MUSIC);
                 GlobalMembers.ConActions.soundonce(STORE_MUSIC_BROKE);
-                GlobalMembers.ConActions.ConAction ASPEAKERBROKE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ASPEAKERBROKE);
             }
             else
             {
@@ -8688,7 +8688,7 @@ else
         if (GlobalMembers.ConActions.ifaction(0))
         {
             GlobalMembers.ConActions.cstat(32768);
-            GlobalMembers.ConActions.ConAction ALAVABUBBLE = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ALAVABUBBLE);
         }
         else
         if (GlobalMembers.ConActions.ifaction(ALAVABUBBLE))
@@ -8697,7 +8697,7 @@ else
                 if (GlobalMembers.ConActions.ifrnd(2))
                 {
                     GlobalMembers.ConActions.cstat(0);
-                    GlobalMembers.ConActions.ConAction ALAVABUBBLEANIM = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ALAVABUBBLEANIM);
                 }
         }
         else
@@ -8705,7 +8705,7 @@ else
             if (GlobalMembers.ConActions.ifactioncount(5))
             {
                 GlobalMembers.ConActions.cstat(32768);
-                GlobalMembers.ConActions.ConAction ALAVABUBBLE = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ALAVABUBBLE);
             }
         }
     }
@@ -8722,7 +8722,7 @@ else
         if (GlobalMembers.ConActions.ifaction(0))
         {
             GlobalMembers.ConActions.sizeat(60, 60);
-            GlobalMembers.ConActions.ConAction ATANKWAIT = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ATANKWAIT);
             GlobalMembers.ConActions.cstat(257);
             GlobalMembers.ConActions.clipdist(100);
         }
@@ -8737,7 +8737,7 @@ else
                         if (GlobalMembers.ConActions.ifcanshoottarget())
                         {
                             GlobalMembers.ConActions.Move(TANKSTOP, geth);
-                            GlobalMembers.ConActions.ConAction ATANKSHOOTING = new GlobalMembers.ConActions.ConAction();
+                            GlobalMembers.ConActions.SetAction(ATANKSHOOTING);
                             GlobalMembers.ConActions.stopsound(TANK_ROAM);
                         }
             }
@@ -8780,7 +8780,7 @@ else
                 else
                 {
                     GlobalMembers.ConActions.Move(TANKFORWARD, seekplayer);
-                    GlobalMembers.ConActions.ConAction ATANKSPIN = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ATANKSPIN);
                 }
             }
             if (GlobalMembers.ConActions.ifrnd(16))
@@ -8795,14 +8795,14 @@ else
             if (GlobalMembers.ConActions.ifactioncount(32))
             {
                 GlobalMembers.ConActions.Move(TANKFORWARD, seekplayer);
-                GlobalMembers.ConActions.ConAction ATANKSPIN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATANKSPIN);
             }
         }
         else
         if (GlobalMembers.ConActions.ifaction(ATANKDESTRUCT))
         {
             if (GlobalMembers.ConActions.ifactioncount(64))
-                GlobalMembers.ConActions.ConAction ATANKDEAD = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATANKDEAD);
             else
             if (GlobalMembers.ConActions.ifactioncount(56))
                 GlobalMembers.ConActions.sound(LASERTRIP_ARMING);
@@ -8832,7 +8832,7 @@ else
         if (GlobalMembers.ConActions.ifhitweapon())
         {
             if (GlobalMembers.ConActions.ifdead())
-                GlobalMembers.ConActions.ConAction ATANKDEAD = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ATANKDEAD);
             else
             {
                 GlobalMembers.ConActions.debris(SCRAP1, 1);
@@ -8841,7 +8841,7 @@ else
                 if (GlobalMembers.ConActions.ifrnd(192))
                 {
                     GlobalMembers.ConActions.Move(TANKSTOP, geth);
-                    GlobalMembers.ConActions.ConAction ATANKSHOOTING = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ATANKSHOOTING);
                     GlobalMembers.ConActions.stopsound(TANK_ROAM);
                 }
             }
@@ -8850,7 +8850,7 @@ else
             if (GlobalMembers.ConActions.ifhitspace())
                 if (GlobalMembers.ConActions.ifp(pfacing))
                     if (GlobalMembers.ConActions.ifangdiffl(512))
-                        GlobalMembers.ConActions.ConAction ATANKDESTRUCT = new GlobalMembers.ConActions.ConAction();
+                        GlobalMembers.ConActions.SetAction(ATANKDESTRUCT);
     }
     GlobalMembers.ConActions.ConAction ABOSS4WALK = new GlobalMembers.ConActions.ConAction(0, 4, 5, 1, 30);
     GlobalMembers.ConActions.ConAction ABOSS4DYING = new GlobalMembers.ConActions.ConAction(40, 9, 1, 1, 20);
@@ -8868,7 +8868,7 @@ else
     {
         if (GlobalMembers.ConActions.ifaction(ABOSS4ABOUTTOSHOOT))
             if (GlobalMembers.ConActions.ifactioncount(3))
-                GlobalMembers.ConActions.ConAction ABOSS4SHOOT = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ABOSS4SHOOT);
         if (GlobalMembers.ConActions.ifaction(ABOSS4SHOOT))
         {
             if (GlobalMembers.ConActions.ifcount(48))
@@ -8915,7 +8915,7 @@ else
                 GlobalMembers.ConActions.Move(0);
                 if (GlobalMembers.ConActions.ifrnd(88))
                 {
-                    GlobalMembers.ConActions.ConAction ABOSS4LAYIT = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ABOSS4LAYIT);
                     GlobalMembers.ConActions.sound(BOS4_LAY);
                 }
                 else
@@ -8937,7 +8937,7 @@ else
             if (GlobalMembers.ConActions.iffloordistl(8))
                 GlobalMembers.ConActions.sound(THUD);
             GlobalMembers.ConActions.endofgame(52);
-            GlobalMembers.ConActions.ConAction ABOSS4DEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ABOSS4DEAD);
             GlobalMembers.ConActions.cstat(0);
         }
     }
@@ -8962,7 +8962,7 @@ else
                 return;
             if (GlobalMembers.ConActions.ifrnd(16))
             {
-                GlobalMembers.ConActions.ConAction BOSS4FLINTCH = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(BOSS4FLINTCH);
                 GlobalMembers.ConActions.Move(0);
             }
         }
@@ -9031,7 +9031,7 @@ else
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
-            GlobalMembers.ConActions.ConAction ANEWBEASTHANG = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANEWBEASTHANG);
             GlobalMembers.ConActions.cstator(257);
             GlobalMembers.ConActions.sizeat(40, 40);
         }
@@ -9039,7 +9039,7 @@ else
     if (GlobalMembers.ConActions.ifhitweapon())
         {
             GlobalMembers.ConActions.cactor(NEWBEAST);
-            GlobalMembers.ConActions.ConAction ANEWBEASTSTAND = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANEWBEASTSTAND);
             GlobalMembers.ConActions.sound(NEWBEAST_PAIN);
         }
         else
@@ -9048,7 +9048,7 @@ else
                 if (GlobalMembers.ConActions.ifrnd(1))
                 {
                     GlobalMembers.ConActions.cactor(NEWBEAST);
-                    GlobalMembers.ConActions.ConAction ANEWBEASTSTAND = new GlobalMembers.ConActions.ConAction();
+                    GlobalMembers.ConActions.SetAction(ANEWBEASTSTAND);
                     GlobalMembers.ConActions.sound(NEWBEAST_PAIN);
                 }
     }
@@ -9057,7 +9057,7 @@ else
     {
         if (GlobalMembers.ConActions.ifaction(0))
         {
-            GlobalMembers.ConActions.ConAction ANEWBEASTHANGDEAD = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANEWBEASTHANGDEAD);
             GlobalMembers.ConActions.sizeat(40, 40);
             GlobalMembers.ConActions.cstator(257);
         }
@@ -9290,7 +9290,7 @@ else
                 GlobalMembers.ConActions.sound(SOMETHINGFROZE);
                 GlobalMembers.ConActions.spritepal(1);
                 GlobalMembers.ConActions.Move(0);
-                GlobalMembers.ConActions.ConAction ANEWBEASTFROZEN = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ANEWBEASTFROZEN);
                 GlobalMembers.ConActions.strength(0);
                 return;
             }
@@ -9351,7 +9351,7 @@ else
         }
         else
         if (GlobalMembers.ConActions.ifcount(32))
-            GlobalMembers.ConActions.ConAction ANEWBEASTFALL = new GlobalMembers.ConActions.ConAction();
+            GlobalMembers.ConActions.SetAction(ANEWBEASTFALL);
     }
     private void newbeastdyingstate()
     {
@@ -9381,7 +9381,7 @@ else
                 if (GlobalMembers.ConActions.iffloordistl(8))
                     GlobalMembers.ConActions.sound(THUD);
                 GlobalMembers.ConActions.Move(NEWBEASTSTOP);
-                GlobalMembers.ConActions.ConAction ANEWBEASTLYINGDEAD = new GlobalMembers.ConActions.ConAction();
+                GlobalMembers.ConActions.SetAction(ANEWBEASTLYINGDEAD);
             }
     }
     private void newbeastdodgestate()
