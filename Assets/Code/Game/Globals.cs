@@ -301,38 +301,6 @@ public class player_struct
     public char return_to_center;
 }
 
-public class scripttemp
-{
-    public int[] temp_data = new int[6];
-    public bool[] script_execute = new bool[6];
-    public bool inScriptExecute = false;
-
-    public int this[int index]
-    {
-        get
-        {
-            if (index == 0 || script_execute[index] == false)
-                return temp_data[index];
-
-            if (index >= temp_data.Length) 
-                throw new System.Exception("scripttemp out of bounds!");
-
-            if (temp_data[index] >= GlobalMembers.scriptptr.buffer.Length)
-                return 0;
-
-            return GlobalMembers.scriptptr.buffer[temp_data[index]];
-        }
-        set
-        {
-            if (inScriptExecute)
-                script_execute[index] = true;
-            else
-                script_execute[index] = false;
-            temp_data[index] = value;
-        }
-    }
-}
-
 public class weaponhit
 {
     public char cgg;
@@ -352,10 +320,56 @@ public class weaponhit
     public int bposx;
     public int bposy;
     public int bposz;
-    public scripttemp temp_data = new scripttemp();
+
+// jmarshall - code cleanup
+    public int[] temp_data = new int[6];    
+
+    public int count = 0;
+    public int actioncount = 0;
+    public int unknowncounter = 0;
+
+    public GlobalMembers.ConActions.MoveAction moveAction;
+    public GlobalMembers.ConActions.ConAction action;
+    public GlobalMembers.ConActions.AIAction aiaction;
+
+    public int this[int index]
+    {
+        get
+        {
+            switch(index)
+            {
+                case 0:
+                    return count;
+                case 2:
+                    return actioncount;
+                case 3:
+                    return unknowncounter;
+                default:
+                    return temp_data[index];
+            }
+        }
+
+        set
+        {
+            switch (index)
+            {
+                case 0:
+                    count = value;
+                    break;
+                case 2:
+                    actioncount = value;
+                    break;
+                case 3:
+                    unknowncounter = value;
+                    break;
+                default:
+                    temp_data[index] = value;
+                    break;
+            }
+        }
+    }
+// jmarshall end
 }
-
-
 
 
 //DUKE3D.H:
@@ -520,98 +534,33 @@ public partial class GlobalMembers
 	public static int respawnitemtime = 768;
 	public static int groupfile;
 
-	//public static int[] script = new int[DefineConstants.MAXSCRIPTSIZE];
-    //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-    //ORIGINAL LINE: int *scriptptr;
-    public struct DefInt
+    public class ScriptActorRegistration
     {
-        public int[] buffer;
-        public int _bufferpos;
-
-        public int bufferpos
-        {
-            get
-            {
-                return _bufferpos;
-            }
-
-            set
-            {
-                if (value < 0)
-                    throw new System.Exception("BufferPos Invalid!");
-                _bufferpos = value;
-            }
-        }
-
-        public DefInt(int t)
-        {
-            buffer = new int[3000];
-            _bufferpos = 0;
-        }
-
-        public static DefInt operator ++(DefInt w)
-        {
-            w.bufferpos++;
-            return w;
-        }
-
-        public static DefInt operator --(DefInt w)
-        {
-            w.bufferpos--;
-            return w;
-        }
-
-        public void Set(int i)
-        {
-            if (bufferpos >= buffer.Length)
-                throw new System.Exception("Set on DefInit exceeds bounds");
-
-            buffer[bufferpos] = i;
-        }
-
-        public int Get()
-        {
-            if (bufferpos >= buffer.Length)
-                return 0;
-
-            return buffer[bufferpos];
-        }
-
-        public int Get(int i)
-        {
-            if (bufferpos + i >= buffer.Length)
-                return 0;
-
-            return buffer[bufferpos + i];
-        }
-
-
-        public int GetPrev()
-        {
-            if (bufferpos - 1 >= buffer.Length)
-                return 0;
-
-            return buffer[bufferpos - 1];
-        }
+        public delegate void Function_t();
+        public Function_t func;
+        public int aiType;
+        public int aiType2;
+        public GlobalMembers.ConActions.ConAction action;
     }
-    public static DefInt scriptptr = new DefInt(1);
-//C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-//ORIGINAL LINE: int *insptr;
-	public static int insptr;
+
+    //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
+    //ORIGINAL LINE: int *insptr;
+    public static ScriptActorRegistration[] scriptActorRegPtr = new ScriptActorRegistration[Build.bMap.MAXTILES];
+    public static int insptr;
 	public static int[] labelcode = new int[3000];
 	public static int labelcnt;
     //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
     //ORIGINAL LINE: int *actorscrptr[DefineConstants.MAXTILES],*parsing_actor;
-    public static int[] actorscrptr;
-//C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-//ORIGINAL LINE: int *parsing_actor;
-	public static int parsing_actor;
+    public static weaponhit[] actorscrptr = new weaponhit[Build.bMap.MAXTILES];
+    //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
+    //ORIGINAL LINE: int *parsing_actor;
+    public static int parsing_actor;
 	public static string[] label = new string[5000];
 	public static int error;
 	public static int warning;
 	public static char killit_flag;
 	public static string music_pointer;
-    public static int[] actortype; // = new int[DefineConstants.MAXTILES];
+    public static int[] actortype = new int[DefineConstants.MAXTILES];
 
 
     public static bool[] KB_KeyDown = new bool[256];
@@ -621,7 +570,7 @@ public partial class GlobalMembers
 	public static char typebuflen;
 	public static string typebuf = new string(new char[41]);
 
-    public static string[,] music_fn = new string[4,64];
+    public static string[,] music_fn = new string[5,64];
 	public static char music_select;
     public static string[] env_music_fn = new string[164];
 	public static char rtsplaying;

@@ -4,13 +4,202 @@ public partial class GlobalMembers
 {
     public static class ConActions
     {
+        public static void gamestartup(params int[] parms)
+        {
+            for(int j = 0; j < parms.Length; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        ud.const_visibility = parms[j];
+                        break;
+                    case 1:
+                        impact_damage = parms[j];
+                        break;
+                    case 2:
+                        max_player_health = parms[j];
+                        break;
+                    case 3:
+                        max_armour_amount = parms[j];
+                        break;
+                    case 4:
+                        respawnactortime = parms[j]; break;
+                    case 5:
+                        respawnitemtime = parms[j]; break;
+                    case 6:
+                        dukefriction = parms[j]; break;
+                    case 7:
+                        gc = parms[j]; break;
+                    case 8: rpgblastradius = parms[j]; break;
+                    case 9: pipebombblastradius = parms[j]; break;
+                    case 10: shrinkerblastradius = parms[j]; break;
+                    case 11: tripbombblastradius = parms[j]; break;
+                    case 12: morterblastradius = parms[j]; break;
+                    case 13: bouncemineblastradius = parms[j]; break;
+                    case 14: seenineblastradius = parms[j]; break;
+
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                    case 21:
+                    case 22:
+                    case 23:
+                    case 24:
+                        if (j == 24)
+                            max_ammo_amount[11] = parms[j];
+                        else max_ammo_amount[j - 14] = parms[j];
+                        break;
+                    case 25:
+                        camerashitable = (char)parms[j];
+                        break;
+                    case 26:
+                        numfreezebounces = parms[j];
+                        break;
+                    case 27:
+                        freezerhurtowner = parms[j];
+                        break;
+                    case 28:
+                        spriteqamount = (short)parms[j];
+                        if (spriteqamount > 1024) spriteqamount = 1024;
+                        else if (spriteqamount < 0) spriteqamount = 0;
+                        break;
+                    case 29:
+                        lasermode = (char)parms[j];
+                        break;
+                }                
+            }
+        }
+        public static void definemusic(int episode, params string[] music)
+        {
+            int k = episode;
+            for(int i = 0; i < music.Length; i++)
+            {
+                GlobalMembers.music_fn[k,i] = music[i];
+            }
+        }
+        public static void definesound(int id, string filename, int var1, int var2, int var3, int var4, int var5)
+        {
+            sounds[id] = filename;
+            soundps[id] = (short)var1;
+            soundpr[id] = var2;
+            soundm[id] = var3;
+            soundvo[id] = (short)var4;
+        }
+        public static void definelevelname(int episode, int level, string mapfile, string time1, string time2, string name)
+        {
+            int index = episode * 11 + level;
+            GlobalMembers.level_file_names[index] = mapfile;
+           // GlobalMembers.partime[index] = time1; // jmarshall: partime
+           // GlobalMembers.designertime[index] = time2; // jmarshall: designertime
+            GlobalMembers.level_names[index] = name.ToUpper();
+        }
+        public static void defineskillname(int id, string name)
+        {
+            GlobalMembers.skill_names[id] = name;
+        }
+        public static void definevolumename(int id, string name)
+        {
+            GlobalMembers.volume_names[id] = name;
+        }
+        public static void definequote(int id, string str)
+        {
+            GlobalMembers.fta_quotes[id] = str;
+        }
+        public static void RegisterActor(GlobalMembers.ScriptActorRegistration.Function_t function, int picnum, int aiType, int aiType2 = 0, GlobalMembers.ConActions.ConAction action = null, GlobalMembers.ConActions.MoveAction unknown2 = null, int unknown3 = 0, int unknown4 = 0)
+        {
+            GlobalMembers.scriptActorRegPtr[picnum] = new GlobalMembers.ScriptActorRegistration();
+            GlobalMembers.scriptActorRegPtr[picnum].func = function;
+            GlobalMembers.scriptActorRegPtr[picnum].aiType = aiType;
+            GlobalMembers.scriptActorRegPtr[picnum].aiType2 = aiType2;
+            GlobalMembers.scriptActorRegPtr[picnum].action = action;
+
+            actortype[picnum] = 1;
+        }
+
+
+        public class ConAction
+        {
+            public int startframe;
+            public int frames;
+            public int viewtype;
+            public int invvalue;
+            public int delay;
+
+            public int GetIndex(int i)
+            {
+                switch(i)
+                {
+                    case 0:
+                        return startframe;
+                    case 1:
+                        return frames;
+                    case 2:
+                        return viewtype;
+                    case 3:
+                        return invvalue;
+                    case 4:
+                        return delay;
+                }
+                return -1;
+            }
+
+            public ConAction(int startframe = 0, int frames = 0, int viewtype = 0, int invvalue = 0, int delay = 0)
+            {
+                this.startframe = startframe;
+                this.frames = frames;
+                this.viewtype = viewtype;
+                this.invvalue = invvalue;
+                this.delay = delay;
+            }
+        }
+
+        public class AIAction
+        {
+            public GlobalMembers.ConActions.ConAction action;
+            public GlobalMembers.ConActions.MoveAction moveAction;
+            public int val;
+            public AIAction(GlobalMembers.ConActions.ConAction action, GlobalMembers.ConActions.MoveAction moveAction, int val = 0, int unknown = 0)
+            {
+                this.action = action;
+                this.moveAction = moveAction;
+                this.val = val;
+            }
+        }
+
+        public class MoveAction
+        {
+            public int horizontal;
+            public int vertical;
+
+            public int GetIndex(int i)
+            {
+                switch (i)
+                {
+                    case 0:
+                        return horizontal;
+                    case 1:
+                        return vertical;             
+                }
+                return -1;
+            }
+
+            public MoveAction(int horizontal = 0, int vertical = 0)
+            {
+                this.horizontal = horizontal;
+                this.vertical = vertical;
+            }
+        }
+
         internal static int j;
         internal static bool jj = false;
         internal static int l;
         internal static int s;
         internal static short temphit = 0;
 
-        public static void ifnosounds()
+        public static bool ifnosounds()
         {
             for (j = 1; j < DefineConstants.NUM_SOUNDS; j++)
             {
@@ -20,23 +209,20 @@ public partial class GlobalMembers
                 }
             }
 
-            parseifelse(j == DefineConstants.NUM_SOUNDS);
+            return (j == DefineConstants.NUM_SOUNDS);
         }
-        public static void ifangdiffl()
+        public static bool ifangdiffl(int value)
         {
-            insptr++;
             j = pragmas.klabs(getincangle(ps[g_p].ang, g_sp.ang));
-            parseifelse(j <= (short)scriptptr.buffer[insptr]);
+            return (j <= value);
         }
-        public static void ifspritepal()
+        public static bool ifspritepal(int value)
         {
-            insptr++;
-            parseifelse(g_sp.pal == (short)scriptptr.buffer[insptr]);
+            return (g_sp.pal == value);
         }
 
         public static void respawnhitag()
         {
-            insptr++;
             switch (g_sp.picnum)
             {
                 case DefineConstants.FEM1:
@@ -65,21 +251,19 @@ public partial class GlobalMembers
                     break;
             }
         }
-        public static void ifnotmoving()
+        public static bool ifnotmoving()
         {
-            parseifelse((hittype[g_i].movflag & 49152) > 16384);
+            return (hittype[g_i].movflag & 49152) > 16384;
         }
-        public static void ifinouterspace()
+        public static bool ifinouterspace()
         {
-            parseifelse(floorspace(g_sp.sectnum) != 0);
+            return (floorspace(g_sp.sectnum) != 0);
         }
-        public static void quote()
+        public static void quote(int value)
         {
-            insptr++;
-            FTA((short)scriptptr.buffer[insptr], ps[g_p]);
-            insptr++;
+            FTA((short)value, ps[g_p]);
         }
-        public static void ifawayfromwall()
+        public static bool ifawayfromwall()
         {
             short s1;
 
@@ -104,7 +288,7 @@ public partial class GlobalMembers
                     }
                 }
             }
-            parseifelse(j != 0);
+            return (j != 0);
         }
         public static void pstomp()
         {
@@ -122,6 +306,7 @@ public partial class GlobalMembers
                 }
             }
         }
+        /*
         public static void ifpinventory()
         {
             insptr++;
@@ -203,77 +388,63 @@ public partial class GlobalMembers
 
             parseifelse(j != 0);
         }
-        public static void ifphealthl()
+        */
+        public static bool ifphealthl(int value)
         {
-            insptr++;
-            parseifelse(Engine.board.sprite[ps[g_p].i].extra < (short)scriptptr.buffer[insptr]);
+            return (Engine.board.sprite[ps[g_p].i].extra < value);
         }
-        public static void palfrom()
+        public static void palfrom(int v1 = 0, int v2 = 0, int v3 = 0, int v4 = 0)
         {
-
-            insptr++;
-            ps[g_p].pals_time = (short)scriptptr.buffer[insptr];
-            insptr++;
-            for (j = 0; j < 3; j++)
-            {
-                ps[g_p].pals[j] = (byte)scriptptr.buffer[insptr];
-                insptr++;
-            }
+            ps[g_p].pals_time = v1;
+            ps[g_p].pals[0] = (byte)v2;
+            ps[g_p].pals[1] = (byte)v3;
+            ps[g_p].pals[2] = (byte)v4;            
         }
-        public static void ifceilingdistl()
+        public static bool ifceilingdistl(int val)
+        {            
+            return ((g_sp.z - hittype[g_i].ceilingz) <= (((short)val) << 8));
+        }
+        public static bool iffloordistl(int val)
         {
-            insptr++;
-            //            getglobalz(g_i);
-            parseifelse((g_sp.z - hittype[g_i].ceilingz) <= (((short)scriptptr.buffer[insptr]) << 8));
+            return ((hittype[g_i].floorz - g_sp.z) <= (((short)val) << 8));
         }
-        public static void iffloordistl()
-        {
-            insptr++;
-            //            getglobalz(g_i);
-            parseifelse((hittype[g_i].floorz - g_sp.z) <= (((short)scriptptr.buffer[insptr]) << 8));
-        }
-        public static void ifrespawn()
+        public static bool ifrespawn()
         {
             if (badguy(g_sp) != 0)
             {
-                parseifelse(ud.respawn_monsters != 0);
+                return (ud.respawn_monsters != 0);
             }
             else if (inventory(g_sp) != 0)
             {
-                parseifelse(ud.respawn_inventory != 0);
+                return  (ud.respawn_inventory != 0);
             }
             else
             {
-                parseifelse(ud.respawn_items != 0);
+                return (ud.respawn_items != 0);
             }
         }
-        public static void ifbulletnear()
+        public static bool ifbulletnear()
         {
-            parseifelse(dodge(g_sp) == 1);
+            return (dodge(g_sp) == 1);
         }
-        public static void cactor()
+        public static void cactor(int value)
         {
-            insptr++;
-            g_sp.picnum = (short)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.picnum = (short)value;
         }
-        public static void spritepal()
+        public static void spritepal(int value)
         {
-            insptr++;
             if (g_sp.picnum != DefineConstants.APLAYER)
             {
                 hittype[g_i].tempang = g_sp.pal;
             }
-            g_sp.pal = (byte)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.pal = (byte)value;
         }
-        public static void ifinspace()
+        public static bool ifinspace()
         {
-            parseifelse(ceilingspace(g_sp.sectnum) != 0);
+            return (ceilingspace(g_sp.sectnum) != 0);
         }
         public static void operate()
         {
-            insptr++;
             if (Engine.board.sector[g_sp.sectnum].lotag == 0)
             {
                 Engine.board.neartag(g_sp.x, g_sp.y, g_sp.z - (32 << 8), g_sp.sectnum, g_sp.ang, ref neartagsector, ref neartagwall, ref neartagsprite, ref neartaghitdist, 768, 1);
@@ -304,57 +475,45 @@ public partial class GlobalMembers
                 }
             }
         }
-        public static void ifmultiplayer()
+        public static bool ifmultiplayer()
         {
-            parseifelse(ud.multimode > 1);
+            return (ud.multimode > 1);
         }
-        public static void ifoutside()
+        public static bool ifoutside()
         {
-            parseifelse((Engine.board.sector[g_sp.sectnum].ceilingstat & 1) != 0);
+            return ((Engine.board.sector[g_sp.sectnum].ceilingstat & 1) != 0);
         }
-        public static void ifhitspace()
+        public static bool ifhitspace()
         {
-            parseifelse((sync[g_p].bits & (1 << 29)) != 0);
+            return ((sync[g_p].bits & (1 << 29)) != 0);
         }
-        public static void ifgapzl()
+        public static bool ifgapzl(int val)
         {
-            insptr++;
-            parseifelse(((hittype[g_i].floorz - hittype[g_i].ceilingz) >> 8) < (short)scriptptr.buffer[insptr]);
+            return (((hittype[g_i].floorz - hittype[g_i].ceilingz) >> 8) < (short)val);
         }
         public static void wackplayer()
         {
-            insptr++;
             forceplayerangle(ps[g_p]);
         }
 
-        public static void ifspawnedby()
+        public static bool ifspawnedby(int value)
         {
-            insptr++;
-            //            if(g_sp->owner >= 0 && Engine.board.sprite[g_sp->owner].picnum == (short)scriptptr.buffer[insptr])
-            //              parseifelse(1);
-            //            else
-            parseifelse(hittype[g_i].picnum == (short)scriptptr.buffer[insptr]);
+            return (hittype[g_i].picnum == (short)value);
         }
 
-        public static void guts()
+        public static void guts(int value1, int value2)
         {
-            insptr += 2;
-            GlobalMembers.guts(g_sp, (short)scriptptr.buffer[insptr - 1], (short)scriptptr.buffer[insptr], g_p);
-            insptr++;
+            GlobalMembers.guts(g_sp, (short)value1, (short)value2, g_p);
         }
 
-        public static void ifstrength()
+        public static bool ifstrength(int value)
         {
-            insptr++;
-            parseifelse(g_sp.extra <= (short)scriptptr.buffer[insptr]);
+            return (g_sp.extra <= (short)value);
         }
 
-        public static void ifp()
+        public static bool ifp(int value, object notused = null, object notused2 = null, object notused3 = null, object notused4 = null)
         {
-
-            insptr++;
-
-            l = (short)scriptptr.buffer[insptr];
+            l = (short)value;
             j = 0;
 
             s = g_sp.xvel;
@@ -444,41 +603,39 @@ public partial class GlobalMembers
                 }
             }
 
-            parseifelse(j == 1);
+            return (j == 1);
         }
 
-        public static void hitradius()
+        public static void hitradius(int val1 = 0, int val2 = 0, int val3 = 0, int val4 = 0, int val5 = 0)
         {
-            GlobalMembers.hitradius(g_i, ((short)scriptptr.buffer[insptr + 1]), (insptr + 2), (insptr + 3), (insptr + 4), (insptr + 5));
-            insptr += 6;
+            GlobalMembers.hitradius(g_i, ((short)val1), val2, val3, val4, val5);
         }
 
-        public static void addinventory()
+        public static void addinventory(int val1, int val2)
         {
-            insptr += 2;
-            switch ((short)scriptptr.buffer[insptr - 1])
+            switch ((short)val1)
             {
                 case 0:
-                    ps[g_p].steroids_amount = (short)scriptptr.buffer[insptr];
+                    ps[g_p].steroids_amount = (short)val2;
                     ps[g_p].inven_icon = (char)2;
                     break;
                 case 1:
-                    ps[g_p].shield_amount += (short)scriptptr.buffer[insptr]; // 100;
+                    ps[g_p].shield_amount += (short)val2; // 100;
                     if (ps[g_p].shield_amount > max_player_health)
                     {
                         ps[g_p].shield_amount = (short)max_player_health;
                     }
                     break;
                 case 2:
-                    ps[g_p].scuba_amount = (short)scriptptr.buffer[insptr]; // 1600;
+                    ps[g_p].scuba_amount = (short)val2; // 1600;
                     ps[g_p].inven_icon = (char)6;
                     break;
                 case 3:
-                    ps[g_p].holoduke_amount = (short)scriptptr.buffer[insptr]; // 1600;
+                    ps[g_p].holoduke_amount = (short)val2; // 1600;
                     ps[g_p].inven_icon = (char)3;
                     break;
                 case 4:
-                    ps[g_p].jetpack_amount = (short)scriptptr.buffer[insptr]; // 1600;
+                    ps[g_p].jetpack_amount = (short)val2; // 1600;
                     ps[g_p].inven_icon = (char)4;
                     break;
                 case 6:
@@ -496,47 +653,43 @@ public partial class GlobalMembers
                     }
                     break;
                 case 7:
-                    ps[g_p].heat_amount = (short)scriptptr.buffer[insptr];
+                    ps[g_p].heat_amount = (short)val2;
                     ps[g_p].inven_icon = (char)5;
                     break;
                 case 9:
                     ps[g_p].inven_icon = (char)1;
-                    ps[g_p].firstaid_amount = (short)scriptptr.buffer[insptr];
+                    ps[g_p].firstaid_amount = (short)val2;
                     break;
                 case 10:
                     ps[g_p].inven_icon = (char)7;
-                    ps[g_p].boot_amount = (short)scriptptr.buffer[insptr];
+                    ps[g_p].boot_amount = (short)val2;
                     break;
             }
             insptr++;
         }
         public static void resetcount()
         {
-            insptr++;
-            g_t[0] = 0;
+            hittype[g_i].count = 0;
         }
-        public static void ifactor()
+        public static bool ifactor(int val1)
         {
-            insptr++;
-            parseifelse(g_sp.picnum == (short)scriptptr.buffer[insptr]);
+            return (g_sp.picnum == (short)val1);
         }
-        public static void ifcount()
+        public static bool ifcount(int val)
         {
-            insptr++;
-            parseifelse(g_t[0] >= (short)scriptptr.buffer[insptr]);
+            int v = hittype[g_i].count;
+            return (v >= (short)val);
         }
-        public static void ifinwater()
+        public static bool ifinwater()
         {
-            parseifelse(Engine.board.sector[g_sp.sectnum].lotag == 2);
+            return (Engine.board.sector[g_sp.sectnum].lotag == 2);
         }
-        public static void ifonwater()
+        public static bool ifonwater()
         {
-            parseifelse(pragmas.klabs(g_sp.z - Engine.board.sector[g_sp.sectnum].floorz) < (32 << 8) && Engine.board.sector[g_sp.sectnum].lotag == 1);
+            return (pragmas.klabs(g_sp.z - Engine.board.sector[g_sp.sectnum].floorz) < (32 << 8) && Engine.board.sector[g_sp.sectnum].lotag == 1);
         }
         public static void resetplayer()
         {
-            insptr++;
-
             if (ud.multimode < 2)
             {
                 if (lastsavedpos >= 0 && ud.recstat != 2)
@@ -609,46 +762,36 @@ public partial class GlobalMembers
             }
             // setpal(ps[g_p]);// jmarshall palette
         }
-        public static void ifmove()
+        public static bool ifmove(MoveAction val1)
         {
-            insptr++;
-            parseifelse(scriptptr.buffer[g_t[1]] == (short)scriptptr.buffer[insptr]);
+            return hittype[g_i].moveAction == val1; 
         }
-        public static void cstat()
+
+        public static void cstat(int value)
         {
-            insptr++;
-            g_sp.cstat = (short)(short)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.cstat = (short)value;
         }
-        public static void clipdist()
+        public static void clipdist(int value)
         {
-            insptr++;
-            g_sp.clipdist = (byte)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.clipdist = (byte)value;
         }
-        public static void cstator()
+        public static void cstator(int value)
         {
-            insptr++;
-            g_sp.cstat |= (short)(short)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.cstat |= (short)value;
         }
-        public static void count()
+        public static void count(int value)
         {
-            insptr++;
-            g_t[0] = (short)(short)scriptptr.buffer[insptr];
-            insptr++;
+            hittype[g_i].count = value;
         }
-        public static void debris()
+        public static void debris(int val1, int val2)
         {
             short dnum;
 
-            insptr++;
-            dnum = (short)scriptptr.buffer[insptr];
-            insptr++;
+            dnum = (short)val1;
 
             if (g_sp.sectnum >= 0 && g_sp.sectnum < DefineConstants.MAXSECTORS)
             {
-                for (j = ((short)scriptptr.buffer[insptr]) - 1; j >= 0; j--)
+                for (j = ((short)val2) - 1; j >= 0; j--)
                 {
                     if (g_sp.picnum == DefineConstants.BLIMP && dnum == DefineConstants.SCRAP1)
                     {
@@ -673,97 +816,89 @@ public partial class GlobalMembers
             }
             insptr++;
         }
-        public static void ifrnd()
+        public static bool ifrnd(int val1)
         {
-            insptr++;
-            parseifelse(((Engine.krand() >> 8) >= (255 - (scriptptr.buffer[insptr]))));
+            return (((Engine.krand() >> 8) >= (255 - (val1))));
         }
         public static void resetactioncount()
         {
-            insptr++;
-            g_t[2] = 0;
+            hittype[g_i].actioncount = 0;
         }
-        public static void ifactioncount()
+        public static bool ifactioncount(int val1)
         {
-            insptr++;
-            parseifelse(g_t[2] >= (short)scriptptr.buffer[insptr]);
-        }
-        public static void ifaction()
-        {
-            insptr++;
-            parseifelse(g_t[4] == (short)scriptptr.buffer[insptr]);
-        }
-        public static void ifai()
-        {
-            insptr++;
-            parseifelse(g_t[5] == (short)scriptptr.buffer[insptr]);
-        }
-        public static void ifwasweapon()
-        {
-            insptr++;
-            parseifelse(hittype[g_i].picnum == (short)scriptptr.buffer[insptr]);
+            return (hittype[g_i].actioncount >= (short)val1);
         }
 
-        public static void spawn()
+        public static void SetAction(ConAction action)
         {
-            insptr++;
+            hittype[g_i].actioncount = 0;
+            hittype[g_i].unknowncounter = 0;
+            hittype[g_i].action = action;
+        }
+
+        public static bool ifaction(ConAction action)
+        {
+            return (hittype[g_i].action == action);
+        }
+
+        public static void Ai(AIAction ai)
+        {
+            hittype[g_i].aiaction = ai;
+            hittype[g_i].action = ai.action; // Action
+            hittype[g_i].moveAction = ai.moveAction; // move
+            g_sp.hitag = (short)ai.val; // Ai
+            hittype[g_i].count = hittype[g_i].actioncount = hittype[g_i].unknowncounter = 0;
+            if ((g_sp.hitag & DefineConstants.random_angle) != 0)
+            {
+                g_sp.ang = (short)(Engine.krand() & 2047);
+            }
+        }
+        public static bool ifai(AIAction ai)
+        {
+            return (hittype[g_i].aiaction == ai);
+        }
+ 
+        public static bool ifwasweapon(int val, int notused = 0)
+        {
+            return (hittype[g_i].picnum == (short)val);
+        }
+
+        public static void spawn(int val)
+        {
             if (g_sp.sectnum >= 0 && g_sp.sectnum < DefineConstants.MAXSECTORS)
             {
-                GlobalMembers.spawn(g_i, (short)scriptptr.buffer[insptr]);
+                GlobalMembers.spawn(g_i, (short)val);
             }
-            insptr++;
         }
 
-        public static void move()
+        public static void Move(MoveAction val, int val2 = 0, int val3 = 0, int unknown1 = 0)
         {
-            g_t[0] = 0;
-            insptr++;
-            g_t[1] = scriptptr.buffer[insptr];
-            insptr++;
-            g_sp.hitag = (short)scriptptr.buffer[insptr];
-            insptr++;
+            hittype[g_i].count = 0;
+            hittype[g_i].moveAction = val;
+            g_sp.hitag = (short)val2;
             if ((g_sp.hitag & DefineConstants.random_angle) != 0)
             {
                 g_sp.ang = (short)(Engine.krand() & 2047);
             }
         }
 
-        public static void openbracket()
+        public static void Move(int val, int val2 = 0)
         {
-            insptr++;
-            while (true)
+            if (val != 0)
+                throw new System.Exception("Move val not null");
+
+            hittype[g_i].count = 0;
+            hittype[g_i].moveAction = null;
+            g_sp.hitag = (short)val2;
+            if ((g_sp.hitag & DefineConstants.random_angle) != 0)
             {
-                if (parse() != 0)
-                {
-                    break;
-                }
+                g_sp.ang = (short)(Engine.krand() & 2047);
             }
         }
 
-        public static void state()
+
+        public static void addphealth(int val)
         {
-            //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
-            //ORIGINAL LINE: int *tempscrptr;
-
-            int tempscrptr;
-
-            tempscrptr = insptr + 2;
-
-            insptr = (scriptptr.buffer[insptr + 1]); // jmarshall 
-            while (true)
-            {
-                if (parse() != 0)
-                {
-                    break;
-                }
-            }
-            insptr = tempscrptr;
-        }
-
-        public static void addphealth()
-        {
-            insptr++;
-
             if (ps[g_p].newowner >= 0)
             {
                 ps[g_p].newowner = -1;
@@ -789,7 +924,7 @@ public partial class GlobalMembers
 
             if (g_sp.picnum != DefineConstants.ATOMICHEALTH)
             {
-                if (j > max_player_health && (short)scriptptr.buffer[insptr] > 0)
+                if (j > max_player_health && (short)val > 0)
                 {
                     insptr++;
                     return;
@@ -798,9 +933,9 @@ public partial class GlobalMembers
                 {
                     if (j > 0)
                     {
-                        j += (short)scriptptr.buffer[insptr];
+                        j += (short)val;
                     }
-                    if (j > max_player_health && (short)scriptptr.buffer[insptr] > 0)
+                    if (j > max_player_health && (short)val > 0)
                     {
                         j = max_player_health;
                     }
@@ -810,7 +945,7 @@ public partial class GlobalMembers
             {
                 if (j > 0)
                 {
-                    j += (short)scriptptr.buffer[insptr];
+                    j += (short)val;
                 }
                 if (j > (max_player_health << 1))
                 {
@@ -825,9 +960,9 @@ public partial class GlobalMembers
 
             if (ud.god == 0)
             {
-                if ((short)scriptptr.buffer[insptr] > 0)
+                if ((short)val > 0)
                 {
-                    if ((j - (short)scriptptr.buffer[insptr]) < (max_player_health >> 2) && j >= (max_player_health >> 2))
+                    if ((j - (short)val) < (max_player_health >> 2) && j >= (max_player_health >> 2))
                     {
                         spritesound(DefineConstants.DUKE_GOTHEALTHATLOW, ps[g_p].i);
                     }
@@ -841,13 +976,11 @@ public partial class GlobalMembers
             insptr++;
         }
 
-        public static void endofgame()
+        public static void endofgame(int timebeforeexit)
         {
-            insptr++;
-            ps[g_p].timebeforeexit = (short)scriptptr.buffer[insptr];
+            ps[g_p].timebeforeexit = (short)timebeforeexit;
             ps[g_p].customexitsound = -1;
             ud.eog = 1;
-            insptr++;
         }
 
         public static void debug()
@@ -857,94 +990,76 @@ public partial class GlobalMembers
             insptr++;
         }
 
-        public static void addweapon()
+        public static void addweapon(int val, int val2)
         {
-            insptr++;
-            if (ps[g_p].gotweapon[(short)scriptptr.buffer[insptr]] == false)
+            if (ps[g_p].gotweapon[(short)val] == false)
             {
-                GlobalMembers.addweapon(ps[g_p], (short)scriptptr.buffer[insptr]);
+                GlobalMembers.addweapon(ps[g_p], (short)val);
             }
-            else if (ps[g_p].ammo_amount[(short)scriptptr.buffer[insptr]] >= max_ammo_amount[(short)scriptptr.buffer[insptr]])
+            else if (ps[g_p].ammo_amount[(short)val] >= max_ammo_amount[(short)val])
             {
                 killit_flag = (char)2;
                 return;
             }
-            GlobalMembers.addammo((short)scriptptr.buffer[insptr], ps[g_p], ((short)scriptptr.buffer[insptr + 1]));
+            GlobalMembers.addammo((short)val, ps[g_p], ((short)val2));
             if (ps[g_p].curr_weapon == DefineConstants.KNEE_WEAPON)
             {
-                if (ps[g_p].gotweapon[(short)scriptptr.buffer[insptr]])
+                if (ps[g_p].gotweapon[(short)val])
                 {
-                    GlobalMembers.addweapon(ps[g_p], (short)scriptptr.buffer[insptr]);
+                    GlobalMembers.addweapon(ps[g_p], (short)val);
                 }
             }
-            insptr += 2;
         }
         public static void killit()
         {
-            insptr++;
             killit_flag = (char)1;
         }
-        public static void lotsofglass()
+        public static void lotsofglass(int val)
         {
-            insptr++;
-            spriteglass(g_i, (short)scriptptr.buffer[insptr]);
-            insptr++;
+            spriteglass(g_i, (short)val);
         }
-        public static void addkills()
+        public static void addkills(int val)
         {
-            insptr++;
-            ps[g_p].actors_killed += (char)scriptptr.buffer[insptr];
+            ps[g_p].actors_killed += (char)val;
             hittype[g_i].actorstayput = -1;
-            insptr++;
         }
 
-        public static void paper()
+        public static void paper(int val)
         {
-            insptr++;
-            lotsofpaper(g_sp, (short)scriptptr.buffer[insptr]);
-            insptr++;
+            lotsofpaper(g_sp, (short)val);
         }
 
-        public static void sleeptime()
+        public static void sleeptime(int val)
         {
-            insptr++;
-            hittype[g_i].timetosleep = (short)scriptptr.buffer[insptr];
-            insptr++;
+            hittype[g_i].timetosleep = (short)val;
         }
-        public static void mail()
+        public static void mail(int val)
         {
-            insptr++;
-            lotsofmail(g_sp, (short)scriptptr.buffer[insptr]);
-            insptr++;
+            lotsofmail(g_sp, (short)val);
         }
 
-        public static void money()
+        public static void money(int val)
         {
-            insptr++;
-            lotsofmoney(g_sp, scriptptr.buffer[insptr]);
-            insptr++;
+            lotsofmoney(g_sp, val);
         }
-        public static void addammo()
+        public static void addammo(int val, int val2)
         {
-            insptr++;
-            if (ps[g_p].ammo_amount[scriptptr.buffer[insptr]] >= max_ammo_amount[scriptptr.buffer[insptr]])
+            if (ps[g_p].ammo_amount[val] >= max_ammo_amount[val])
             {
                 killit_flag = (char)2;
                 return;
             }
-            GlobalMembers.addammo((short)scriptptr.buffer[insptr], ps[g_p], (short)scriptptr.buffer[insptr + 1]);
+            GlobalMembers.addammo((short)val, ps[g_p], (short)val2);
             if (ps[g_p].curr_weapon == DefineConstants.KNEE_WEAPON)
             {
-                if (ps[g_p].gotweapon[scriptptr.buffer[insptr]])
+                if (ps[g_p].gotweapon[val])
                 {
-                    GlobalMembers.addweapon(ps[g_p], (short)scriptptr.buffer[insptr]);
+                    GlobalMembers.addweapon(ps[g_p], (short)val);
                 }
             }
-            insptr += 2;
         }
         public static void fall()
         {
-            insptr++;
             g_sp.xoffset = 0;
             g_sp.yoffset = 0;
             //            if(!gotz)
@@ -1051,80 +1166,58 @@ public partial class GlobalMembers
 
         public static void tip()
         {
-            insptr++;
             ps[g_p].tipincs = 26;
         }
-        public static void sound()
+        public static void sound(int val)
         {
-            insptr++;
-            spritesound(scriptptr.buffer[insptr], g_i);
-            insptr++;
+            spritesound(val, g_i);
         }
-        public static void globalsound()
+        public static void globalsound(int val)
         {
-            insptr++;
             if (g_p == screenpeek || ud.coop == 1)
             {
-                spritesound(scriptptr.buffer[insptr], ps[screenpeek].i);
+                spritesound(val, ps[screenpeek].i);
             }
-            insptr++;
         }
-        public static void stopsound()
-        {
-            insptr++;
-            if (Sound[scriptptr.buffer[insptr]].num > 0)
+        public static void stopsound(int val)
+        {            
+            if (Sound[val].num > 0)
             {
-                GlobalMembers.stopsound(scriptptr.buffer[insptr]);
+                GlobalMembers.stopsound(val);
             }
-            insptr++;
         }
-        public static void soundonce()
+        public static void soundonce(int val)
         {
-            insptr++;
-            if (Sound[scriptptr.buffer[insptr]].num == 0)
+            if (Sound[val].num == 0)
             {
-                spritesound((short)scriptptr.buffer[insptr], g_i);
+                spritesound((short)val, g_i);
             }
-            insptr++;
         }
-        public static void shoot()
+        public static void shoot(int val)
         {
-            insptr++;
-            GlobalMembers.shoot(g_i, (short)scriptptr.buffer[insptr]);
-            insptr++;
+            GlobalMembers.shoot(g_i, (short)val);
         }
-        public static void sizeat()
+        public static void sizeat(int val, int val2)
         {
-            insptr++;
-            g_sp.xrepeat = (byte)scriptptr.buffer[insptr];
-            insptr++;
-            g_sp.yrepeat = (byte)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.xrepeat = (byte)val;
+            g_sp.yrepeat = (byte)val2;
         }
-        public static void sizeto()
+        public static void sizeto(int val, int val2)
         {
-            insptr++;
-
-            j = ((scriptptr.buffer[insptr]) - g_sp.xrepeat) << 1;
+            j = ((val) - g_sp.xrepeat) << 1;
             g_sp.xrepeat += (byte)pragmas.ksgn(j);
 
-            insptr++;
-
-            if ((g_sp.picnum == DefineConstants.APLAYER && g_sp.yrepeat < 36) || insptr < g_sp.yrepeat || ((g_sp.yrepeat * (Engine.tilesizy[g_sp.picnum] + 8)) << 2) < (hittype[g_i].floorz - hittype[g_i].ceilingz))
+            if ((g_sp.picnum == DefineConstants.APLAYER && g_sp.yrepeat < 36) || val2 < g_sp.yrepeat || ((g_sp.yrepeat * (Engine.tilesizy[g_sp.picnum] + 8)) << 2) < (hittype[g_i].floorz - hittype[g_i].ceilingz))
             {
-                j = ((scriptptr.buffer[insptr]) - g_sp.yrepeat) << 1;
+                j = ((val2) - g_sp.yrepeat) << 1;
                 if (pragmas.klabs(j) != 0)
                 {
                     g_sp.yrepeat += (byte)pragmas.ksgn(j);
                 }
-            }
-
-            insptr++;
+            }            
         }
         public static void pkick()
         {
-            insptr++;
-
             if (ud.multimode > 1 && g_sp.picnum == DefineConstants.APLAYER)
             {
                 if (ps[otherp].quick_kick == 0)
@@ -1139,7 +1232,6 @@ public partial class GlobalMembers
         }
         public static void mikesnd()
         {
-            insptr++;
             if (Sound[g_sp.yvel].num == 0)
             {
                 spritesound((ushort)g_sp.yvel, g_i);
@@ -1147,18 +1239,16 @@ public partial class GlobalMembers
         }
         public static void nullop()
         {
-            insptr++;
+
         }
 
         public static void tossweapon()
         {
-            insptr++;
             checkweapons(ps[g_sp.yvel]);
         }
 
         public static void getlastpal()
         {
-            insptr++;
             if (g_sp.picnum == DefineConstants.APLAYER)
             {
                 g_sp.pal = (byte)ps[g_sp.yvel].palookup;
@@ -1170,13 +1260,11 @@ public partial class GlobalMembers
             hittype[g_i].tempang = 0;
         }
 
-        public static void ifgotweaponce()
+        public static bool ifgotweaponce(int val)
         {
-            insptr++;
-
             if (ud.coop >= 1 && ud.multimode > 1)
             {
-                if (scriptptr.buffer[insptr] == 0)
+                if (val == 0)
                 {
                     for (j = 0; j < ps[g_p].weapreccnt; j++)
                     {
@@ -1186,102 +1274,84 @@ public partial class GlobalMembers
                         }
                     }
 
-                    parseifelse(j < ps[g_p].weapreccnt && g_sp.owner == g_i);
+                    return (j < ps[g_p].weapreccnt && g_sp.owner == g_i);
                 }
                 else if (ps[g_p].weapreccnt < 16)
                 {
                     ps[g_p].weaprecs[ps[g_p].weapreccnt++] = g_sp.picnum;
-                    parseifelse(g_sp.owner == g_i);
+                    return (g_sp.owner == g_i);
                 }
             }
-            else
-            {
-                parseifelse(false);
-            }
+            return (false);
         }
-        public static void strength()
+        public static void strength(int val)
         {
-            insptr++;
-            g_sp.extra = (short)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.extra = (short)val;
         }
 
-        public static void addstrength()
+        public static void addstrength(int val)
         {
-            insptr++;
-            g_sp.extra += (short)scriptptr.buffer[insptr];
-            insptr++;
+            g_sp.extra += (short)val;
         }
 
-        public static void _else()
-        {
-            insptr = scriptptr.buffer[insptr + 1];
-        }
 
-        public static void ifpdistg()
+        public static bool ifpdistg(int val)
         {
             insptr++;
-            parseifelse(g_x > scriptptr.buffer[insptr]);
+            bool r = (g_x > val);
             if (g_x > DefineConstants.MAXSLEEPDIST && hittype[g_i].timetosleep == 0)
             {
                 hittype[g_i].timetosleep = DefineConstants.SLEEPTIME;
             }
+            return r; // jmarshall: the flow of this might be wrong.
         }
 
-        public static void ifpdistl()
+        public static bool ifpdistl(int val)
         {
-            insptr++;
-            parseifelse(g_x < scriptptr.buffer[insptr]);
+            bool r = (g_x < val);
             if (g_x > DefineConstants.MAXSLEEPDIST && hittype[g_i].timetosleep == 0)
             {
                 hittype[g_i].timetosleep = DefineConstants.SLEEPTIME;
             }
+            return r; // jmarshall: the flow of this might be wrong.
         }
 
-        public static void action()
-        {
-            insptr++;
-            g_t[2] = 0;
-            g_t[3] = 0;
-            g_t[4] = insptr;
-            insptr++;
-        }
-
-        public static void ai()
-        {
-            insptr++;
-            g_t[5] = insptr;
-            g_t[4] = g_t[5]; // Action
-            g_t[1] = g_t[5] + 4; // move
-            g_sp.hitag = (short)scriptptr.buffer[g_t[5] + 8]; // Ai
-            g_t[0] = g_t[2] = g_t[3] = 0;
-            if ((g_sp.hitag & DefineConstants.random_angle) != 0)
-            {
-                g_sp.ang = (short)(Engine.krand() & 2047);
-            }
-            insptr++;
-        }
-
-        public static void ifdead()
+// jmarshall
+        //public static void ai()
+        //{
+        //    insptr++;
+        //    g_t[5] = insptr;
+        //    g_t[4] = g_t[5]; // Action
+        //    g_t[1] = g_t[5] + 4; // move
+        //    g_sp.hitag = (short)scriptptr.buffer[g_t[5] + 8]; // Ai
+        //    hittype[g_i].count = hittype[g_i].actioncount = hittype[g_i].unknowncounter = 0;
+        //    if ((g_sp.hitag & DefineConstants.random_angle) != 0)
+        //    {
+        //        g_sp.ang = (short)(Engine.krand() & 2047);
+        //    }
+        //    insptr++;
+        //}
+// jmarshall end
+        public static bool ifdead()
         {
             j = g_sp.extra;
             if (g_sp.picnum == DefineConstants.APLAYER)
             {
                 j--;
             }
-            parseifelse(j < 0);
+            return (j < 0);
         }
-        public static void ifsquished()
+        public static bool ifsquished()
         {
-            parseifelse(GlobalMembers.ifsquished(g_i, g_p) == 1);
+            return (GlobalMembers.ifsquished(g_i, g_p) == 1);
         }
 
-        public static void ifhitweapon()
+        public static bool ifhitweapon()
         {
-            parseifelse(ifhitbyweapon(g_i) >= 0);
+            return (ifhitbyweapon(g_i) >= 0);
         }
 
-        public static void ifcansee()
+        public static bool ifcansee()
         {
             spritetype ss;
             short sect;
@@ -1334,24 +1404,24 @@ public partial class GlobalMembers
                 hittype[g_i].timetosleep = DefineConstants.SLEEPTIME;
             }
 
-            parseifelse(jj);
+            return (jj);
         }
 
-        public static void ifactornotstayput()
+        public static bool ifactornotstayput()
         {
-            parseifelse(hittype[g_i].actorstayput == -1);
+            return (hittype[g_i].actorstayput == -1);
         }
 
-        public static void ifcanseetarget()
+        public static bool ifcanseetarget()
         {
-            jj = Engine.board.cansee(g_sp.x, g_sp.y, (short)(g_sp.z - ((Engine.krand() & 41) << 8)), g_sp.sectnum, ps[g_p].posx, ps[g_p].posy, ps[g_p].posz, Engine.board.sprite[ps[g_p].i].sectnum);
-            parseifelse(jj);
+            bool jj = Engine.board.cansee(g_sp.x, g_sp.y, (short)(g_sp.z - ((Engine.krand() & 41) << 8)), g_sp.sectnum, ps[g_p].posx, ps[g_p].posy, ps[g_p].posz, Engine.board.sprite[ps[g_p].i].sectnum);
             if (jj)
             {
                 hittype[g_i].timetosleep = DefineConstants.SLEEPTIME;
             }
+            return jj;
         }
-        public static void ifcanshoottarget()
+        public static bool ifcanshoottarget()
         {
             if (g_x > 1024)
             {
@@ -1373,8 +1443,7 @@ public partial class GlobalMembers
                 j = hitasprite(g_i, ref temphit);
                 if (j == (1 << 30))
                 {
-                    parseifelse(true);
-                    return;
+                    return true;
                 }
                 if (j > sclip)
                 {
@@ -1431,7 +1500,7 @@ public partial class GlobalMembers
                 j = 1;
             }
 
-            parseifelse(j != 0);
+            return(j != 0);
         }
     }
 }

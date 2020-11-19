@@ -1100,7 +1100,7 @@ public partial class GlobalMembers
 						{
 							if (Engine.board.sprite[j].lotag == 12 && Engine.board.sprite[j].hitag == Engine.board.sprite[i].lotag)
 							{
-								hittype[j].temp_data[0] = 1;
+								hittype[j].count = 1;
 							}
 							j = (short)Engine.board.nextspritestat[j];
 						}

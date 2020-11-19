@@ -648,7 +648,7 @@ public partial class GlobalMembers
 				if (p >= 0)
 				{
 					k = EGS(hitsect, hitx, hity, hitz, DefineConstants.SHOTSPARK1, -15, 10, 10, sa, 0, 0, i, 4);
-					Engine.board.sprite[k].extra = (short)scriptptr.buffer[actorscrptr[atwith]]; // jmarshall: con
+					//Engine.board.sprite[k].extra = (short)scriptptr.buffer[actorscrptr[atwith]]; // jmarshall - con_integrate
 					Engine.board.sprite[k].extra += (short)((Engine.krand() % 6));
 
 					if (hitwall == -1 && hitspr == -1)
@@ -772,7 +772,7 @@ public partial class GlobalMembers
 				else
 				{
 					k = EGS(hitsect, hitx, hity, hitz, DefineConstants.SHOTSPARK1, -15, 24, 24, sa, 0, 0, i, 4);
-					Engine.board.sprite[k].extra = (short)scriptptr.buffer[actorscrptr[atwith]]; // jmarshall: con
+					//Engine.board.sprite[k].extra = (short)scriptptr.buffer[actorscrptr[atwith]]; // jmarshall - con_integrate
 
 					if (hitspr >= 0)
 					{
@@ -3975,7 +3975,7 @@ public partial class GlobalMembers
 			psect = s.sectnum;
 			if (ud.clipping == 0 && Engine.board.sector[psect].lotag == 31)
 			{
-				if (Engine.board.sprite[Engine.board.sector[psect].hitag].xvel != 0 && hittype[Engine.board.sector[psect].hitag].temp_data[0] == 0)
+				if (Engine.board.sprite[Engine.board.sector[psect].hitag].xvel != 0 && hittype[Engine.board.sector[psect].hitag].count == 0)
 				{
 					quickkill(p);
 					return;

@@ -214,7 +214,7 @@ namespace Conport
 
                         if (inState == false)
                         {
-                            con_code += "GlobalMembers.ConActions.ConAction " + name + " = new GlobalMembers.ConActions.ConAction(";
+                            con_code += "static GlobalMembers.ConActions.ConAction " + name + " = new GlobalMembers.ConActions.ConAction(";
                             while (_tokens[currentToken] != "NEWLINE")
                             {
                                 con_code += _tokens[currentToken];
@@ -307,7 +307,7 @@ namespace Conport
                         else
                         {
                             string name = token;
-                            con_code += "GlobalMembers.ConActions.MoveAction " + name + " = new GlobalMembers.ConActions.MoveAction(";
+                            con_code += "static GlobalMembers.ConActions.MoveAction " + name + " = new GlobalMembers.ConActions.MoveAction(";
                             while (_tokens[currentToken] != "NEWLINE")
                             {                                
                                 con_code += _tokens[currentToken];                                
@@ -338,7 +338,7 @@ namespace Conport
                         else
                         {
                             string name = token;
-                            con_code += "GlobalMembers.ConActions.AIAction " + name + " = new GlobalMembers.ConActions.AIAction(";
+                            con_code += "static GlobalMembers.ConActions.AIAction " + name + " = new GlobalMembers.ConActions.AIAction(";
                             while (_tokens[currentToken] != "NEWLINE")
                             {
                                 con_code += _tokens[currentToken];
@@ -628,7 +628,7 @@ namespace Conport
                     ["ifp"] = () =>
                     {
                         string parms = token;
-                        while (_tokens[currentToken] != "NEWLINE")
+                        while (_tokens[currentToken] != "NEWLINE" && _tokens[currentToken] != "nullop")
                         {
                             parms += ",";
                             parms += token;
@@ -757,7 +757,7 @@ namespace Conport
                     },
                     ["nullop"] = () =>
                     {
-                        con_code += "// nullop\n";
+                        con_code += "{\n }\n";
                     },
                     ["ifdead"] = () =>
                     {

@@ -162,7 +162,7 @@ public partial class GlobalMembers
         int x;
         int y;
 
-        if (hittype[i].temp_data[0] == 0)
+        if (hittype[i].count == 0)
         {
             Engine.rotatesprite(24 << 16, 33 << 16, 65536, 0, DefineConstants.CAMCORNER, 0, 0, 2, Engine._device.windowx1, Engine._device.windowy1, Engine._device.windowx2, Engine._device.windowy2);
             Engine.rotatesprite((320 - 26) << 16, 34 << 16, 65536, 0, DefineConstants.CAMCORNER + 1, 0, 0, 2, Engine._device.windowx1, Engine._device.windowy1, Engine._device.windowx2, Engine._device.windowy2);
@@ -1806,17 +1806,25 @@ public partial class GlobalMembers
 		hittype[i].floorz = hittype[s_ow].floorz;
 		hittype[i].ceilingz = hittype[s_ow].ceilingz;
 
-		hittype[i].temp_data[0] = hittype[i].temp_data[2] = hittype[i].temp_data[3] = hittype[i].temp_data[5] = 0;
-		if (actorscrptr[s_pn] != 0)
+		hittype[i].count = hittype[i].actioncount = hittype[i][3] = 0;
+		hittype[i].aiaction = null;
+		if (actorscrptr[s_pn] != null)
 		{
-			s.extra = (short)scriptptr.buffer[actorscrptr[s_pn]];
-			hittype[i].temp_data[4] = (short)(actorscrptr[s_pn] + 1); //*(actorscrptr[s_pn] + 1);
-            hittype[i].temp_data[1] = (short)(actorscrptr[s_pn] + 2); //* (actorscrptr[s_pn] + 2);
-			s.hitag = (short)(actorscrptr[s_pn + 3]); //*(actorscrptr[s_pn] + 3);
-		}
+            hittype[i].action = scriptActorRegPtr[s_pn].action;
+            hittype[i].extra = (short)scriptActorRegPtr[s_pn].aiType;
+
+            // jmarshall - con_integrate
+            //s.extra = (short)actorscrptr[s].count.indexes[0];
+            //hittype[i].temp_data[4] = actorscrptr[s].temp_data.temp_data[1];
+            //hittype[i].temp_data[1] = actorscrptr[s].temp_data.actioncount;
+            //
+            //s.hitag = (short)actorscrptr[s].temp_data[3].indexes[0];
+            // jmarshall end
+        }
 		else
 		{
-			hittype[i].temp_data[1] = hittype[i].temp_data[4] = 0;
+			hittype[i].moveAction = null;
+			hittype[i].action = null;
 			s.extra = 0;
 			s.hitag = 0;
 		}
@@ -1935,7 +1943,7 @@ public partial class GlobalMembers
 			hittype[i].lastvy = 0;
 			hittype[i].actorstayput = -1;
 
-			hittype[i].temp_data[0] = hittype[i].temp_data[1] = hittype[i].temp_data[2] = hittype[i].temp_data[3] = hittype[i].temp_data[4] = hittype[i].temp_data[5] = 0;
+			hittype[i].count = hittype[i].temp_data[1] = hittype[i].actioncount = hittype[i].temp_data[3] = hittype[i].temp_data[4] = hittype[i].temp_data[5] = 0;
 
 			if (Engine.board.sprite[i].picnum != DefineConstants.SPEAKER && Engine.board.sprite[i].picnum != DefineConstants.LETTER && Engine.board.sprite[i].picnum != DefineConstants.DUCK && Engine.board.sprite[i].picnum != DefineConstants.TARGET && Engine.board.sprite[i].picnum != DefineConstants.TRIPBOMB && Engine.board.sprite[i].picnum != DefineConstants.VIEWSCREEN && Engine.board.sprite[i].picnum != DefineConstants.VIEWSCREEN2 && (Engine.board.sprite[i].cstat & 48) != 0)
 			{
@@ -1981,15 +1989,20 @@ public partial class GlobalMembers
 				Engine.board.sprite[i].cstat |= 256;
 			}
 
-			if (actorscrptr[s] != 0)
+			if (scriptActorRegPtr[s] != null)
 			{
-				Engine.board.sprite[i].extra = (short)scriptptr.buffer[actorscrptr[s]];
-				hittype[i].temp_data[4] = (short)scriptptr.buffer[actorscrptr[s] + 1];
-				hittype[i].temp_data[1] = (short)scriptptr.buffer[actorscrptr[s] + 2];
-				if (scriptptr.buffer[actorscrptr[s + 3]] != 0 && Engine.board.sprite[i].hitag == 0)
-				{
-					Engine.board.sprite[i].hitag = (short)scriptptr.buffer[actorscrptr[s] + 3];
-				}
+				hittype[i].action = scriptActorRegPtr[s].action;
+				hittype[i].extra = (short)scriptActorRegPtr[s].aiType;
+
+// jmarshall - con_integrate
+				//Engine.board.sprite[i].extra = (short)actorscrptr[s].count.indexes[0];
+				//hittype[i].temp_data[4] = (short)actorscrptr[s].temp_data[1];
+				//hittype[i].temp_data[1] = (short)actorscrptr[s].actioncount;
+				//if (scriptptr.buffer[actorscrptr[s + 3]] != 0 && Engine.board.sprite[i].hitag == 0)
+				//{
+				//	Engine.board.sprite[i].hitag = (short)scriptptr.buffer[actorscrptr[s] + 3];
+				//}
+// jmarshall end
 			}
 			else
 			{
@@ -2004,7 +2017,7 @@ public partial class GlobalMembers
 		{
 			default:
 
-				if (actorscrptr[sp.picnum] != 0)
+				if (actorscrptr[sp.picnum] != null)
 				{
 					if (j == -1 && sp.lotag > ud.player_skill)
 					{
@@ -2372,8 +2385,8 @@ public partial class GlobalMembers
 
 				sp.xvel = 16;
 				ssp(i, (uint)(((1) << 16) + 1));
-				hittype[i].temp_data[0] = 17;
-				hittype[i].temp_data[2] = 0;
+				hittype[i].count = 17;
+				hittype[i].actioncount = 0;
 				hittype[i].temp_data[5] = sp.ang;
 
 				goto case DefineConstants.SPACEMARINE;
@@ -2636,7 +2649,7 @@ public partial class GlobalMembers
 				break;
 
 			case DefineConstants.SPOTLITE:
-				hittype[i].temp_data[0] = sp.x;
+				hittype[i].count = sp.x;
 				hittype[i].temp_data[1] = sp.y;
 				break;
 			case DefineConstants.BULLETHOLE:
@@ -2649,7 +2662,7 @@ public partial class GlobalMembers
 			case DefineConstants.PAPER:
 				if (sp.picnum == DefineConstants.MONEY || sp.picnum == DefineConstants.MAIL || sp.picnum == DefineConstants.PAPER)
 				{
-					hittype[i].temp_data[0] = (short)(Engine.krand() & 2047);
+					hittype[i].count = (short)(Engine.krand() & 2047);
 					sp.cstat = (short)(Engine.krand() & 12);
 					sp.xrepeat = sp.yrepeat = 8;
 					sp.ang = (short)(Engine.krand() & 2047);
@@ -2677,7 +2690,7 @@ public partial class GlobalMembers
 						snum = Engine.board.sprite[j].yvel;
 						a = (short)(ps[snum].ang - (Engine.krand() & 63) + 8); //Fine tune
 
-						hittype[i].temp_data[0] = (short)(Engine.krand() & 1);
+						hittype[i].count = (short)(Engine.krand() & 1);
 						if (sp.picnum == DefineConstants.SHOTGUNSHELL)
 						{
 							sp.z = (6 << 8) + ps[snum].pyoff + ps[snum].posz - ((ps[snum].horizoff + ps[snum].horiz - 100) << 4);
@@ -2890,7 +2903,7 @@ public partial class GlobalMembers
 				else if (j == -1)
 				{
 					sp.z += (4 << 8);
-					hittype[i].temp_data[0] = sp.z;
+					hittype[i].count = sp.z;
 					hittype[i].temp_data[1] = (short)(Engine.krand() & 127);
 				}
 				goto case DefineConstants.TRASH;
@@ -2916,7 +2929,7 @@ public partial class GlobalMembers
 				Engine.board.changespritestat(i, 6);
 				break;
 			case DefineConstants.TOUCHPLATE:
-				hittype[i].temp_data[2] = Engine.board.sector[sect].floorz;
+				hittype[i].actioncount = Engine.board.sector[sect].floorz;
 				if (Engine.board.sector[sect].lotag != 1 && Engine.board.sector[sect].lotag != 2)
 				{
 					Engine.board.sector[sect].floorz = sp.z;
@@ -2940,7 +2953,7 @@ public partial class GlobalMembers
 			case DefineConstants.SIDEBOLT1 + 1:
 			case DefineConstants.SIDEBOLT1 + 2:
 			case DefineConstants.SIDEBOLT1 + 3:
-				hittype[i].temp_data[0] = sp.xrepeat;
+				hittype[i].count = sp.xrepeat;
 				hittype[i].temp_data[1] = sp.yrepeat;
 				goto case DefineConstants.MASTERSWITCH;
 			case DefineConstants.MASTERSWITCH:
@@ -3415,7 +3428,7 @@ public partial class GlobalMembers
 						return i;
 					case 1:
 						sp.owner = -1;
-						hittype[i].temp_data[0] = 1;
+						hittype[i].count = 1;
 						break;
 					case 18:
 
@@ -3461,15 +3474,15 @@ public partial class GlobalMembers
 					case 12:
 
 						hittype[i].temp_data[1] = Engine.board.sector[sect].floorshade;
-						hittype[i].temp_data[2] = Engine.board.sector[sect].ceilingshade;
+						hittype[i].actioncount = Engine.board.sector[sect].ceilingshade;
 						break;
 
 					case 13:
 
-						hittype[i].temp_data[0] = Engine.board.sector[sect].ceilingz;
+						hittype[i].count = Engine.board.sector[sect].ceilingz;
 						hittype[i].temp_data[1] = Engine.board.sector[sect].floorz;
 
-						if (pragmas.klabs(hittype[i].temp_data[0] - sp.z) < pragmas.klabs(hittype[i].temp_data[1] - sp.z))
+						if (pragmas.klabs(hittype[i].count - sp.z) < pragmas.klabs(hittype[i].temp_data[1] - sp.z))
 						{
 							sp.owner = 1;
 						}
@@ -3531,7 +3544,7 @@ public partial class GlobalMembers
 
 					case 17:
 
-						hittype[i].temp_data[2] = Engine.board.sector[sect].floorz; //Stopping loc
+						hittype[i].actioncount = Engine.board.sector[sect].floorz; //Stopping loc
 
 						j = Engine.board.nextsectorneighborz(sect, Engine.board.sector[sect].floorz, -1, -1);
 						if(j >= 0)
@@ -3596,7 +3609,7 @@ public partial class GlobalMembers
 								}
 							}
 
-							hittype[i].temp_data[2] = clostest;
+							hittype[i].actioncount = clostest;
 						}
 
 						break;
@@ -3653,7 +3666,7 @@ public partial class GlobalMembers
 						break;
 					case 32:
 						hittype[i].temp_data[1] = Engine.board.sector[sect].ceilingz;
-						hittype[i].temp_data[2] = sp.hitag;
+						hittype[i].actioncount = sp.hitag;
 						if (sp.ang != 1536)
 						{
 							Engine.board.sector[sect].ceilingz = sp.z;
@@ -3676,7 +3689,7 @@ public partial class GlobalMembers
 
 					case 4: //Flashing lights
 
-						hittype[i].temp_data[2] = Engine.board.sector[sect].floorshade;
+						hittype[i].actioncount = Engine.board.sector[sect].floorshade;
 
 						startwall = Engine.board.sector[sect].wallptr;
 						endwall = (short)(startwall + Engine.board.sector[sect].wallnum);
@@ -3703,7 +3716,7 @@ public partial class GlobalMembers
 					case 8:
 						//First, get the ceiling-floor shade
 
-						hittype[i].temp_data[0] = Engine.board.sector[sect].floorshade;
+						hittype[i].count = Engine.board.sector[sect].floorshade;
 						hittype[i].temp_data[1] = Engine.board.sector[sect].ceilingshade;
 
 						startwall = Engine.board.sector[sect].wallptr;
@@ -3711,9 +3724,9 @@ public partial class GlobalMembers
 
 						for (s = startwall; s < endwall; s++)
 						{
-							if (Engine.board.wall[s].shade > hittype[i].temp_data[2])
+							if (Engine.board.wall[s].shade > hittype[i].actioncount)
 							{
-								hittype[i].temp_data[2] = Engine.board.wall[s].shade;
+								hittype[i].actioncount = Engine.board.wall[s].shade;
 							}
 						}
 
@@ -3828,7 +3841,7 @@ public partial class GlobalMembers
 							}
 
 							sp.owner = -1;
-							hittype[i].temp_data[0] = s;
+							hittype[i].count = s;
 
 							if (sp.lotag != 30)
 							{
@@ -4031,7 +4044,7 @@ public partial class GlobalMembers
 		int l;
 		int t1;
 		int t3;
-		int t4;
+		GlobalMembers.ConActions.ConAction t4;
 		spritetype s;
 		spritetype2 t;
 
@@ -4140,6 +4153,7 @@ public partial class GlobalMembers
 				l = 127;
 			}
 			t.shade = (sbyte)l;
+			Engine.board.tsprite[j] = t;
 		}
 
 
@@ -4256,7 +4270,7 @@ public partial class GlobalMembers
 			sect = s.sectnum;
 			t1 = hittype[i].temp_data[1];
 			t3 = hittype[i].temp_data[3];
-			t4 = hittype[i].temp_data[4];
+			t4 = hittype[i].action;
 
 			switch (s.picnum)
 			{
@@ -4333,7 +4347,7 @@ public partial class GlobalMembers
 					continue;
 				case DefineConstants.VIEWSCREEN:
 				case DefineConstants.VIEWSCREEN2:
-					if (camsprite >= 0 && hittype[Engine.board.sprite[i].owner].temp_data[0] == 1)
+					if (camsprite >= 0 && hittype[Engine.board.sprite[i].owner].count == 1)
 					{
 						t.picnum = DefineConstants.STATIC;
 						t.cstat |= (short)(Engine.krand() & 12);
@@ -4366,7 +4380,7 @@ public partial class GlobalMembers
 				case DefineConstants.RECON:
 
 					k = (short)Engine.getangle(s.x - x, s.y - y);
-					if (hittype[i].temp_data[0] < 4)
+					if (hittype[i].count < 4)
 					{
 						k = (short)(((s.ang + 3072 + 128 - k) & 2047) / 170);
 					}
@@ -4530,9 +4544,11 @@ public partial class GlobalMembers
 
 					if (ps[p].newowner > -1)
 					{
-						t4 = (short)actorscrptr[DefineConstants.APLAYER] + 1;
-						t3 = 0;
-						t1 = (short)actorscrptr[DefineConstants.APLAYER] + 2;
+// jmarshall - con_integrate
+						//t4 = (short)actorscrptr[DefineConstants.APLAYER] + 1;
+						//t3 = 0;
+						//t1 = (short)actorscrptr[DefineConstants.APLAYER] + 2;
+// jmarshall end
 					}
 
 					if (ud.camerasprite == -1 && ps[p].newowner == -1)
@@ -4613,7 +4629,7 @@ public partial class GlobalMembers
 					}
 					else
 					{
-						t.picnum += (short)hittype[i].temp_data[0];
+						t.picnum += (short)hittype[i].count;
 					}
 					t.shade -= 6;
 
@@ -4643,11 +4659,11 @@ public partial class GlobalMembers
 					break;
 			}
 
-			if (actorscrptr[s.picnum] != 0)
+			if (actorscrptr[s.picnum] != null)
 			{
-				if (scriptptr.buffer[t4] != 0)
+				if (t4 != null)
 				{
-					l = scriptptr.buffer[(t4 + 8)];
+					l = t4.viewtype;// scriptptr.buffer[(t4 + 8)];
 
 					switch (l)
 					{
@@ -4704,7 +4720,7 @@ public partial class GlobalMembers
 							break;
 					}
 // jmarshall - animation crash.
-					//t.picnum += (short)(k + (scriptptr.buffer[t4]) + l * t3);
+					t.picnum += (short)(k + (t4.startframe) + l * t3);
 
 					if (l > 0) 
 					{
@@ -4852,7 +4868,7 @@ public partial class GlobalMembers
 					}
 
 					int __tt = 0;
-					if (hittype[i].temp_data[0] < 4)
+					if (hittype[i].count < 4)
 						__tt = 1;
 
 					t.picnum = (short)(s.picnum + k + ((__tt) * 5));
@@ -4864,18 +4880,18 @@ public partial class GlobalMembers
 					t.picnum = (short)(DefineConstants.WATERSPLASH2 + t1);
 					break;
 				case DefineConstants.REACTOR2:
-					t.picnum = (short)(s.picnum + hittype[i].temp_data[2]);
+					t.picnum = (short)(s.picnum + hittype[i].actioncount);
 					break;
 				case DefineConstants.SHELL:
-					t.picnum = (short)(s.picnum + (hittype[i].temp_data[0] & 1));
+					t.picnum = (short)(s.picnum + (hittype[i].count & 1));
 					goto case DefineConstants.SHOTGUNSHELL;
 				case DefineConstants.SHOTGUNSHELL:
 					t.cstat |= 12;
-					if (hittype[i].temp_data[0] > 1)
+					if (hittype[i].count > 1)
 					{
 						t.cstat &= ~4;
 					}
-					if (hittype[i].temp_data[0] > 2)
+					if (hittype[i].count > 2)
 					{
 						t.cstat &= ~12;
 					}
@@ -4926,7 +4942,9 @@ public partial class GlobalMembers
 			{
 				t.xrepeat = t.yrepeat = 0;
 			}
-		}
+
+			Engine.board.tsprite[j] = t;
+		}		
 	}
 
 
@@ -5795,9 +5813,9 @@ public partial class GlobalMembers
 								pub = 1;
 								Engine.board.sprite[ps[myconnectindex].i].cstat = 257;
 
-								hittype[ps[myconnectindex].i].temp_data[0] = 0;
+								hittype[ps[myconnectindex].i].count = 0;
 								hittype[ps[myconnectindex].i].temp_data[1] = 0;
-								hittype[ps[myconnectindex].i].temp_data[2] = 0;
+								hittype[ps[myconnectindex].i].actioncount = 0;
 								hittype[ps[myconnectindex].i].temp_data[3] = 0;
 								hittype[ps[myconnectindex].i].temp_data[4] = 0;
 								hittype[ps[myconnectindex].i].temp_data[5] = 0;

@@ -52,7 +52,7 @@ public partial class GlobalMembers
                     whatsprite = (short)i;
                 }
 
-                if (hittype[i].temp_data[0] == 0)
+                if (hittype[i].count == 0)
                 {
                     if ((soundm[Engine.board.sprite[i].lotag] & 16) == 0)
                     {
@@ -67,7 +67,7 @@ public partial class GlobalMembers
 
                         if ((Engine.board.sector[Engine.board.sprite[i].sectnum].lotag & 0xff) != 22)
                         {
-                            hittype[i].temp_data[0] = 1;
+                            hittype[i].count = 1;
                         }
                     }
                 }
@@ -81,7 +81,7 @@ public partial class GlobalMembers
                     {
                         stopsound(Engine.board.sprite[i].lotag);
                     }
-                    hittype[i].temp_data[0] = 0;
+                    hittype[i].count = 0;
                 }
                 return Engine.board.sprite[i].lotag;
             }
@@ -129,7 +129,7 @@ public partial class GlobalMembers
                             case 31:
                             case 32:
                             case 18:
-                                if (hittype[j].temp_data[0] != 0)
+                                if (hittype[j].count != 0)
                                 {
                                     return (1);
                                 }
@@ -485,9 +485,9 @@ public partial class GlobalMembers
 
         i = camsprite;
 
-        if (hittype[i].temp_data[0] >= 11)
+        if (hittype[i].count >= 11)
         {
-            hittype[i].temp_data[0] = 0;
+            hittype[i].count = 0;
 
             if (ps[screenpeek].newowner >= 0)
             {
@@ -501,7 +501,7 @@ public partial class GlobalMembers
         }
         else
         {
-            hittype[i].temp_data[0]++;
+            hittype[i].count++;
         }
     }
 
@@ -637,7 +637,7 @@ public partial class GlobalMembers
             {
                 if (Engine.board.sprite[i].hitag == Engine.board.sprite[s].hitag)
                 {
-                    if ((pragmas.klabs(Engine.board.sector[sn].floorz - hittype[s].temp_data[2]) > Engine.board.sprite[i].yvel) || (Engine.board.sector[Engine.board.sprite[i].sectnum].hitag == (Engine.board.sector[sn].hitag - d)))
+                    if ((pragmas.klabs(Engine.board.sector[sn].floorz - hittype[s].actioncount) > Engine.board.sprite[i].yvel) || (Engine.board.sector[Engine.board.sprite[i].sectnum].hitag == (Engine.board.sector[sn].hitag - d)))
                     {
                         break;
                     }
@@ -671,7 +671,7 @@ public partial class GlobalMembers
             {
                 if (Engine.board.sprite[i].hitag == Engine.board.sprite[s].hitag)
                 {
-                    hittype[i].temp_data[0] = d;
+                    hittype[i].count = d;
                     hittype[i].temp_data[1] = d; //Make all check warp
                 }
             }
@@ -960,7 +960,7 @@ public partial class GlobalMembers
                     {
                         Engine.board.sector[Engine.board.sprite[i].sectnum].extra = (short)(-Engine.board.sector[Engine.board.sprite[i].sectnum].extra);
 
-                        hittype[i].temp_data[0] = sn;
+                        hittype[i].count = sn;
                         hittype[i].temp_data[1] = 1;
                     }
                     i = Engine.board.nextspritestat[i];
@@ -1177,11 +1177,11 @@ public partial class GlobalMembers
                         Engine.board.sector[sn].lotag ^= unchecked((short)0x8000);
                         if ((Engine.board.sector[sn].lotag & 0x8000) != 0) //OPENING
                         {
-                            hittype[j].temp_data[0] = 1;
+                            hittype[j].count = 1;
                         }
                         else
                         {
-                            hittype[j].temp_data[0] = 2;
+                            hittype[j].count = 2;
                         }
                         callsound(sn, ii);
                         break;
@@ -1209,9 +1209,9 @@ public partial class GlobalMembers
                 l = Engine.board.headspritestat[3];
                 while (l >= 0)
                 {
-                    if ((Engine.board.sprite[l].lotag & 0xff) == 21 && hittype[l].temp_data[0] == 0 && (Engine.board.sprite[l].hitag) == j)
+                    if ((Engine.board.sprite[l].lotag & 0xff) == 21 && hittype[l].count == 0 && (Engine.board.sprite[l].hitag) == j)
                     {
-                        hittype[l].temp_data[0] = 1;
+                        hittype[l].count = 1;
                     }
                     l = Engine.board.nextspritestat[l];
                 }
@@ -1351,7 +1351,7 @@ public partial class GlobalMembers
                                     case 31:
                                     case 32:
                                     case 18:
-                                        hittype[j].temp_data[0] = 1 - hittype[j].temp_data[0];
+                                        hittype[j].count = 1 - hittype[j].count;
                                         callsound(Engine.board.sprite[i].sectnum, (short)j);
                                         break;
                                 }
@@ -1854,10 +1854,10 @@ public partial class GlobalMembers
                         {
                             case 12:
                                 Engine.board.sector[Engine.board.sprite[x].sectnum].floorpal = 0;
-                                hittype[x].temp_data[0]++;
-                                if (hittype[x].temp_data[0] == 2)
+                                hittype[x].count++;
+                                if (hittype[x].count == 2)
                                 {
-                                    hittype[x].temp_data[0]++;
+                                    hittype[x].count++;
                                 }
 
                                 break;
@@ -2065,7 +2065,7 @@ public partial class GlobalMembers
                             i = EGS(sn, x, y, z, DefineConstants.SECTOREFFECTOR, 0, 0, 0, ps[0].ang, 0, 0, spr, 3);
                             Engine.board.sprite[i].lotag = 128;
                             hittype[i].temp_data[1] = 5;
-                            hittype[i].temp_data[2] = dawallnum;
+                            hittype[i].actioncount = dawallnum;
                             spritesound(DefineConstants.GLASS_BREAKING, i);
                             return;
                         case DefineConstants.STAINGLASS1:
@@ -2252,7 +2252,7 @@ public partial class GlobalMembers
                 {
                     if (Engine.board.sprite[i].hitag == Engine.board.wall[dawallnum].lotag && Engine.board.sprite[i].lotag == 3)
                     {
-                        hittype[i].temp_data[2] = j;
+                        hittype[i].actioncount = j;
                         hittype[i].temp_data[3] = darkestwall;
                         hittype[i].temp_data[4] = 1;
                     }
@@ -2415,7 +2415,7 @@ public partial class GlobalMembers
                 {
                     if (Engine.board.sprite[i].hitag == (Engine.board.sector[sn].hitag) && Engine.board.sprite[i].lotag == 3)
                     {
-                        hittype[i].temp_data[2] = j;
+                        hittype[i].actioncount = j;
                         hittype[i].temp_data[4] = 1;
                     }
                     i = Engine.board.nextspritestat[i];
@@ -2486,10 +2486,10 @@ public partial class GlobalMembers
                     case DefineConstants.FIRELASER:
                     case DefineConstants.HYDRENT:
                     case DefineConstants.HEAVYHBOMB:
-                        if (hittype[i].temp_data[0] == 0)
+                        if (hittype[i].count == 0)
                         {
                             Engine.board.sprite[i].cstat &= ~257;
-                            hittype[i].temp_data[0] = 1;
+                            hittype[i].count = 1;
                             spawn(i, DefineConstants.BURNING);
                         }
                         break;
@@ -2646,7 +2646,7 @@ public partial class GlobalMembers
 
             case DefineConstants.FORCESPHERE:
                 Engine.board.sprite[i].xrepeat = 0;
-                hittype[Engine.board.sprite[i].owner].temp_data[0] = 32;
+                hittype[Engine.board.sprite[i].owner].count = 32;
                 if (hittype[Engine.board.sprite[i].owner].temp_data[1] == 0)
                 {
                     hittype[Engine.board.sprite[i].owner].temp_data[1] = 1;
@@ -2655,7 +2655,7 @@ public partial class GlobalMembers
                 {
                     hittype[Engine.board.sprite[i].owner].temp_data[1] = 0;
                 }
-                hittype[Engine.board.sprite[i].owner].temp_data[2]++;
+                hittype[Engine.board.sprite[i].owner].actioncount++;
                 spawn(i, DefineConstants.EXPLOSION2);
                 break;
 
@@ -3289,9 +3289,9 @@ public partial class GlobalMembers
                         hitawall(p, ref j);
                         if (j >= 0 && Engine.board.wall[j].overpicnum == 0)
                         {
-                            if (hittype[neartagsprite].temp_data[0] == 0)
+                            if (hittype[neartagsprite].count == 0)
                             {
-                                hittype[neartagsprite].temp_data[0] = 1;
+                                hittype[neartagsprite].count = 1;
                                 Engine.board.sprite[neartagsprite].owner = p.i;
                                 //p.buttonpalette = Engine.board.sprite[neartagsprite].pal; // jmarshall: palette
                                 if (p.buttonpalette != 0)
@@ -3306,9 +3306,9 @@ public partial class GlobalMembers
                         }
                         return;
                     case DefineConstants.WATERFOUNTAIN:
-                        if (hittype[neartagsprite].temp_data[0] != 1)
+                        if (hittype[neartagsprite].count != 1)
                         {
-                            hittype[neartagsprite].temp_data[0] = 1;
+                            hittype[neartagsprite].count = 1;
                             Engine.board.sprite[neartagsprite].owner = p.i;
 
                             if (Engine.board.sprite[p.i].extra < max_player_health)
