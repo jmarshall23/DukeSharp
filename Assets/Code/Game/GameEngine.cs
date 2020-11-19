@@ -115,6 +115,27 @@ public class GameEngine : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.RightArrow))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_RightArrow)] = false;
 
+        if (Input.GetKeyDown(KeyCode.Space))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_Space)] = true;
+        else if (Input.GetKeyUp(KeyCode.Space))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_Space)] = false;
+
+
+        if (Input.GetKeyDown(KeyCode.C))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_C)] = true;
+        else if (Input.GetKeyUp(KeyCode.C))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_C)] = false;
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftControl)] = true;
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftControl)] = false;
+
+        if (Input.GetKeyDown(KeyCode.E))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = true;
+        else if (Input.GetKeyUp(KeyCode.E))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = false;
+
 
         if (GlobalMembers.totalclock == 0)
         {

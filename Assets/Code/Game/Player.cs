@@ -2151,94 +2151,111 @@ public partial class GlobalMembers
 			return;
 		}
 
-// jmarshall - keys and weapon switch.
-/*
-		loc.bits = (((gamefunc_Jump) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Jump) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Jump)) & 1));
-		loc.bits |= (((gamefunc_Crouch) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Crouch) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Crouch)) & 1)) << 1;
-		loc.bits |= (((gamefunc_Fire) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Fire) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Fire)) & 1)) << 2;
-		loc.bits |= (((gamefunc_Aim_Up) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Aim_Up) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Aim_Up)) & 1)) << 3;
-		loc.bits |= (((gamefunc_Aim_Down) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Aim_Down) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Aim_Down)) & 1)) << 4;
-		loc.bits |= (((gamefunc_Run) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Run) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Run)) & 1)) << 5;
-		loc.bits |= (((gamefunc_Look_Left) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Left) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Left)) & 1)) << 6;
-		loc.bits |= (((gamefunc_Look_Right) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Right) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Right)) & 1)) << 7;
+		// jmarshall - keys and weapon switch.
+		/*
+				loc.bits = (((gamefunc_Jump) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Jump) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Jump)) & 1));
+				loc.bits |= (((gamefunc_Crouch) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Crouch) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Crouch)) & 1)) << 1;
+				loc.bits |= (((gamefunc_Fire) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Fire) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Fire)) & 1)) << 2;
+				loc.bits |= (((gamefunc_Aim_Up) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Aim_Up) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Aim_Up)) & 1)) << 3;
+				loc.bits |= (((gamefunc_Aim_Down) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Aim_Down) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Aim_Down)) & 1)) << 4;
+				loc.bits |= (((gamefunc_Run) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Run) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Run)) & 1)) << 5;
+				loc.bits |= (((gamefunc_Look_Left) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Left) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Left)) & 1)) << 6;
+				loc.bits |= (((gamefunc_Look_Right) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Right) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Right)) & 1)) << 7;
 
-		j = 0;
-		if ((((gamefunc_Weapon_1) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_1) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_1)) & 1)) != 0)
-		{
-			j = 1;
-		}
-		if ((((gamefunc_Weapon_2) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_2) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_2)) & 1)) != 0)
-		{
-			j = 2;
-		}
-		if ((((gamefunc_Weapon_3) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_3) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_3)) & 1)) != 0)
-		{
-			j = 3;
-		}
-		if ((((gamefunc_Weapon_4) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_4) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_4)) & 1)) != 0)
-		{
-			j = 4;
-		}
-		if ((((gamefunc_Weapon_5) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_5) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_5)) & 1)) != 0)
-		{
-			j = 5;
-		}
-		if ((((gamefunc_Weapon_6) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_6) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_6)) & 1)) != 0)
-		{
-			j = 6;
-		}
+				j = 0;
+				if ((((gamefunc_Weapon_1) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_1) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_1)) & 1)) != 0)
+				{
+					j = 1;
+				}
+				if ((((gamefunc_Weapon_2) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_2) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_2)) & 1)) != 0)
+				{
+					j = 2;
+				}
+				if ((((gamefunc_Weapon_3) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_3) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_3)) & 1)) != 0)
+				{
+					j = 3;
+				}
+				if ((((gamefunc_Weapon_4) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_4) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_4)) & 1)) != 0)
+				{
+					j = 4;
+				}
+				if ((((gamefunc_Weapon_5) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_5) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_5)) & 1)) != 0)
+				{
+					j = 5;
+				}
+				if ((((gamefunc_Weapon_6) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_6) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_6)) & 1)) != 0)
+				{
+					j = 6;
+				}
 
-		if ((((gamefunc_Previous_Weapon) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Previous_Weapon) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Previous_Weapon)) & 1)) != 0)
-		{
-			j = 11;
-		}
-		if ((((gamefunc_Next_Weapon) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Next_Weapon) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Next_Weapon)) & 1)) != 0)
-		{
-			j = 12;
-		}
+				if ((((gamefunc_Previous_Weapon) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Previous_Weapon) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Previous_Weapon)) & 1)) != 0)
+				{
+					j = 11;
+				}
+				if ((((gamefunc_Next_Weapon) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Next_Weapon) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Next_Weapon)) & 1)) != 0)
+				{
+					j = 12;
+				}
 
-#if !VOLUMEONE
-		if ((((gamefunc_Weapon_7) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_7) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_7)) & 1)) != 0)
-		{
-			j = 7;
-		}
-		if ((((gamefunc_Weapon_8) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_8) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_8)) & 1)) != 0)
-		{
-			j = 8;
-		}
-		if ((((gamefunc_Weapon_9) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_9) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_9)) & 1)) != 0)
-		{
-			j = 9;
-		}
-		if ((((gamefunc_Weapon_10) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_10) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_10)) & 1)) != 0)
-		{
-			j = 10;
-		}
-#endif
+		#if !VOLUMEONE
+				if ((((gamefunc_Weapon_7) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_7) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_7)) & 1)) != 0)
+				{
+					j = 7;
+				}
+				if ((((gamefunc_Weapon_8) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_8) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_8)) & 1)) != 0)
+				{
+					j = 8;
+				}
+				if ((((gamefunc_Weapon_9) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_9) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_9)) & 1)) != 0)
+				{
+					j = 9;
+				}
+				if ((((gamefunc_Weapon_10) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Weapon_10) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Weapon_10)) & 1)) != 0)
+				{
+					j = 10;
+				}
+		#endif
 
-		loc.bits |= j << 8;
-		loc.bits |= (((gamefunc_Steroids) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Steroids) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Steroids)) & 1)) << 12;
-		loc.bits |= (((gamefunc_Look_Up) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Up) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Up)) & 1)) << 13;
-		loc.bits |= (((gamefunc_Look_Down) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Down) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Down)) & 1)) << 14;
-		loc.bits |= (((gamefunc_NightVision) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_NightVision) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_NightVision)) & 1)) << 15;
-		loc.bits |= (((gamefunc_MedKit) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_MedKit) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_MedKit)) & 1)) << 16;
-		loc.bits |= (((gamefunc_Center_View) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Center_View) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Center_View)) & 1)) << 18;
-		loc.bits |= (((gamefunc_Holster_Weapon) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Holster_Weapon) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Holster_Weapon)) & 1)) << 19;
-		loc.bits |= (((gamefunc_Inventory_Left) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Inventory_Left) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Inventory_Left)) & 1)) << 20;
-		loc.bits |= (KB_KeyDown[(DefineConstants.sc_Pause)] != 0) << 21;
-		loc.bits |= (((gamefunc_Quick_Kick) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Quick_Kick) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Quick_Kick)) & 1)) << 22;
-		loc.bits |= myaimmode << 23;
-		loc.bits |= (((gamefunc_Holo_Duke) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Holo_Duke) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Holo_Duke)) & 1)) << 24;
-		loc.bits |= (((gamefunc_Jetpack) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Jetpack) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Jetpack)) & 1)) << 25;
-		loc.bits |= (((int)gamequit) << 26);
-		loc.bits |= (((gamefunc_Inventory_Right) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Inventory_Right) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Inventory_Right)) & 1)) << 27;
-		loc.bits |= (((gamefunc_TurnAround) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_TurnAround) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_TurnAround)) & 1)) << 28;
-		loc.bits |= (((gamefunc_Open) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Open) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Open)) & 1)) << 29;
-		loc.bits |= (((gamefunc_Inventory) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Inventory) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Inventory)) & 1)) << 30;
-		loc.bits |= (KB_KeyDown[(DefineConstants.sc_Escape)] != 0) << 31;
-		running = (((gamefunc_Run) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Run) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Run)) & 1)) | ud.auto_run;
-*/
-		svel = vel = angvel = horiz = 0;
+				loc.bits |= j << 8;
+				loc.bits |= (((gamefunc_Steroids) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Steroids) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Steroids)) & 1)) << 12;
+				loc.bits |= (((gamefunc_Look_Up) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Up) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Up)) & 1)) << 13;
+				loc.bits |= (((gamefunc_Look_Down) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Look_Down) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Look_Down)) & 1)) << 14;
+				loc.bits |= (((gamefunc_NightVision) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_NightVision) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_NightVision)) & 1)) << 15;
+				loc.bits |= (((gamefunc_MedKit) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_MedKit) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_MedKit)) & 1)) << 16;
+				loc.bits |= (((gamefunc_Center_View) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Center_View) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Center_View)) & 1)) << 18;
+				loc.bits |= (((gamefunc_Holster_Weapon) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Holster_Weapon) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Holster_Weapon)) & 1)) << 19;
+				loc.bits |= (((gamefunc_Inventory_Left) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Inventory_Left) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Inventory_Left)) & 1)) << 20;
+				loc.bits |= (KB_KeyDown[(DefineConstants.sc_Pause)] != 0) << 21;
+				loc.bits |= (((gamefunc_Quick_Kick) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Quick_Kick) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Quick_Kick)) & 1)) << 22;
+				loc.bits |= myaimmode << 23;
+				loc.bits |= (((gamefunc_Holo_Duke) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Holo_Duke) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Holo_Duke)) & 1)) << 24;
+				loc.bits |= (((gamefunc_Jetpack) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Jetpack) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Jetpack)) & 1)) << 25;
+				loc.bits |= (((int)gamequit) << 26);
+				loc.bits |= (((gamefunc_Inventory_Right) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Inventory_Right) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Inventory_Right)) & 1)) << 27;
+				loc.bits |= (((gamefunc_TurnAround) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_TurnAround) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_TurnAround)) & 1)) << 28;
+				loc.bits |= (((gamefunc_Open) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Open) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Open)) & 1)) << 29;
+				loc.bits |= (((gamefunc_Inventory) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Inventory) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Inventory)) & 1)) << 30;
+				loc.bits |= (KB_KeyDown[(DefineConstants.sc_Escape)] != 0) << 31;
+				running = (((gamefunc_Run) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Run) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Run)) & 1)) | ud.auto_run;
+		*/
+		loc.bits = 0;
+		if (KB_KeyDown[DefineConstants.sc_Space])
+        {
+			loc.bits = 1;
+		}
+		if (KB_KeyDown[DefineConstants.sc_C])
+        {
+			loc.bits |= 1 << 1;
+		}
+		if (KB_KeyDown[DefineConstants.sc_LeftControl])
+        {
+			loc.bits |= 1 << 2;
+		}
+        if (KB_KeyDown[DefineConstants.sc_E])
+        {
+            loc.bits |= 1 << 29;
+        }
+        svel = vel = angvel = horiz = 0;
 
 		//if (CONTROL_JoystickEnabled)
 		//{
@@ -2711,10 +2728,7 @@ public partial class GlobalMembers
 
 		if (p.cheat_phase <= 0)
 		{
-// jmarshall: sb_snum
-			//sb_snum = (int)sync[snum].bits;
-			sb_snum = 0;
-// jmarshall end
+			sb_snum = (int)sync[snum].bits;
 		}
 		else
 		{
@@ -4241,7 +4255,7 @@ public partial class GlobalMembers
 		{
 			sb_snum &= ((~(1 << 2)));
 		}
-		else if (shrunk == false && (sb_snum & (1 << 2)) != 0 && p.kickback_pic == null && p.fist_incs == 0 && p.last_weapon == -1 && (p.weapon_pos == 0 || p.holster_weapon == 1))
+		else if (shrunk == false && (sb_snum & (1 << 2)) != 0 && p.kickback_pic == 0 && p.fist_incs == 0 && p.last_weapon == -1 && (p.weapon_pos == 0 || p.holster_weapon == 1))
 		{
 
 			p.crack_time = 777;
