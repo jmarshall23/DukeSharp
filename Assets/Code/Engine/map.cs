@@ -366,10 +366,11 @@ namespace Build
         public short nextsectorneighborz(short sectnum, long thez, short topbottom, short direction)
         {
             walltype wal;
-            long i, testz, nextz;
+            int i, testz;
+            int nextz;
             short sectortouse;
 
-            if (direction == 1) nextz = 0x7fffffff; else nextz = 0x80000000;
+            if (direction == 1) nextz = 0x7fffffff; else nextz = unchecked((int)0x80000000);
 
             sectortouse = -1;
 
