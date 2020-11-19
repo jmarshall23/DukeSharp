@@ -691,6 +691,7 @@ public partial class GlobalMembers
             g_sp.lotag += (DefineConstants.TICRATE / 26);
             if(g_sp.lotag > action.delay)
             {
+                g_sp.lotag = 0;
                 hittype[g_i].actioncount++;
                 hittype[g_i].animcounter += action.invvalue;
                 if (pragmas.klabs(hittype[g_i].animcounter) >= pragmas.klabs(action.frames * action.invvalue))
