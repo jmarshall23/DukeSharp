@@ -832,7 +832,7 @@ public partial class GlobalMembers
         public static void SetAction(ConAction action)
         {
             hittype[g_i].actioncount = 0;
-            hittype[g_i].unknowncounter = 0;
+            hittype[g_i].animcounter = 0;
             hittype[g_i].action = action;
         }
 
@@ -847,7 +847,7 @@ public partial class GlobalMembers
             hittype[g_i].action = ai.action; // Action
             hittype[g_i].moveAction = ai.moveAction; // move
             g_sp.hitag = (short)ai.val; // Ai
-            hittype[g_i].count = hittype[g_i].actioncount = hittype[g_i].unknowncounter = 0;
+            hittype[g_i].count = hittype[g_i].actioncount = hittype[g_i].animcounter = 0;
             if ((g_sp.hitag & DefineConstants.random_angle) != 0)
             {
                 g_sp.ang = (short)(Engine.krand() & 2047);
@@ -1324,7 +1324,7 @@ public partial class GlobalMembers
         //    g_t[4] = g_t[5]; // Action
         //    g_t[1] = g_t[5] + 4; // move
         //    g_sp.hitag = (short)scriptptr.buffer[g_t[5] + 8]; // Ai
-        //    hittype[g_i].count = hittype[g_i].actioncount = hittype[g_i].unknowncounter = 0;
+        //    hittype[g_i].count = hittype[g_i].actioncount = hittype[g_i].animcounter = 0;
         //    if ((g_sp.hitag & DefineConstants.random_angle) != 0)
         //    {
         //        g_sp.ang = (short)(Engine.krand() & 2047);

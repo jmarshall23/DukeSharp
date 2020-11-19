@@ -326,7 +326,7 @@ public class weaponhit
 
     public int count = 0;
     public int actioncount = 0;
-    public int unknowncounter = 0;
+    public int animcounter = 0;
 
     public GlobalMembers.ConActions.MoveAction moveAction;
     public GlobalMembers.ConActions.ConAction action;
@@ -343,7 +343,7 @@ public class weaponhit
                 case 2:
                     return actioncount;
                 case 3:
-                    return unknowncounter;
+                    return animcounter;
                 default:
                     return temp_data[index];
             }
@@ -360,7 +360,7 @@ public class weaponhit
                     actioncount = value;
                     break;
                 case 3:
-                    unknowncounter = value;
+                    animcounter = value;
                     break;
                 default:
                     temp_data[index] = value;

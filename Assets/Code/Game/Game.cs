@@ -4269,7 +4269,7 @@ public partial class GlobalMembers
 
 			sect = s.sectnum;
 			t1 = hittype[i].temp_data[1];
-			t3 = hittype[i].temp_data[3];
+			t3 = hittype[i].animcounter;
 			t4 = hittype[i].action;
 
 			switch (s.picnum)

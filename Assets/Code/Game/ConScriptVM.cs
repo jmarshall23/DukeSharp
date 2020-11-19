@@ -676,11 +676,11 @@ public partial class GlobalMembers
             {
                 hittype[g_i].actioncount++;
                 g_sp.lotag = 0;
-                hittype[g_i].unknowncounter += scriptptr.buffer[(g_t[4] + 12)];
+                hittype[g_i].animcounter += scriptptr.buffer[(g_t[4] + 12)];
             }
-            if (pragmas.klabs(hittype[g_i].unknowncounter) >= pragmas.klabs(scriptptr.buffer[(g_t[4] + 4)] * scriptptr.buffer[(g_t[4] + 12)]))
+            if (pragmas.klabs(hittype[g_i].animcounter) >= pragmas.klabs(scriptptr.buffer[(g_t[4] + 4)] * scriptptr.buffer[(g_t[4] + 12)]))
             {
-                hittype[g_i].unknowncounter = 0;
+                hittype[g_i].animcounter = 0;
             }
         }
         */
@@ -692,10 +692,10 @@ public partial class GlobalMembers
             if(g_sp.lotag > action.delay)
             {
                 hittype[g_i].actioncount++;
-                hittype[g_i].unknowncounter += action.invvalue;
-                if (pragmas.klabs(hittype[g_i].unknowncounter) >= pragmas.klabs(action.frames * action.invvalue))
+                hittype[g_i].animcounter += action.invvalue;
+                if (pragmas.klabs(hittype[g_i].animcounter) >= pragmas.klabs(action.frames * action.invvalue))
                 {
-                    hittype[g_i].unknowncounter = 0;
+                    hittype[g_i].animcounter = 0;
                 }
             }
 
