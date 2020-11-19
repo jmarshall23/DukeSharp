@@ -1262,7 +1262,12 @@ palette:
 	        }
 
 	        if (waloff[picnum] == null) loadtile(picnum);
-	        //setgotpic(picnum);
+            //setgotpic(picnum);
+// jmarshall - If the tile is invalid, this can by null, should this be a silient return?
+            if (waloff[picnum] == null || waloff[picnum].memory == null)
+                return;
+// jmarshall end
+
             byte[] buf = waloff[picnum].memory;
 	        bufplc = 0;
 
