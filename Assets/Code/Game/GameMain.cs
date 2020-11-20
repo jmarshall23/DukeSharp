@@ -34,7 +34,7 @@ using UnityEngine;
 public partial class GlobalMembers
 {
     static bool in_menu = false;
-
+    static byte[] palette = null;
 
 
     public static void displayrest(int smoothratio)
@@ -53,13 +53,13 @@ public partial class GlobalMembers
 
         if (pp.pals_time > 0 && pp.loogcnt == 0)
         {
-            palto(pp.pals[0], pp.pals[1], pp.pals[2], pp.pals_time | 128);
+            palto(pp.pals[0], pp.pals[1], pp.pals[2], pp.pals_time /* | 128 */);
 
             restorepalette = (char)1;
         }
         else if (restorepalette != 0)
         {
-            //Engine.board.setbrightness(ud.brightness >> 2, pp.palette[0]); // palette.
+            Engine.setbrightness(ud.brightness >> 2, GlobalMembers.palette); // palette.
             restorepalette = (char)0;
         }
         else if (pp.loogcnt > 0)
@@ -2088,7 +2088,7 @@ public partial class GlobalMembers
         Engine.clearview();
 		Engine.NextPage();
 
-        //ps[myconnectindex].palette = palette; // jmarshall: palette
+        ps[myconnectindex].palette = palette; 
         sound(DefineConstants.NITEVISION_ONOFF);
 
         palto(0, 0, 0, 0);
@@ -2111,7 +2111,7 @@ public partial class GlobalMembers
 
 		loadefs(DefineConstants.confilename);
 
-        Engine.loadpics("tiles000.art");
+        Engine.loadpics("tiles000.art");        
 
 //		CONFIG_GetSetupFilename();
 //		CONFIG_ReadSetup();
@@ -2217,9 +2217,7 @@ public partial class GlobalMembers
 		//	printf("Using %ld bytes for heap.\n", totalmemory);
 		//}
 
-		Startup();
-
-        Engine._device._palette = new bPalette();
+		Startup();        
 
         if (numplayers > 1)
 		{
@@ -2292,25 +2290,27 @@ public partial class GlobalMembers
         FX_StopAllSounds();
 		clearsoundlocks();
 
-		//if (ud.warp_on > 1 && ud.multimode < 2)
-		//{
-		//	clearview(0);
-		//	ps[myconnectindex].palette = palette;
-		//	palto(0, 0, 0, 0);
-		//	Engine.rotatesprite(320 << 15, 200 << 15, 65536, 0, DefineConstants.LOADSCREEN, 0, 0, 2 + 8 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-		//	menutext(160, 105, 0, 0, "LOADING SAVED GAME...");
-		//	nextpage();
-		//
-		//	j = loadplayer(ud.warp_on - 2);
-		//	if (j != 0)
-		//	{
-		//		ud.warp_on = 0;
-		//	}
-		//}
+        palette = Engine.palette.palette;
 
-		//    getpackets();
+        //if (ud.warp_on > 1 && ud.multimode < 2)
+        //{
+        //	clearview(0);
+        //	ps[myconnectindex].palette = palette;
+        //	palto(0, 0, 0, 0);
+        //	Engine.rotatesprite(320 << 15, 200 << 15, 65536, 0, DefineConstants.LOADSCREEN, 0, 0, 2 + 8 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+        //	menutext(160, 105, 0, 0, "LOADING SAVED GAME...");
+        //	nextpage();
+        //
+        //	j = loadplayer(ud.warp_on - 2);
+        //	if (j != 0)
+        //	{
+        //		ud.warp_on = 0;
+        //	}
+        //}
 
-		MAIN_LOOP_RESTART:
+        //    getpackets();
+
+        MAIN_LOOP_RESTART:
 
 		if (ud.warp_on == 0)
 		{

@@ -2987,11 +2987,10 @@ public partial class GlobalMembers
 			{
 				if (s.pal != 1)
 				{
-// jmarshall - palette
-					//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 63);
-					//p.pals = p.pals.Substring(0, 1);
-					//p.pals = p.pals.Substring(0, 2);
-// jmarshall end
+					p.pals[0] = (byte)63;
+					p.pals[1] = (byte)0;
+					p.pals[2] = (byte)0;
+
 					p.pals_time = 63;
 					p.posz -= (16 << 8);
 					s.z -= (16 << 8);
@@ -3536,11 +3535,9 @@ public partial class GlobalMembers
 								if (s.extra <= 0)
 								{
 									spritesound(DefineConstants.SQUISHED, pi);
-// jmarshall - palette
-									//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 63);
-									//p.pals = p.pals.Substring(0, 1);
-									//p.pals = p.pals.Substring(0, 2);
-// jmarshall end
+									p.pals[0] = 63;
+									p.pals[1] = 0;
+									p.pals[2] = 0;
 									p.pals_time = 63;
 								}
 								else
@@ -3548,13 +3545,10 @@ public partial class GlobalMembers
 									spritesound(DefineConstants.DUKE_LAND, pi);
 									spritesound(DefineConstants.DUKE_LAND_HURT, pi);
 								}
-
-// jmarshall - palette
-								//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 16);
-								//p.pals = p.pals.Substring(0, 1);
-								//p.pals = p.pals.Substring(0, 2);
-// jmarshall end
-								p.pals_time = 32;
+                                p.pals[0] = 16;
+                                p.pals[1] = 0;
+                                p.pals[2] = 0;
+                                p.pals_time = 32;
 							}
 							else if (p.poszv > 2048)
 							{
@@ -3729,11 +3723,9 @@ public partial class GlobalMembers
 					{
 						spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
 					}
-// jmarshall - palette
-					//p.pals = null;
-					//p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 8);
-					//p.pals = p.pals.Substring(0, 2);
-// jmarshall end
+					p.pals[0] = 0;
+					p.pals[1] = 8;
+					p.pals[2] = 0;
 					p.pals_time = 32;
 					s.extra--;
 				}
@@ -3758,11 +3750,9 @@ public partial class GlobalMembers
 								{
 									spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
 								}
-// jmarshall - palette
-								//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 64);
-								//p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 64);
-								//p.pals = StringFunctions.ChangeCharacter(p.pals, 2, 64);
-// jmarsshall end
+								p.pals[0] = 64;
+								p.pals[1] = 64;
+								p.pals[2] = 64;
 								p.pals_time = 32;
 								s.extra -= (short)(1 + (Engine.krand() & 3));
 								if (Sound[DefineConstants.SHORT_CIRCUIT].num < 1)
@@ -3784,12 +3774,10 @@ public partial class GlobalMembers
 								if (Sound[DefineConstants.DUKE_LONGTERM_PAIN].num < 1)
 								{
 									spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
-								}
-// jmarshall -palette
-								//p.pals = null;
-								//p.pals = StringFunctions.ChangeCharacter(p.pals, 1, 8);
-								//p.pals = p.pals.Substring(0, 2);
-// jmarshall end
+								}								
+								p.pals[0] = 0;
+								p.pals[1] = 8;
+								p.pals[2] = 0;
 								p.pals_time = 32;
 								s.extra -= (short)(1 + (Engine.krand() & 3));
 							}
@@ -3808,12 +3796,10 @@ public partial class GlobalMembers
 								{
 									spritesound(DefineConstants.DUKE_LONGTERM_PAIN, pi);
 								}
-// jmarshall - palette
-								//p.pals = StringFunctions.ChangeCharacter(p.pals, 0, 8);
-								//p.pals = p.pals.Substring(0, 1);
-								//p.pals = p.pals.Substring(0, 2);
-// jmarshall end
-								p.pals_time = 32;
+                                p.pals[0] = 8;
+                                p.pals[1] = 0;
+                                p.pals[2] = 0;
+                                p.pals_time = 32;
 								s.extra -= (short)(1 + (Engine.krand() & 3));
 							}
 						}

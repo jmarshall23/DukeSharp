@@ -213,27 +213,29 @@ public partial class GlobalMembers
 	{
 		short i;
 
-		if (ud.screen_size >= 8)
-		{
-			if (Engine.waloff[DefineConstants.BOTTOMSTATUSBAR].memory == null)
-			{
-				tloadtile(DefineConstants.BOTTOMSTATUSBAR);
-			}
-			if (ud.multimode > 1)
-			{
-				if (Engine.waloff[DefineConstants.FRAGBAR].memory == null)
-				{
-					tloadtile(DefineConstants.FRAGBAR);
-				}
-				for (i = DefineConstants.MINIFONT; i < DefineConstants.MINIFONT + 63; i++)
-				{
-					if (Engine.waloff[i].memory == null)
-					{
-						tloadtile(i);
-					}
-				}
-			}
-		}
+// jmarshall caching?
+		//if (ud.screen_size >= 8)
+		//{
+		//	if (Engine.waloff[DefineConstants.BOTTOMSTATUSBAR].memory == null)
+		//	{
+		//		tloadtile(DefineConstants.BOTTOMSTATUSBAR);
+		//	}
+		//	if (ud.multimode > 1)
+		//	{
+		//		if (Engine.waloff[DefineConstants.FRAGBAR].memory == null)
+		//		{
+		//			tloadtile(DefineConstants.FRAGBAR);
+		//		}
+		//		for (i = DefineConstants.MINIFONT; i < DefineConstants.MINIFONT + 63; i++)
+		//		{
+		//			if (Engine.waloff[i].memory == null)
+		//			{
+		//				tloadtile(i);
+		//			}
+		//		}
+		//	}
+		//}
+// jmarshall end
 
 		tloadtile(DefineConstants.VIEWSCREEN);
 // jmarshall caching?
@@ -1901,8 +1903,8 @@ public partial class GlobalMembers
 
 		resetmys();
 // jmarshall - palette
-		//ps[myconnectindex].palette = palette;
-		//palto(0, 0, 0, 0);
+		ps[myconnectindex].palette = palette;
+		palto(0, 0, 0, 0);
 		//
 		//setpal(ps[myconnectindex]);
 // jmarshall end
@@ -1927,9 +1929,8 @@ public partial class GlobalMembers
 // jmarshall end
 		waitforeverybody();
 
-// jmarshall - palette
-		//palto(0, 0, 0, 0);
-// jmarshall end
+
+		palto(0, 0, 0, 0);
 		vscrn();
 		Engine.clearview();
 		drawbackground();

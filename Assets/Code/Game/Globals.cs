@@ -111,7 +111,7 @@ public class user_defs
     public int tickrate;
     public int m_coop;
     public int coop;
-    public int screen_size;
+    public int screen_size = 8;
     public int lockout;
     public int crosshair;
     public int[,] wchoice = new int[DefineConstants.MAXPLAYERS, DefineConstants.MAX_WEAPONS];
@@ -122,7 +122,7 @@ public class user_defs
     public int respawn_inventory;
     public int recstat;
     public int monsters_off;
-    public int brightness;
+    public int brightness = 16;
     public int m_respawn_items;
     public int m_respawn_monsters;
     public int m_respawn_inventory;

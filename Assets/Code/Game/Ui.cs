@@ -779,7 +779,7 @@ public partial class GlobalMembers
 		int j;
 		int o;
 		int ss;
-		int u;
+		uint u;
 		char c;
 		char permbit;
 
@@ -799,12 +799,11 @@ public partial class GlobalMembers
 			}
 		}
 
-		//ss = ud.screen_size;
-		//if (ss < 4)
-		//{
-		//	return;
-		//}
-		ss = 4;
+		ss = ud.screen_size;
+		if (ss < 4)
+		{
+			return;
+		}		
 
 		if (ud.multimode > 1 && ud.coop != 1)
 		{
@@ -832,7 +831,7 @@ public partial class GlobalMembers
 			}
 		}
 
-	//	if (ss == 4) //DRAW MINI STATUS BAR:
+		if (ss == 4) //DRAW MINI STATUS BAR:
 		{
 			Engine.rotatesprite(5 << 16, (200 - 28) << 16, 65536, 0, DefineConstants.HEALTHBOX, 0, 21, 10 + 16, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 			if (p.inven_icon != 0)
@@ -949,7 +948,7 @@ public partial class GlobalMembers
 		if (pus != 0)
 		{
 			pus = (char)0;
-			u = unchecked((int)0xffffffff);
+			u = unchecked((uint)0xffffffff);
 		}
 		else
 		{
@@ -959,27 +958,27 @@ public partial class GlobalMembers
 		if (sbar.frag[myconnectindex] != p.frag)
 		{
 			sbar.frag[myconnectindex] = p.frag;
-			u |= 32768;
+		//	u |= 32768;
 		}
 		if (sbar.got_access != p.got_access)
 		{
 			sbar.got_access = p.got_access;
-			u |= 16384;
+			//u |= 16384;
 		}
 		if (sbar.last_extra != p.last_extra)
 		{
 			sbar.last_extra = p.last_extra;
-			u |= 1;
+		//	u |= 1;
 		}
 		if (sbar.shield_amount != p.shield_amount)
 		{
 			sbar.shield_amount = p.shield_amount;
-			u |= 2;
+		//	u |= 2;
 		}
 		if (sbar.curr_weapon != p.curr_weapon)
 		{
 			sbar.curr_weapon = p.curr_weapon;
-			u |= (4 + 8 + 16 + 32 + 64 + 128 + 256 + 512 + 1024 + 65536);
+			//u |= (4 + 8 + 16 + 32 + 64 + 128 + 256 + 512 + 1024 + 65536);
 		}
 		for (i = 1; i < 10; i++)
 		{
@@ -988,11 +987,11 @@ public partial class GlobalMembers
 				sbar.ammo_amount[i] = p.ammo_amount[i];
 				if (i < 9)
 				{
-					u |= ((2 << i) + 1024);
+				//	u |= ((2 << i) + 1024);
 				}
 				else
 				{
-					u |= 65536 + 1024;
+				//	u |= 65536 + 1024;
 				}
 			}
 			if (sbar.gotweapon[i] != p.gotweapon[i])
@@ -1000,73 +999,75 @@ public partial class GlobalMembers
 				sbar.gotweapon[i] = p.gotweapon[i];
 				if (i < 9)
 				{
-					u |= ((2 << i) + 1024);
+				//	u |= ((2 << i) + 1024);
 				}
 				else
 				{
-					u |= 65536 + 1024;
+				//	u |= 65536 + 1024;
 				}
 			}
 		}
 		if (sbar.inven_icon != p.inven_icon)
 		{
 			sbar.inven_icon = p.inven_icon;
-			u |= (2048 + 4096 + 8192);
+		//	u |= (2048 + 4096 + 8192);
 		}
 		if (sbar.holoduke_on != p.holoduke_on)
 		{
 			sbar.holoduke_on = p.holoduke_on;
-			u |= (4096 + 8192);
+		//	u |= (4096 + 8192);
 		}
 		if (sbar.jetpack_on != p.jetpack_on)
 		{
 			sbar.jetpack_on = p.jetpack_on;
-			u |= (4096 + 8192);
+		//	u |= (4096 + 8192);
 		}
 		if (sbar.heat_on != p.heat_on)
 		{
 			sbar.heat_on = p.heat_on;
-			u |= (4096 + 8192);
+		//	u |= (4096 + 8192);
 		}
 		if (sbar.firstaid_amount != p.firstaid_amount)
 		{
 			sbar.firstaid_amount = p.firstaid_amount;
-			u |= 8192;
+		//	u |= 8192;
 		}
 		if (sbar.steroids_amount != p.steroids_amount)
 		{
 			sbar.steroids_amount = p.steroids_amount;
-			u |= 8192;
+		//	u |= 8192;
 		}
 		if (sbar.holoduke_amount != p.holoduke_amount)
 		{
 			sbar.holoduke_amount = p.holoduke_amount;
-			u |= 8192;
+		//	u |= 8192;
 		}
 		if (sbar.jetpack_amount != p.jetpack_amount)
 		{
 			sbar.jetpack_amount = p.jetpack_amount;
-			u |= 8192;
+		//	u |= 8192;
 		}
 		if (sbar.heat_amount != p.heat_amount)
 		{
 			sbar.heat_amount = p.heat_amount;
-			u |= 8192;
+		//	u |= 8192;
 		}
 		if (sbar.scuba_amount != p.scuba_amount)
 		{
 			sbar.scuba_amount = p.scuba_amount;
-			u |= 8192;
+		//	u |= 8192;
 		}
 		if (sbar.boot_amount != p.boot_amount)
 		{
 			sbar.boot_amount = p.boot_amount;
-			u |= 8192;
+		//	u |= 8192;
 		}
-		if (u == 0)
-		{
-			return;
-		}
+		//if (u == 0)
+		//{
+		//	return; 
+		//}
+
+		u = 0xffffffff;
 
 		//0 - update health
 		//1 - update armor
@@ -1131,7 +1132,7 @@ public partial class GlobalMembers
 		}
 		if ((u & (4 + 8 + 16 + 32 + 64 + 128 + 256 + 512 + 65536)) != 0)
 		{
-			weapon_amounts(p, 96, 182, u);
+			weapon_amounts(p, 96, 182, (int)u);
 		}
 
 		if ((u & 1) != 0)

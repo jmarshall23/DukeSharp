@@ -1270,125 +1270,122 @@ public partial class GlobalMembers
 		return (x);
 	}
 
-	public static void bar(int x, int y, short p, short dainc, char damodify, short s, short pa)
+	public static void bar(int x, int y, ref int p, short dainc, char damodify, short s, short pa)
 	{
-		// jmarshall - ui bar
-		/*
-				short xloc;
-				int rev;
+		int xloc;
+		int rev;
 
-				if (dainc < 0)
-				{
-					dainc = (short)(-dainc);
-					rev = 1;
-				}
-				else
-				{
-					rev = 0;
-				}
-				y -= 2;
+		if (dainc < 0)
+		{
+			dainc = (short)(-dainc);
+			rev = 1;
+		}
+		else
+		{
+			rev = 0;
+		}
+		y -= 2;
 
-				if (damodify != 0)
+		if (damodify != 0)
+		{
+			if (rev == 0)
+			{
+				if ((KB_KeyDown[(DefineConstants.sc_LeftArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_4)] != false) || ((buttonstat & 1) != 0 && minfo.dyaw < -256)) // && onbar) )
 				{
-					if (rev == 0)
 					{
-						if ((KB_KeyDown[(DefineConstants.sc_LeftArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_4)] != false) || ((buttonstat & 1) != 0 && minfo.dyaw < -256)) // && onbar) )
-						{
-							{
-								KB_KeyDown[(DefineConstants.sc_LeftArrow)] = (!(1 == 1));
-							};
-							{
-								KB_KeyDown[(DefineConstants.sc_kpad_4)] = (!(1 == 1));
-							};
-
-							*p -= dainc;
-							if (*p < 0)
-							{
-								*p = 0;
-							}
-							sound(DefineConstants.KICK_HIT);
-						}
-						if ((KB_KeyDown[(DefineConstants.sc_RightArrow)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_6)] != 0) || ((buttonstat & 1) != 0 && minfo.dyaw > 256)) //&& onbar) )
-						{
-							{
-								KB_KeyDown[(DefineConstants.sc_RightArrow)] = (!(1 == 1));
-							};
-							{
-								KB_KeyDown[(DefineConstants.sc_kpad_6)] = (!(1 == 1));
-							};
-
-							*p += dainc;
-							if (*p > 63)
-							{
-								*p = 63;
-							}
-							sound(DefineConstants.KICK_HIT);
-						}
-					}
-					else
+						KB_KeyDown[(DefineConstants.sc_LeftArrow)] = (!(1 == 1));
+					};
 					{
-						if ((KB_KeyDown[(DefineConstants.sc_RightArrow)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_6)] != 0) || ((buttonstat & 1) != 0 && minfo.dyaw > 256)) //&& onbar ))
-						{
-							{
-								KB_KeyDown[(DefineConstants.sc_RightArrow)] = (!(1 == 1));
-							};
-							{
-								KB_KeyDown[(DefineConstants.sc_kpad_6)] = (!(1 == 1));
-							};
+						KB_KeyDown[(DefineConstants.sc_kpad_4)] = (!(1 == 1));
+					};
 
-							*p -= dainc;
-							if (*p < 0)
-							{
-								*p = 0;
-							}
-							sound(DefineConstants.KICK_HIT);
-						}
-						if ((KB_KeyDown[(DefineConstants.sc_LeftArrow)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_4)] != 0) || ((buttonstat & 1) != 0 && minfo.dyaw < -256)) // && onbar) )
-						{
-							{
-								KB_KeyDown[(DefineConstants.sc_LeftArrow)] = (!(1 == 1));
-							};
-							{
-								KB_KeyDown[(DefineConstants.sc_kpad_4)] = (!(1 == 1));
-							};
-
-							*p += dainc;
-							if (*p > 64)
-							{
-								*p = 64;
-							}
-							sound(DefineConstants.KICK_HIT);
-						}
+					p -= dainc;
+					if (p < 0)
+					{
+						p = 0;
 					}
+					sound(DefineConstants.KICK_HIT);
 				}
-
-				xloc = *p;
-
-				Engine.rotatesprite((x + 22) << 16, (y - 3) << 16, 65536, 0, DefineConstants.SLIDEBAR, s, pa, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-				if (rev == 0)
+				if ((KB_KeyDown[(DefineConstants.sc_RightArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_6)] != false) || ((buttonstat & 1) != 0 && minfo.dyaw > 256)) //&& onbar) )
 				{
-					Engine.rotatesprite((x + xloc + 1) << 16, (y + 1) << 16, 65536, 0, DefineConstants.SLIDEBAR + 1, s, pa, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+					{
+						KB_KeyDown[(DefineConstants.sc_RightArrow)] = (!(1 == 1));
+					};
+					{
+						KB_KeyDown[(DefineConstants.sc_kpad_6)] = (!(1 == 1));
+					};
+
+					p += dainc;
+					if (p > 63)
+					{
+						p = 63;
+					}
+					sound(DefineConstants.KICK_HIT);
 				}
-				else
+			}
+			else
+			{
+				if ((KB_KeyDown[(DefineConstants.sc_RightArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_6)] != false) || ((buttonstat & 1) != 0 && minfo.dyaw > 256)) //&& onbar ))
 				{
-					Engine.rotatesprite((x + (65 - xloc)) << 16, (y + 1) << 16, 65536, 0, DefineConstants.SLIDEBAR + 1, s, pa, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+					{
+						KB_KeyDown[(DefineConstants.sc_RightArrow)] = (!(1 == 1));
+					};
+					{
+						KB_KeyDown[(DefineConstants.sc_kpad_6)] = (!(1 == 1));
+					};
+
+					p -= dainc;
+					if (p < 0)
+					{
+						p = 0;
+					}
+					sound(DefineConstants.KICK_HIT);
 				}
-		*/
-	}
+				if ((KB_KeyDown[(DefineConstants.sc_LeftArrow)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_4)] != false) || ((buttonstat & 1) != 0 && minfo.dyaw < -256)) // && onbar) )
+				{
+					{
+						KB_KeyDown[(DefineConstants.sc_LeftArrow)] = (!(1 == 1));
+					};
+					{
+						KB_KeyDown[(DefineConstants.sc_kpad_4)] = (!(1 == 1));
+					};
 
-	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
-	//ORIGINAL LINE: #define SHX
-	// ((x==X)*(-sh))
-	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
-	//ORIGINAL LINE: #define PHX
-	// ((x==X)?1:2)
-	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
-	//ORIGINAL LINE: #define MWIN(X) Engine.rotatesprite( 320<<15,200<<15,X,0,MENUSCREEN,-16,0,10+64,0,0,Engine.xdim-1,Engine.ydim-1)
-	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
-	//ORIGINAL LINE: #define MWINXY(X,OX,OY) Engine.rotatesprite( ( 320+(OX) )<<15, ( 200+(OY) )<<15,X,0,MENUSCREEN,-16,0,10+64,0,0,Engine.xdim-1,Engine.ydim-1)
+					p += dainc;
+					if (p > 64)
+					{
+						p = 64;
+					}
+					sound(DefineConstants.KICK_HIT);
+				}
+			}
+		}
+
+		xloc = p;
+
+		Engine.rotatesprite((x + 22) << 16, (y - 3) << 16, 65536, 0, DefineConstants.SLIDEBAR, (sbyte)s, (byte)pa, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		if (rev == 0)
+		{
+			Engine.rotatesprite((x + xloc + 1) << 16, (y + 1) << 16, 65536, 0, DefineConstants.SLIDEBAR + 1, (sbyte)s, (byte)pa, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		}
+		else
+		{
+			Engine.rotatesprite((x + (65 - xloc)) << 16, (y + 1) << 16, 65536, 0, DefineConstants.SLIDEBAR + 1, (sbyte)s, (byte)pa, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+		}
+    }
+
+    //C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
+    //ORIGINAL LINE: #define SHX
+    // ((x==X)*(-sh))
+    //C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
+    //ORIGINAL LINE: #define PHX
+    // ((x==X)?1:2)
+    //C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
+    //ORIGINAL LINE: #define MWIN(X) Engine.rotatesprite( 320<<15,200<<15,X,0,MENUSCREEN,-16,0,10+64,0,0,Engine.xdim-1,Engine.ydim-1)
+    //C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
+    //ORIGINAL LINE: #define MWINXY(X,OX,OY) Engine.rotatesprite( ( 320+(OX) )<<15, ( 200+(OY) )<<15,X,0,MENUSCREEN,-16,0,10+64,0,0,Engine.xdim-1,Engine.ydim-1)
 
 
-	public static int volnum;
+    public static int volnum;
 	public static int levnum;
 	public static int plrskl;
 	public static int numplr;
@@ -2624,17 +2621,17 @@ public partial class GlobalMembers
 				menutext(c, 31 + 15, (-3), (-3), "SHADOWS");
 				menutext(c, 31 + 15 + 15, (-4), (-4), "SCREEN TILTING");
 				menutext(c, 31 + 15 + 15 + 15, (-5), (-5), "SCREEN SIZE");
-				// jmarshall - options mouse
-				/*
-								bar(c + 167 + 40, 31 + 15 + 15 + 15, (short)ud.screen_size, -4, x == 3, (-5), (-5));
+
+								bar(c + 167 + 40, 31 + 15 + 15 + 15, ref ud.screen_size, -4, (char)((x == 3) ? 1 : 0), (-5), (-5));
 
 								menutext(c, 31 + 15 + 15 + 15 + 15, (-6), (-6), "BRIGHTNESS");
-								bar(c + 167 + 40, 31 + 15 + 15 + 15 + 15, ud.brightness, 8, x == 4, (-6), (-6));
+								bar(c + 167 + 40, 31 + 15 + 15 + 15 + 15, ref ud.brightness, 8, (char)((x == 4) ? 1 : 0), (-6), (-6));
 								if (x == 4)
 								{
-									Engine.setbrightness(ud.brightness >> 2, ps[myconnectindex].palette[0]);
+									Engine.setbrightness(ud.brightness >> 2, ps[myconnectindex].palette);
 								}
-
+				// jmarshall - options mouse
+				/*
 								if (ControllerType == controltype.controltype_keyboardandmouse)
 								{
 									short sense;
@@ -3880,15 +3877,20 @@ public partial class GlobalMembers
 
         for (i = 0; i < 768; i += 3)
         {
-            temparray[i] =
-                (byte)(ps[myconnectindex].palette[i + 0] + ((((byte)r - (byte)ps[myconnectindex].palette[i + 0]) * (byte)(e & 127)) >> 6));
-            temparray[i + 1] =
-                (byte)(ps[myconnectindex].palette[i + 1] + ((((byte)g - (byte)ps[myconnectindex].palette[i + 1]) * (byte)(e & 127)) >> 6));
-            temparray[i + 2] =
-                (byte)(ps[myconnectindex].palette[i + 2] + ((((byte)b - (byte)ps[myconnectindex].palette[i + 2]) * (byte)(e & 127)) >> 6));
-        }
+			int rshift = ((r - ps[myconnectindex].palette[i + 0]) * e) >> 8;
+			int gshift = ((g - ps[myconnectindex].palette[i + 1]) * e) >> 8;
+			int bshift = ((b - ps[myconnectindex].palette[i + 2]) * e) >> 8;
 
-		Engine.setbrightness(ud.brightness >> 2, temparray);
+			int _r = (((int)ps[myconnectindex].palette[i + 0]) + rshift);
+            int _g = (((int)ps[myconnectindex].palette[i + 1]) + gshift);
+            int _b = (((int)ps[myconnectindex].palette[i + 2]) + bshift);
+
+			temparray[i + 0] = (byte)_r;
+			temparray[i + 1] = (byte)_g;
+			temparray[i + 2] = (byte)_b;
+		}
+
+		Engine.setbrightness(ud.brightness >> 2, temparray);		
 	}
 
 

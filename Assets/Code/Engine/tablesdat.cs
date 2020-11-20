@@ -11,7 +11,13 @@ namespace Build
         public short[] radarang = new short[1280];
         public byte[] textfont = new byte[1024];
         public byte[] smalltextfont = new byte[1024];
-        public byte[] britable = new byte[1024];
+
+        public class britTable_t
+        {
+            public byte[] data = new byte[64];
+        }
+
+        public britTable_t[] britable = new britTable_t[16];
 
         public bTable()
         {
@@ -29,7 +35,12 @@ namespace Build
 
                 fil.kread<byte>(ref textfont, 0, 1024);
                 fil.kread<byte>(ref smalltextfont, 0, 1024);
-                fil.kread<byte>(ref britable, 0, 1024);
+
+                for (i = 0; i < 16; i++)
+                {
+                    britable[i] = new britTable_t();
+                    fil.kread<byte>(ref britable[i].data, 0, 64);
+                }
             }
             else
             {

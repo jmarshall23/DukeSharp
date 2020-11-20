@@ -392,8 +392,13 @@ palette:
             curbrightness = Math.Min(Math.Max((int)dabrightness, 0), 15);
 
             k = 0;
-            
-            palette.palette = dapal;
+
+            Engine._device._palette.palette = Engine._device._palette.scratchpal;
+            for (i = 0; i < dapal.Length; i++)
+            {                
+                Engine._device._palette.palette[i] = Engine.table.britable[curbrightness].data[dapal[i]];
+            }
+            Engine._device._palette.UpdatePalette();
         }
 
         public static void SetPalette(bPalette palette)
@@ -538,6 +543,8 @@ palette:
         {
             table = new bTable();
             palette = new bPalette();
+
+            Engine._device._palette = Engine.palette;
 
             A.setpalookupaddress(palette.globalpalwritten, 0);
         }

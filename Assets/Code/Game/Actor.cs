@@ -1464,12 +1464,10 @@ public partial class GlobalMembers
 
 	public static void quickkill(player_struct p)
 	{
-// jmarshall - palette
-	    //p.pals[0] = 48;
-	    //p.pals[1] = 48;
-	    //p.pals[2] = 48;
-	    //p.pals_time = 48;
-// jamrshall end
+	    p.pals[0] = 48;
+	    p.pals[1] = 48;
+	    p.pals[2] = 48;
+	    p.pals_time = 48;
 	
 	    Engine.board.sprite[p.i].extra = 0;
 	    Engine.board.sprite[p.i].cstat |= unchecked((short)32768);
@@ -5330,12 +5328,10 @@ public partial class GlobalMembers
 
 								if (Engine.board.sprite[s.owner].picnum != DefineConstants.APLAYER)
 								{
-// jmarshall - palette
-									//ps[p].pals[0] = 0;
-									//ps[p].pals[1] = 32;
-									//ps[p].pals[2] = 0;
+									ps[p].pals[0] = 0;
+									ps[p].pals[1] = 32;
+									ps[p].pals[2] = 0;
 									ps[p].pals_time = 32;
-// j marshall end
 								}
 
 								if (s.owner != i || ud.respawn_items == 0)

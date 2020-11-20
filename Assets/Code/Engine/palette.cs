@@ -12,6 +12,7 @@ namespace Build
     public class bPalette
     {
         public short numpalookups;
+        public byte[] scratchpal = new byte[768];
         public byte[] palette = new byte[768];
         public bPalLookup[] _palookup = new bPalLookup[256];
         public byte[] palookup = null;
@@ -83,6 +84,11 @@ namespace Build
 
             initfastcolorlookup(30, 59, 11);
 
+            UpdatePalette();            
+        }
+
+        public void UpdatePalette()
+        {
             initfastcolorlookup2();
         }
 
