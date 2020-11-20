@@ -1992,7 +1992,7 @@ public partial class GlobalMembers
 			if (scriptActorRegPtr[s] != null)
 			{
 				hittype[i].action = scriptActorRegPtr[s].action;
-				hittype[i].extra = (short)scriptActorRegPtr[s].aiType;
+				Engine.board.sprite[i].extra = (short)scriptActorRegPtr[s].aiType2;
 
 // jmarshall - con_integrate
 				//Engine.board.sprite[i].extra = (short)actorscrptr[s].count.indexes[0];
