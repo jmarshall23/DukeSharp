@@ -3901,8 +3901,10 @@ public partial class GlobalMembers
 					case 15:
 					case 16:
 					case 26:
-						setsectinterpolate(i);
-						break;
+// jmarshall - disable sector interpolation for subways, this is a hack to work around some graphical issues.
+                        //setsectinterpolate(i);
+ // jmarshall end
+                        break;
 				}
 
 				switch (Engine.board.sprite[i].lotag)
