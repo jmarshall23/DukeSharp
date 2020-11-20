@@ -94,7 +94,7 @@ public class SectorAnimation
                     case WallAnimType.WALL_ANIM_X:
                         return wall.x;
                     case WallAnimType.WALL_ANIM_Y:
-                        return wall.x;
+                        return wall.y;
                     default:
                         throw new System.Exception("Unknown WallAnim Type in Get");
                 }
@@ -127,7 +127,7 @@ public class SectorAnimation
                         wall.x = value;
                         return;
                     case WallAnimType.WALL_ANIM_Y:
-                        wall.x = value;
+                        wall.y = value;
                         return;
                     default:
                         throw new System.Exception("Unknown WallAnim Type in set");
