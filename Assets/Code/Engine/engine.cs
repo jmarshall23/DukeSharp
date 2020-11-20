@@ -553,7 +553,7 @@ palette:
             path = "file:" + GameEngine.AppPath + "/Raw/";
             #else
             //Desktop (Mac OS or Windows)
-            path = "file:"+ GameEngine.AppPath + "/StreamingAssets/";
+            path = GameEngine.AppPath + "/StreamingAssets/";
             #endif
             
             return path;
