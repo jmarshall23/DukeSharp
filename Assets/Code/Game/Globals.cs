@@ -551,7 +551,6 @@ public partial class GlobalMembers
 	public static int labelcnt;
     //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
     //ORIGINAL LINE: int *actorscrptr[DefineConstants.MAXTILES],*parsing_actor;
-    public static weaponhit[] actorscrptr = new weaponhit[Build.bMap.MAXTILES];
     //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
     //ORIGINAL LINE: int *parsing_actor;
     public static int parsing_actor;

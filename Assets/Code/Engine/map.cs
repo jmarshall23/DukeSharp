@@ -4293,6 +4293,9 @@ namespace Build
             walltype wal;
             int x1, y1, x2, y2, r;
 
+            if (wall[wallnum] == null)
+                return 0;
+
             r = (walldist << 1);
             wal = wall[wallnum]; x1 = wal.x + walldist - x; y1 = wal.y + walldist - y;
             wal = wall[wal.point2]; x2 = wal.x + walldist - x; y2 = wal.y + walldist - y;

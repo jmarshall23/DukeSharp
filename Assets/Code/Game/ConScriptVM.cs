@@ -652,8 +652,6 @@ public partial class GlobalMembers
             return;
         }
 
-        actorscrptr[g_sp.picnum] = hittype[g_i];
-
         //insptr = 4 + ();
 
         killit_flag = (char)0;

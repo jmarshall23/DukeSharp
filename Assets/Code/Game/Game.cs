@@ -1808,10 +1808,10 @@ public partial class GlobalMembers
 
 		hittype[i].count = hittype[i].actioncount = hittype[i][3] = 0;
 		hittype[i].aiaction = null;
-		if (actorscrptr[s_pn] != null)
+		if (scriptActorRegPtr[s_pn] != null)
 		{
             hittype[i].action = scriptActorRegPtr[s_pn].action;
-            hittype[i].extra = (short)scriptActorRegPtr[s_pn].aiType;
+            s.extra = (short)scriptActorRegPtr[s_pn].aiType2;
 
             // jmarshall - con_integrate
             //s.extra = (short)actorscrptr[s].count.indexes[0];
@@ -2017,7 +2017,7 @@ public partial class GlobalMembers
 		{
 			default:
 
-				if (actorscrptr[sp.picnum] != null)
+				if (scriptActorRegPtr[sp.picnum] != null)
 				{
 					if (j == -1 && sp.lotag > ud.player_skill)
 					{
@@ -4661,7 +4661,7 @@ public partial class GlobalMembers
 					break;
 			}
 
-			if (actorscrptr[s.picnum] != null)
+			if (scriptActorRegPtr[s.picnum] != null)
 			{
 				if (t4 != null)
 				{
