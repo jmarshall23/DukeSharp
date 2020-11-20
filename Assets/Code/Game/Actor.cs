@@ -824,7 +824,14 @@ public partial class GlobalMembers
 
 			if (dasectnum < 0 || (dasectnum >= 0 && ((hittype[spritenum].actorstayput >= 0 && hittype[spritenum].actorstayput != dasectnum) || ((Engine.board.sprite[spritenum].picnum == DefineConstants.BOSS2) && Engine.board.sprite[spritenum].pal == 0 && Engine.board.sector[dasectnum].lotag != 3) || ((Engine.board.sprite[spritenum].picnum == DefineConstants.BOSS1 || Engine.board.sprite[spritenum].picnum == DefineConstants.BOSS2) && Engine.board.sector[dasectnum].lotag == 1) || (Engine.board.sector[dasectnum].lotag == 1 && (Engine.board.sprite[spritenum].picnum == DefineConstants.LIZMAN || (Engine.board.sprite[spritenum].picnum == DefineConstants.LIZTROOP && Engine.board.sprite[spritenum].zvel == 0))))))
 			{
-				Engine.board.sprite[spritenum].x = oldx;
+// jmarshall - crash fix
+// NOW HERE:
+                if (dasectnum < 0)
+                {
+                	dasectnum = 0;
+                }
+// jmarshall end
+                Engine.board.sprite[spritenum].x = oldx;
 				Engine.board.sprite[spritenum].y = oldy;
 				if (Engine.board.sector[dasectnum].lotag == 1 && Engine.board.sprite[spritenum].picnum == DefineConstants.LIZMAN)
 				{
@@ -835,10 +842,13 @@ public partial class GlobalMembers
 					Engine.board.sprite[spritenum].ang = (short)(Engine.krand() & 2047);
 				}
 				Engine.board.setsprite(spritenum, oldx, oldy, Engine.board.sprite[spritenum].z);
-				if (dasectnum < 0)
-				{
-					dasectnum = 0;
-				}
+// jmarshall - crash fix
+// WAS HERE:
+				//if (dasectnum < 0)
+				//{
+				//	dasectnum = 0;
+				//}
+// jmarshall end
 				return (16384 + dasectnum);
 			}
 			if ((retval & 49152) >= 32768 && (hittype[spritenum].cgg == 0))

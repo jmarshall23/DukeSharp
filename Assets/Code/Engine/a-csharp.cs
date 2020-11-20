@@ -122,7 +122,11 @@ namespace Build
 
 	        for(;cnt>=0;cnt--)
 	        {
-                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette.palookup[gpalpos + gbuf[gbufpos + (vplc >> glogy)]]];
+                long pos = gbufpos + (vplc >> glogy);
+                if (pos < 0)
+                    continue;
+
+                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette.palookup[gpalpos + gbuf[pos]]];
                 pbase += bpl;
                 vplc += (uint)vinc;
 	        }
