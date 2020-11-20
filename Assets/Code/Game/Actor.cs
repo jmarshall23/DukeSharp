@@ -41,12 +41,12 @@ public partial class GlobalMembers
 
 		for (i = numinterpolations - 1; i >= 0; i--)
 		{
-			oldipos[i] = curipos[i];
+			oldipos[i] = curipos[i].Value;
 		}
 	}
 
 
-	public static void setinterpolation(ref int posptr)
+	public static void setinterpolation(SectorAnimation posptr)
 	{
 		int i;
 
@@ -56,23 +56,23 @@ public partial class GlobalMembers
 		}
 		for (i = numinterpolations - 1; i >= 0; i--)
 		{
-			if (curipos[i] == posptr)
+			if (curipos[i].Compare(posptr))
 			{
 				return;
 			}
 		}
 		curipos[numinterpolations] = posptr;
-		oldipos[numinterpolations] = posptr;
+		oldipos[numinterpolations] = posptr.Value;
 		numinterpolations++;
 	}
 
-	public static void stopinterpolation(ref int posptr)
+	public static void stopinterpolation(SectorAnimation posptr)
 	{
 		int i;
 
 		for (i = numinterpolations - 1; i >= startofdynamicinterpolations; i--)
 		{
-			if (curipos[i] == posptr)
+			if (curipos[i].Compare(posptr))
 			{
 				numinterpolations--;
 				oldipos[i] = oldipos[numinterpolations];
@@ -93,14 +93,14 @@ public partial class GlobalMembers
 		j = 0;
 		for (i = numinterpolations - 1; i >= 0; i--)
 		{
-			bakipos[i] = curipos[i];
+			bakipos[i] = curipos[i].Value;
 			odelta = ndelta;
-			ndelta = (curipos[i]) - oldipos[i];
+			ndelta = (curipos[i].Value) - oldipos[i];
 			if (odelta != ndelta)
 			{
 				j = pragmas.mulscale16(ndelta, smoothratio);
 			}
-			curipos[i] = oldipos[i] + j;
+			curipos[i].Value = oldipos[i] + j;
 		}
 	}
 
@@ -110,7 +110,7 @@ public partial class GlobalMembers
 
 		for (i = numinterpolations - 1; i >= 0; i--)
 		{
-			curipos[i] = bakipos[i];
+			curipos[i].Value = bakipos[i];
 		}
 	}
 
@@ -1059,16 +1059,16 @@ public partial class GlobalMembers
 
 		for (j = startwall; j < endwall; j++)
 		{
-			setinterpolation(ref Engine.board.wall[j].x);
-			setinterpolation(ref Engine.board.wall[j].y);
+			setinterpolation(new SectorAnimation(Engine.board.wall[j], SectorAnimation.WallAnimType.WALL_ANIM_X));
+			setinterpolation(new SectorAnimation(Engine.board.wall[j], SectorAnimation.WallAnimType.WALL_ANIM_Y));
 			k = Engine.board.wall[j].nextwall;
 			if (k >= 0)
 			{
-				setinterpolation(ref Engine.board.wall[k].x);
-				setinterpolation(ref Engine.board.wall[k].y);
+				setinterpolation(new SectorAnimation(Engine.board.wall[k], SectorAnimation.WallAnimType.WALL_ANIM_X));
+				setinterpolation(new SectorAnimation(Engine.board.wall[k], SectorAnimation.WallAnimType.WALL_ANIM_Y));
 				k = Engine.board.wall[k].point2;
-				setinterpolation(ref Engine.board.wall[k].x);
-				setinterpolation(ref Engine.board.wall[k].y);
+				setinterpolation(new SectorAnimation(Engine.board.wall[k], SectorAnimation.WallAnimType.WALL_ANIM_X));
+				setinterpolation(new SectorAnimation(Engine.board.wall[k], SectorAnimation.WallAnimType.WALL_ANIM_Y));
 			}
 		}
 	}
@@ -1083,12 +1083,12 @@ public partial class GlobalMembers
 		endwall = startwall + Engine.board.sector[Engine.board.sprite[i].sectnum].wallnum;
 		for (j = startwall; j < endwall; j++)
 		{
-			stopinterpolation(ref Engine.board.wall[j].x);
-			stopinterpolation(ref Engine.board.wall[j].y);
+			stopinterpolation(new SectorAnimation(Engine.board.wall[j], SectorAnimation.WallAnimType.WALL_ANIM_X));
+			stopinterpolation(new SectorAnimation(Engine.board.wall[j], SectorAnimation.WallAnimType.WALL_ANIM_Y));
 			if (Engine.board.wall[j].nextwall >= 0)
 			{
-				stopinterpolation(ref Engine.board.wall[Engine.board.wall[j].nextwall].x);
-				stopinterpolation(ref Engine.board.wall[Engine.board.wall[j].nextwall].y);
+				stopinterpolation(new SectorAnimation(Engine.board.wall[Engine.board.wall[j].nextwall], SectorAnimation.WallAnimType.WALL_ANIM_X));
+				stopinterpolation(new SectorAnimation(Engine.board.wall[Engine.board.wall[j].nextwall], SectorAnimation.WallAnimType.WALL_ANIM_Y));
 			}
 		}
 	}
@@ -7392,7 +7392,7 @@ public partial class GlobalMembers
 					}
 					else
 					{
-						j = getanimationgoal(ref sc.ceilingz);
+						j = getanimationgoal(new SectorAnimation(sc, SectorAnimation.SectorAnimType.SECTOR_CEILING_Z));
 					}
 
 					if (j >= 0)
@@ -7505,7 +7505,7 @@ public partial class GlobalMembers
 									case 21:
 									case 22:
 									case 26:
-										if (getanimationgoal(ref Engine.board.sector[s.sectnum].ceilingz) >= 0)
+										if (getanimationgoal(new SectorAnimation(Engine.board.sector[s.sectnum], SectorAnimation.SectorAnimType.SECTOR_CEILING_Z)) >= 0)
 										{
 											break;
 										}
@@ -8319,7 +8319,7 @@ public partial class GlobalMembers
 
 					if (t[1] != 0)
 					{
-						if (getanimationgoal(ref Engine.board.sector[t[0]].ceilingz) >= 0)
+						if (getanimationgoal(new SectorAnimation(Engine.board.sector[t[0]], SectorAnimation.SectorAnimType.SECTOR_CEILING_Z)) >= 0)
 						{
 							sc.ceilingz += sc.extra * 9;
 						}

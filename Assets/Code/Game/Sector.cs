@@ -28,7 +28,132 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 //-------------------------------------------------------------------------
 
 using Build;
+using UnityEngine;
 
+public class SectorAnimation
+{
+    public enum WallAnimType
+    {
+        WALL_ANIM_X = 0,
+        WALL_ANIM_Y
+    }
+
+    public enum SectorAnimType
+    {
+        SECTOR_FLOOR_Z = 0,
+        SECTOR_CEILING_Z = 1
+    }
+
+    public walltype wall;
+    public WallAnimType wallAnimType;
+
+    public sectortype sector;
+    public SectorAnimType sectorAnimType;
+
+    public bool Compare(SectorAnimation anim)
+    {
+        return (anim.wall == wall) && (anim.wallAnimType == wallAnimType) && (sector == anim.sector) && (sectorAnimType == anim.sectorAnimType);
+    }
+
+    public bool IsSector
+    {
+        get
+        {
+            return sector != null;
+        }
+    }
+
+    public bool IsWall
+    {
+        get
+        {
+            return wall != null;
+        }
+    }
+
+    public SectorAnimation(walltype wall, WallAnimType wallAnimType)
+    {
+        this.wall = wall;
+        this.wallAnimType = wallAnimType;
+    }
+
+    public SectorAnimation(sectortype sector, SectorAnimType sectorAnimType)
+    {
+        this.sector = sector;
+        this.sectorAnimType = sectorAnimType;
+    }
+
+    public int Value
+    {
+        get
+        {
+            if(wall != null)
+            {
+                switch(wallAnimType)
+                {
+                    case WallAnimType.WALL_ANIM_X:
+                        return wall.x;
+                    case WallAnimType.WALL_ANIM_Y:
+                        return wall.x;
+                    default:
+                        throw new System.Exception("Unknown WallAnim Type in Get");
+                }
+            }
+            else if(sector != null)
+            {
+                switch(sectorAnimType)
+                {
+                    case SectorAnimType.SECTOR_FLOOR_Z:
+                        return sector.floorz;
+                    case SectorAnimType.SECTOR_CEILING_Z:
+                        return sector.ceilingz;
+                    default:
+                        throw new System.Exception("Unknown SectorAnim Type in Get");
+                }
+            }
+            else
+            {
+                throw new System.Exception("Unknown anim type!");
+            }
+        }
+
+        set
+        {
+            if (wall != null)
+            {
+                switch (wallAnimType)
+                {
+                    case WallAnimType.WALL_ANIM_X:
+                        wall.x = value;
+                        return;
+                    case WallAnimType.WALL_ANIM_Y:
+                        wall.x = value;
+                        return;
+                    default:
+                        throw new System.Exception("Unknown WallAnim Type in set");
+                }
+            }
+            else if (sector != null)
+            {
+                switch (sectorAnimType)
+                {
+                    case SectorAnimType.SECTOR_FLOOR_Z:
+                        sector.floorz = value;
+                        return;
+                    case SectorAnimType.SECTOR_CEILING_Z:
+                        sector.ceilingz = value;
+                        return;
+                    default:
+                        throw new System.Exception("Unknown SectorAnim Type in set");
+                }
+            }
+            else
+            {
+                throw new System.Exception("Unknown anim type!");
+            }
+        }
+    }
+}
 public partial class GlobalMembers
 {
     public static int haltsoundhack = 0;
@@ -316,161 +441,149 @@ public partial class GlobalMembers
 
     public static void doanimations()
     {
-        // jmarshall - sector animations
-        /*
-                int i;
-                int j;
-                int a;
-                int p;
-                int v;
-                int dasect;
-
-                for (i = animatecnt - 1; i >= 0; i--)
+        int i;
+        int j;
+        int a;
+        int p;
+        int v;
+        int dasect;
+        
+        for (i = animatecnt - 1; i >= 0; i--)
+        {
+            a = animateptr[i].Value;
+            v = animatevel[i] * (DefineConstants.TICRATE / 26);
+            dasect = animatesect[i];
+        
+            if (a == animategoal[i])
+            {
+                stopinterpolation(animateptr[i]);
+        
+                animatecnt--;
+                animateptr[i] = animateptr[animatecnt];
+                animategoal[i] = animategoal[animatecnt];
+                animatevel[i] = animatevel[animatecnt];
+                animatesect[i] = animatesect[animatecnt];
+                if (Engine.board.sector[animatesect[i]].lotag == 18 || Engine.board.sector[animatesect[i]].lotag == 19)
                 {
-                    a = *animateptr[i];
-                    v = animatevel[i] * (DefineConstants.TICRATE / 26);
-                    dasect = animatesect[i];
-
-                    if (a == animategoal[i])
+                    if (animateptr[i].IsSector && animateptr[i].sectorAnimType == SectorAnimation.SectorAnimType.SECTOR_CEILING_Z && animateptr[i].sector == Engine.board.sector[animatesect[i]])
                     {
-                        stopinterpolation(ref animateptr[i]);
-
-                        animatecnt--;
-                        animateptr[i] = animateptr[animatecnt];
-                        animategoal[i] = animategoal[animatecnt];
-                        animatevel[i] = animatevel[animatecnt];
-                        animatesect[i] = animatesect[animatecnt];
-                        if (sector[animatesect[i]].lotag == 18 || sector[animatesect[i]].lotag == 19)
-                        {
-                            if (animateptr[i] == &sector[animatesect[i]].ceilingz)
-                            {
-                                continue;
-                            }
-                        }
-
-                        if ((sector[dasect].lotag & 0xff) != 22)
-                        {
-                            callsound((short)dasect, -1);
-                        }
-
                         continue;
                     }
-
-                    if (v > 0)
+                }
+        
+                if ((Engine.board.sector[dasect].lotag & 0xff) != 22)
+                {
+                    callsound((short)dasect, -1);
+                }
+        
+                continue;
+            }
+        
+            if (v > 0)
+            {
+                a = Mathf.Min(a + v, animategoal[i]);
+            }
+            else
+            {
+                a = Mathf.Max(a + v, animategoal[i]);
+            }
+        
+           if (animateptr[i].IsSector && animateptr[i].sectorAnimType == SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z && animateptr[i].sector == Engine.board.sector[animatesect[i]])
+            {
+                for (p = connecthead; p >= 0; p = connectpoint2[p])
+                {
+                    if (ps[p].cursectnum == dasect)
                     {
-                        a = Math.Min(a + v, animategoal[i]);
-                    }
-                    else
-                    {
-                        a = Math.Max(a + v, animategoal[i]);
-                    }
-
-                    if (animateptr[i] == &sector[animatesect[i]].floorz)
-                    {
-                        for (p = connecthead; p >= 0; p = connectpoint2[p])
+                        if ((Engine.board.sector[dasect].floorz - ps[p].posz) < (64 << 8))
                         {
-                            if (ps[p].cursectnum == dasect)
+                            if (Engine.board.sprite[ps[p].i].owner >= 0)
                             {
-                                if ((sector[dasect].floorz - ps[p].posz) < (64 << 8))
+                                ps[p].posz += v;
+                                ps[p].poszv = 0;
+                                if (p == myconnectindex)
                                 {
-                                    if (sprite[ps[p].i].owner >= 0)
-                                    {
-                                        ps[p].posz += v;
-                                        ps[p].poszv = 0;
-                                        if (p == myconnectindex)
-                                        {
-                                            myz += v;
-                                            myzvel = 0;
-                                            myzbak[((movefifoplc - 1) & (DefineConstants.MOVEFIFOSIZ - 1))] = ps[p].posz;
-                                        }
-                                    }
+                                    myz += v;
+                                    myzvel = 0;
+                                    myzbak[((movefifoplc - 1) & (DefineConstants.MOVEFIFOSIZ - 1))] = ps[p].posz;
                                 }
                             }
                         }
-
-                        for (j = headspritesect[dasect]; j >= 0; j = nextspritesect[j])
-                        {
-                            if (sprite[j].statnum != 3)
-                            {
-                                hittype[j].bposz = sprite[j].z;
-                                sprite[j].z += v;
-                                hittype[j].floorz = sector[dasect].floorz + v;
-                            }
-                        }
                     }
-
-                    *animateptr[i] = a;
                 }
-        */
-        // jmarshall end
+        
+                for (j = Engine.board.headspritesect[dasect]; j >= 0; j = Engine.board.nextspritesect[j])
+                {
+                    if (Engine.board.sprite[j].statnum != 3)
+                    {
+                        hittype[j].bposz = Engine.board.sprite[j].z;
+                        Engine.board.sprite[j].z += v;
+                        hittype[j].floorz = Engine.board.sector[dasect].floorz + v;
+                    }
+                }
+            }
+        
+            animateptr[i].Value = a;
+        }
+
     }
 
-    public static int getanimationgoal(ref int animptr)
+    public static int getanimationgoal(SectorAnimation animptr)
     {
-        // jmarshall - sector animations
-        /*
-                int i;
-                int j;
+        int i;
+        int j;
 
-                j = -1;
-                for (i = animatecnt - 1; i >= 0; i--)
-                {
-                    if (animptr == (int)animateptr[i])
-                    {
-                        j = i;
-                        break;
-                    }
-                }
-                return (j);
-        */
-        return 0;
-        // jamrshall end
+        j = -1;
+        for (i = animatecnt - 1; i >= 0; i--)
+        {
+            if (animateptr[i].Compare(animptr))
+            {
+                j = i;
+                break;
+            }
+        }
+        return (j);
     }
 
-    public static int setanimation(short animsect, ref int animptr, int thegoal, int thevel)
+    public static int setanimation(short animsect, SectorAnimation animptr, int thegoal, int thevel)
     {
-        // jmarshall - sector animations
-        /*
-                int i;
-                int j;
-
-                if (animatecnt >= DefineConstants.MAXANIMATES - 1)
-                {
-                    return (-1);
-                }
-
-                j = animatecnt;
-                for (i = 0; i < animatecnt; i++)
-                {
-                    if (animptr == animateptr[i])
-                    {
-                        j = i;
-                        break;
-                    }
-                }
-
-                animatesect[j] = animsect;
-                animateptr[j] = animptr;
-                animategoal[j] = thegoal;
-                if (thegoal >= animptr)
-                {
-                    animatevel[j] = thevel;
-                }
-                else
-                {
-                    animatevel[j] = -thevel;
-                }
-
-                if (j == animatecnt)
-                {
-                    animatecnt++;
-                }
-
-                setinterpolation(ref animptr);
-
-                return (j);
-        */
-        return 0;
+        int i;
+        int j;
+        
+        if (animatecnt >= DefineConstants.MAXANIMATES - 1)
+        {
+            return (-1);
+        }
+        
+        j = animatecnt;
+        for (i = 0; i < animatecnt; i++)
+        {
+            if (animptr == animateptr[i])
+            {
+                j = i;
+                break;
+            }
+        }
+        
+        animatesect[j] = animsect;
+        animateptr[j] = animptr;
+        animategoal[j] = thegoal;
+        if (thegoal >= animptr.Value)
+        {
+            animatevel[j] = thevel;
+        }
+        else
+        {
+            animatevel[j] = -thevel;
+        }
+        
+        if (j == animatecnt)
+        {
+            animatecnt++;
+        }
+        
+        setinterpolation(animptr);
+        
+        return (j);        
         // jmarshall end
     }
 
@@ -725,7 +838,7 @@ public partial class GlobalMembers
                 break;
 
             case 26: //The split doors
-                i = getanimationgoal(ref sptr.ceilingz);
+                i = getanimationgoal(new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_CEILING_Z));
                 if (i == -1) //if the door has stopped
                 {
                     haltsoundhack = 1;
@@ -801,18 +914,18 @@ public partial class GlobalMembers
                             {
                                 dax2 = Engine.board.wall[Engine.board.wall[Engine.board.wall[wallfind[j]].point2].point2].x;
                                 dax2 -= Engine.board.wall[Engine.board.wall[wallfind[j]].point2].x;
-                                setanimation(sn, ref Engine.board.wall[wallfind[j]].x, Engine.board.wall[wallfind[j]].x + dax2, sp);
-                                setanimation(sn, ref Engine.board.wall[i].x, Engine.board.wall[i].x + dax2, sp);
-                                setanimation(sn, ref Engine.board.wall[Engine.board.wall[wallfind[j]].point2].x, Engine.board.wall[Engine.board.wall[wallfind[j]].point2].x + dax2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[wallfind[j]], SectorAnimation.WallAnimType.WALL_ANIM_X), Engine.board.wall[wallfind[j]].x + dax2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[i], SectorAnimation.WallAnimType.WALL_ANIM_X), Engine.board.wall[i].x + dax2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[Engine.board.wall[wallfind[j]].point2], SectorAnimation.WallAnimType.WALL_ANIM_X), Engine.board.wall[Engine.board.wall[wallfind[j]].point2].x + dax2, sp);
                                 callsound(sn, ii);
                             }
                             else if (day2 != 0)
                             {
                                 day2 = Engine.board.wall[Engine.board.wall[Engine.board.wall[wallfind[j]].point2].point2].y;
                                 day2 -= Engine.board.wall[Engine.board.wall[wallfind[j]].point2].y;
-                                setanimation(sn, ref Engine.board.wall[wallfind[j]].y, Engine.board.wall[wallfind[j]].y + day2, sp);
-                                setanimation(sn, ref Engine.board.wall[i].y, Engine.board.wall[i].y + day2, sp);
-                                setanimation(sn, ref Engine.board.wall[Engine.board.wall[wallfind[j]].point2].y, Engine.board.wall[Engine.board.wall[wallfind[j]].point2].y + day2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[wallfind[j]], SectorAnimation.WallAnimType.WALL_ANIM_Y), Engine.board.wall[wallfind[j]].y + day2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[i], SectorAnimation.WallAnimType.WALL_ANIM_Y), Engine.board.wall[i].y + day2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[Engine.board.wall[wallfind[j]].point2], SectorAnimation.WallAnimType.WALL_ANIM_Y), Engine.board.wall[Engine.board.wall[wallfind[j]].point2].y + day2, sp);
                                 callsound(sn, ii);
                             }
                         }
@@ -827,16 +940,16 @@ public partial class GlobalMembers
                             day2 = ((Engine.board.wall[i].y + Engine.board.wall[Engine.board.wall[wallfind[j]].point2].y) >> 1) - Engine.board.wall[wallfind[j]].y;
                             if (dax2 != 0)
                             {
-                                setanimation(sn, ref Engine.board.wall[wallfind[j]].x, dax, sp);
-                                setanimation(sn, ref Engine.board.wall[i].x, dax + dax2, sp);
-                                setanimation(sn, ref Engine.board.wall[Engine.board.wall[wallfind[j]].point2].x, dax + dax2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[wallfind[j]], SectorAnimation.WallAnimType.WALL_ANIM_X), dax, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[i], SectorAnimation.WallAnimType.WALL_ANIM_X), dax + dax2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[Engine.board.wall[wallfind[j]].point2], SectorAnimation.WallAnimType.WALL_ANIM_X), dax + dax2, sp);
                                 callsound(sn, ii);
                             }
                             else if (day2 != 0)
                             {
-                                setanimation(sn, ref Engine.board.wall[wallfind[j]].y, day, sp);
-                                setanimation(sn, ref Engine.board.wall[i].y, day + day2, sp);
-                                setanimation(sn, ref Engine.board.wall[Engine.board.wall[wallfind[j]].point2].y, day + day2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[wallfind[j]], SectorAnimation.WallAnimType.WALL_ANIM_Y), day, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[i], SectorAnimation.WallAnimType.WALL_ANIM_Y), day + day2, sp);
+                                setanimation(sn, new SectorAnimation(Engine.board.wall[Engine.board.wall[wallfind[j]].point2], SectorAnimation.WallAnimType.WALL_ANIM_Y), day + day2, sp);
                                 callsound(sn, ii);
                             }
                         }
@@ -892,7 +1005,7 @@ public partial class GlobalMembers
             case 16:
             case 17:
 
-                i = getanimationgoal(ref sptr.floorz);
+                i = getanimationgoal(new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z));
 
                 if (i == -1)
                 {
@@ -905,12 +1018,12 @@ public partial class GlobalMembers
                             return;
                         }
                         j = Engine.board.sector[i].floorz;
-                        setanimation(sn, ref sptr.floorz, j, sptr.extra);
+                        setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z), j, sptr.extra);
                     }
                     else
                     {
                         j = Engine.board.sector[i].floorz;
-                        setanimation(sn, ref sptr.floorz, j, sptr.extra);
+                        setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z), j, sptr.extra);
                     }
                     callsound(sn, ii);
                 }
@@ -920,7 +1033,7 @@ public partial class GlobalMembers
             case 18:
             case 19:
 
-                i = getanimationgoal(ref sptr.floorz);
+                i = getanimationgoal(new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z));
 
                 if (i == -1)
                 {
@@ -936,8 +1049,8 @@ public partial class GlobalMembers
                     j = Engine.board.sector[i].floorz;
                     q = sptr.extra;
                     l = sptr.ceilingz - sptr.floorz;
-                    setanimation(sn, ref sptr.floorz, j, q);
-                    setanimation(sn, ref sptr.ceilingz, j + l, q);
+                    setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z), j, q);
+                    setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_CEILING_Z), j + l, q);
                     callsound(sn, ii);
                 }
                 return;
@@ -968,7 +1081,7 @@ public partial class GlobalMembers
 
                 sptr.lotag ^= unchecked((short)0x8000); // jmarshall added unchecked here;
 
-                setanimation(sn, ref sptr.ceilingz, j, sptr.extra);
+                setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_CEILING_Z), j, sptr.extra);
 
                 callsound(sn, ii);
 
@@ -1012,13 +1125,13 @@ public partial class GlobalMembers
 
                 sptr.lotag ^= unchecked((short)(0x8000));
 
-                setanimation(sn, ref sptr.ceilingz, j, sptr.extra);
+                setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_CEILING_Z), j, sptr.extra);
                 callsound(sn, ii);
 
                 return;
 
             case 21:
-                i = getanimationgoal(ref sptr.floorz);
+                i = getanimationgoal(new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z));
                 if (i >= 0)
                 {
                     if (animategoal[sn] == sptr.ceilingz)
@@ -1044,7 +1157,7 @@ public partial class GlobalMembers
 
                     sptr.lotag ^= unchecked((short)0x8000);
 
-                    if (setanimation(sn, ref sptr.floorz, j, sptr.extra) >= 0)
+                    if (setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z), j, sptr.extra) >= 0)
                     {
                         callsound(sn, ii);
                     }
@@ -1058,15 +1171,15 @@ public partial class GlobalMembers
                 if ((sptr.lotag & 0x8000) != 0)
                 {
                     q = (sptr.ceilingz + sptr.floorz) >> 1;
-                    j = setanimation(sn, ref sptr.floorz, q, sptr.extra);
-                    j = setanimation(sn, ref sptr.ceilingz, q, sptr.extra);
+                    j = setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z), q, sptr.extra);
+                    j = setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_CEILING_Z), q, sptr.extra);
                 }
                 else
                 {
                     q = Engine.board.sector[Engine.board.nextsectorneighborz(sn, sptr.floorz, 1, 1)].floorz;
-                    j = setanimation(sn, ref sptr.floorz, q, sptr.extra);
+                    j = setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z), q, sptr.extra);
                     q = Engine.board.sector[Engine.board.nextsectorneighborz(sn, sptr.ceilingz, -1, -1)].ceilingz;
-                    j = setanimation(sn, ref sptr.ceilingz, q, sptr.extra);
+                    j = setanimation(sn, new SectorAnimation(sptr, SectorAnimation.SectorAnimType.SECTOR_CEILING_Z), q, sptr.extra);
                 }
 
                 sptr.lotag ^= unchecked((short)0x8000);

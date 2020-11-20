@@ -432,7 +432,7 @@ public partial class GlobalMembers
 	public static short moustat;
 	public static animwalltype[] animwall = new animwalltype[DefineConstants.MAXANIMWALLS];
 	public static short numanimwalls;
-	public static int[] animateptr = new int[DefineConstants.MAXANIMATES];
+	public static SectorAnimation[] animateptr = new SectorAnimation[DefineConstants.MAXANIMATES];
 	public static int[] animategoal = new int[DefineConstants.MAXANIMATES];
 	public static int[] animatevel = new int[DefineConstants.MAXANIMATES];
 	public static int animatecnt;
@@ -656,7 +656,7 @@ public partial class GlobalMembers
 	public static int[] bakipos = new int[DefineConstants.MAXINTERPOLATIONS];
 //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
 //ORIGINAL LINE: int *curipos[DefineConstants.MAXINTERPOLATIONS];
-	public static int[] curipos = new int[DefineConstants.MAXINTERPOLATIONS];
+	public static SectorAnimation[] curipos = new SectorAnimation[DefineConstants.MAXINTERPOLATIONS];
 
 
 }

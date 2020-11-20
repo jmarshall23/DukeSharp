@@ -3459,7 +3459,7 @@ public partial class GlobalMembers
 						hittype[i].temp_data[3] = Engine.board.sector[sect].ceilingz;
 						hittype[i].temp_data[4] = 1;
 						Engine.board.sector[sect].ceilingz = sp.z;
-						setinterpolation(ref Engine.board.sector[sect].ceilingz);
+						setinterpolation(new SectorAnimation(Engine.board.sector[sect], SectorAnimation.SectorAnimType.SECTOR_CEILING_Z));
 						break;
 					case 35:
 						Engine.board.sector[sect].ceilingz = sp.z;
@@ -3557,8 +3557,8 @@ public partial class GlobalMembers
 
 						if (numplayers < 2)
 						{
-							setinterpolation(ref Engine.board.sector[sect].floorz);
-							setinterpolation(ref Engine.board.sector[sect].ceilingz);
+							setinterpolation(new SectorAnimation(Engine.board.sector[sect], SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z));
+							setinterpolation(new SectorAnimation(Engine.board.sector[sect], SectorAnimation.SectorAnimType.SECTOR_CEILING_Z));
 						}
 
 						break;
@@ -3661,7 +3661,7 @@ public partial class GlobalMembers
 							}
 						}
 
-						setinterpolation(ref Engine.board.sector[sect].floorz);
+						setinterpolation(new SectorAnimation(Engine.board.sector[sect], SectorAnimation.SectorAnimType.SECTOR_FLOOR_Z));
 
 						break;
 					case 32:
@@ -3683,7 +3683,7 @@ public partial class GlobalMembers
 							}
 						}
 
-						setinterpolation(ref Engine.board.sector[sect].ceilingz);
+						setinterpolation( new SectorAnimation(Engine.board.sector[sect], SectorAnimation.SectorAnimType.SECTOR_CEILING_Z));
 
 						break;
 

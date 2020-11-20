@@ -1917,7 +1917,7 @@ public partial class GlobalMembers
 
 		for (i = (short)(numinterpolations - 1); i >= 0; i--)
 		{
-			bakipos[i] = curipos[i];
+			bakipos[i] = curipos[i].Value;
 		}
 
 // jmarshall - palette and networking
