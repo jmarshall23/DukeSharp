@@ -1112,7 +1112,7 @@ public partial class GlobalMembers
 		s.y += (s.xvel * (Engine.table.sintable[s.ang & 2047])) >> 14;
 
 		j = hittype[i].temp_data[1];
-		k = hittype[i].actioncount;
+		k = hittype[i].temp_data[2];
 
 		startwall = Engine.board.sector[s.sectnum].wallptr;
 		endwall = startwall + Engine.board.sector[s.sectnum].wallnum;
@@ -7527,13 +7527,13 @@ public partial class GlobalMembers
 					break;
 				case 11: //Swingdoor
 
-					if (t[5] > 0)
+					if (hittype[i].temp_data[5] > 0)
 					{
-						t[5]--;
+						hittype[i].temp_data[5]--;
 						break;
 					}
 
-					if (t[4] != 0)
+					if (hittype[i].temp_data[4] != 0)
 					{
 						short startwall;
 						short endwall;
@@ -7558,10 +7558,10 @@ public partial class GlobalMembers
 							{
 								if (Engine.board.sprite[k].owner >= 0 && Engine.board.clipinsidebox(Engine.board.sprite[k].x, Engine.board.sprite[k].y, (short)j, 144) == 1)
 								{
-									t[5] = 8; // Delay
-									k = (short)((Engine.board.sprite[i].yvel >> 3) * t[3]);
-									t[2] -= k;
-									t[4] -= k;
+									hittype[i].temp_data[5] = 8; // Delay
+									k = (short)((Engine.board.sprite[i].yvel >> 3) * hittype[i].temp_data[3]);
+									hittype[i].temp_data[2] -= k;
+									hittype[i].temp_data[4] -= k;
 									ms(i);
 									Engine.board.setsprite(i, s.x, s.y, s.z);
 									goto BOLT;
@@ -7570,16 +7570,16 @@ public partial class GlobalMembers
 							}
 						}
 
-						k = (short)((Engine.board.sprite[i].yvel >> 3) * t[3]);
-						t[2] += k;
-						t[4] += k;
+						k = (short)((Engine.board.sprite[i].yvel >> 3) * hittype[i].temp_data[3]);
+						hittype[i].temp_data[2] += k;
+						hittype[i].temp_data[4] += k;
 						ms(i);
 						Engine.board.setsprite(i, s.x, s.y, s.z);
 
-						if (t[4] <= -511 || t[4] >= 512)
+						if (hittype[i].temp_data[4] <= -511 || hittype[i].temp_data[4] >= 512)
 						{
-							t[4] = 0;
-							t[2] &= unchecked((int)0xffffff00);
+							hittype[i].temp_data[4] = 0;
+							hittype[i].temp_data[2] &= unchecked((int)0xffffff00);
 							ms(i);
 							Engine.board.setsprite(i, s.x, s.y, s.z);
 							break;
