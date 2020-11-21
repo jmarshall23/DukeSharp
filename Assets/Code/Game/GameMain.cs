@@ -1974,7 +1974,7 @@ public partial class GlobalMembers
         Engine.NextPage();
 #endif
 
-        PlayMusic(env_music_fn[0]);
+        playmusic(0, 0);
         for (i = 0; i < 64; i += 7)
         {
             palto(0, 0, 0, i);

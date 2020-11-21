@@ -12,7 +12,7 @@ public partial class GlobalMembers
     internal static ConScript conScript;
     public static void loadefs(string filenam)
     {
-        conScript = new ConScript();
+        
     }
 
     public static void getglobalz(short i)

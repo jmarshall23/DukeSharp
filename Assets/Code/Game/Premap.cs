@@ -1333,7 +1333,7 @@ public partial class GlobalMembers
 
 		if (ln == 0 && vn == 3 && ud.multimode < 2 && ud.lockout == 0)
 		{
-			playmusic(env_music_fn[1]);
+			//playmusic(env_music_fn[1]); // jmarshall: eval vol4 animations
 
 			flushperms();
 			Engine._device.setview(0, 0, Engine.xdim - 1, Engine.ydim - 1);
@@ -1851,7 +1851,9 @@ public partial class GlobalMembers
 		if (ud.recstat != 2)
 		{
 			music_select = (char)((ud.volume_number * 11) + ud.level_number);
-			playmusic(music_fn[0,music_select]);
+// jmarshall - changed to just pass in the indexes
+			playmusic(ud.volume_number + 1, ud.level_number);
+// jmarshall end
 		}
 
 		if ((g & DefineConstants.MODE_GAME) != 0 || (g & DefineConstants.MODE_EOL) != 0)

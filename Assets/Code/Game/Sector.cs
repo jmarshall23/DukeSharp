@@ -1204,6 +1204,9 @@ public partial class GlobalMembers
                     i = Engine.board.nextspritestat[i];
                 }
 
+                if (i == -1)
+                    break;
+
                 l = Engine.board.sector[Engine.board.sprite[i].sectnum].lotag & 0x8000;
 
                 if (j >= 0)

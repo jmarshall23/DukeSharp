@@ -91,8 +91,10 @@
     <Compile Include="Assets\Code\Game\Premap.cs" />
     <Compile Include="Assets\Code\Game\Sector.cs" />
     <Compile Include="Assets\Code\Game\Sound.cs" />
+    <Compile Include="Assets\Code\Game\SoundEngine.cs" />
     <Compile Include="Assets\Code\Game\Ui.cs" />
     <None Include="Assets\StreamingAssets\duke3d_grp_goes_here.txt" />
+    <None Include="Assets\StreamingAssets\sound\readme.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

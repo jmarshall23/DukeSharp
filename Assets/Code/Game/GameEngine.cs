@@ -45,6 +45,8 @@ public class GameEngine : MonoBehaviour
 
     public static string AppPath;
 
+    private bool delayedStart = true;
+
     private static void DukeThread()
     {
         GlobalMembers.DukeMain("");
@@ -53,7 +55,16 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+       
+    }
+
+    private void DelayedStart()
+    {
         AppPath = Application.dataPath;
+
+        // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
+        GlobalMembers.conScript = new ConScript();
+        SoundEngine.globalSoundEngine.LoadAllSounds();
 
         //GlobalMembers.ud.warp_on = 1;
         //GlobalMembers.boardfilename = "_zoo.map";
@@ -82,7 +93,14 @@ public class GameEngine : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {      
+        if(delayedStart)
+        {
+            DelayedStart();
+            delayedStart = false;
+        }
+
+
         GlobalMembers.anyKeyDown = Input.anyKeyDown;
 
         if (Input.GetKeyDown(KeyCode.Escape))

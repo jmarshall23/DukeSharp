@@ -27,18 +27,17 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 */
 //-------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
+using Build;
 
-public partial class GlobalMembers
+public partial class GlobalMembers 
 {
     public static int SoundToggle = 1;
     public static int AmbienceToggle = 1;
     public static int numenvsnds = 0;
     public static int NumVoices = 32;
+
+    internal static int LOUDESTVOLUME = 150;
 
     public enum FX_ERRORS
     {
@@ -63,11 +62,6 @@ public partial class GlobalMembers
 
     }
 
-    public static void PlayMusic(string song)
-    {
-
-    }
-
     public static void testcallback(int index)
     {
 
@@ -85,11 +79,12 @@ public partial class GlobalMembers
 
     public static void spritesound(int index)
     {
-
+        SoundEngine.globalSoundEngine.PlaySound(index);
     }
 
     public static short spritesound(int index, int spriteindex)
     {
+        xyzsound((short)index, (short)spriteindex, Engine.board.sprite[spriteindex].x, Engine.board.sprite[spriteindex].y, Engine.board.sprite[spriteindex].z);
         return 0;
     }
 
@@ -100,12 +95,87 @@ public partial class GlobalMembers
 
     public static int xyzsound(short num, short i, long x, long y, long z)
     {
+        int sndist, cx, cy, cz, j, k;
+        short pitche, pitchs, cs;
+        int voice, sndang, ca, pitch;
+
+        cx = ps[screenpeek].oposx;
+        cy = ps[screenpeek].oposy;
+        cz = ps[screenpeek].oposz;
+        cs = ps[screenpeek].cursectnum;
+        ca = ps[screenpeek].ang + ps[screenpeek].look_ang;
+
+        sndist = Engine.FindDistance3D((int)(cx - x), (int)(cy - y), (int)((cz - z) >> 4));
+
+        if (i >= 0 && (soundm[num] & 16) == 0 && Engine.board.sprite[i].picnum == ConScript.MUSICANDSFX && Engine.board.sprite[i].lotag < 999 && (Engine.board.sector[Engine.board.sprite[i].sectnum].lotag & 0xff) < 9)
+            sndist = pragmas.divscale14(sndist, (Engine.board.sprite[i].hitag + 1));
+
+        pitchs = soundps[num];
+        pitche = soundpe[num];
+        cx = pragmas.klabs(pitche - pitchs);
+
+        if (cx != 0)
+        {
+            if (pitchs < pitche)
+                pitch = (int)(pitchs + (Engine.krand() % cx));
+            else pitch = (int)(pitche + (Engine.krand() % cx));
+        }
+        else pitch = pitchs;
+
+        sndist += soundvo[num];
+        if (sndist < 0) sndist = 0;
+        if (sndist != 0 && Engine.board.sprite[i].picnum != ConScript.MUSICANDSFX && !Engine.board.cansee(cx, cy, cz - (24 << 8), cs, Engine.board.sprite[i].x, Engine.board.sprite[i].y, Engine.board.sprite[i].z - (24 << 8), Engine.board.sprite[i].sectnum))
+            sndist += sndist >> 5;
+
+        switch (num)
+        {
+            case ConScript.PIPEBOMB_EXPLODE:
+            case ConScript.LASERTRIP_EXPLODE:
+            case ConScript.RPG_EXPLODE:
+                if (sndist > (6144))
+                    sndist = 6144;
+                if (Engine.board.sector[ps[screenpeek].cursectnum].lotag == 2)
+                    pitch -= 1024;
+                break;
+            default:
+                if (Engine.board.sector[ps[screenpeek].cursectnum].lotag == 2 && (soundm[num] & 4) == 0)
+                    pitch = -768;
+                if (sndist > 31444 && Engine.board.sprite[i].picnum != ConScript.MUSICANDSFX)
+                    return -1;
+                break;
+        }
+
+
+        if (Sound[num].num > 0 && Engine.board.sprite[i].picnum != ConScript.MUSICANDSFX)
+        {
+            if (SoundOwner[num, 0] != null && SoundOwner[num,0].i == i) stopsound(num);
+            else if (Sound[num].num > 1) stopsound(num);
+            else if (badguy(Engine.board.sprite[i]) != 0 && Engine.board.sprite[i].extra <= 0) stopsound(num);
+        }
+
+        if (Engine.board.sprite[i].picnum == ConScript.APLAYER && Engine.board.sprite[i].yvel == screenpeek)
+        {
+            sndang = 0;
+            sndist = 0;
+        }
+        else
+        {
+            sndang = 2048 + ca - Engine.getangle((int)(cx - x), (int)(cy - y));
+            sndang &= 2047;
+        }
+
+        if ((soundm[num] & 16) != 0) sndist = 0;
+
+        if (sndist < ((255 - LOUDESTVOLUME) << 6))
+            sndist = ((255 - LOUDESTVOLUME) << 6);
+
+        SoundEngine.globalSoundEngine.PlaySound(num, sndist >> 6, sndang >> 6);
         return 0;
     }
 
     public static void sound(int x)
     {
-
+        SoundEngine.globalSoundEngine.PlaySound(x);
     }
 
     public static void FX_SetReverb(int reverb)
@@ -138,8 +208,8 @@ public partial class GlobalMembers
 
     }
 
-    public static void playmusic(string s)
+    public static void playmusic(int volumeNumber, int levelNumber)
     {
-
+        SoundEngine.globalSoundEngine.PlayMusic(volumeNumber, levelNumber);
     }
 }
