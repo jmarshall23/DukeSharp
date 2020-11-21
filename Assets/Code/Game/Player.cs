@@ -2172,9 +2172,13 @@ public partial class GlobalMembers
 			j = 9;
 		if (KB_KeyDown[DefineConstants.sc_0])
 			j = 10;
+		if (KB_KeyDown[DefineConstants.sc_R])
+			j = 11;
+        if (KB_KeyDown[DefineConstants.sc_T])
+            j = 12;
 
 
-		loc.bits = 0;
+        loc.bits = 0;
 		loc.bits |= (uint)(j << 8);
 
 		// jmarshall - keys and weapon switch.

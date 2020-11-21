@@ -37,11 +37,26 @@ using Build;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine;
+using System.Collections;
+using UnityEngine.EventSystems;
+
 public class GameEngine : MonoBehaviour
 {
     //public Player player;
     public RawImage canvasImage;
     public Texture2D _texture;
+    public TextAsset _defaultGrpFile; // Only used on non PC platforms
+    public Canvas mobileCanvas;
+    public UIButton mobileUpButton;
+    public UIButton mobileDownButton;
+    public UIButton mobileLeftButton;
+    public UIButton mobileRightButton;
+    public UIButton mobileFireButton;
+    public UIButton mobileJumpButton;
+    public UIButton mobileOpenButton;
+    public UIButton mobilePrevButton;
+    public UIButton mobileNextButton;
 
     public static string AppPath;
 
@@ -55,7 +70,11 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-       
+        bGrpArchive._defaultGrpFile = _defaultGrpFile;
+
+#if (UNITY_STANDALONE || UNITY_EDITOR)
+        mobileCanvas.enabled = false;
+#endif
     }
 
     private void DelayedStart()
@@ -102,7 +121,17 @@ public class GameEngine : MonoBehaviour
 
 
         GlobalMembers.anyKeyDown = Input.anyKeyDown;
-
+#if !(UNITY_STANDALONE || UNITY_EDITOR)
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = mobileUpButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_DownArrow)] = mobileDownButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftArrow)] = mobileLeftButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_RightArrow)] = mobileRightButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftControl)] = mobileFireButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_Space)] = mobileJumpButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = mobileOpenButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = mobilePrevButton.buttonPressed;
+        GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = mobileNextButton.buttonPressed;
+#else
         if (Input.GetKeyDown(KeyCode.Escape))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Escape)] = true;
         else if (Input.GetKeyUp(KeyCode.Escape))
@@ -154,7 +183,17 @@ public class GameEngine : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.E))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = false;
 
-        for(int i = 0; i <= 9; i++)
+        if (Input.GetKeyDown(KeyCode.R))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = true;
+        else if (Input.GetKeyUp(KeyCode.R))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = false;
+
+        if (Input.GetKeyDown(KeyCode.T))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = true;
+        else if (Input.GetKeyUp(KeyCode.T))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = false;
+#endif
+        for (int i = 0; i <= 9; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0 + i))
                 GlobalMembers.KB_KeyDown[(DefineConstants.sc_0 + i)] = true;

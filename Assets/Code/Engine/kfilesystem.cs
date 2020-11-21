@@ -351,8 +351,12 @@ namespace Build
         //
         private bool ContentFileExists(string filepath)
         {
+#if UNITY_STANDALONE || UNITY_EDITOR // External file loading only supported on PC platforms.
             string fullFilePath = Engine.GetStreamingAssetsPath() + filepath;
             return File.Exists(fullFilePath);
+#else
+            return false;
+#endif
         }
         public byte[] kreadfile(string name)
         {
