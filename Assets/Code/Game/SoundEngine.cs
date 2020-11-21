@@ -26,9 +26,16 @@ public class SoundEngine : MonoBehaviour
     private AudioClip newMusicClip = null;
     private static Mutex mut = new Mutex();
 
+    private bool stopAllSounds = false;
+
     void Start()
     {
         globalSoundEngine = this;        
+    }
+
+    public void StopAllSounds()
+    {
+        stopAllSounds = true;
     }
 
     public void LoadAllSounds()
@@ -85,6 +92,18 @@ public class SoundEngine : MonoBehaviour
     void Update()
     {
         mut.WaitOne();
+
+        if(stopAllSounds)
+        {
+            for (int d = 0; d < channels.Count; d++)
+            {
+                if (channels[d].isPlaying)
+                {
+                    channels[d].Stop();
+                }
+            }
+            stopAllSounds = false;
+        }
 
         for (int d = 0; d < channels.Count; d++)
         {

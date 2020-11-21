@@ -92,8 +92,8 @@ public partial class GlobalMembers
         {
             int index = episode * 11 + level;
             GlobalMembers.level_file_names[index] = mapfile;
-           // GlobalMembers.partime[index] = time1; // jmarshall: partime
-           // GlobalMembers.designertime[index] = time2; // jmarshall: designertime
+            GlobalMembers.partime[index] = time1; // jmarshall: partime
+            GlobalMembers.designertime[index] = time2; // jmarshall: designertime
             GlobalMembers.level_names[index] = name.ToUpper();
         }
         public static void defineskillname(int id, string name)

@@ -460,8 +460,8 @@ public partial class GlobalMembers
 
     public static string[] level_names = new string[44];
     public static string[] level_file_names = new string[44];
-	public static int[] partime = new int[44];
-	public static int[] designertime = new int[44];
+	public static string[] partime = new string[44];
+	public static string[] designertime = new string[44];
     public static string[] volume_names = new string[4];
     public static string[] skill_names = new string[5];
 

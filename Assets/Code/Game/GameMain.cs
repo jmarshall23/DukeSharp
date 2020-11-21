@@ -2368,7 +2368,7 @@ public partial class GlobalMembers
 					ud.screen_size = 0;
 					vscrn();
 					ud.screen_size = i;
-					// dobonus(0); // jmarshall: end screens
+					dobonus((char)0); // jmarshall: end screens
 
 					if (ud.eog != 0)
 					{
