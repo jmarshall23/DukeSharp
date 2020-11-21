@@ -3091,7 +3091,643 @@ public partial class GlobalMembers
 
     public static void cheatkeys(short snum)
     {
-        // jmarshall: do we need this?
+        short i;
+        short k;
+        char dainv;
+        uint sb_snum;
+        int j;
+        player_struct p;
+
+        sb_snum = sync[snum].bits;
+        p = ps[snum];
+
+        if (p.cheat_phase == 1)
+        {
+            return;
+        }
+
+        i = (short)p.aim_mode;
+        p.aim_mode = (int)((sb_snum >> 23) & 1);
+        if (p.aim_mode < i)
+        {
+            p.return_to_center = (char)9;
+        }
+
+        if ((sb_snum & (1 << 22)) != 0 && p.quick_kick == 0)
+        {
+            if (p.curr_weapon != DefineConstants.KNEE_WEAPON || p.kickback_pic == 0)
+            {
+                p.quick_kick = 14;
+                FTA(80, p);
+            }
+        }
+
+        if ((sb_snum & ((15 << 8) | (1 << 12) | (1 << 15) | (1 << 16) | (1 << 22) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 24) | (1 << 25) | (1 << 27) | (1 << 28) | (1 << 29) | (1 << 30) | (1 << 31))) == 0)
+        {
+            p.interface_toggle_flag = 0;
+        }
+        else if (p.interface_toggle_flag == 0 && (sb_snum & (1 << 17)) == 0)
+        {
+            p.interface_toggle_flag = 1;
+
+            if ((sb_snum & (1 << 21)) != 0)
+            {
+                {
+                    KB_KeyDown[(DefineConstants.sc_Pause)] = (!(1 == 1));
+                };
+                ud.pause_on = (short)((ud.pause_on == 1) ? 1 : 0);
+                if (ud.pause_on == 1 && (sb_snum & (1 << 5)) != 0)
+                {
+                    ud.pause_on = 2;
+                }
+                if (ud.pause_on != 0)
+                {
+                    //MUSIC_Pause();
+                    FX_StopAllSounds();
+                    clearsoundlocks();
+                }
+                else
+                {
+                    //if (MusicToggle)
+                    //{
+                    //    MUSIC_Continue();
+                    //}
+                    pub = (char)DefineConstants.NUMPAGES;
+                    pus = (char)DefineConstants.NUMPAGES;
+                }
+            }
+
+            if (ud.pause_on != 0)
+            {
+                return;
+            }
+
+            if (Engine.board.sprite[p.i].extra <= 0)
+            {
+                return;
+            }
+
+            if ((sb_snum & (1 << 30)) != 0 && p.newowner == -1)
+            {
+                switch ((int)p.inven_icon)
+                {
+                    case 4:
+                        sb_snum |= (1 << 25);
+                        break;
+                    case 3:
+                        sb_snum |= (1 << 24);
+                        break;
+                    case 5:
+                        sb_snum |= (1 << 15);
+                        break;
+                    case 1:
+                        sb_snum |= (1 << 16);
+                        break;
+                    case 2:
+                        sb_snum |= (1 << 12);
+                        break;
+                }
+            }
+
+            if ((sb_snum & (1 << 15)) != 0 && p.heat_amount > 0)
+            {
+                p.heat_on = (char)((p.heat_on == 1) ? 1 : 0);
+                setpal(p);
+                p.inven_icon = (char)5;
+                spritesound(DefineConstants.NITEVISION_ONOFF, p.i);
+                FTA((short)(106 + ((p.heat_on == 1) ? 1 : 0)), p);
+            }
+
+            if ((sb_snum & (1 << 12)) != 0)
+            {
+                if (p.steroids_amount == 400)
+                {
+                    p.steroids_amount--;
+                    spritesound(DefineConstants.DUKE_TAKEPILLS, p.i);
+                    p.inven_icon = (char)2;
+                    FTA(12, p);
+                }
+                return;
+            }
+
+            if (p.newowner == -1)
+            {
+                if ((sb_snum & (1 << 20)) != 0 || (sb_snum & (1 << 27)) != 0 || p.refresh_inventory != 0)
+                {
+                    p.invdisptime = 26 * 2;
+
+                    if ((sb_snum & (1 << 27)) != 0)
+                    {
+                        k = 1;
+                    }
+                    else
+                    {
+                        k = 0;
+                    }
+
+                    if (p.refresh_inventory != 0)
+                    {
+                        p.refresh_inventory = (char)0;
+                    }
+                    dainv = p.inven_icon;
+
+                    i = 0;
+                    CHECKINV1:
+
+                    if (i < 9)
+                    {
+                        i++;
+
+                        switch ((int)dainv)
+                        {
+                            case 4:
+                                if (p.jetpack_amount > 0 && i > 1)
+                                {
+                                    break;
+                                }
+                                if (k != 0)
+                                {
+                                    dainv = (char)5;
+                                }
+                                else
+                                {
+                                    dainv = (char)3;
+                                }
+                                goto CHECKINV1;
+                            case 6:
+                                if (p.scuba_amount > 0 && i > 1)
+                                {
+                                    break;
+                                }
+                                if (k != 0)
+                                {
+                                    dainv = (char)7;
+                                }
+                                else
+                                {
+                                    dainv = (char)5;
+                                }
+                                goto CHECKINV1;
+                            case 2:
+                                if (p.steroids_amount > 0 && i > 1)
+                                {
+                                    break;
+                                }
+                                if (k != 0)
+                                {
+                                    dainv = (char)3;
+                                }
+                                else
+                                {
+                                    dainv = (char)1;
+                                }
+                                goto CHECKINV1;
+                            case 3:
+                                if (p.holoduke_amount > 0 && i > 1)
+                                {
+                                    break;
+                                }
+                                if (k != 0)
+                                {
+                                    dainv = (char)4;
+                                }
+                                else
+                                {
+                                    dainv = (char)2;
+                                }
+                                goto CHECKINV1;
+                            case 0:
+                            case 1:
+                                if (p.firstaid_amount > 0 && i > 1)
+                                {
+                                    break;
+                                }
+                                if (k != 0)
+                                {
+                                    dainv = (char)2;
+                                }
+                                else
+                                {
+                                    dainv = (char)7;
+                                }
+                                goto CHECKINV1;
+                            case 5:
+                                if (p.heat_amount > 0 && i > 1)
+                                {
+                                    break;
+                                }
+                                if (k != 0)
+                                {
+                                    dainv = (char)6;
+                                }
+                                else
+                                {
+                                    dainv = (char)4;
+                                }
+                                goto CHECKINV1;
+                            case 7:
+                                if (p.boot_amount > 0 && i > 1)
+                                {
+                                    break;
+                                }
+                                if (k != 0)
+                                {
+                                    dainv = (char)1;
+                                }
+                                else
+                                {
+                                    dainv = (char)6;
+                                }
+                                goto CHECKINV1;
+                        }
+                    }
+                    else
+                    {
+                        dainv = (char)0;
+                    }
+                    p.inven_icon = dainv;
+
+                    switch ((int)dainv)
+                    {
+                        case 1:
+                            FTA(3, p);
+                            break;
+                        case 2:
+                            FTA(90, p);
+                            break;
+                        case 3:
+                            FTA(91, p);
+                            break;
+                        case 4:
+                            FTA(88, p);
+                            break;
+                        case 5:
+                            FTA(101, p);
+                            break;
+                        case 6:
+                            FTA(89, p);
+                            break;
+                        case 7:
+                            FTA(6, p);
+                            break;
+                    }
+                }
+            }
+
+            j = (int)(((sb_snum & (15 << 8)) >> 8) - 1);
+
+            if (j > 0 && p.kickback_pic > 0)
+            {
+                p.wantweaponfire = (short)j;
+            }
+
+            if (p.last_pissed_time <= (26 * 218) && p.show_empty_weapon == 0 && p.kickback_pic == 0 && p.quick_kick == 0 && Engine.board.sprite[p.i].xrepeat > 32 && p.access_incs == 0 && p.knee_incs == 0)
+            {
+                if ((p.weapon_pos == 0 || (p.holster_weapon != 0 && p.weapon_pos == -9)))
+                {
+                    if (j == 10 || j == 11)
+                    {
+                        k = p.curr_weapon;
+                        j = (j == 10 ? -1 : 1);
+                        i = 0;
+
+                        while ((k >= 0 && k < 10) || (k == DefineConstants.GROW_WEAPON && 0 != (p.subweapon & (1 << DefineConstants.GROW_WEAPON))))
+                        {
+                            if (k == DefineConstants.GROW_WEAPON)
+                            {
+                                if (j == -1)
+                                {
+                                    k = 5;
+                                }
+                                else
+                                {
+                                    k = 7;
+                                }
+
+                            }
+                            else
+                            {
+                                k += (short)j;
+                                if (k == 6 && (p.subweapon & (1 << DefineConstants.GROW_WEAPON)) != 0)
+                                {
+                                    k = DefineConstants.GROW_WEAPON;
+                                }
+                            }
+
+                            if (k == -1)
+                            {
+                                k = 9;
+                            }
+                            else if (k == 10)
+                            {
+                                k = 0;
+                            }
+
+                            if (p.gotweapon[k] && p.ammo_amount[k] > 0)
+                            {
+                                if (k == DefineConstants.SHRINKER_WEAPON && (p.subweapon & (1 << DefineConstants.GROW_WEAPON)) != 0)
+                                {
+                                    k = DefineConstants.GROW_WEAPON;
+                                }
+                                j = (int)k;
+                                break;
+                            }
+                            else
+                            {
+                                if (k == DefineConstants.GROW_WEAPON && p.ammo_amount[DefineConstants.GROW_WEAPON] == 0 && p.gotweapon[DefineConstants.SHRINKER_WEAPON] && p.ammo_amount[DefineConstants.SHRINKER_WEAPON] > 0)
+                                {
+                                    j = DefineConstants.SHRINKER_WEAPON;
+                                    p.subweapon &= ~(1 << DefineConstants.GROW_WEAPON);
+                                    break;
+                                }
+                                else
+                                {
+                                    if (k == DefineConstants.SHRINKER_WEAPON && p.ammo_amount[DefineConstants.SHRINKER_WEAPON] == 0 && p.gotweapon[DefineConstants.SHRINKER_WEAPON] && p.ammo_amount[DefineConstants.GROW_WEAPON] > 0)
+                                    {
+                                        j = DefineConstants.GROW_WEAPON;
+                                        p.subweapon |= (1 << DefineConstants.GROW_WEAPON);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            i++;
+                            if (i == 10)
+                            {
+                                addweapon(p, DefineConstants.KNEE_WEAPON);
+                                break;
+                            }
+                        }
+                    }
+
+                    k = -1;
+
+
+                    if (j == DefineConstants.HANDBOMB_WEAPON && p.ammo_amount[DefineConstants.HANDBOMB_WEAPON] == 0)
+                    {
+                        k = (short)Engine.board.headspritestat[1];
+                        while (k >= 0)
+                        {
+                            if (Engine.board.sprite[k].picnum == DefineConstants.HEAVYHBOMB && Engine.board.sprite[k].owner == p.i)
+                            {
+                                p.gotweapon[DefineConstants.HANDBOMB_WEAPON] = true;
+                                j = DefineConstants.HANDREMOTE_WEAPON;
+                                break;
+                            }
+                            k = (short)Engine.board.nextspritestat[k];
+                        }
+                    }
+
+                    if (j == DefineConstants.SHRINKER_WEAPON)
+                    {
+                        if (screenpeek == snum)
+                        {
+                            pus = (char)DefineConstants.NUMPAGES;
+                        }
+
+                        if (p.curr_weapon != DefineConstants.GROW_WEAPON && p.curr_weapon != DefineConstants.SHRINKER_WEAPON)
+                        {
+                            if (p.ammo_amount[DefineConstants.GROW_WEAPON] > 0)
+                            {
+                                if ((p.subweapon & (1 << DefineConstants.GROW_WEAPON)) == (1 << DefineConstants.GROW_WEAPON))
+                                {
+                                    j = DefineConstants.GROW_WEAPON;
+                                }
+                                else if (p.ammo_amount[DefineConstants.SHRINKER_WEAPON] == 0)
+                                {
+                                    j = DefineConstants.GROW_WEAPON;
+                                    p.subweapon |= (1 << DefineConstants.GROW_WEAPON);
+                                }
+                            }
+                            else if (p.ammo_amount[DefineConstants.SHRINKER_WEAPON] > 0)
+                            {
+                                p.subweapon &= ~(1 << DefineConstants.GROW_WEAPON);
+                            }
+                        }
+                        else if (p.curr_weapon == DefineConstants.SHRINKER_WEAPON)
+                        {
+                            p.subweapon |= (1 << DefineConstants.GROW_WEAPON);
+                            j = DefineConstants.GROW_WEAPON;
+                        }
+                        else
+                        {
+                            p.subweapon &= ~(1 << DefineConstants.GROW_WEAPON);
+                        }
+                    }
+
+                    if (p.holster_weapon != 0)
+                    {
+                        sb_snum |= 1 << 19;
+                        p.weapon_pos = -9;
+                    }
+                    else if (j >= 0 && j <= 10 && p.gotweapon[j] && p.curr_weapon != j)
+                    {
+                        switch (j)
+                        {
+                            case DefineConstants.KNEE_WEAPON:
+                                addweapon(p, DefineConstants.KNEE_WEAPON);
+                                break;
+                            case DefineConstants.PISTOL_WEAPON:
+                                if (p.ammo_amount[DefineConstants.PISTOL_WEAPON] == 0)
+                                {
+                                    if (p.show_empty_weapon == 0)
+                                    {
+                                        p.last_full_weapon = p.curr_weapon;
+                                        p.show_empty_weapon = 32;
+                                    }
+                                }
+                                addweapon(p, DefineConstants.PISTOL_WEAPON);
+                                break;
+                            case DefineConstants.SHOTGUN_WEAPON:
+                                if (p.ammo_amount[DefineConstants.SHOTGUN_WEAPON] == 0 && p.show_empty_weapon == 0)
+                                {
+                                    p.last_full_weapon = p.curr_weapon;
+                                    p.show_empty_weapon = 32;
+                                }
+                                addweapon(p, DefineConstants.SHOTGUN_WEAPON);
+                                break;
+                            case DefineConstants.CHAINGUN_WEAPON:
+                                if (p.ammo_amount[DefineConstants.CHAINGUN_WEAPON] == 0 && p.show_empty_weapon == 0)
+                                {
+                                    p.last_full_weapon = p.curr_weapon;
+                                    p.show_empty_weapon = 32;
+                                }
+                                addweapon(p, DefineConstants.CHAINGUN_WEAPON);
+                                break;
+                            case DefineConstants.RPG_WEAPON:
+                                if (p.ammo_amount[DefineConstants.RPG_WEAPON] == 0)
+                                {
+                                    if (p.show_empty_weapon == 0)
+                                    {
+                                        p.last_full_weapon = p.curr_weapon;
+                                        p.show_empty_weapon = 32;
+                                    }
+                                }
+                                addweapon(p, DefineConstants.RPG_WEAPON);
+                                break;
+                            case DefineConstants.DEVISTATOR_WEAPON:
+                                if (p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON] == 0 && p.show_empty_weapon == 0)
+                                {
+                                    p.last_full_weapon = p.curr_weapon;
+                                    p.show_empty_weapon = 32;
+                                }
+                                addweapon(p, DefineConstants.DEVISTATOR_WEAPON);
+                                break;
+                            case DefineConstants.FREEZE_WEAPON:
+                                if (p.ammo_amount[DefineConstants.FREEZE_WEAPON] == 0 && p.show_empty_weapon == 0)
+                                {
+                                    p.last_full_weapon = p.curr_weapon;
+                                    p.show_empty_weapon = 32;
+                                }
+                                addweapon(p, DefineConstants.FREEZE_WEAPON);
+                                break;
+                            case DefineConstants.GROW_WEAPON:
+                            case DefineConstants.SHRINKER_WEAPON:
+
+                                if (p.ammo_amount[j] == 0 && p.show_empty_weapon == 0)
+                                {
+                                    p.show_empty_weapon = 32;
+                                    p.last_full_weapon = p.curr_weapon;
+                                }
+
+                                addweapon(p, (short)j);
+                                break;
+                            case DefineConstants.HANDREMOTE_WEAPON:
+                                if (k >= 0) // Found in list of [1]'s
+                                {
+                                    p.curr_weapon = DefineConstants.HANDREMOTE_WEAPON;
+                                    p.last_weapon = -1;
+                                    p.weapon_pos = 10;
+                                }
+                                break;
+                            case DefineConstants.HANDBOMB_WEAPON:
+                                if (p.ammo_amount[DefineConstants.HANDBOMB_WEAPON] > 0 && p.gotweapon[DefineConstants.HANDBOMB_WEAPON])
+                                {
+                                    addweapon(p, DefineConstants.HANDBOMB_WEAPON);
+                                }
+                                break;
+                            case DefineConstants.TRIPBOMB_WEAPON:
+                                if (p.ammo_amount[DefineConstants.TRIPBOMB_WEAPON] > 0 && p.gotweapon[DefineConstants.TRIPBOMB_WEAPON])
+                                {
+                                    addweapon(p, DefineConstants.TRIPBOMB_WEAPON);
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                if ((sb_snum & (1 << 19)) != 0)
+                {
+                    if (p.curr_weapon > DefineConstants.KNEE_WEAPON)
+                    {
+                        if (p.holster_weapon == 0 && p.weapon_pos == 0)
+                        {
+                            p.holster_weapon = 1;
+                            p.weapon_pos = -1;
+                            FTA(73, p);
+                        }
+                        else if (p.holster_weapon == 1 && p.weapon_pos == -9)
+                        {
+                            p.holster_weapon = 0;
+                            p.weapon_pos = 10;
+                            FTA(74, p);
+                        }
+                    }
+                }
+            }
+
+            if ((sb_snum & (1 << 24)) != 0 && p.newowner == -1)
+            {
+                if (p.holoduke_on == -1)
+                {
+
+                    if (p.holoduke_amount > 0)
+                    {
+                        p.inven_icon = (char)3;
+
+                        p.holoduke_on = i = EGS(p.cursectnum, p.posx, p.posy, p.posz + (30 << 8), DefineConstants.APLAYER, -64, 0, 0, p.ang, 0, 0, -1, 10);
+                        hittype[i].temp_data[3] = hittype[i].temp_data[4] = 0;
+                        Engine.board.sprite[i].yvel = snum;
+                        Engine.board.sprite[i].extra = 0;
+                        FTA(47, p);
+                    }
+                    else
+                    {
+                        FTA(49, p);
+                    }
+                    spritesound(DefineConstants.TELEPORTER, p.holoduke_on);
+
+                }
+                else
+                {
+                    spritesound(DefineConstants.TELEPORTER, p.holoduke_on);
+                    p.holoduke_on = -1;
+                    FTA(48, p);
+                }
+            }
+
+            if ((sb_snum & (1 << 16)) != 0)
+            {
+                if (p.firstaid_amount > 0 && Engine.board.sprite[p.i].extra < max_player_health)
+                {
+                    j = (max_player_health - Engine.board.sprite[p.i].extra);
+
+                    if (p.firstaid_amount > j)
+                    {
+                        p.firstaid_amount -= (short)j;
+                        Engine.board.sprite[p.i].extra = (short)max_player_health;
+                        p.inven_icon = (char)1;
+                    }
+                    else
+                    {
+                        Engine.board.sprite[p.i].extra += p.firstaid_amount;
+                        p.firstaid_amount = 0;
+                        checkavailinven(p);
+                    }
+                    spritesound(DefineConstants.DUKE_USEMEDKIT, p.i);
+                }
+            }
+
+            if ((sb_snum & (1 << 25)) != 0 && p.newowner == -1)
+            {
+                if (p.jetpack_amount > 0)
+                {
+                    p.jetpack_on = (char)((p.jetpack_on == 1) ? 1 : 0);
+                    if (p.jetpack_on != 0)
+                    {
+                        p.inven_icon = (char)4;
+                        if (p.scream_voice > (int)FX_ERRORS.FX_Ok)
+                        {
+                            FX_StopSound(p.scream_voice);
+                            testcallback(DefineConstants.DUKE_SCREAM);
+                            p.scream_voice = (int)FX_ERRORS.FX_Ok;
+                        }
+
+                        spritesound(DefineConstants.DUKE_JETPACK_ON, p.i);
+
+                        FTA(52, p);
+                    }
+                    else
+                    {
+                        p.hard_landing = (char)0;
+                        p.poszv = 0;
+                        spritesound(DefineConstants.DUKE_JETPACK_OFF, p.i);
+                        stopsound(DefineConstants.DUKE_JETPACK_IDLE);
+                        stopsound(DefineConstants.DUKE_JETPACK_ON);
+                        FTA(53, p);
+                    }
+                }
+                else
+                {
+                    FTA(50, p);
+                }
+            }
+
+            if ((sb_snum & (1 << 28)) != 0 && p.one_eighty_count == 0)
+            {
+                p.one_eighty_count = -1024;
+            }
+        }
     }
 
     public static void checksectors(short snum)

@@ -2151,6 +2151,32 @@ public partial class GlobalMembers
 			return;
 		}
 
+		j = 0;
+		if (KB_KeyDown[DefineConstants.sc_1])
+			j = 1;
+		if (KB_KeyDown[DefineConstants.sc_2])
+			j = 2;
+		if (KB_KeyDown[DefineConstants.sc_3])
+			j = 3;
+		if (KB_KeyDown[DefineConstants.sc_4])
+			j = 4;
+		if (KB_KeyDown[DefineConstants.sc_5])
+			j = 5;
+		if (KB_KeyDown[DefineConstants.sc_6])
+			j = 6;
+		if (KB_KeyDown[DefineConstants.sc_7])
+			j = 7;
+		if (KB_KeyDown[DefineConstants.sc_8])
+			j = 8;
+		if (KB_KeyDown[DefineConstants.sc_9])
+			j = 9;
+		if (KB_KeyDown[DefineConstants.sc_0])
+			j = 10;
+
+
+		loc.bits = 0;
+		loc.bits |= (uint)(j << 8);
+
 		// jmarshall - keys and weapon switch.
 		/*
 				loc.bits = (((gamefunc_Jump) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Jump) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Jump)) & 1));
@@ -2238,7 +2264,7 @@ public partial class GlobalMembers
 				loc.bits |= (KB_KeyDown[(DefineConstants.sc_Escape)] != 0) << 31;
 				running = (((gamefunc_Run) > 31) ? ((CONTROL_ButtonState2 >> ((gamefunc_Run) - 32)) & 1) : ((CONTROL_ButtonState1 >> (gamefunc_Run)) & 1)) | ud.auto_run;
 		*/
-		loc.bits = 0;
+
 		if (KB_KeyDown[DefineConstants.sc_Space])
         {
 			loc.bits = 1;

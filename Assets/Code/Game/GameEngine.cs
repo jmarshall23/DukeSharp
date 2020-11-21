@@ -154,6 +154,14 @@ public class GameEngine : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.E))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = false;
 
+        for(int i = 0; i <= 9; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+                GlobalMembers.KB_KeyDown[(DefineConstants.sc_0 + i)] = true;
+            else if (Input.GetKeyUp(KeyCode.Alpha0 + i))
+                GlobalMembers.KB_KeyDown[(DefineConstants.sc_0 + i)] = false;
+        }
+
 
         if (GlobalMembers.totalclock == 0)
         {
