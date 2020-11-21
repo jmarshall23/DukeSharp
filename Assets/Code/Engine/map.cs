@@ -4595,6 +4595,9 @@ namespace Build
                     if (clipsectcnt < 0)
                         return 0;
 
+                    if (clipsectorlist[clipsectcnt] < 0)
+                        return 0;
+
                     sec = sector[clipsectorlist[clipsectcnt]];
                     if (dir > 0)
                     {

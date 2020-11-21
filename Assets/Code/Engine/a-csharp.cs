@@ -144,7 +144,10 @@ namespace Build
 
 	        for(;cnt>=0;cnt--)
 	        {
-                ch = gbuf[bufplcbase + (vplc >> (glogy))];
+                long pos = bufplcbase + (vplc >> (glogy));
+                if (pos >= gbuf.Length || pos < 0)
+                    continue; 
+                ch = gbuf[pos];
                 if (ch != 255)
                 {
                     //Engine._device.SetScreenPixel(p, Engine.palette.palookup[gpalpos + ch]);
