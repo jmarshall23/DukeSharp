@@ -52,14 +52,38 @@ public partial class GlobalMembers
         FX_DPMI_Error
     }
 
+    static short[] menusnds = new short[]
+    {
+        ConScript.LASERTRIP_EXPLODE,
+        ConScript.DUKE_GRUNT,
+        ConScript.DUKE_LAND_HURT,
+        ConScript.CHAINGUN_FIRE,
+        ConScript.SQUISHED,
+        ConScript.KICK_HIT,
+        ConScript.PISTOL_RICOCHET,
+        ConScript.PISTOL_BODYHIT,
+        ConScript.PISTOL_FIRE,
+        ConScript.SHOTGUN_FIRE,
+        ConScript.BOS1_WALK,
+        ConScript.RPG_EXPLODE,
+        ConScript.PIPEBOMB_BOUNCE,
+        ConScript.PIPEBOMB_EXPLODE,
+        ConScript.NITEVISION_ONOFF,
+        ConScript.RPG_SHOOT,
+        ConScript.SELECT_WEAPON
+    };
+
+    internal static int menunum = 0;
+
     public static void pan3dsound()
     {
 
     }
 
     public static void intomenusounds()
-    {
-
+    {        
+        sound(menusnds[(int)menunum++]);
+        menunum %= 17;
     }
 
     public static void testcallback(int index)
