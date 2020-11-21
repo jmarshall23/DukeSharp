@@ -4043,136 +4043,160 @@ namespace Build
                     }
                 }
 
-#if false
-		        for(j = 0; j < sprite.Length; j++)
-		        {
-			        spr = sprite[j];
-			        cstat = spr.cstat;
-			        if ((cstat&dasprclipmask) == 0) continue;
-			        x1 = spr.x; y1 = spr.y;
+                for (j = headspritesect[dasect]; j >= 0; j = nextspritesect[j])
+                {
+                    spr = sprite[j];
+                    cstat = spr.cstat;
+                    if ((cstat & dasprclipmask) == 0) continue;
+                    x1 = spr.x;
+                    y1 = spr.y;
+                    switch (cstat & 48)
+                    {
+                        case 0:
+                            if ((x1 >= xmin) && (x1 <= xmax) && (y1 >= ymin) && (y1 <= ymax))
+                            {
+                                k = ((Engine.tilesizy[spr.picnum] * spr.yrepeat) << 2);
+                                if ((cstat & 128) != 0) daz = spr.z + (k >> 1);
+                                else daz = spr.z;
 
-                    if (spr.sectnum != sectnum) continue;
+                                if ((Engine.picanm[spr.picnum] & 0x00ff0000) != 0)
+                                    daz -= ((int)((byte)((Engine.picanm[spr.picnum] >> 16) & 255)) * spr.yrepeat << 2);
 
-                    int tilesizy = spr.spriteTexture.Height;
-                    int tilesizx = spr.spriteTexture.Width;
-                    int picanm = spr.spriteTexture.picanm;
+                                if ((z < daz + ceildist) && (z > daz - k - flordist))
+                                {
+                                    bsz = (spr.clipdist << 2) + walldist;
+                                    if (gx < 0) bsz = -bsz;
+                                    addclipline(x1 - bsz, y1 - bsz, x1 - bsz, y1 + bsz, (short)j + 49152);
+                                    bsz = (spr.clipdist << 2) + walldist;
+                                    if (gy < 0) bsz = -bsz;
+                                    addclipline(x1 + bsz, y1 - bsz, x1 - bsz, y1 - bsz, (short)j + 49152);
+                                }
+                            }
+                            break;
+                        case 16:
+                            k = ((Engine.tilesizy[spr.picnum] * spr.yrepeat) << 2);
 
-			        switch(cstat&48)
-			        {
-				        case 0:
-					        if ((x1 >= xmin) && (x1 <= xmax) && (y1 >= ymin) && (y1 <= ymax))
-					        {
-						        k = ((tilesizy*spr.yrepeat)<<2);
-						        if ((cstat&128) != 0) daz = spr.z+(k>>1); else daz = spr.z;
-						        if ((picanm&0x00ff0000) != 0) daz -= ((int)((sbyte)((picanm>>16)&255))*spr.yrepeat<<2);
-						        if (((z) < daz+ceildist) && ((z) > daz-k-flordist))
-						        {
-							        bsz = (spr.clipdist<<2)+walldist; if (gx < 0) bsz = -bsz;
-							        addclipline(x1-bsz,y1-bsz,x1-bsz,y1+bsz,(short)j+49152);
-							        bsz = (spr.clipdist<<2)+walldist; if (gy < 0) bsz = -bsz;
-							        addclipline(x1+bsz,y1-bsz,x1-bsz,y1-bsz,(short)j+49152);
-						        }
-					        }
-					        break;
-				        case 16:
-					        k = ((tilesizy*spr.yrepeat)<<2);
-					        if ((cstat&128) != 0) daz = spr.z+(k>>1); else daz = spr.z;
-					        if ((picanm&0x00ff0000) != 0) daz -= ((int)((sbyte)((picanm>>16)&255))*spr.yrepeat<<2);
-					        daz2 = daz-k;
-					        daz += ceildist; daz2 -= flordist;
-					        if (((z) < daz) && ((z) > daz2))
-					        {
-							        //These lines get the 2 points of the rotated sprite
-							        //Given: (x1, y1) starts out as the center point
-						        tilenum = spr.picnum;
-						        xoff = (int)((sbyte)((picanm>>8)&255))+((int)spr.xoffset);
-						        if ((cstat&4) > 0) xoff = -xoff;
-						        k = spr.ang; l = spr.xrepeat;
-						        dax = Program.engine.sintable[k&2047]*l; day = Program.engine.sintable[(k+1536)&2047]*l;
-						        l = tilesizx; k = (l>>1)+xoff;
-						        x1 -= pragmas.mulscale16(dax,k); x2 = x1+pragmas.mulscale16(dax,l);
-						        y1 -= pragmas.mulscale16(day,k); y2 = y1+pragmas.mulscale16(day,l);
-						        if (bUtilityInternal.clipinsideboxline(cx,cy,x1,y1,x2,y2,rad) == true /*!= 0*/)
-						        {
-							        dax = pragmas.mulscale14( Program.engine.sintable[(spr.ang+256+512)&2047],walldist);
-							        day = pragmas.mulscale14( Program.engine.sintable[(spr.ang+256)&2047],walldist);
+                            if ((cstat & 128) != 0)
+                                daz = spr.z + (k >> 1);
+                            else
+                                daz = spr.z;
 
-							        if ((x1-(x))*(y2-(y)) >= (x2-(x))*(y1-(y)))   //Front
-							        {
-								        addclipline(x1+dax,y1+day,x2+day,y2-dax,(short)j+49152);
-							        }
-							        else
-							        {
-								        if ((cstat&64) != 0) continue;
-								        addclipline(x2-dax,y2-day,x1-day,y1+dax,(short)j+49152);
-							        }
+                            if ((Engine.picanm[spr.picnum] & 0x00ff0000) != 0)
+                                daz -= ((int)((byte)((Engine.picanm[spr.picnum] >> 16) & 255)) * spr.yrepeat << 2);
+                            daz2 = daz - k;
+                            daz += ceildist;
+                            daz2 -= flordist;
+                            if ((z < daz) && (z > daz2))
+                            {
+                                /*
+                                 * These lines get the 2 points of the rotated sprite
+                                 * Given: (x1, y1) starts out as the center point
+                                 */
+                                tilenum = spr.picnum;
+                                xoff = (int)((byte)((Engine.picanm[tilenum] >> 8) & 255)) + ((int)spr.xoffset);
+                                if ((cstat & 4) > 0) xoff = -xoff;
+                                k = spr.ang;
+                                l = spr.xrepeat;
+                                dax = Engine.table.sintable[k & 2047] * l;
+                                day = Engine.table.sintable[(k + 1536) & 2047] * l;
+                                l = Engine.tilesizx[tilenum];
+                                k = (l >> 1) + xoff;
+                                x1 -= pragmas.mulscale16(dax, k);
+                                x2 = x1 + pragmas.mulscale16(dax, l);
+                                y1 -= pragmas.mulscale16(day, k);
+                                y2 = y1 + pragmas.mulscale16(day, l);
+                                if (Engine.clipinsideboxline(cx, cy, x1, y1, x2, y2, rad) != false)
+                                {
+                                    dax = pragmas.mulscale14(Engine.table.sintable[(spr.ang + 256 + 512) & 2047], walldist);
+                                    day = pragmas.mulscale14(Engine.table.sintable[(spr.ang + 256) & 2047], walldist);
 
-								        //Side blocker
-							        if ((x2-x1)*((x)-x1) + (y2-y1)*((y)-y1) < 0)
-								        { addclipline(x1-day,y1+dax,x1+dax,y1+day,(short)j+49152); }
-							        else if ((x1-x2)*((x)-x2) + (y1-y2)*((y)-y2) < 0)
-								        { addclipline(x2+day,y2-dax,x2-dax,y2-day,(short)j+49152); }
-						        }
-					        }
-					        break;
-				        case 32:
-					        daz = spr.z+ceildist;
-					        daz2 = spr.z-flordist;
-					        if (((z) < daz) && ((z) > daz2))
-					        {
-						        if ((cstat&64) != 0)
-							        if (((z) > spr.z) == ((cstat&8)==0)) continue;
+                                    if ((x1 - x) * (y2 - y) >= (x2 - x) * (y1 - y))   /* Front */
+                                    {
+                                        addclipline(x1 + dax, y1 + day, x2 + day, y2 - dax, (short)j + 49152);
+                                    }
+                                    else
+                                    {
+                                        if ((cstat & 64) != 0) continue;
+                                        addclipline(x2 - dax, y2 - day, x1 - day, y1 + dax, (short)j + 49152);
+                                    }
 
-						        tilenum = spr.picnum;
-						        xoff = (int)((sbyte)((picanm >>8)&255))+((int)spr.xoffset);
-                                yoff = (int)((sbyte)((picanm >> 16) & 255)) + ((int)spr.yoffset);
-						        if ((cstat&4) > 0) xoff = -xoff;
-						        if ((cstat&8) > 0) yoff = -yoff;
+                                    /* Side blocker */
+                                    if ((x2 - x1) * (x - x1) + (y2 - y1) * (y - y1) < 0)
+                                    {
+                                        addclipline(x1 - day, y1 + dax, x1 + dax, y1 + day, (short)j + 49152);
+                                    }
+                                    else if ((x1 - x2) * (x - x2) + (y1 - y2) * (y - y2) < 0)
+                                    {
+                                        addclipline(x2 + day, y2 - dax, x2 - dax, y2 - day, (short)j + 49152);
+                                    }
+                                }
+                            }
+                            break;
+                        case 32:
+                            daz = spr.z + ceildist;
+                            daz2 = spr.z - flordist;
+                            if ((z < daz) && (z > daz2))
+                            {
+                                if ((cstat & 64) != 0)
+                                    if ((z > spr.z) == ((cstat & 8) == 0)) continue;
 
-						        k = spr.ang;
-                                cosang = Program.engine.sintable[(k + 512) & 2047]; sinang = Program.engine.sintable[k];
-						        xspan = tilesizx; xrepeat = spr.xrepeat;
-						        yspan = tilesizy; yrepeat = spr.yrepeat;
+                                tilenum = spr.picnum;
+                                xoff = (int)((byte)((Engine.picanm[tilenum] >> 8) & 255)) + ((int)spr.xoffset);
+                                yoff = (int)((byte)((Engine.picanm[tilenum] >> 16) & 255)) + ((int)spr.yoffset);
+                                if ((cstat & 4) > 0) xoff = -xoff;
+                                if ((cstat & 8) > 0) yoff = -yoff;
 
-						        dax = ((xspan>>1)+xoff)*xrepeat; day = ((yspan>>1)+yoff)*yrepeat;
-						        rxi[0] = x1 + pragmas.dmulscale16( sinang,dax,cosang,day);
-                                ryi[0] = y1 + pragmas.dmulscale16( sinang, day, -cosang, dax);
-						        l = xspan*xrepeat;
-                                rxi[1] = rxi[0] - pragmas.mulscale16( sinang, l);
-                                ryi[1] = ryi[0] + pragmas.mulscale16( cosang, l);
-						        l = yspan*yrepeat;
-                                k = -pragmas.mulscale16( cosang, l); rxi[2] = rxi[1] + k; rxi[3] = rxi[0] + k;
-                                k = -pragmas.mulscale16( sinang, l); ryi[2] = ryi[1] + k; ryi[3] = ryi[0] + k;
+                                k = spr.ang;
+                                cosang = Engine.table.sintable[(k + 512) & 2047];
+                                sinang = Engine.table.sintable[k];
+                                xspan = Engine.tilesizx[tilenum];  //Engine.tilesizx[tilenum];
+                                xrepeat = spr.xrepeat;
+                                yspan = Engine.tilesizy[tilenum];// Engine.tilesizy[tilenum];
+                                yrepeat = spr.yrepeat;
 
-                                dax = pragmas.mulscale14( Program.engine.sintable[(spr.ang - 256 + 512) & 2047], walldist);
-                                day = pragmas.mulscale14( Program.engine.sintable[(spr.ang - 256) & 2047], walldist);
+                                dax = ((xspan >> 1) + xoff) * xrepeat;
+                                day = ((yspan >> 1) + yoff) * yrepeat;
+                                rxi[0] = x1 + pragmas.dmulscale16(sinang, dax, cosang, day);
+                                ryi[0] = y1 + pragmas.dmulscale16(sinang, day, -cosang, dax);
+                                l = xspan * xrepeat;
+                                rxi[1] = rxi[0] - pragmas.mulscale16(sinang, l);
+                                ryi[1] = ryi[0] + pragmas.mulscale16(cosang, l);
+                                l = yspan * yrepeat;
+                                k = -pragmas.mulscale16(cosang, l);
+                                rxi[2] = rxi[1] + k;
+                                rxi[3] = rxi[0] + k;
+                                k = -pragmas.mulscale16(sinang, l);
+                                ryi[2] = ryi[1] + k;
+                                ryi[3] = ryi[0] + k;
 
-						        if ((rxi[0]-(x))*(ryi[1]-(y)) < (rxi[1]-(x))*(ryi[0]-(y)))
-						        {
-							        if (bUtilityInternal.clipinsideboxline(cx,cy,rxi[1],ryi[1],rxi[0],ryi[0],rad))
-								        addclipline(rxi[1]-day,ryi[1]+dax,rxi[0]+dax,ryi[0]+day,(short)j+49152);
-						        }
-						        else if ((rxi[2]-(x))*(ryi[3]-(y)) < (rxi[3]-(x))*(ryi[2]-(y)))
-						        {
-                                    if (bUtilityInternal.clipinsideboxline(cx, cy, rxi[3], ryi[3], rxi[2], ryi[2], rad))
-								        addclipline(rxi[3]+day,ryi[3]-dax,rxi[2]-dax,ryi[2]-day,(short)j+49152);
-						        }
+                                dax = pragmas.mulscale14(Engine.table.sintable[(spr.ang - 256 + 512) & 2047], walldist);
+                                day = pragmas.mulscale14(Engine.table.sintable[(spr.ang - 256) & 2047], walldist);
 
-						        if ((rxi[1]-(x))*(ryi[2]-(y)) < (rxi[2]-(x))*(ryi[1]-(y)))
-						        {
-                                    if (bUtilityInternal.clipinsideboxline(cx, cy, rxi[2], ryi[2], rxi[1], ryi[1], rad))
-								        addclipline(rxi[2]-dax,ryi[2]-day,rxi[1]-day,ryi[1]+dax,(short)j+49152);
-						        }
-						        else if ((rxi[3]-(x))*(ryi[0]-(y)) < (rxi[0]-(x))*(ryi[3]-(y)))
-						        {
-                                    if (bUtilityInternal.clipinsideboxline(cx, cy, rxi[0], ryi[0], rxi[3], ryi[3], rad))
-								        addclipline(rxi[0]+dax,ryi[0]+day,rxi[3]+day,ryi[3]-dax,(short)j+49152);
-						        }
-					        }
-					        break;
-			        }
-		        }
-#endif
+                                if ((rxi[0] - x) * (ryi[1] - y) < (rxi[1] - x) * (ryi[0] - y))
+                                {
+                                    if (Engine.clipinsideboxline(cx, cy, rxi[1], ryi[1], rxi[0], ryi[0], rad) != false)
+                                        addclipline(rxi[1] - day, ryi[1] + dax, rxi[0] + dax, ryi[0] + day, (short)j + 49152);
+                                }
+                                else if ((rxi[2] - x) * (ryi[3] - y) < (rxi[3] - x) * (ryi[2] - y))
+                                {
+                                    if (Engine.clipinsideboxline(cx, cy, rxi[3], ryi[3], rxi[2], ryi[2], rad) != false)
+                                        addclipline(rxi[3] + day, ryi[3] - dax, rxi[2] - dax, ryi[2] - day, (short)j + 49152);
+                                }
+
+                                if ((rxi[1] - x) * (ryi[2] - y) < (rxi[2] - x) * (ryi[1] - y))
+                                {
+                                    if (Engine.clipinsideboxline(cx, cy, rxi[2], ryi[2], rxi[1], ryi[1], rad) != false)
+                                        addclipline(rxi[2] - dax, ryi[2] - day, rxi[1] - day, ryi[1] + dax, (short)j + 49152);
+                                }
+                                else if ((rxi[3] - x) * (ryi[0] - y) < (rxi[0] - x) * (ryi[3] - y))
+                                {
+                                    if (Engine.clipinsideboxline(cx, cy, rxi[0], ryi[0], rxi[3], ryi[3], rad) != false)
+                                        addclipline(rxi[0] + dax, ryi[0] + day, rxi[3] + day, ryi[3] - dax, (short)j + 49152);
+                                }
+                            }
+                            break;
+                    }
+                }
             } while (clipsectcnt < clipsectnum);
 
 
@@ -4565,14 +4589,14 @@ namespace Build
 				        if (((spr.cstat&48) != 0) && ((spr.cstat&48) != 48)) continue;
 				        if ((spr.cstat&dasprclipmask) == 0) continue;
 
-				        dax = (*x)-spr.x; day = (*y)-spr.y;
+				        dax = x-spr.x; day = y-spr.y;
 				        t = (spr.clipdist<<2)+walldist;
 				        if ((klabs(dax) < t) && (klabs(day) < t))
 				        {
 					        t = ((tilesizy[spr.picnum]*spr.yrepeat)<<2);
 					        if (spr.cstat&128) daz = spr.z+(t>>1); else daz = spr.z;
 					        if (picanm[spr.picnum]&0x00ff0000) daz -= ((int)((signed char)((picanm[spr.picnum]>>16)&255))*spr.yrepeat<<2);
-					        if (((*z) < daz+ceildist) && ((*z) > daz-t-flordist))
+					        if ((z < daz+ceildist) && (z > daz-t-flordist))
 					        {
 						        t = (spr.clipdist<<2)+walldist;
 
@@ -4582,9 +4606,9 @@ namespace Build
 						        bad2 = 16;
 						        do
 						        {
-							        *x = (*x) + dx; *y = (*y) + dy;
+							        *x = x + dx; *y = y + dy;
 							        bad2--; if (bad2 == 0) break;
-						        } while ((klabs((*x)-spr.x) < t) && (klabs((*y)-spr.y) < t));
+						        } while ((klabs(x-spr.x) < t) && (klabs(y-spr.y) < t));
 						        bad = -1;
 						        k--; if (k <= 0) return(bad);
 						        updatesector(*x,*y,sectnum);
