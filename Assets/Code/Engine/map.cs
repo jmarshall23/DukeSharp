@@ -4542,7 +4542,7 @@ namespace Build
 						        break;
 				        }
 
-				        if (clipyou != true)
+				        if (clipyou != false)
 				        {
 					        if ((z > daz) && (daz > ceilz)) { ceilz = daz; ceilhit = j+49152; }
 					        if ((z < daz2) && (daz2 < florz)) { florz = daz2; florhit = j+49152; }
