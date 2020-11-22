@@ -201,6 +201,7 @@ namespace Build
         private int[] lplc = new int[VgaDevice.MAXXDIM];
 
         private bool inpreparemirror = false;
+        private bool inrendermirror = false;
 
         private int[] slopalookup = new int[16384];
 
@@ -1606,7 +1607,7 @@ namespace Build
                 {
                     spr = sprite[z];
 // jmarshall: hack not sure why we need this yet?
-                    if (spr.picnum == 1405)
+                    if (spr.picnum == 1405 && inrendermirror == false)
                         continue;
 
                     if ((((spr.cstat & 0x8000) == 0) || (showinvisibility)) &&
@@ -4367,14 +4368,12 @@ namespace Build
             char bad;
             bool clipyou;
 
-            /*
             if (sectnum < 0)
             {
-                ceilz = 0x80000000; ceilhit = -1;
+                ceilz = unchecked((int)0x80000000); ceilhit = -1;
                 florz = 0x7fffffff; florhit = -1;
                 return;
             }
-            */
 
             //Extra walldist for sprites on sector lines
             i = walldist + MAXCLIPDIST + 1;
@@ -5773,6 +5772,7 @@ namespace Build
             tang = (short)(((Engine.getangle(dx, dy) << 1) - daang) & 2047);
 
             inpreparemirror = true;
+            inrendermirror = true;
         }
 
 
@@ -5782,6 +5782,8 @@ namespace Build
         public void completemirror()
         {
             int i, dy, p;
+
+            inrendermirror = false;
 
             //Can't reverse with uninitialized data
             if (inpreparemirror) { inpreparemirror = false; return; }
