@@ -63,7 +63,7 @@ namespace Build
 
         private short[] sectorborder = new short[256];
         private short sectorbordercnt;
-        public sectortype[] sector = new sectortype[MAXSECTORS + 1];
+        public sectortype[] sector = new sectortype[MAXSECTORS * 2 + 1];
         public walltype[] wall = new walltype[MAXWALLS];
         public spritetype[] sprite = new spritetype[MAXSPRITES];
 
@@ -139,8 +139,8 @@ namespace Build
         private short[] bunchfirst = new short[MAXWALLSB];
         private short[] bunchlast = new short[MAXWALLSB];
 
-        private byte[] tempbuf = new byte[256];
-        private int[] tempbufint = new int[256];
+        private byte[] tempbuf = new byte[4096];
+        private int[] tempbufint = new int[4096];
 
         private const int MAXPSKYTILES = 256;
         public short[] pskyoff = new short[MAXPSKYTILES];
@@ -3120,7 +3120,7 @@ namespace Build
             }
 
             if ((Engine.picanm[globalpicnum] & 192) != 0) globalpicnum += Engine.animateoffs((short)globalpicnum, (short)sectnum);
-            gotpic[globalpicnum] = 1;
+            Engine.setgotpic(globalpicnum);
             if ((Engine.tilesizx[globalpicnum] <= 0) || (Engine.tilesizy[globalpicnum] <= 0)) return;
 
             if (Engine.waloff[(int)globalpicnum] == null) Engine.loadtile((short)globalpicnum);
@@ -3268,7 +3268,7 @@ namespace Build
 
             tsizx = Engine.tilesizx[globalpicnum];
             tsizy = Engine.tilesizy[globalpicnum];
-            gotpic[globalpicnum] = 1;
+            Engine.setgotpic(globalpicnum);
             if ((tsizx <= 0) || (tsizy <= 0))
                 return;
             if ((uwal[x1] > Engine._device.ydimen) && (uwal[x2] > Engine._device.ydimen)) return;
@@ -3603,7 +3603,7 @@ namespace Build
             if (globalzd > 0) return;
             globalpicnum = sec.floorpicnum;
             if (globalpicnum >= MAXTILES) globalpicnum = 0;
-            gotpic[globalpicnum] = 1;
+            Engine.setgotpic(globalpicnum);
             if ((Engine.tilesizx[globalpicnum] <= 0) || (Engine.tilesizy[globalpicnum] <= 0)) return;
             if ((Engine.picanm[globalpicnum] & 192) != 0) globalpicnum += Engine.animateoffs((short)globalpicnum, (short)sectnum);
 
@@ -3775,7 +3775,7 @@ namespace Build
             if (globalzd > 0) return;
             globalpicnum = sec.ceilingpicnum;
             if (globalpicnum >= MAXTILES) globalpicnum = 0;
-            // setgotpic(globalpicnum);
+            Engine.setgotpic(globalpicnum);
             if ((Engine.tilesizx[globalpicnum] <= 0) || (Engine.tilesizy[globalpicnum] <= 0)) return;
             if ((Engine.picanm[globalpicnum] & 192) != 0) globalpicnum += Engine.animateoffs((short)globalpicnum, (short)sectnum);
 
@@ -5124,7 +5124,7 @@ namespace Build
 
             tsizx = Engine.tilesizx[globalpicnum];
             tsizy = Engine.tilesizy[globalpicnum];
-            gotpic[globalpicnum] = 1;
+            Engine.setgotpic(globalpicnum);
             if ((tsizx <= 0) || (tsizy <= 0)) return;
             if ((uwal[x1] > Engine._device.ydimen) && (uwal[x2] > Engine._device.ydimen)) return;
             if ((dwal[x1] < 0) && (dwal[x2] < 0)) return;
@@ -5208,6 +5208,8 @@ namespace Build
         private void transmaskwallscan(int x1, int x2)
         {
             int x;
+
+            Engine.setgotpic(globalpicnum);
 
             if ((Engine.tilesizx[globalpicnum] <= 0) || (Engine.tilesizy[globalpicnum] <= 0)) return;
 
@@ -5785,9 +5787,7 @@ namespace Build
             if (inpreparemirror) { inpreparemirror = false; return; }
             if (mirrorsx1 > 0) mirrorsx1--;
             if (mirrorsx2 < Engine._device.windowx2 - Engine._device.windowx1 - 1) mirrorsx2++;
-            if (mirrorsx2 < mirrorsx1) return;
-
-            if (mirrorsx2 > 128) return;
+            if (mirrorsx2 < mirrorsx1) return; 
 
             //     Engine._device.BeginDrawing();
             p = Engine.frameplace + Engine.ylookup[Engine._device.windowy1 + mirrorsy1] + Engine._device.windowx1 + mirrorsx1;

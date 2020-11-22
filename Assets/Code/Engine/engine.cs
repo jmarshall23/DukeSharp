@@ -111,7 +111,7 @@ namespace Build
             while ((c--) > 0)
             {
 
-                D[base_d--] = S[base_s++];
+                D[base_d++] = S[base_s--];
             }
         }
 #region voxformatdoc
@@ -1153,10 +1153,19 @@ palette:
 	        return 0;
         }
 
+        //1. Lock a picture in the cache system.
+        //2. Mark it as used in the bitvector tracker.
+        public static void setgotpic(int tilenume)
+        {
+            if (board == null)
+                return;
+            board.gotpic[tilenume >> 3] |= Engine.pow2char[tilenume & 7];
+        }
+
         //
         // dorotatesprite (internal)
         //
-	    //JBF 20031206: Thanks to Ken's hunting, s/(rx1|ry1|rx2|ry2)/n\1/ in this function
+        //JBF 20031206: Thanks to Ken's hunting, s/(rx1|ry1|rx2|ry2)/n\1/ in this function
         private static int[] y1ve = new int[4];
         private static int[] y2ve = new int[4];
         private static int[] nrx1 = new int[8];
@@ -1211,7 +1220,9 @@ palette:
 		        z = pragmas.mulscale16( z,x);
 	        }
 
-	        xv = pragmas.mulscale14( cosang,z);
+            Engine.setgotpic(picnum);
+
+            xv = pragmas.mulscale14( cosang,z);
 	        yv = pragmas.mulscale14( sinang,z);
 	        if (((dastat&2) != 0) || ((dastat&8) == 0)) //Don't aspect unscaled perms
 	        {

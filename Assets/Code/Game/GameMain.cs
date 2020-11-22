@@ -401,14 +401,14 @@ public partial class GlobalMembers
         short choriz;
         short tsect;
         player_struct p;
-        int tposx;
-        int tposy;
-        int tposz;
+        int tposx = 0;
+        int tposy = 0;
+        int tposz = 0;
         int dx;
         int dy;
         int thoriz;
         int i;
-        short tang;
+        short tang = 0;
 
         p = ps[snum];
 
@@ -626,43 +626,42 @@ public partial class GlobalMembers
                 choriz = -99;
             }
 
-           // se40code(cposx, cposy, cposz, cang, choriz, smoothratio); // jmarshall se40
-            // jmarshall - mirror
-            /*
-                        if ((gotpic[DefineConstants.MIRROR >> 3] & (1 << (DefineConstants.MIRROR & 7))) > 0)
-                        {
-                            dst = 0x7fffffff;
-                            i = 0;
-                            for (k = 0;k < mirrorcnt;k++)
-                            {
-                                j = pragmas.klabs(Engine.board.wall[mirrorwall[k]].x - cposx);
-                                j += pragmas.klabs(Engine.board.wall[mirrorwall[k]].y - cposy);
-                                if (j < dst)
-                                {
-                                    dst = j, i = k;
-                                }
-                            }
+            // se40code(cposx, cposy, cposz, cang, choriz, smoothratio); // jmarshall se40
+   
+            if ((Engine.board.gotpic[DefineConstants.MIRROR >> 3] & (1 << (DefineConstants.MIRROR & 7))) > 0)
+            {
+                dst = 0x7fffffff;
+                i = 0;
+                for (k = 0;k < mirrorcnt;k++)
+                {
+                    j = pragmas.klabs(Engine.board.wall[mirrorwall[k]].x - cposx);
+                    j += pragmas.klabs(Engine.board.wall[mirrorwall[k]].y - cposy);
+                    if (j < dst)
+                    {
+                        dst = j; i = k;
+                    }
+                }
+            
+                if (Engine.board.wall[mirrorwall[i]].overpicnum == DefineConstants.MIRROR)
+                {
+                    Engine.board.preparemirror(cposx, cposy, cposz, cang, choriz, mirrorwall[i], mirrorsector[i], ref tposx, ref tposy, ref tang);
+            
+                    j = Engine.board.visibility; 
+                    Engine.board.visibility = (j >> 1) + (j >> 2);
 
-                            if (Engine.board.wall[mirrorwall[i]].overpicnum == DefineConstants.MIRROR)
-                            {
-                                preparemirror(cposx, cposy, cposz, cang, choriz, mirrorwall[i], mirrorEngine.board.sector[i], tposx, tposy, tang);
+                    Engine.board.drawrooms(tposx,tposy,cposz,tang,choriz, (short)(mirrorsector[i] + DefineConstants.MAXSECTORS));
+            
+                    display_mirror = (char)1;
+                    animatesprites(tposx, tposy, tang, smoothratio);
+                    display_mirror = (char)0;
 
-                                j = visibility;
-                                visibility = (j >> 1) + (j >> 2);
+                    Engine.board.drawmasks();
+                    Engine.board.completemirror(); //Reverse screen x-wise in this function
+                    Engine.board.visibility = j;
+                }
+                Engine.board.gotpic[DefineConstants.MIRROR >> 3] &= ~(1 << (DefineConstants.MIRROR & 7));
+            }
 
-                                drawrooms(tposx,tposy,cposz,tang,choriz,mirrorEngine.board.sector[i] + DefineConstants.MAXSECTORS);
-
-                                display_mirror = 1;
-                                animatesprites(tposx, tposy, tang, smoothratio);
-                                display_mirror = 0;
-
-                                drawmasks();
-                                completemirror(); //Reverse screen x-wise in this function
-                                visibility = j;
-                            }
-                            gotpic[DefineConstants.MIRROR >> 3] &= ~(1 << (DefineConstants.MIRROR & 7));
-                        }
-            */
             Engine.board.drawrooms(cposx, cposy, cposz, cang, choriz, sect);
             animatesprites(cposx, cposy, cang, smoothratio);
             Engine.board.drawmasks();
@@ -2111,7 +2110,11 @@ public partial class GlobalMembers
 
 		loadefs(DefineConstants.confilename);
 
-        Engine.loadpics("tiles000.art");        
+        Engine.loadpics("tiles000.art");
+
+
+        Engine.tilesizx[DefineConstants.MIRROR] = 0;
+        Engine.tilesizy[DefineConstants.MIRROR] = 0;
 
 //		CONFIG_GetSetupFilename();
 //		CONFIG_ReadSetup();
