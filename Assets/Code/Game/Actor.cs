@@ -6523,7 +6523,7 @@ public partial class GlobalMembers
 							}
 
 							s.ang += (short)(l * q);
-							t[2] += (l * q);
+							t.temp_data[2] += (l * q);
 						}
 						else
 						{
@@ -6545,15 +6545,15 @@ public partial class GlobalMembers
 							{
 								l = 1;
 							}
-							if (t[3] == 0)
+							if (t.temp_data[3] == 0)
 							{
-								t[3] = ldist(s, Engine.board.sprite[j]);
+								t.temp_data[3] = ldist(s, Engine.board.sprite[j]);
 							}
-							s.xvel = (short)t[3];
+							s.xvel = (short)t.temp_data[3];
 							s.x = Engine.board.sprite[j].x;
 							s.y = Engine.board.sprite[j].y;
 							s.ang += (short)(l * q);
-							t[2] += (l * q);
+							t.temp_data[2] += (l * q);
 						}
 
 						if (l != 0 && (sc.floorstat & 64) != 0)
