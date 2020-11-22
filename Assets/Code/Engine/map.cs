@@ -98,7 +98,7 @@ namespace Build
 
         private int globalposx, globalposy, globalposz, globalhoriz;
         private short globalang, globalcursectnum;
-        private int globalpal, cosglobalang, singlobalang;
+        public int globalpal, cosglobalang, singlobalang;
         private int cosviewingrangeglobalang, sinviewingrangeglobalang;
         private int globaluclip, globaldclip, globvis;
         private int globalvisibility, globalhisibility, globalpisibility, globalcisibility;

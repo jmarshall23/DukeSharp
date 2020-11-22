@@ -1162,6 +1162,19 @@ palette:
             board.gotpic[tilenume >> 3] |= Engine.pow2char[tilenume & 7];
         }
 
+
+        public static int globalpal
+        {
+            get
+            {
+                if (board != null)
+                    return board.globalpal;
+
+                return 0;
+            }
+        }
+
+
         //
         // dorotatesprite (internal)
         //

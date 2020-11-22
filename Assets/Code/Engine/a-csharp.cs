@@ -69,7 +69,7 @@ namespace Build
         
 	        for(;cnt>=0;cnt--)
 	        {
-                //Engine._device.SetScreenPixel(pbase, Engine.palette.palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]);
+                //Engine._device.SetScreenPixel(pbase, Engine.palette._palookup[Engine.globalpal].palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]);
                 Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.palette.globalpalwritten].palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]];
 		        bx -=(uint)gbxinc;
                 by -= (uint)gbyinc;
@@ -94,7 +94,7 @@ namespace Build
 
             bz = asm5; bzinc = (asm1 >> 3);
 
-            byte[] pal = Engine.palette.palookup;
+            byte[] pal = Engine.palette._palookup[Engine.globalpal].palookup;
 
             int ppos = startpos;
 	        for(;cnt>0;cnt--)
@@ -126,7 +126,7 @@ namespace Build
                 if (pos < 0)
                     continue;
 
-                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette.palookup[gpalpos + gbuf[pos]]];
+                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + gbuf[pos]]];
                 pbase += bpl;
                 vplc += (uint)vinc;
 	        }
@@ -150,8 +150,8 @@ namespace Build
                 ch = gbuf[pos];
                 if (ch != 255)
                 {
-                    //Engine._device.SetScreenPixel(p, Engine.palette.palookup[gpalpos + ch]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette.palookup[gpalpos + ch]];
+                    //Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + ch]);
+                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + ch]];
                 }
 		        p += bpl;
                 vplc += (uint)vinc;
@@ -175,8 +175,8 @@ namespace Build
                     ch = gbuf[bufplcbase + (vplc >> glogy)];
                     if (ch != 255)
                     {
-                        //   Engine._device.SetScreenPixel(p, gtrans[p/*.memory*/+ (Engine.palette.palookup[ch + gpalpos] << 8) + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(Engine.palette.palookup[ch + gpalpos] << 8) + gtranspos]];
+                        //   Engine._device.SetScreenPixel(p, gtrans[p/*.memory*/+ (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]);
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]];
                     }
 			        p += bpl;
                     vplc += (uint)vinc;
@@ -189,8 +189,8 @@ namespace Build
 			        ch = gbuf[bufplcbase + (vplc>>glogy)];
                     if (ch != 255)
                     {
-                        //Engine._device.SetScreenPixel(p, gtrans[(p/*p.memory*/<< 8) + Engine.palette.palookup[ch + gpalpos] + gtranspos]);
-                        int c = p/*.memory*/+ (Engine.palette.palookup[ch + gpalpos] << 8) + gtranspos; // jmarshall: out of bounds check.
+                        //Engine._device.SetScreenPixel(p, gtrans[(p/*p.memory*/<< 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]);
+                        int c = p/*.memory*/+ (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos; // jmarshall: out of bounds check.
                         if (c < gtrans.Length)
                         {
                             int d = gtrans[c];
@@ -212,7 +212,7 @@ namespace Build
 
 	        gbuf = bufplc;
             gbufpos = bufplcpos;
-	        //gpal = Engine.palette.palookup;
+	        //gpal = Engine.palette._palookup[Engine.globalpal].palookup;
             gpalpos = asm3;
 
 	        for(cntup16>>=16;cntup16>0;cntup16--)
@@ -220,8 +220,8 @@ namespace Build
                 ch = gbuf[gbufpos + ((bx>>(32-glogx))<<glogy)+(by>>(32-glogy))];
                 if (ch != 255)
                 {
-                 //   Engine._device.SetScreenPixel(p, Engine.palette.palookup[ch + gpalpos]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette.palookup[ch + gpalpos]];
+                 //   Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]);
+                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
                 }
                 bx += (uint)asm1;
                 by += (uint)asm2;
@@ -241,7 +241,7 @@ namespace Build
 
 	        gbuf = bufplc;
             gbufpos = bufplcbase;
-            //gpal = Engine.palette.palookup;
+            //gpal = Engine.palette._palookup[Engine.globalpal].palookup;
             gpalpos = asm3;
 	        if (transmode != 0)
 	        {
@@ -250,7 +250,7 @@ namespace Build
                     ch = gbuf[gbufpos + ((bx >> (32 - glogx)) << glogy) + (by >> (32 - glogy))];
                     if (ch != 255) // jv?
                     {
-                        int _pallookup = Engine.palette.palookup[ch + gpalpos] << 8;
+                        int _pallookup = Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8;
                         byte trans = gtrans[(_pallookup) + gtranspos];
                         Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[trans];
                     }
@@ -266,8 +266,8 @@ namespace Build
                     ch = gbuf[gbufpos + ((bx >> (32 - glogx)) << glogy) + (by >> (32 - glogy))];
 			        if (ch != 255) /// jv
                     {
-                        //Engine._device.SetScreenPixel(p, gtrans[((p/*.memory*/) << 8) + Engine.palette.palookup[ch + gpalpos] + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette.palookup[ch + gpalpos] + gtranspos]];
+                        //Engine._device.SetScreenPixel(p, gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]);
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]];
                     }
                     bx += (uint)asm1;
                     by += (uint)asm2;
@@ -297,8 +297,8 @@ namespace Build
 
                 if(ch != 255)
                 {
-                    //Engine._device.SetScreenPixel(p, Engine.palette.palookup[ch + gpalpos]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette.palookup[ch + gpalpos]];
+                    //Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]);
+                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
                 }
 		        bx += gbxinc;
 		        by += gbyinc;
@@ -326,8 +326,8 @@ namespace Build
                 ch = gbuf[gbufpos + ((bx >> 16) * glogy + (by >> 16))];
                 if (ch != 255)
                 {
-                    //   Engine._device.SetScreenPixel(p, Engine.palette.palookup[ch + gpalpos]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette.palookup[ch + gpalpos]];
+                    //   Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]);
+                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
                 }
 		        bx += gbxinc;
 		        by += gbyinc;
@@ -361,8 +361,8 @@ namespace Build
                     ch = gbuf[gbufpos + ((bx >> 16) * glogy + (by >> 16))];
                     if (ch != 255)
                     {
-                        //Engine._device.SetScreenPixel(p, gtrans[(p/*.memory*/) + (Engine.palette.palookup[ch + gpalpos] << 8) + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(p/*.memory*/) + (Engine.palette.palookup[ch + gpalpos] << 8) + gtranspos]];
+                        //Engine._device.SetScreenPixel(p, gtrans[(p/*.memory*/) + (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]);
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(p/*.memory*/) + (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]];
                     }
 			        bx += gbxinc;
 			        by += gbyinc;
@@ -376,8 +376,8 @@ namespace Build
                     ch = gbuf[gbufpos + ((bx >> 16) * glogy + (by >> 16))];
                     if (ch != 255)
                     {
-                        //   Engine._device.SetScreenPixel(p, gtrans[((p/*.memory*/) << 8) + Engine.palette.palookup[ch + gpalpos] + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette.palookup[ch + gpalpos] + gtranspos]];
+                        //   Engine._device.SetScreenPixel(p, gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]);
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]];
                     }
 			        bx += gbxinc;
 			        by += gbyinc;
@@ -401,8 +401,8 @@ namespace Build
             {
                 for (x = 0; x < dx; x++)
                 {
-                 //   Engine._device.SetScreenPixel((p + x), Engine.palette.palookup[gpalpos + vptr[(v >> 16) + vptrpos]]);
-                    Engine._device._screenbuffer.Pixels[p + x] = Engine._device._palette._palettebuffer[Engine.palette.palookup[gpalpos + vptr[(v >> 16) + vptrpos]]];
+                 //   Engine._device.SetScreenPixel((p + x), Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + vptr[(v >> 16) + vptrpos]]);
+                    Engine._device._screenbuffer.Pixels[p + x] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + vptr[(v >> 16) + vptrpos]]];
                 }
                 p += bpl; v += vi; dy--;
             }
