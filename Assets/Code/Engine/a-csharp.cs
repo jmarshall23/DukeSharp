@@ -70,7 +70,7 @@ namespace Build
 	        for(;cnt>=0;cnt--)
 	        {
                 //Engine._device.SetScreenPixel(pbase, Engine.palette.palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]);
-                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette.palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]];
+                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.palette.globalpalwritten].palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]];
 		        bx -=(uint)gbxinc;
                 by -= (uint)gbyinc;
                 pbase--;
