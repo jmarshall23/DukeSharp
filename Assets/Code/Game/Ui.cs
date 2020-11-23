@@ -629,37 +629,37 @@ public partial class GlobalMembers
 
 		j = xoff = 0;
 
-		n = (short)((p.jetpack_amount > 0) ? 1 : 0 << 3);
+		n = (short)(((p.jetpack_amount > 0) ? 1 : 0) << 3);
 		if ((n & 8) != 0)
 		{
 			j++;
 		}
-		n |= (p.scuba_amount > 0) ? 1 : 0 << 5;
+		n |= ((p.scuba_amount > 0) ? 1 : 0) << 5;
 		if ((n & 32) != 0)
 		{
 			j++;
 		}
-		n |= (p.steroids_amount > 0) ? 1 : 0 << 1;
+		n |= ((p.steroids_amount > 0) ? 1 : 0) << 1;
 		if ((n & 2) != 0)
 		{
 			j++;
 		}
-		n |= (p.holoduke_amount > 0) ? 1 : 0 << 2;
+		n |= ((p.holoduke_amount > 0) ? 1 : 0) << 2;
 		if ((n & 4) != 0)
 		{
 			j++;
 		}
-		n |= (p.firstaid_amount > 0) ? 1 : 0;
+		n |= ((p.firstaid_amount > 0) ? 1 : 0);
 		if ((n & 1) != 0)
 		{
 			j++;
 		}
-		n |= (p.heat_amount > 0) ? 1 : 0 << 4;
+		n |= ((p.heat_amount > 0) ? 1 : 0) << 4;
 		if ((n & 16) != 0)
 		{
 			j++;
 		}
-		n |= (p.boot_amount > 0) ? 1 : 0 << 6;
+		n |= ((p.boot_amount > 0) ? 1 : 0) << 6;
 		if ((n & 64) != 0)
 		{
 			j++;

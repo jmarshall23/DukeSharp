@@ -2653,7 +2653,7 @@ public partial class GlobalMembers
 			if (p.scuba_amount > 0)
 			{
 				p.scuba_on = (char)1;
-				p.inven_icon = (char)6;
+				p.inven_icon = 6;
 				FTA(76, p);
 			}
 			else
@@ -3757,7 +3757,7 @@ public partial class GlobalMembers
 				if (p.boot_amount > 0)
 				{
 					p.boot_amount--;
-					p.inven_icon = (char)7;
+					p.inven_icon = 7;
 					if (p.boot_amount <= 0)
 					{
 						checkavailinven(p);

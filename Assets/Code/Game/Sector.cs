@@ -3093,7 +3093,7 @@ public partial class GlobalMembers
     {
         short i;
         short k;
-        char dainv;
+        int dainv;
         uint sb_snum;
         int j;
         player_struct p;
@@ -3193,7 +3193,7 @@ public partial class GlobalMembers
             {
                 p.heat_on = (char)((p.heat_on == 1) ? 1 : 0);
                 setpal(p);
-                p.inven_icon = (char)5;
+                p.inven_icon = 5;
                 spritesound(DefineConstants.NITEVISION_ONOFF, p.i);
                 FTA((short)(106 + ((p.heat_on == 1) ? 1 : 0)), p);
             }
@@ -3204,7 +3204,7 @@ public partial class GlobalMembers
                 {
                     p.steroids_amount--;
                     spritesound(DefineConstants.DUKE_TAKEPILLS, p.i);
-                    p.inven_icon = (char)2;
+                    p.inven_icon = 2;
                     FTA(12, p);
                 }
                 return;
@@ -3643,7 +3643,7 @@ public partial class GlobalMembers
 
                     if (p.holoduke_amount > 0)
                     {
-                        p.inven_icon = (char)3;
+                        p.inven_icon = 3;
 
                         p.holoduke_on = i = EGS(p.cursectnum, p.posx, p.posy, p.posz + (30 << 8), DefineConstants.APLAYER, -64, 0, 0, p.ang, 0, 0, -1, 10);
                         hittype[i].temp_data[3] = hittype[i].temp_data[4] = 0;
@@ -3676,7 +3676,7 @@ public partial class GlobalMembers
                     {
                         p.firstaid_amount -= (short)j;
                         Engine.board.sprite[p.i].extra = (short)max_player_health;
-                        p.inven_icon = (char)1;
+                        p.inven_icon = 1;
                     }
                     else
                     {
@@ -3695,7 +3695,7 @@ public partial class GlobalMembers
                     p.jetpack_on = (char)((p.jetpack_on == 1) ? 1 : 0);
                     if (p.jetpack_on != 0)
                     {
-                        p.inven_icon = (char)4;
+                        p.inven_icon = 4;
                         if (p.scream_voice > (int)FX_ERRORS.FX_Ok)
                         {
                             FX_StopSound(p.scream_voice);

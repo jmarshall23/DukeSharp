@@ -272,7 +272,7 @@ public class player_struct
     public char rapid_fire_hold;
     public char on_ground;
     public string name = new string(new char[32]);
-    public char inven_icon;
+    public int inven_icon;
     public char buttonpalette;
 
     public char jetpack_on;
@@ -383,7 +383,7 @@ public class STATUSBARTYPE
     public short[] ammo_amount = new short[DefineConstants.MAX_WEAPONS];
     public short holoduke_on;
     public bool[] gotweapon = new bool[DefineConstants.MAX_WEAPONS];
-    public char inven_icon;
+    public int inven_icon;
     public char jetpack_on;
     public char heat_on;
     public short firstaid_amount;
