@@ -5720,7 +5720,7 @@ internal class ConScript
                     GlobalMembers.ConActions.Ai(AITROOPSEEKPLAYER);
         }
         else
-        if (GlobalMembers.ConActions.ifcount(48))
+        if (GlobalMembers.ConActions.ifcount(62)) // jmarshall: was 48 extended jetpack time. 
             if (GlobalMembers.ConActions.ifcansee())
             {
                 GlobalMembers.ConActions.SetAction(ATROOPJETPACKILL);

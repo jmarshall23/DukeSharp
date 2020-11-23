@@ -785,6 +785,8 @@ public partial class GlobalMembers
 
 		p = ps[snum];
 
+		Engine.board.globalpal = 0;
+
 		if (p.invdisptime > 0)
 		{
 			displayinventory(p);

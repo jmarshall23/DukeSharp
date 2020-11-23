@@ -470,11 +470,11 @@ public partial class GlobalMembers
 
         ConActions.MoveAction moveptr = (ConActions.MoveAction)hittype[g_i].moveAction;
 
-        if ((a & DefineConstants.geth) != 0)
+        if (/*(a & DefineConstants.geth) != 0*/ moveptr.horizontal != 0)
         {
             g_sp.xvel += (short)((moveptr.horizontal - g_sp.xvel) >> 1);
         }
-        if ((a & DefineConstants.getv) != 0)
+        if (/*(a & DefineConstants.getv) != 0*/ moveptr.vertical != 0)
         {
             g_sp.zvel += (short)(((moveptr.vertical << 4) - g_sp.zvel) >> 1);
         }
