@@ -2273,7 +2273,23 @@ public partial class GlobalMembers
         {
 			loc.bits = 1;
 		}
-		if (KB_KeyDown[DefineConstants.sc_C])
+
+        if (KB_KeyDown[DefineConstants.sc_OpenBracket])
+        {
+			loc.bits |= 1 << 20;
+		}
+
+        if (KB_KeyDown[DefineConstants.sc_CloseBracket])
+        {
+            loc.bits |= 1 << 27;
+        }
+
+        if (KB_KeyDown[DefineConstants.sc_Return])
+        {
+            loc.bits |= 1 << 30;
+        }
+
+        if (KB_KeyDown[DefineConstants.sc_C])
         {
 			loc.bits |= 1 << 1;
 		}

@@ -142,6 +142,16 @@ public class GameEngine : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Return))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Return)] = false;
 
+        if (Input.GetKeyDown(KeyCode.LeftBracket))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_OpenBracket)] = true;
+        else if (Input.GetKeyUp(KeyCode.LeftBracket))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_OpenBracket)] = false;
+
+        if (Input.GetKeyDown(KeyCode.RightBracket))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_CloseBracket)] = true;
+        else if (Input.GetKeyUp(KeyCode.RightBracket))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_CloseBracket)] = false;
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = true;
         else if (Input.GetKeyUp(KeyCode.UpArrow))
