@@ -616,7 +616,7 @@ public partial class GlobalMembers
             {
                 case 0:
                     ps[g_p].steroids_amount = (short)val2;
-                    ps[g_p].inven_icon = (char)2;
+                    ps[g_p].inven_icon = 2;
                     break;
                 case 1:
                     ps[g_p].shield_amount += (short)val2; // 100;
@@ -627,15 +627,15 @@ public partial class GlobalMembers
                     break;
                 case 2:
                     ps[g_p].scuba_amount = (short)val2; // 1600;
-                    ps[g_p].inven_icon = (char)6;
+                    ps[g_p].inven_icon = 6;
                     break;
                 case 3:
                     ps[g_p].holoduke_amount = (short)val2; // 1600;
-                    ps[g_p].inven_icon = (char)3;
+                    ps[g_p].inven_icon = 3;
                     break;
                 case 4:
                     ps[g_p].jetpack_amount = (short)val2; // 1600;
-                    ps[g_p].inven_icon = (char)4;
+                    ps[g_p].inven_icon = 4;
                     break;
                 case 6:
                     switch (g_sp.pal)
@@ -653,14 +653,14 @@ public partial class GlobalMembers
                     break;
                 case 7:
                     ps[g_p].heat_amount = (short)val2;
-                    ps[g_p].inven_icon = (char)5;
+                    ps[g_p].inven_icon = 5;
                     break;
                 case 9:
-                    ps[g_p].inven_icon = (char)1;
+                    ps[g_p].inven_icon = 1;
                     ps[g_p].firstaid_amount = (short)val2;
                     break;
                 case 10:
-                    ps[g_p].inven_icon = (char)7;
+                    ps[g_p].inven_icon = 7;
                     ps[g_p].boot_amount = (short)val2;
                     break;
             }

@@ -204,35 +204,35 @@ public partial class GlobalMembers
 
 		if (p.firstaid_amount > 0)
 		{
-			p.inven_icon = (char)1;
+			p.inven_icon = 1;
 		}
 		else if (p.steroids_amount > 0)
 		{
-			p.inven_icon = (char)2;
+			p.inven_icon = 2;
 		}
 		else if (p.holoduke_amount > 0)
 		{
-			p.inven_icon = (char)3;
+			p.inven_icon = 3;
 		}
 		else if (p.jetpack_amount > 0)
 		{
-			p.inven_icon = (char)4;
+			p.inven_icon = 4;
 		}
 		else if (p.heat_amount > 0)
 		{
-			p.inven_icon = (char)5;
+			p.inven_icon = 5;
 		}
 		else if (p.scuba_amount > 0)
 		{
-			p.inven_icon = (char)6;
+			p.inven_icon = 6;
 		}
 		else if (p.boot_amount > 0)
 		{
-			p.inven_icon = (char)7;
+			p.inven_icon = 7;
 		}
 		else
 		{
-			p.inven_icon = (char)0;
+			p.inven_icon = 0;
 		}
 	}
 

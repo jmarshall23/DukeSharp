@@ -684,7 +684,7 @@ public partial class GlobalMembers
 		if (p.steroids_amount < 400)
 		{
 			p.steroids_amount = 0;
-			p.inven_icon = (char)0;
+			p.inven_icon = 0;
 		}
 		p.heat_on = (char)0;
 		p.jetpack_on = (char)0;
@@ -768,7 +768,7 @@ public partial class GlobalMembers
 
 		p = ps[snum];
 
-		p.inven_icon = (char)0;
+		p.inven_icon = 0;
 		p.boot_amount = 0;
 		p.scuba_on = (char)0;
 		p.scuba_amount = 0;
@@ -781,7 +781,7 @@ public partial class GlobalMembers
 		p.holoduke_amount = 0;
 		p.firstaid_amount = 0;
 		p.steroids_amount = 0;
-		p.inven_icon = (char)0;
+		p.inven_icon = 0;
 	}
 
 
