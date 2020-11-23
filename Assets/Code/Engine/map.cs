@@ -1154,12 +1154,12 @@ namespace Build
             {
                 Engine.oxyaspect = Engine._device.xyaspect;
                 j = Engine._device.xyaspect * 320;
-                Engine.lookups[Engine.horizlookup2 + (Engine.horizycent - 1)] = pragmas.divscale26(131072, j);
+                Engine.lookups2[Engine.horizlookup2 + (Engine.horizycent - 1)] = pragmas.divscale26(131072, j);
                 for (i = Engine.ydim * 4 - 1; i >= 0; i--)
                     if (i != (Engine.horizycent - 1))
                     {
                         Engine.lookups[Engine.horizlookup + i] = pragmas.divscale28(1, i - (Engine.horizycent - 1));
-                        Engine.lookups[Engine.horizlookup2 + i] = pragmas.divscale14(pragmas.klabs(Engine.lookups[Engine.horizlookup + i]), j);
+                        Engine.lookups2[Engine.horizlookup2 + i] = pragmas.divscale14(pragmas.klabs(Engine.lookups[Engine.horizlookup + i]), j);
                     }
             }
             if ((Engine._device.xdimen != Engine.oxdimen) || (Engine._device.viewingrange != Engine.oviewingrange))
@@ -3316,7 +3316,7 @@ namespace Build
             int xl, r, s;
 
             xl = lastx[yp]; if (xl > xr) return;
-            r = Engine.lookups[Engine.horizlookup2 + (yp - globalhoriz + Engine.horizycent)];
+            r = Engine.lookups2[Engine.horizlookup2 + (yp - globalhoriz + Engine.horizycent)];
             A.asm1 = globalx1 * r;
             A.asm2 = globaly2 * r;
             s = ((int)Engine.palette.getpalookup((int)pragmas.mulscale16(r, globvis), globalshade) << 8);
@@ -3330,7 +3330,7 @@ namespace Build
             int xl, x, y, ox, oy, r, p, shade;
 
             xl = lastx[yp]; if (xl > xr) return;
-            r = Engine.lookups[Engine.horizlookup2 + (yp - globalhoriz + Engine.horizycent)];
+            r = Engine.lookups2[Engine.horizlookup2 + (yp - globalhoriz + Engine.horizycent)];
             A.asm1 = globalx1 * r;
             A.asm2 = globaly2 * r;
 

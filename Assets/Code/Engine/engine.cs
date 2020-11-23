@@ -44,6 +44,7 @@ namespace Build
         public static short[] tilesizy = new short[MAXTILES];
         public static int[] picanm = new int[MAXTILES];
         internal static int[] lookups;
+        internal static int[] lookups2;
         public static int horizlookup;
         public static int horizlookup2;
        
@@ -510,9 +511,10 @@ palette:
 	        }
 	        
             lookups = new int[ j << 1 ];
+            lookups2 = new int[j << 1];
 
-	        horizlookup = lookups[0];
-	        horizlookup2 = lookups[0] + j;
+            horizlookup = 0;
+	        horizlookup2 = 0;
 	        horizycent = ((_device.ydim*4)>>1);
 
 	        //Force drawrooms to call dosetaspect & recalculate stuff
