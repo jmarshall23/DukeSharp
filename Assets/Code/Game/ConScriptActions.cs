@@ -306,15 +306,14 @@ public partial class GlobalMembers
                 }
             }
         }
-        /*
-        public static void ifpinventory()
+
+        public static bool ifpinventory(int val1, int val2)
         {
-            insptr++;
             j = 0;
-            switch (scriptptr.buffer[insptr++])
+            switch (val1)
             {
                 case 0:
-                    if (ps[g_p].steroids_amount != (short)scriptptr.buffer[insptr])
+                    if (ps[g_p].steroids_amount != (short)val2)
                     {
                         j = 1;
                     }
@@ -326,19 +325,19 @@ public partial class GlobalMembers
                     }
                     break;
                 case 2:
-                    if (ps[g_p].scuba_amount != (short)scriptptr.buffer[insptr])
+                    if (ps[g_p].scuba_amount != (short)val2)
                     {
                         j = 1;
                     }
                     break;
                 case 3:
-                    if (ps[g_p].holoduke_amount != (short)scriptptr.buffer[insptr])
+                    if (ps[g_p].holoduke_amount != (short)val2)
                     {
                         j = 1;
                     }
                     break;
                 case 4:
-                    if (ps[g_p].jetpack_amount != (short)scriptptr.buffer[insptr])
+                    if (ps[g_p].jetpack_amount != (short)val2)
                     {
                         j = 1;
                     }
@@ -367,28 +366,28 @@ public partial class GlobalMembers
                     }
                     break;
                 case 7:
-                    if (ps[g_p].heat_amount != (short)scriptptr.buffer[insptr])
+                    if (ps[g_p].heat_amount != (short)val2)
                     {
                         j = 1;
                     }
                     break;
                 case 9:
-                    if (ps[g_p].firstaid_amount != (short)scriptptr.buffer[insptr])
+                    if (ps[g_p].firstaid_amount != (short)val2)
                     {
                         j = 1;
                     }
                     break;
                 case 10:
-                    if (ps[g_p].boot_amount != (short)scriptptr.buffer[insptr])
+                    if (ps[g_p].boot_amount != (short)val2)
                     {
                         j = 1;
                     }
                     break;
             }
 
-            parseifelse(j != 0);
+            return (j != 0);
         }
-        */
+
         public static bool ifphealthl(int value)
         {
             return (Engine.board.sprite[ps[g_p].i].extra < value);
@@ -858,7 +857,7 @@ public partial class GlobalMembers
             return (hittype[g_i].aiaction == ai);
         }
  
-        public static bool ifwasweapon(int val, int notused = 0)
+        public static bool ifwasweapon(int val)
         {
             return (hittype[g_i].picnum == (short)val);
         }

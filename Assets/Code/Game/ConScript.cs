@@ -2998,7 +2998,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifcount(6))
                 if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_STEROIDS, STEROID_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_STEROIDS, STEROID_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             GlobalMembers.ConActions.addinventory(GET_STEROIDS, STEROID_AMOUNT);
@@ -3022,7 +3022,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifcount(6))
                 if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_BOOTS, BOOT_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_BOOTS, BOOT_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             GlobalMembers.ConActions.addinventory(GET_BOOTS, BOOT_AMOUNT);
@@ -3046,7 +3046,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifcount(6))
                 if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_HEATS, HEAT_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_HEATS, HEAT_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             GlobalMembers.ConActions.addinventory(GET_HEATS, HEAT_AMOUNT);
@@ -3070,7 +3070,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifcount(6))
                 if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_SHIELD, SHIELD_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_SHIELD, SHIELD_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             if (GlobalMembers.ConActions.ifspawnedby(PIGCOP))
@@ -3106,7 +3106,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifcount(6))
                 if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_SCUBA, SCUBA_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_SCUBA, SCUBA_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             GlobalMembers.ConActions.addinventory(GET_SCUBA, SCUBA_AMOUNT);
@@ -3131,7 +3131,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifcount(6))
                 if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_HOLODUKE, HOLODUKE_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_HOLODUKE, HOLODUKE_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             GlobalMembers.ConActions.addinventory(GET_HOLODUKE, HOLODUKE_AMOUNT);
@@ -3155,7 +3155,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
                 if (GlobalMembers.ConActions.ifcount(6))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_JETPACK, JETPACK_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_JETPACK, JETPACK_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             GlobalMembers.ConActions.addinventory(GET_JETPACK, JETPACK_AMOUNT);
@@ -3181,7 +3181,7 @@ internal class ConScript
                 if (GlobalMembers.ConActions.ifcount(6))
                     if (GlobalMembers.ConActions.ifcanseetarget())
                     {
-                        if (GlobalMembers.ConActions.ifwasweapon(GET_ACCESS, 0))
+                        if (GlobalMembers.ConActions.ifpinventory(GET_ACCESS, 0))
                             return;
                         GlobalMembers.ConActions.addinventory(GET_ACCESS, 1);
                         GlobalMembers.ConActions.quote(43);
@@ -3572,7 +3572,7 @@ internal class ConScript
         if (GlobalMembers.ConActions.ifp(palive))
             if (GlobalMembers.ConActions.ifpdistl(RETRIEVEDISTANCE))
                 if (GlobalMembers.ConActions.ifcount(6))
-                    if (GlobalMembers.ConActions.ifwasweapon(GET_FIRSTAID, FIRSTAID_AMOUNT))
+                    if (GlobalMembers.ConActions.ifpinventory(GET_FIRSTAID, FIRSTAID_AMOUNT))
                         if (GlobalMembers.ConActions.ifcanseetarget())
                         {
                             GlobalMembers.ConActions.addinventory(GET_FIRSTAID, FIRSTAID_AMOUNT);

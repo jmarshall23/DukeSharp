@@ -324,12 +324,12 @@ public partial class GlobalMembers
         return (x);
     }
 
-	public static void invennum(int x, int y, char num1, int ha, int sbits)
+	public static void invennum(int x, int y, int num1, int ha, int sbits)
 	{
 		//char[] dabuf = {0, '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
 		//sprintf(dabuf,"%ld",num1);
 		string dabuf = "";
-		dabuf += (char)num1;
+		dabuf += num1;
 
 		if (num1 > 99)
 		{
@@ -1286,7 +1286,7 @@ public partial class GlobalMembers
 							i = (p.boot_amount >> 1);
 							break;
 					}
-					invennum(284 - 30 - o, 200 - 6, (char)i, 0, 10 + permbit);
+					invennum(284 - 30 - o, 200 - 6, i, 0, 10 + permbit);
 				}
 			}
 		}
