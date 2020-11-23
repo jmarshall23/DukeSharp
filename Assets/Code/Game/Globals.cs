@@ -342,8 +342,8 @@ public class weaponhit
                     return count;
                 case 2:
                     return actioncount;
-                case 3:
-                    return animcounter;
+               // case 3:
+               //     return animcounter;
                 default:
                     return temp_data[index];
             }
@@ -359,9 +359,9 @@ public class weaponhit
                 case 2:
                     actioncount = value;
                     break;
-                case 3:
-                    animcounter = value;
-                    break;
+               // case 3:
+               //     animcounter = value;
+               //     break;
                 default:
                     temp_data[index] = value;
                     break;
