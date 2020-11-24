@@ -116,6 +116,11 @@ public class TrapEngine : ConTraps
         GlobalMembers.actortype[picnum] = 1;
     }
 
+    public override void myospal(int x, int y, int tilenum, int shade, int orientation, int p)
+    {
+        GlobalMembers.myospal(x, y, tilenum, shade, orientation, p);
+    }
+
     internal static int j;
     internal static bool jj = false;
     internal static int l;

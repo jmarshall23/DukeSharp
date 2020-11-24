@@ -1849,50 +1849,7 @@ public partial class GlobalMembers
 						pal = Engine.board.sector[p.cursectnum].floorpal;
 					}
 
-					if (p.kickback_pic < 5)
-					{
-						short[] kb_frames = { 0, 1, 2, 0, 0 };
-						short l;
-
-						l = (short)(195 - 12 + weapon_xoffset);
-
-						if (p.kickback_pic == 2)
-						{
-							l -= 3;
-						}
-						myospal((l - (p.look_ang >> 1)), (looking_arc + 244 - gun_pos), DefineConstants.FIRSTGUN + kb_frames[p.kickback_pic], gs, 2, pal);
-					}
-					else
-					{
-						if (p.kickback_pic < 10)
-						{
-							myospal(194 - (p.look_ang >> 1), looking_arc + 230 - gun_pos, DefineConstants.FIRSTGUN + 4, gs, o, pal);
-						}
-						else if (p.kickback_pic < 15)
-						{
-							myospal(244 - (p.kickback_pic << 3) - (p.look_ang >> 1), looking_arc + 130 - gun_pos + (p.kickback_pic << 4), DefineConstants.FIRSTGUN + 6, gs, o, pal);
-							myospal(224 - (p.look_ang >> 1), looking_arc + 220 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
-						}
-						else if (p.kickback_pic < 20)
-						{
-							myospal(124 + (p.kickback_pic << 1) - (p.look_ang >> 1), looking_arc + 430 - gun_pos - (p.kickback_pic << 3), DefineConstants.FIRSTGUN + 6, gs, o, pal);
-							myospal(224 - (p.look_ang >> 1), looking_arc + 220 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
-						}
-						else if (p.kickback_pic < 23)
-						{
-							myospal(184 - (p.look_ang >> 1), looking_arc + 235 - gun_pos, DefineConstants.FIRSTGUN + 8, gs, o, pal);
-							myospal(224 - (p.look_ang >> 1), looking_arc + 210 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
-						}
-						else if (p.kickback_pic < 25)
-						{
-							myospal(164 - (p.look_ang >> 1), looking_arc + 245 - gun_pos, DefineConstants.FIRSTGUN + 8, gs, o, pal);
-							myospal(224 - (p.look_ang >> 1), looking_arc + 220 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
-						}
-						else if (p.kickback_pic < 27)
-						{
-							myospal(194 - (p.look_ang >> 1), looking_arc + 235 - gun_pos, DefineConstants.FIRSTGUN + 5, gs, o, pal);
-						}
-					}
+					conScript.DisplayPistol(weapon_xoffset, p.look_ang, looking_arc, p.kickback_pic, gun_pos, gs, o, pal);
 
 					break;
 				case DefineConstants.HANDBOMB_WEAPON:

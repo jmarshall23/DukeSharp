@@ -80,6 +80,8 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract void myospal(int x, int y, int tilenum, int shade, int orientation, int p);
+
     public abstract void gamestartup(params int[] parms);
 
     public abstract void definemusic(int episode, params string[] music);

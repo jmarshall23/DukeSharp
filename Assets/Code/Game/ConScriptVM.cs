@@ -9,7 +9,7 @@ public partial class GlobalMembers
     internal static int g_x;
     internal static spritetype g_sp;
 
-    internal static ConScript conScript;
+    public static ConScript conScript;
     public static void loadefs(string filenam)
     {
         
