@@ -468,7 +468,7 @@ public partial class GlobalMembers
             return;
         }
 
-        ConActions.MoveAction moveptr = (ConActions.MoveAction)hittype[g_i].moveAction;
+        MoveAction moveptr = (MoveAction)hittype[g_i].moveAction;
 
         if (/*(a & DefineConstants.geth) != 0*/ moveptr.horizontal != 0)
         {
@@ -685,7 +685,7 @@ public partial class GlobalMembers
 
         if (hittype[g_i].action != null)
         {
-            GlobalMembers.ConActions.ConAction action = hittype[g_i].action;
+            ConAction action = hittype[g_i].action;
             g_sp.lotag += (DefineConstants.TICRATE / 26);
             if(g_sp.lotag > action.delay)
             {

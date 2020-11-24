@@ -328,9 +328,9 @@ public class weaponhit
     public int actioncount = 0;
     public int animcounter = 0;
 
-    public GlobalMembers.ConActions.MoveAction moveAction;
-    public GlobalMembers.ConActions.ConAction action;
-    public GlobalMembers.ConActions.AIAction aiaction;
+    public MoveAction moveAction;
+    public ConAction action;
+    public AIAction aiaction;
 
     public int this[int index]
     {
@@ -540,7 +540,7 @@ public partial class GlobalMembers
         public Function_t func;
         public int aiType;
         public int aiType2;
-        public GlobalMembers.ConActions.ConAction action;
+        public ConAction action;
     }
 
     //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:

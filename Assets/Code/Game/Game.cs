@@ -4040,7 +4040,7 @@ public partial class GlobalMembers
 		int l;
 		int t1;
 		int t3;
-		GlobalMembers.ConActions.ConAction t4;
+		ConAction t4;
 		spritetype s;
 		spritetype2 t;
 
