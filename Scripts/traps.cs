@@ -80,6 +80,10 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract int sgn(int i1);
+    public abstract int sintable(int index);
+    public abstract int getspritepal(int index);
+    public abstract uint krand();
     public abstract void myospal(int x, int y, int tilenum, int shade, int orientation, int p);
 
     public abstract void gamestartup(params int[] parms);

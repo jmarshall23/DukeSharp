@@ -1,6 +1,25 @@
 ﻿using Build;
 public class TrapEngine : ConTraps
 {
+    public override int sgn(int i1)
+    {
+        return pragmas.sgn(i1);
+    }
+
+    public override int sintable(int index)
+    {
+        return Engine.table.sintable[index];
+    }
+
+    public override int getspritepal(int index)
+    {
+        return Engine.board.sprite[index].pal;
+    }
+
+    public override uint krand()
+    {
+        return Engine.krand();
+    }
     public override void gamestartup(params int[] parms)
     {
         for (int j = 0; j < parms.Length; j++)
