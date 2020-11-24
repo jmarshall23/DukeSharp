@@ -1,80 +1,7 @@
 ﻿using Build;
-public class ConAction
+public class TrapEngine : ConTraps
 {
-    public int startframe;
-    public int frames;
-    public int viewtype;
-    public int invvalue;
-    public int delay;
-
-    public int GetIndex(int i)
-    {
-        switch (i)
-        {
-            case 0:
-                return startframe;
-            case 1:
-                return frames;
-            case 2:
-                return viewtype;
-            case 3:
-                return invvalue;
-            case 4:
-                return delay;
-        }
-        return -1;
-    }
-
-    public ConAction(int startframe = 0, int frames = 0, int viewtype = 0, int invvalue = 0, int delay = 0)
-    {
-        this.startframe = startframe;
-        this.frames = frames;
-        this.viewtype = viewtype;
-        this.invvalue = invvalue;
-        this.delay = delay;
-    }
-}
-
-public class AIAction
-{
-    public ConAction action;
-    public MoveAction moveAction;
-    public int val;
-    public AIAction(ConAction action, MoveAction moveAction, int val = 0, int unknown = 0)
-    {
-        this.action = action;
-        this.moveAction = moveAction;
-        this.val = val;
-    }
-}
-
-public class MoveAction
-{
-    public int horizontal;
-    public int vertical;
-
-    public int GetIndex(int i)
-    {
-        switch (i)
-        {
-            case 0:
-                return horizontal;
-            case 1:
-                return vertical;
-        }
-        return -1;
-    }
-
-    public MoveAction(int horizontal = 0, int vertical = 0)
-    {
-        this.horizontal = horizontal;
-        this.vertical = vertical;
-    }
-}
-
-public static class traps
-{
-    public static void gamestartup(params int[] parms)
+    public override void gamestartup(params int[] parms)
     {
         for (int j = 0; j < parms.Length; j++)
         {
@@ -142,7 +69,7 @@ public static class traps
             }
         }
     }
-    public static void definemusic(int episode, params string[] music)
+    public override void definemusic(int episode, params string[] music)
     {
         int k = episode;
         for (int i = 0; i < music.Length; i++)
@@ -150,7 +77,7 @@ public static class traps
             GlobalMembers.music_fn[k, i] = music[i];
         }
     }
-    public static void definesound(int id, string filename, int var1, int var2, int var3, int var4, int var5)
+    public override void definesound(int id, string filename, int var1, int var2, int var3, int var4, int var5)
     {
         GlobalMembers.sounds[id] = filename;
         GlobalMembers.soundps[id] = (short)var1;
@@ -158,7 +85,7 @@ public static class traps
         GlobalMembers.soundm[id] = var3;
         GlobalMembers.soundvo[id] = (short)var4;
     }
-    public static void definelevelname(int episode, int level, string mapfile, string time1, string time2, string name)
+    public override void definelevelname(int episode, int level, string mapfile, string time1, string time2, string name)
     {
         int index = episode * 11 + level;
         GlobalMembers.level_file_names[index] = mapfile;
@@ -166,21 +93,21 @@ public static class traps
         GlobalMembers.designertime[index] = time2; // jmarshall: designertime
         GlobalMembers.level_names[index] = name.ToUpper();
     }
-    public static void defineskillname(int id, string name)
+    public override void defineskillname(int id, string name)
     {
         GlobalMembers.skill_names[id] = name;
     }
-    public static void definevolumename(int id, string name)
+    public override void definevolumename(int id, string name)
     {
         GlobalMembers.volume_names[id] = name;
     }
-    public static void definequote(int id, string str)
+    public override void definequote(int id, string str)
     {
         GlobalMembers.fta_quotes[id] = str;
     }
-    public static void RegisterActor(GlobalMembers.ScriptActorRegistration.Function_t function, int picnum, int aiType, int aiType2 = 0, ConAction action = null, MoveAction unknown2 = null, int unknown3 = 0, int unknown4 = 0)
+    public override void RegisterActor(ScriptActorRegistration.Function_t function, int picnum, int aiType, int aiType2 = 0, ConAction action = null, MoveAction unknown2 = null, int unknown3 = 0, int unknown4 = 0)
     {
-        GlobalMembers.scriptActorRegPtr[picnum] = new GlobalMembers.ScriptActorRegistration();
+        GlobalMembers.scriptActorRegPtr[picnum] = new ScriptActorRegistration();
         GlobalMembers.scriptActorRegPtr[picnum].func = function;
         GlobalMembers.scriptActorRegPtr[picnum].aiType = aiType;
         GlobalMembers.scriptActorRegPtr[picnum].aiType2 = aiType2;
@@ -195,7 +122,7 @@ public static class traps
     internal static int s;
     internal static short temphit = 0;
 
-    public static bool ifnosounds()
+    public override bool ifnosounds()
     {
         for (j = 1; j < DefineConstants.NUM_SOUNDS; j++)
         {
@@ -207,17 +134,17 @@ public static class traps
 
         return (j == DefineConstants.NUM_SOUNDS);
     }
-    public static bool ifangdiffl(int value)
+    public override bool ifangdiffl(int value)
     {
         j = pragmas.klabs(GlobalMembers.getincangle(GlobalMembers.ps[GlobalMembers.g_p].ang, GlobalMembers.g_sp.ang));
         return (j <= value);
     }
-    public static bool ifspritepal(int value)
+    public override bool ifspritepal(int value)
     {
         return (GlobalMembers.g_sp.pal == value);
     }
 
-    public static void respawnhitag()
+    public override void respawnhitag()
     {
         switch (GlobalMembers.g_sp.picnum)
         {
@@ -247,19 +174,19 @@ public static class traps
                 break;
         }
     }
-    public static bool ifnotmoving()
+    public override bool ifnotmoving()
     {
         return (GlobalMembers.hittype[GlobalMembers.g_i].movflag & 49152) > 16384;
     }
-    public static bool ifinouterspace()
+    public override bool ifinouterspace()
     {
         return (GlobalMembers.floorspace(GlobalMembers.g_sp.sectnum) != 0);
     }
-    public static void quote(int value)
+    public override void quote(int value)
     {
         GlobalMembers.FTA((short)value, GlobalMembers.ps[GlobalMembers.g_p]);
     }
-    public static bool ifawayfromwall()
+    public override bool ifawayfromwall()
     {
         short s1;
 
@@ -286,7 +213,7 @@ public static class traps
         }
         return (j != 0);
     }
-    public static void pstomp()
+    public override void pstomp()
     {
         if (GlobalMembers.ps[GlobalMembers.g_p].knee_incs == 0 && Engine.board.sprite[GlobalMembers.ps[GlobalMembers.g_p].i].xrepeat >= 40)
         {
@@ -302,7 +229,7 @@ public static class traps
         }
     }
 
-    public static bool ifpinventory(int val1, int val2)
+    public override bool ifpinventory(int val1, int val2)
     {
         j = 0;
         switch (val1)
@@ -383,26 +310,26 @@ public static class traps
         return (j != 0);
     }
 
-    public static bool ifphealthl(int value)
+    public override bool ifphealthl(int value)
     {
         return (Engine.board.sprite[GlobalMembers.ps[GlobalMembers.g_p].i].extra < value);
     }
-    public static void palfrom(int v1 = 0, int v2 = 0, int v3 = 0, int v4 = 0)
+    public override void palfrom(int v1 = 0, int v2 = 0, int v3 = 0, int v4 = 0)
     {
         GlobalMembers.ps[GlobalMembers.g_p].pals_time = v1;
         GlobalMembers.ps[GlobalMembers.g_p].pals[0] = (byte)v2;
         GlobalMembers.ps[GlobalMembers.g_p].pals[1] = (byte)v3;
         GlobalMembers.ps[GlobalMembers.g_p].pals[2] = (byte)v4;
     }
-    public static bool ifceilingdistl(int val)
+    public override bool ifceilingdistl(int val)
     {
         return ((GlobalMembers.g_sp.z - GlobalMembers.hittype[GlobalMembers.g_i].ceilingz) <= (((short)val) << 8));
     }
-    public static bool iffloordistl(int val)
+    public override bool iffloordistl(int val)
     {
         return ((GlobalMembers.hittype[GlobalMembers.g_i].floorz - GlobalMembers.g_sp.z) <= (((short)val) << 8));
     }
-    public static bool ifrespawn()
+    public override bool ifrespawn()
     {
         if (GlobalMembers.badguy(GlobalMembers.g_sp) != 0)
         {
@@ -417,15 +344,15 @@ public static class traps
             return (GlobalMembers.ud.respawn_items != 0);
         }
     }
-    public static bool ifbulletnear()
+    public override bool ifbulletnear()
     {
         return (GlobalMembers.dodge(GlobalMembers.g_sp) == 1);
     }
-    public static void cactor(int value)
+    public override void cactor(int value)
     {
         GlobalMembers.g_sp.picnum = (short)value;
     }
-    public static void spritepal(int value)
+    public override void spritepal(int value)
     {
         if (GlobalMembers.g_sp.picnum != DefineConstants.APLAYER)
         {
@@ -433,11 +360,11 @@ public static class traps
         }
         GlobalMembers.g_sp.pal = (byte)value;
     }
-    public static bool ifinspace()
+    public override bool ifinspace()
     {
         return (GlobalMembers.ceilingspace(GlobalMembers.g_sp.sectnum) != 0);
     }
-    public static void operate()
+    public override void operate()
     {
         if (Engine.board.sector[GlobalMembers.g_sp.sectnum].lotag == 0)
         {
@@ -469,43 +396,43 @@ public static class traps
             }
         }
     }
-    public static bool ifmultiplayer()
+    public override bool ifmultiplayer()
     {
         return (GlobalMembers.ud.multimode > 1);
     }
-    public static bool ifoutside()
+    public override bool ifoutside()
     {
         return ((Engine.board.sector[GlobalMembers.g_sp.sectnum].ceilingstat & 1) != 0);
     }
-    public static bool ifhitspace()
+    public override bool ifhitspace()
     {
         return ((GlobalMembers.sync[GlobalMembers.g_p].bits & (1 << 29)) != 0);
     }
-    public static bool ifgapzl(int val)
+    public override bool ifgapzl(int val)
     {
         return (((GlobalMembers.hittype[GlobalMembers.g_i].floorz - GlobalMembers.hittype[GlobalMembers.g_i].ceilingz) >> 8) < (short)val);
     }
-    public static void wackplayer()
+    public override void wackplayer()
     {
         GlobalMembers.forceplayerangle(GlobalMembers.ps[GlobalMembers.g_p]);
     }
 
-    public static bool ifspawnedby(int value)
+    public override bool ifspawnedby(int value)
     {
         return (GlobalMembers.hittype[GlobalMembers.g_i].picnum == (short)value);
     }
 
-    public static void guts(int value1, int value2)
+    public override void guts(int value1, int value2)
     {
         GlobalMembers.guts(GlobalMembers.g_sp, (short)value1, (short)value2, GlobalMembers.g_p);
     }
 
-    public static bool ifstrength(int value)
+    public override bool ifstrength(int value)
     {
         return (GlobalMembers.g_sp.extra <= (short)value);
     }
 
-    public static bool ifp(int value, object notused = null, object notused2 = null, object notused3 = null, object notused4 = null)
+    public override bool ifp(int value, object notused = null, object notused2 = null, object notused3 = null, object notused4 = null)
     {
         l = (short)value;
         j = 0;
@@ -600,12 +527,12 @@ public static class traps
         return (j == 1);
     }
 
-    public static void hitradius(int val1 = 0, int val2 = 0, int val3 = 0, int val4 = 0, int val5 = 0)
+    public override void hitradius(int val1 = 0, int val2 = 0, int val3 = 0, int val4 = 0, int val5 = 0)
     {
         GlobalMembers.hitradius(GlobalMembers.g_i, ((short)val1), val2, val3, val4, val5);
     }
 
-    public static void addinventory(int val1, int val2)
+    public override void addinventory(int val1, int val2)
     {
         switch ((short)val1)
         {
@@ -660,28 +587,28 @@ public static class traps
                 break;
         }
     }
-    public static void resetcount()
+    public override void resetcount()
     {
         GlobalMembers.hittype[GlobalMembers.g_i].count = 0;
     }
-    public static bool ifactor(int val1)
+    public override bool ifactor(int val1)
     {
         return (GlobalMembers.g_sp.picnum == (short)val1);
     }
-    public static bool ifcount(int val)
+    public override bool ifcount(int val)
     {
         int v = GlobalMembers.hittype[GlobalMembers.g_i].count;
         return (v >= (short)val);
     }
-    public static bool ifinwater()
+    public override bool ifinwater()
     {
         return (Engine.board.sector[GlobalMembers.g_sp.sectnum].lotag == 2);
     }
-    public static bool ifonwater()
+    public override bool ifonwater()
     {
         return (pragmas.klabs(GlobalMembers.g_sp.z - Engine.board.sector[GlobalMembers.g_sp.sectnum].floorz) < (32 << 8) && Engine.board.sector[GlobalMembers.g_sp.sectnum].lotag == 1);
     }
-    public static void resetplayer()
+    public override void resetplayer()
     {
         if (GlobalMembers.ud.multimode < 2)
         {
@@ -755,28 +682,28 @@ public static class traps
         }
         // setpal(ps[g_p]);// jmarshall palette
     }
-    public static bool ifmove(MoveAction val1)
+    public override bool ifmove(MoveAction val1)
     {
         return GlobalMembers.hittype[GlobalMembers.g_i].moveAction == val1;
     }
 
-    public static void cstat(int value)
+    public override void cstat(int value)
     {
         GlobalMembers.g_sp.cstat = (short)value;
     }
-    public static void clipdist(int value)
+    public override void clipdist(int value)
     {
         GlobalMembers.g_sp.clipdist = (byte)value;
     }
-    public static void cstator(int value)
+    public override void cstator(int value)
     {
         GlobalMembers.g_sp.cstat |= (short)value;
     }
-    public static void count(int value)
+    public override void count(int value)
     {
         GlobalMembers.hittype[GlobalMembers.g_i].count = value;
     }
-    public static void debris(int val1, int val2)
+    public override void debris(int val1, int val2)
     {
         short dnum;
 
@@ -808,32 +735,32 @@ public static class traps
             }
         }
     }
-    public static bool ifrnd(int val1)
+    public override bool ifrnd(int val1)
     {
         return (((Engine.krand() >> 8) >= (255 - (val1))));
     }
-    public static void resetactioncount()
+    public override void resetactioncount()
     {
         GlobalMembers.hittype[GlobalMembers.g_i].actioncount = 0;
     }
-    public static bool ifactioncount(int val1)
+    public override bool ifactioncount(int val1)
     {
         return (GlobalMembers.hittype[GlobalMembers.g_i].actioncount >= (short)val1);
     }
 
-    public static void SetAction(ConAction action)
+    public override void SetAction(ConAction action)
     {
         GlobalMembers.hittype[GlobalMembers.g_i].actioncount = 0;
         GlobalMembers.hittype[GlobalMembers.g_i].animcounter = 0;
         GlobalMembers.hittype[GlobalMembers.g_i].action = action;
     }
 
-    public static bool ifaction(ConAction action)
+    public override bool ifaction(ConAction action)
     {
         return (GlobalMembers.hittype[GlobalMembers.g_i].action == action);
     }
 
-    public static void Ai(AIAction ai)
+    public override void Ai(AIAction ai)
     {
         GlobalMembers.hittype[GlobalMembers.g_i].aiaction = ai;
         GlobalMembers.hittype[GlobalMembers.g_i].action = ai.action; // Action
@@ -845,17 +772,17 @@ public static class traps
             GlobalMembers.g_sp.ang = (short)(Engine.krand() & 2047);
         }
     }
-    public static bool ifai(AIAction ai)
+    public override bool ifai(AIAction ai)
     {
         return (GlobalMembers.hittype[GlobalMembers.g_i].aiaction == ai);
     }
 
-    public static bool ifwasweapon(int val)
+    public override bool ifwasweapon(int val)
     {
         return (GlobalMembers.hittype[GlobalMembers.g_i].picnum == (short)val);
     }
 
-    public static void spawn(int val)
+    public override void spawn(int val)
     {
         if (GlobalMembers.g_sp.sectnum >= 0 && GlobalMembers.g_sp.sectnum < DefineConstants.MAXSECTORS)
         {
@@ -863,7 +790,7 @@ public static class traps
         }
     }
 
-    public static void Move(MoveAction val, int val2 = 0, int val3 = 0, int unknown1 = 0)
+    public override void Move(MoveAction val, int val2 = 0, int val3 = 0, int unknown1 = 0)
     {
         GlobalMembers.hittype[GlobalMembers.g_i].count = 0;
         GlobalMembers.hittype[GlobalMembers.g_i].moveAction = val;
@@ -874,7 +801,7 @@ public static class traps
         }
     }
 
-    public static void Move(int val, int val2 = 0)
+    public override void Move(int val, int val2 = 0)
     {
         if (val != 0)
             throw new System.Exception("Move val not null");
@@ -889,7 +816,7 @@ public static class traps
     }
 
 
-    public static void addphealth(int val)
+    public override void addphealth(int val)
     {
         if (GlobalMembers.ps[GlobalMembers.g_p].newowner >= 0)
         {
@@ -965,21 +892,21 @@ public static class traps
         }
     }
 
-    public static void endofgame(int timebeforeexit)
+    public override void endofgame(int timebeforeexit)
     {
         GlobalMembers.ps[GlobalMembers.g_p].timebeforeexit = (short)timebeforeexit;
         GlobalMembers.ps[GlobalMembers.g_p].customexitsound = -1;
         GlobalMembers.ud.eog = 1;
     }
 
-    public static void debug()
+    public override void debug()
     {
         //insptr++;
         //Engine.Printf("" + scriptptr.buffer[insptr]);
        // insptr++;
     }
 
-    public static void addweapon(int val, int val2)
+    public override void addweapon(int val, int val2)
     {
         if (GlobalMembers.ps[GlobalMembers.g_p].gotweapon[(short)val] == false)
         {
@@ -999,39 +926,39 @@ public static class traps
             }
         }
     }
-    public static void killit()
+    public override void killit()
     {
         GlobalMembers.killit_flag = (char)1;
     }
-    public static void lotsofglass(int val)
+    public override void lotsofglass(int val)
     {
         GlobalMembers.spriteglass(GlobalMembers.g_i, (short)val);
     }
-    public static void addkills(int val)
+    public override void addkills(int val)
     {
         GlobalMembers.ps[GlobalMembers.g_p].actors_killed += (char)val;
         GlobalMembers.hittype[GlobalMembers.g_i].actorstayput = -1;
     }
 
-    public static void paper(int val)
+    public override void paper(int val)
     {
         GlobalMembers.lotsofpaper(GlobalMembers.g_sp, (short)val);
     }
 
-    public static void sleeptime(int val)
+    public override void sleeptime(int val)
     {
         GlobalMembers.hittype[GlobalMembers.g_i].timetosleep = (short)val;
     }
-    public static void mail(int val)
+    public override void mail(int val)
     {
         GlobalMembers.lotsofmail(GlobalMembers.g_sp, (short)val);
     }
 
-    public static void money(int val)
+    public override void money(int val)
     {
         GlobalMembers.lotsofmoney(GlobalMembers.g_sp, val);
     }
-    public static void addammo(int val, int val2)
+    public override void addammo(int val, int val2)
     {
         if (GlobalMembers.ps[GlobalMembers.g_p].ammo_amount[val] >= GlobalMembers.max_ammo_amount[val])
         {
@@ -1047,7 +974,7 @@ public static class traps
             }
         }
     }
-    public static void fall()
+    public override void fall()
     {
         GlobalMembers.g_sp.xoffset = 0;
         GlobalMembers.g_sp.yoffset = 0;
@@ -1153,45 +1080,45 @@ public static class traps
         }
     }
 
-    public static void tip()
+    public override void tip()
     {
         GlobalMembers.ps[GlobalMembers.g_p].tipincs = 26;
     }
-    public static void sound(int val)
+    public override void sound(int val)
     {
         GlobalMembers.spritesound(val, GlobalMembers.g_i);
     }
-    public static void globalsound(int val)
+    public override void globalsound(int val)
     {
         if (GlobalMembers.g_p == GlobalMembers.screenpeek || GlobalMembers.ud.coop == 1)
         {
             GlobalMembers.spritesound(val, GlobalMembers.ps[GlobalMembers.screenpeek].i);
         }
     }
-    public static void stopsound(int val)
+    public override void stopsound(int val)
     {
         if (GlobalMembers.Sound[val].num > 0)
         {
             GlobalMembers.stopsound(val);
         }
     }
-    public static void soundonce(int val)
+    public override void soundonce(int val)
     {
         if (GlobalMembers.Sound[val].num == 0)
         {
             GlobalMembers.spritesound((short)val, GlobalMembers.g_i);
         }
     }
-    public static void shoot(int val)
+    public override void shoot(int val)
     {
         GlobalMembers.shoot(GlobalMembers.g_i, (short)val);
     }
-    public static void sizeat(int val, int val2)
+    public override void sizeat(int val, int val2)
     {
         GlobalMembers.g_sp.xrepeat = (byte)val;
         GlobalMembers.g_sp.yrepeat = (byte)val2;
     }
-    public static void sizeto(int val, int val2)
+    public override void sizeto(int val, int val2)
     {
         j = ((val) - GlobalMembers.g_sp.xrepeat) << 1;
         GlobalMembers.g_sp.xrepeat += (byte)pragmas.ksgn(j);
@@ -1205,7 +1132,7 @@ public static class traps
             }
         }
     }
-    public static void pkick()
+    public override void pkick()
     {
         if (GlobalMembers.ud.multimode > 1 && GlobalMembers.g_sp.picnum == DefineConstants.APLAYER)
         {
@@ -1219,24 +1146,24 @@ public static class traps
             GlobalMembers.ps[GlobalMembers.g_p].quick_kick = 14;
         }
     }
-    public static void mikesnd()
+    public override void mikesnd()
     {
         if (GlobalMembers.Sound[GlobalMembers.g_sp.yvel].num == 0)
         {
             GlobalMembers.spritesound((ushort)GlobalMembers.g_sp.yvel, GlobalMembers.g_i);
         }
     }
-    public static void nullop()
+    public override void nullop()
     {
 
     }
 
-    public static void tossweapon()
+    public override void tossweapon()
     {
         GlobalMembers.checkweapons(GlobalMembers.ps[GlobalMembers.g_sp.yvel]);
     }
 
-    public static void getlastpal()
+    public override void getlastpal()
     {
         if (GlobalMembers.g_sp.picnum == DefineConstants.APLAYER)
         {
@@ -1249,7 +1176,7 @@ public static class traps
         GlobalMembers.hittype[GlobalMembers.g_i].tempang = 0;
     }
 
-    public static bool ifgotweaponce(int val)
+    public override bool ifgotweaponce(int val)
     {
         if (GlobalMembers.ud.coop >= 1 && GlobalMembers.ud.multimode > 1)
         {
@@ -1273,18 +1200,18 @@ public static class traps
         }
         return (false);
     }
-    public static void strength(int val)
+    public override void strength(int val)
     {
         GlobalMembers.g_sp.extra = (short)val;
     }
 
-    public static void addstrength(int val)
+    public override void addstrength(int val)
     {
         GlobalMembers.g_sp.extra += (short)val;
     }
 
 
-    public static bool ifpdistg(int val)
+    public override bool ifpdistg(int val)
     {
         bool r = (GlobalMembers.g_x > val);
         if (GlobalMembers.g_x > DefineConstants.MAXSLEEPDIST && GlobalMembers.hittype[GlobalMembers.g_i].timetosleep == 0)
@@ -1294,7 +1221,7 @@ public static class traps
         return r; // jmarshall: the flow of this might be wrong.
     }
 
-    public static bool ifpdistl(int val)
+    public override bool ifpdistl(int val)
     {
         bool r = (GlobalMembers.g_x < val);
         if (GlobalMembers.g_x > DefineConstants.MAXSLEEPDIST && GlobalMembers.hittype[GlobalMembers.g_i].timetosleep == 0)
@@ -1305,7 +1232,7 @@ public static class traps
     }
 
     // jmarshall
-    //public static void ai()
+    //public override void ai()
     //{
     //    insptr++;
     //    g_t[5] = insptr;
@@ -1320,7 +1247,7 @@ public static class traps
     //    insptr++;
     //}
     // jmarshall end
-    public static bool ifdead()
+    public override bool ifdead()
     {
         j = GlobalMembers.g_sp.extra;
         if (GlobalMembers.g_sp.picnum == DefineConstants.APLAYER)
@@ -1329,17 +1256,17 @@ public static class traps
         }
         return (j < 0);
     }
-    public static bool ifsquished()
+    public override bool ifsquished()
     {
         return (GlobalMembers.ifsquished(GlobalMembers.g_i, GlobalMembers.g_p) == 1);
     }
 
-    public static bool ifhitweapon()
+    public override bool ifhitweapon()
     {
         return (GlobalMembers.ifhitbyweapon(GlobalMembers.g_i) >= 0);
     }
 
-    public static bool ifcansee()
+    public override bool ifcansee()
     {
         spritetype ss;
         short sect;
@@ -1395,12 +1322,12 @@ public static class traps
         return (jj);
     }
 
-    public static bool ifactornotstayput()
+    public override bool ifactornotstayput()
     {
         return (GlobalMembers.hittype[GlobalMembers.g_i].actorstayput == -1);
     }
 
-    public static bool ifcanseetarget()
+    public override bool ifcanseetarget()
     {
         bool jj = Engine.board.cansee(GlobalMembers.g_sp.x, GlobalMembers.g_sp.y, (short)(GlobalMembers.g_sp.z - ((Engine.krand() & 41) << 8)), GlobalMembers.g_sp.sectnum, GlobalMembers.ps[GlobalMembers.g_p].posx, GlobalMembers.ps[GlobalMembers.g_p].posy, GlobalMembers.ps[GlobalMembers.g_p].posz, Engine.board.sprite[GlobalMembers.ps[GlobalMembers.g_p].i].sectnum);
         if (jj)
@@ -1409,7 +1336,7 @@ public static class traps
         }
         return jj;
     }
-    public static bool ifcanshoottarget()
+    public override bool ifcanshoottarget()
     {
         if (GlobalMembers.g_x > 1024)
         {

@@ -1,7 +1,11 @@
 ﻿public partial class ConScript
 {
-    public ConScript()
+    private ConTraps traps;
+
+    public ConScript(ConTraps traps)
     {
+        this.traps = traps;
+
         Init();
         RegisterActors();
     }

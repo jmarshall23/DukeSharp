@@ -82,7 +82,7 @@ public class GameEngine : MonoBehaviour
         AppPath = Application.dataPath;
 
         // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
-        GlobalMembers.conScript = new ConScript();
+        GlobalMembers.conScript = new ConScript(new TrapEngine());
         SoundEngine.globalSoundEngine.LoadAllSounds();
 
         //GlobalMembers.ud.warp_on = 1;

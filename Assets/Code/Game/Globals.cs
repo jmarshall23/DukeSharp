@@ -534,15 +534,6 @@ public partial class GlobalMembers
 	public static int respawnitemtime = 768;
 	public static int groupfile;
 
-    public class ScriptActorRegistration
-    {
-        public delegate void Function_t();
-        public Function_t func;
-        public int aiType;
-        public int aiType2;
-        public ConAction action;
-    }
-
     //C++ TO C# CONVERTER TODO TASK: C# does not have an equivalent to pointers to value types:
     //ORIGINAL LINE: int *insptr;
     public static ScriptActorRegistration[] scriptActorRegPtr = new ScriptActorRegistration[Build.bMap.MAXTILES];
