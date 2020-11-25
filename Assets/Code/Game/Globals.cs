@@ -221,7 +221,7 @@ public class player_struct
     public short ftq;
     public short access_wallnum;
     public short access_spritenum;
-    public short kickback_pic;
+    public int kickback_pic;
     public short got_access;
     public short weapon_ang;
     public short firstaid_amount;

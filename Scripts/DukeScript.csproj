@@ -63,7 +63,18 @@
     <Compile Include="toilet.cs" />
     <Compile Include="traps.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="weapons.cs" />
+    <Compile Include="weapon_events.cs" />
+    <Compile Include="weapon_chaingun.cs" />
+    <Compile Include="weapon_devistator.cs" />
+    <Compile Include="weapon_freeze.cs" />
+    <Compile Include="weapon_handbomb.cs" />
+    <Compile Include="weapon_handremote.cs" />
+    <Compile Include="weapon_knee.cs" />
+    <Compile Include="weapon_pistol.cs" />
+    <Compile Include="weapon_rpg.cs" />
+    <Compile Include="weapon_shotgun.cs" />
+    <Compile Include="weapon_shrinkgrow.cs" />
+    <Compile Include="weapon_tripbomb.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

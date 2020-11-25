@@ -2356,7 +2356,14 @@ public partial class GlobalMembers
 			sb_snum = 0;
 		}
 
-		psect = p.cursectnum;
+ // jmarshall - con vm support
+        g_i = (short)p.i;
+        g_p = snum;
+        g_x = Engine.board.sprite[p.i].extra;
+        g_sp = Engine.board.sprite[p.i];
+// jmarshall end
+
+        psect = p.cursectnum;
 		if (psect == -1)
 		{
 			if (s.extra > 0 && ud.clipping == 0)
@@ -4028,15 +4035,14 @@ public partial class GlobalMembers
 		}
 		else if (p.kickback_pic != 0)
 		{
-			switch (p.curr_weapon)
-			{
-				case DefineConstants.HANDBOMB_WEAPON:
-
-					if (p.kickback_pic == 6 && (sb_snum & (1 << 2)) != 0)
-					{
-						p.rapid_fire_hold = (char)1;
-						break;
-					}
+			if(p.curr_weapon == DefineConstants.HANDBOMB_WEAPON)
+            {
+				if (p.kickback_pic == 6 && (sb_snum & (1 << 2)) != 0)
+				{
+					p.rapid_fire_hold = (char)1;
+				}
+				else
+				{
 					p.kickback_pic++;
 					if (p.kickback_pic == 12)
 					{
@@ -4083,330 +4089,11 @@ public partial class GlobalMembers
 						p.last_weapon = -1;
 						p.weapon_pos = 10;
 					}
-
-					break;
-
-
-				case DefineConstants.HANDREMOTE_WEAPON:
-
-					p.kickback_pic++;
-
-					if (p.kickback_pic == 2)
-					{
-						p.hbomb_on = (char)0;
-					}
-
-					if (p.kickback_pic == 10)
-					{
-						p.kickback_pic = 0;
-						if (p.ammo_amount[DefineConstants.HANDBOMB_WEAPON] > 0)
-						{
-							addweapon(p, DefineConstants.HANDBOMB_WEAPON);
-						}
-						else
-						{
-							checkavailweapon(p);
-						}
-					}
-					break;
-
-				case DefineConstants.PISTOL_WEAPON:
-					if (p.kickback_pic == 1)
-					{
-						shoot(pi, DefineConstants.SHOTSPARK1);
-						spritesound(DefineConstants.PISTOL_FIRE, pi);
-
-						lastvisinc = totalclock + 32;
-						p.visibility = 0;
-					}
-					else if (p.kickback_pic == 2)
-					{
-						spawn(pi, DefineConstants.SHELL);
-					}
-
-					p.kickback_pic++;
-
-					if (p.kickback_pic >= 5)
-					{
-						if (p.ammo_amount[DefineConstants.PISTOL_WEAPON] <= 0 || (p.ammo_amount[DefineConstants.PISTOL_WEAPON] % 12) != 0)
-						{
-							p.kickback_pic = 0;
-							checkavailweapon(p);
-						}
-						else
-						{
-							switch (p.kickback_pic)
-							{
-								case 5:
-									spritesound(DefineConstants.EJECT_CLIP, pi);
-									break;
-								case 8:
-									spritesound(DefineConstants.INSERT_CLIP, pi);
-									break;
-							}
-						}
-					}
-
-					if (p.kickback_pic == 27)
-					{
-						p.kickback_pic = 0;
-						checkavailweapon(p);
-					}
-
-					break;
-
-				case DefineConstants.SHOTGUN_WEAPON:
-
-					p.kickback_pic++;
-
-					if (p.kickback_pic == 4)
-					{
-						shoot(pi, DefineConstants.SHOTGUN);
-						shoot(pi, DefineConstants.SHOTGUN);
-						shoot(pi, DefineConstants.SHOTGUN);
-						shoot(pi, DefineConstants.SHOTGUN);
-						shoot(pi, DefineConstants.SHOTGUN);
-						shoot(pi, DefineConstants.SHOTGUN);
-						shoot(pi, DefineConstants.SHOTGUN);
-
-						p.ammo_amount[DefineConstants.SHOTGUN_WEAPON]--;
-
-						spritesound(DefineConstants.SHOTGUN_FIRE, pi);
-
-						lastvisinc = totalclock + 32;
-						p.visibility = 0;
-					}
-
-					switch (p.kickback_pic)
-					{
-						case 13:
-							checkavailweapon(p);
-							break;
-						case 15:
-							spritesound(DefineConstants.SHOTGUN_COCK, pi);
-							break;
-						case 17:
-						case 20:
-							p.kickback_pic++;
-							break;
-						case 24:
-							j = spawn(pi, DefineConstants.SHOTGUNSHELL);
-							Engine.board.sprite[j].ang += 1024;
-							ssp((short)j, (uint)(((1) << 16) + 1));
-							Engine.board.sprite[j].ang += 1024;
-							p.kickback_pic++;
-							break;
-						case 31:
-							p.kickback_pic = 0;
-							return;
-					}
-					break;
-
-				case DefineConstants.CHAINGUN_WEAPON:
-
-					p.kickback_pic++;
-
-					if ((p.kickback_pic) <= 12)
-					{
-						if (((p.kickback_pic) % 3) == 0)
-						{
-							p.ammo_amount[DefineConstants.CHAINGUN_WEAPON]--;
-
-							if (((p.kickback_pic) % 3) == 0)
-							{
-								j = spawn(pi, DefineConstants.SHELL);
-
-								Engine.board.sprite[j].ang += 1024;
-								Engine.board.sprite[j].ang &= 2047;
-								Engine.board.sprite[j].xvel += 32;
-								Engine.board.sprite[j].z += (3 << 8);
-								ssp((short)j, (uint)(((1) << 16) + 1));
-							}
-
-							spritesound(DefineConstants.CHAINGUN_FIRE, pi);
-							shoot(pi, DefineConstants.CHAINGUN);
-							lastvisinc = totalclock + 32;
-							p.visibility = 0;
-							checkavailweapon(p);
-
-							if ((sb_snum & (1 << 2)) == 0)
-							{
-								p.kickback_pic = 0;
-								break;
-							}
-						}
-					}
-					else if (p.kickback_pic > 10)
-					{
-						if ((sb_snum & (1 << 2)) != 0)
-						{
-							p.kickback_pic = 1;
-						}
-						else
-						{
-							p.kickback_pic = 0;
-						}
-					}
-
-					break;
-
-				case DefineConstants.SHRINKER_WEAPON:
-				case DefineConstants.GROW_WEAPON:
-
-					if (p.curr_weapon == DefineConstants.GROW_WEAPON)
-					{
-						if (p.kickback_pic > 3)
-						{
-							p.kickback_pic = 0;
-							if (screenpeek == snum)
-							{
-								pus = (char)1;
-							}
-							p.ammo_amount[DefineConstants.GROW_WEAPON]--;
-							shoot(pi, DefineConstants.GROWSPARK);
-
-							p.visibility = 0;
-							lastvisinc = totalclock + 32;
-							checkavailweapon(p);
-						}
-						else
-						{
-							p.kickback_pic++;
-						}
-					}
-					else
-					{
-						if (p.kickback_pic > 10)
-						{
-							p.kickback_pic = 0;
-
-							p.ammo_amount[DefineConstants.SHRINKER_WEAPON]--;
-							shoot(pi, DefineConstants.SHRINKER);
-
-							p.visibility = 0;
-							lastvisinc = totalclock + 32;
-							checkavailweapon(p);
-						}
-						else
-						{
-							p.kickback_pic++;
-						}
-					}
-					break;
-
-				case DefineConstants.DEVISTATOR_WEAPON:
-					if (p.kickback_pic != 0)
-					{
-						p.kickback_pic++;
-
-						if ((p.kickback_pic & 1) != 0)
-						{
-							p.visibility = 0;
-							lastvisinc = totalclock + 32;
-							shoot(pi, DefineConstants.RPG);
-							p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON]--;
-							checkavailweapon(p);
-						}
-						if (p.kickback_pic > 5)
-						{
-							p.kickback_pic = 0;
-						}
-					}
-					break;
-				case DefineConstants.FREEZE_WEAPON:
-
-					if (p.kickback_pic < 4)
-					{
-						p.kickback_pic++;
-						if (p.kickback_pic == 3)
-						{
-							p.ammo_amount[DefineConstants.FREEZE_WEAPON]--;
-							p.visibility = 0;
-							lastvisinc = totalclock + 32;
-							shoot(pi, DefineConstants.FREEZEBLAST);
-							checkavailweapon(p);
-						}
-						if (s.xrepeat < 32)
-						{
-							p.kickback_pic = 0;
-							break;
-						}
-					}
-					else
-					{
-						if ((sb_snum & (1 << 2)) != 0)
-						{
-							p.kickback_pic = 1;
-							spritesound(DefineConstants.CAT_FIRE, pi);
-						}
-						else
-						{
-							p.kickback_pic = 0;
-						}
-					}
-					break;
-
-				case DefineConstants.TRIPBOMB_WEAPON:
-					if (p.kickback_pic < 4)
-					{
-						p.posz = p.oposz;
-						p.poszv = 0;
-						if (p.kickback_pic == 3)
-						{
-							shoot(pi, DefineConstants.HANDHOLDINGLASER);
-						}
-					}
-					if (p.kickback_pic == 16)
-					{
-						p.kickback_pic = 0;
-						checkavailweapon(p);
-						p.weapon_pos = -9;
-					}
-					else
-					{
-						p.kickback_pic++;
-					}
-					break;
-				case DefineConstants.KNEE_WEAPON:
-					p.kickback_pic++;
-
-					if (p.kickback_pic == 7)
-					{
-						shoot(pi, DefineConstants.KNEE);
-					}
-					else if (p.kickback_pic == 14)
-					{
-						if ((sb_snum & (1 << 2)) != 0)
-						{
-							p.kickback_pic = (short)(1 + (Engine.krand() & 3));
-						}
-						else
-						{
-							p.kickback_pic = 0;
-						}
-					}
-
-					if (p.wantweaponfire >= 0)
-					{
-						checkavailweapon(p);
-					}
-					break;
-
-				case DefineConstants.RPG_WEAPON:
-					p.kickback_pic++;
-					if (p.kickback_pic == 4)
-					{
-						p.ammo_amount[DefineConstants.RPG_WEAPON]--;
-						lastvisinc = totalclock + 32;
-						p.visibility = 0;
-						shoot(pi, DefineConstants.RPG);
-						checkavailweapon(p);
-					}
-					else if (p.kickback_pic == 20)
-					{
-						p.kickback_pic = 0;
-					}
-					break;
+				}
+            }
+			else
+            {
+				conScript.Event_FireWeapon(ref p.hbomb_on, ref pus, screenpeek, snum, p.weapon_pos, s.xrepeat, sb_snum, p.curr_weapon, p.wantweaponfire, ref p.kickback_pic, p.i, p.ammo_amount, ref lastvisinc, ref p.visibility);
 			}
 		}
 	}

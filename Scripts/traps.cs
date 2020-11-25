@@ -80,6 +80,12 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract void tripbombresetposz();
+    public abstract void chaingunprojectileshift(int sprite);
+    public abstract void adjustspriteang(int sprite, int ang);
+    public abstract short ssp(short i, uint cliptype);
+    public abstract void checkavailweapon();
+    public abstract int totalclock();
     public abstract int sgn(int i1);
     public abstract int sintable(int index);
     public abstract int getspritepal(int index);
@@ -162,7 +168,7 @@ public abstract class ConTraps
     public abstract bool ifai(AIAction ai);
 
     public abstract bool ifwasweapon(int val);
-    public abstract void spawn(int val);
+    public abstract int spawn(int val);
 
     public abstract void Move(MoveAction val, int val2 = 0, int val3 = 0, int unknown1 = 0);
 
@@ -174,6 +180,8 @@ public abstract class ConTraps
     public abstract void endofgame(int timebeforeexit);
 
     public abstract void debug();
+
+    public abstract void addweapon(int val);
 
     public abstract void addweapon(int val, int val2);
     public abstract void killit();
@@ -193,6 +201,7 @@ public abstract class ConTraps
     public abstract void globalsound(int val);
     public abstract void stopsound(int val);
     public abstract void soundonce(int val);
+
     public abstract void shoot(int val);
     public abstract void sizeat(int val, int val2);
     public abstract void sizeto(int val, int val2);

@@ -1,6 +1,23 @@
 ﻿using Build;
 public class TrapEngine : ConTraps
 {
+// jmarshall - these functions are hacks because stuff isn't exposed enough to DukeScript but allowed me to move over fire* functions.
+    public override void chaingunprojectileshift(int sprite)
+    {
+        Engine.board.sprite[sprite].ang += 1024;
+        Engine.board.sprite[sprite].ang &= 2047;
+        Engine.board.sprite[sprite].xvel += 32;
+        Engine.board.sprite[sprite].z += (3 << 8);
+    }
+
+    public override void tripbombresetposz()
+    {
+        player_struct p;        
+        p = GlobalMembers.ps[GlobalMembers.g_p];
+        p.posz = p.oposz;
+        p.poszv = 0;
+    }
+// jmarshall end
     public override int sgn(int i1)
     {
         return pragmas.sgn(i1);
@@ -138,6 +155,11 @@ public class TrapEngine : ConTraps
     public override void myospal(int x, int y, int tilenum, int shade, int orientation, int p)
     {
         GlobalMembers.myospal(x, y, tilenum, shade, orientation, p);
+    }
+
+    public override int totalclock()
+    {
+        return Engine.totalclocklock;
     }
 
     internal static int j;
@@ -806,12 +828,24 @@ public class TrapEngine : ConTraps
         return (GlobalMembers.hittype[GlobalMembers.g_i].picnum == (short)val);
     }
 
-    public override void spawn(int val)
+    public override void adjustspriteang(int sprite, int ang)
     {
+        Engine.board.sprite[sprite].ang += (short)ang;
+    }
+
+    public override short ssp(short i, uint cliptype)
+    {
+        return GlobalMembers.ssp(i, cliptype);
+    }
+
+    public override int spawn(int val)
+    {
+        int j = -1;
         if (GlobalMembers.g_sp.sectnum >= 0 && GlobalMembers.g_sp.sectnum < DefineConstants.MAXSECTORS)
         {
-            GlobalMembers.spawn(GlobalMembers.g_i, (short)val);
+            j = GlobalMembers.spawn(GlobalMembers.g_i, (short)val);
         }
+        return j;
     }
 
     public override void Move(MoveAction val, int val2 = 0, int val3 = 0, int unknown1 = 0)
@@ -928,6 +962,11 @@ public class TrapEngine : ConTraps
         //insptr++;
         //Engine.Printf("" + scriptptr.buffer[insptr]);
        // insptr++;
+    }
+
+    public override void addweapon(int val)
+    {
+        GlobalMembers.addweapon(GlobalMembers.ps[GlobalMembers.g_p], (short)val);
     }
 
     public override void addweapon(int val, int val2)
@@ -1102,6 +1141,11 @@ public class TrapEngine : ConTraps
                 }
             }
         }
+    }
+
+    public override void checkavailweapon()
+    {
+        GlobalMembers.checkavailweapon(GlobalMembers.ps[GlobalMembers.g_p]);
     }
 
     public override void tip()

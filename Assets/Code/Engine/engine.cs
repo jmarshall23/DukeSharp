@@ -57,7 +57,7 @@ namespace Build
         private static int artfilnum = -1;
         private static string artfilename;
 
-        private static int totalclocklock = 0;
+        public static int totalclocklock = 0;
 
         public static short[] tilefilenum = new short[MAXTILES];
         private static int[] tilefileoffs = new int[MAXTILES];
