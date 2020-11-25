@@ -80,6 +80,7 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract void RegisterVoxel(string voxel);
     public abstract void tripbombresetposz();
     public abstract void chaingunprojectileshift(int sprite);
     public abstract void adjustspriteang(int sprite, int ang);

@@ -63,6 +63,7 @@
     <Compile Include="toilet.cs" />
     <Compile Include="traps.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="voxels.cs" />
     <Compile Include="weapon_events.cs" />
     <Compile Include="weapon_chaingun.cs" />
     <Compile Include="weapon_devistator.cs" />

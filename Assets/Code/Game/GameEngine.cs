@@ -81,15 +81,15 @@ public class GameEngine : MonoBehaviour
     {
         AppPath = Application.dataPath;
 
-        // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
-        GlobalMembers.conScript = new ConScript(new TrapEngine());
-        SoundEngine.globalSoundEngine.LoadAllSounds();
-
         //GlobalMembers.ud.warp_on = 1;
         //GlobalMembers.boardfilename = "_zoo.map";
 
         // Init the build engine.
         Engine.Init();
+
+        // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
+        GlobalMembers.conScript = new ConScript(new TrapEngine());
+        SoundEngine.globalSoundEngine.LoadAllSounds();
 
         // Load in the game data.
         //Engine.initgroupfile("data.grp");

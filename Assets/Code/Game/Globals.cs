@@ -486,6 +486,8 @@ public partial class GlobalMembers
 	public static char loadfromgrouponly;
 	public static char earthquaketime;
 
+    public static int nextvoxid = 0;
+
 	public static int fricxv;
 	public static int fricyv;
 	public static player_orig[] po = new player_orig[DefineConstants.MAXPLAYERS];

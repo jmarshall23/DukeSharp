@@ -2108,6 +2108,13 @@ namespace Build
 
             int cstatval = (cstat & 48);
 
+// jmarshall - would we ever need opt out per picnum voxel bits?
+            if(Engine.tiletovox[tspr.picnum] >= 0)
+            {
+                cstatval |= 48;
+            }
+// jmarshall end
+
             switch (cstatval)
             {
                 case 0:

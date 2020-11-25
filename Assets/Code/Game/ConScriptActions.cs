@@ -1,6 +1,35 @@
 ﻿using Build;
 public class TrapEngine : ConTraps
 {
+    public override void RegisterVoxel(string voxel)
+    {
+        string temp = "";
+        bool nukeStart = true;
+        int tileid = 0;
+
+        for(int i = 0; i < voxel.Length; i++)
+        {
+            if(nukeStart)
+            {
+                if(voxel[i] == '0')
+                {
+                    continue;
+                }
+                nukeStart = false;                
+            }
+
+            if (voxel[i] == '_')
+                break;
+
+            temp += voxel[i];
+        }
+
+        tileid = int.Parse(temp);
+
+        Engine.qloadkvx(GlobalMembers.nextvoxid, "voxels/" + voxel);
+        Engine.tiletovox[tileid] = GlobalMembers.nextvoxid++;
+    }
+
 // jmarshall - these functions are hacks because stuff isn't exposed enough to DukeScript but allowed me to move over fire* functions.
     public override void chaingunprojectileshift(int sprite)
     {

@@ -7,6 +7,7 @@
         this.traps = traps;
 
         Init();
+        InitVoxels();
         RegisterActors();
     }
 
