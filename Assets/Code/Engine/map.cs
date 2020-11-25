@@ -110,7 +110,7 @@ namespace Build
         private int[] swall = new int[VgaDevice.MAXXDIM];
         private int[] lwall = new int[VgaDevice.MAXXDIM + 4];
 
-        private short[] radarang2 = new short[640 * 2];
+        private short[] radarang2 = new short[4096 * 2];
         private uint[] distrecip = new uint[65536];
 
         private byte[] gotsector = new byte[((MAXSECTORS + 7) >> 3)];
@@ -1146,11 +1146,11 @@ namespace Build
             sectnum = -1;
         }
 
-        private void dosetaspect()
+        private void dosetaspect(bool force)
         {
             int i, j, k, x, y, xinc;
 
-            if (Engine._device.xyaspect != Engine.oxyaspect)
+            if (Engine._device.xyaspect != Engine.oxyaspect || force)
             {
                 Engine.oxyaspect = Engine._device.xyaspect;
                 j = Engine._device.xyaspect * 320;
@@ -1162,7 +1162,7 @@ namespace Build
                         Engine.lookups2[Engine.horizlookup2 + i] = pragmas.divscale14(pragmas.klabs(Engine.lookups[Engine.horizlookup + i]), j);
                     }
             }
-            if ((Engine._device.xdimen != Engine.oxdimen) || (Engine._device.viewingrange != Engine.oviewingrange))
+            if ((Engine._device.xdimen != Engine.oxdimen) || (Engine._device.viewingrange != Engine.oviewingrange) || force)
             {
                 Engine.oxdimen = Engine._device.xdimen;
                 Engine.oviewingrange = Engine._device.viewingrange;
@@ -5848,7 +5848,7 @@ namespace Build
             sinviewingrangeglobalang = pragmas.mulscale16(singlobalang, Engine._device.viewingrange);
 
             if ((Engine._device.xyaspect != Engine.oxyaspect) || (Engine._device.xdimen != Engine.oxdimen) || (Engine._device.viewingrange != Engine.oviewingrange))
-                dosetaspect();
+                dosetaspect(false);
 
             //clearbufbyte(&gotsector[0],(int)((numsectors+7)>>3),0L);
             //gotsector.memset( 0 );
@@ -6031,6 +6031,8 @@ namespace Build
         public int loadboard(kFile fil, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum)
         {
             short numsprites;
+
+            dosetaspect(true);
 
             fil.kreadint(out mapversion);
 
