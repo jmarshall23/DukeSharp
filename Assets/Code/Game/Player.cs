@@ -1958,7 +1958,12 @@ public partial class GlobalMembers
 			}
 		}
 */
-		if (running != null)
+		if (KB_KeyDown[DefineConstants.sc_LeftShift])
+        {
+			running = true;
+        }
+
+		if (running)
 		{
 			turnamount = DefineConstants.NORMALTURN << 1;
 			keymove = DefineConstants.NORMALKEYMOVE << 1;

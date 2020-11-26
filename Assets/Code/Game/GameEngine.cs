@@ -132,6 +132,12 @@ public class GameEngine : MonoBehaviour
         GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = mobilePrevButton.buttonPressed;
         GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = mobileNextButton.buttonPressed;
 #else
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftShift)] = true;
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+            GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftShift)] = false;
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Escape)] = true;
         else if (Input.GetKeyUp(KeyCode.Escape))
