@@ -3014,8 +3014,9 @@ namespace Build
 
 
                         i = (int)tspr.ang + 1536;
-
-                        drawvox(tspr.x, tspr.y, tspritez, i, (int)tspr.xrepeat, (int)tspr.yrepeat, vtilenum, tspr.shade, tspr.pal, ref lwall, ref swall);
+// jmarshall - hack vox scale
+                        drawvox(tspr.x, tspr.y, tspritez, i, (int)(tspr.xrepeat * 1.3f), (int)(tspr.yrepeat * 1.15f), vtilenum, tspr.shade, tspr.pal, ref lwall, ref swall);
+// jmarshall end
                     }
                     break;
             }

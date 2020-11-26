@@ -1757,6 +1757,10 @@ public partial class GlobalMembers
 		if(hittype[i] == null)
 			hittype[i] = new weaponhit();
 
+		hittype[i].moveAction = null;
+		hittype[i].action = null;
+		hittype[i].aiaction = null;
+
 		hittype[i].bposx = (short)s_x;
 		hittype[i].bposy = (short)s_y;
 		hittype[i].bposz = (short)s_z;
