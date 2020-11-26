@@ -1424,9 +1424,9 @@ public class TrapEngine : ConTraps
         return (GlobalMembers.hittype[GlobalMembers.g_i].actorstayput == -1);
     }
 
-    public override bool ifcanseetarget()
+    public override bool ifcanseetarget() 
     {
-        bool jj = Engine.board.cansee(GlobalMembers.g_sp.x, GlobalMembers.g_sp.y, (short)(GlobalMembers.g_sp.z - ((Engine.krand() & 41) << 8)), GlobalMembers.g_sp.sectnum, GlobalMembers.ps[GlobalMembers.g_p].posx, GlobalMembers.ps[GlobalMembers.g_p].posy, GlobalMembers.ps[GlobalMembers.g_p].posz, Engine.board.sprite[GlobalMembers.ps[GlobalMembers.g_p].i].sectnum);
+        bool jj = Engine.board.cansee(GlobalMembers.g_sp.x, GlobalMembers.g_sp.y, (int)(GlobalMembers.g_sp.z - ((Engine.krand() & 41) << 8)), GlobalMembers.g_sp.sectnum, GlobalMembers.ps[GlobalMembers.g_p].posx, GlobalMembers.ps[GlobalMembers.g_p].posy, GlobalMembers.ps[GlobalMembers.g_p].posz, Engine.board.sprite[GlobalMembers.ps[GlobalMembers.g_p].i].sectnum);
         if (jj)
         {
             GlobalMembers.hittype[GlobalMembers.g_i].timetosleep = DefineConstants.SLEEPTIME;
