@@ -80,7 +80,10 @@ namespace Build
             wall3D = new Wall3D[board.numwalls];
             for (int i = 0; i < board.numwalls; i++)
             {
+                wall3D[i] = new Wall3D();
                 wall3D[i].wall.Init(4);
+                wall3D[i].over.Init(4);
+                wall3D[i].mask.Init(4);
                 UpdateWall((short)i);
             }
         }
@@ -576,6 +579,7 @@ namespace Build
 
         private void InitSector(int sectnum)
         {
+            sector3D[sectnum] = new Sector3D();
             sector3D[sectnum].verts = new float[board.sector[sectnum].wallnum * 3];
             sector3D[sectnum].floor.Init(board.sector[sectnum].wallnum * 5);
             sector3D[sectnum].ceil.Init(board.sector[sectnum].wallnum * 5);
@@ -590,12 +594,12 @@ namespace Build
             sec = board.sector[sectnum];
             s = sector3D[sectnum];
 
-            if(s.floor.indexes == null)
-            {
-                s.indicescount = (Mathf.Max(3, sec.wallnum) - 2) * 3;
-                s.floor.indexes = new int[s.indicescount];
-                s.ceil.indexes = new int[s.indicescount];
-            }
+           // if(s.floor.indexes == null)
+           // {
+           //     s.indicescount = (Mathf.Max(3, sec.wallnum) - 2) * 3;
+           //     s.floor.indexes = new int[s.indicescount];
+           //     s.ceil.indexes = new int[s.indicescount];
+           // }
 
             LibTessDotNet.Tess tess = new Tess();
 
@@ -613,6 +617,7 @@ namespace Build
             tess.AddContour(contour, LibTessDotNet.ContourOrientation.Clockwise);
             tess.Tessellate(LibTessDotNet.WindingRule.Positive, LibTessDotNet.ElementType.Polygons, 3);
 
+            s.indicescount = tess.Elements.Length;
             s.ceil.indexes = tess.Elements;
             s.floor.indexes = new int[s.ceil.indexes.Length];
 

@@ -13,6 +13,7 @@ namespace Build
     public class bMap
     {
         private int mapversion;
+        private Render3D render3D;
 
         public bMap()
         {
@@ -6078,6 +6079,10 @@ namespace Build
             updatesector(daposx, daposy, ref dacursectnum);
 
             fil.Close();
+
+            render3D = new Render3D();
+            render3D.LoadBoard(this);
+
             return (0);
         }
     }
