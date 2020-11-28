@@ -462,8 +462,7 @@ namespace Build
 
                     w.over.xyz[0] = ns.ceil.xyz[nnwallnum - nsec.wallptr]; // Bmemcpy(w.over.buffer, ns.ceil.buffer[nnwallnum - nsec.wallptr], sizeof(GLfloat) * 3);
                     w.over.xyz[1] = ns.ceil.xyz[nwallnum - nsec.wallptr]; // Bmemcpy(w.over.buffer[1], ns.ceil.buffer[nwallnum - nsec.wallptr], sizeof(GLfloat) * 3);
-                    w.over.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
-                    w.over.InitTexture(walloverpicnum);
+
 
                     if (s.ceil.xyz[wal.point2 - sec.wallptr].y > ns.ceil.xyz[nwallnum - nsec.wallptr].y)
                     {
@@ -483,6 +482,9 @@ namespace Build
                     {
                         curpicnum = wallpicnum;
                     }
+
+                    w.over.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+                    w.over.InitTexture(curpicnum);
 
                     //w.over.bucket = polymer_getbuildmaterial(w.over.material, curpicnum, wal.pal, wal.shade, sec.visibility, DAMETH_WALL);
                     //
