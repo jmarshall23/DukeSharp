@@ -84,6 +84,7 @@
     <Compile Include="Assets\Code\Engine\pragmas.cs" />
     <Compile Include="Assets\Code\Engine\render3d.cs" />
     <Compile Include="Assets\Code\Engine\tablesdat.cs" />
+    <Compile Include="Assets\Code\Engine\tile.cs" />
     <Compile Include="Assets\Code\Game\Actor.cs" />
     <Compile Include="Assets\Code\Game\Anim.cs" />
     <Compile Include="Assets\Code\Game\Bonus.cs" />
@@ -106,6 +107,7 @@
     <None Include="Assets\StreamingAssets\duke3d_grp_goes_here.txt" />
     <None Include="Assets\StreamingAssets\sound\readme.txt" />
     <None Include="Assets\StreamingAssets\voxels\readme.txt" />
+    <None Include="Assets\Shaders\Polymer.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

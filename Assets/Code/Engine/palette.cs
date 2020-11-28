@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Build
 {
@@ -20,6 +21,8 @@ namespace Build
         public int globalpalwritten;
         public int globalpal;
         private int _currentpal = 0;
+
+        public Texture2D paletteTexture;
 
         public int currentpal
         {
@@ -50,6 +53,8 @@ namespace Build
         public int[] colnext = new int[ 256 ];
         public byte[] coldist = new byte[]{0,1,2,3,4,3,2,1};
         public int[] colscan = new int[27];
+
+        private bool needPaletteUpdate = false;
 
         public int getpalookup(int davis, int dashade)
         {
@@ -82,14 +87,39 @@ namespace Build
             fil.kread<byte>(ref transluc, 0, 65536);
             fil.Close();
 
-            initfastcolorlookup(30, 59, 11);
-
+            initfastcolorlookup(30, 59, 11);           
             UpdatePalette();            
         }
 
         public void UpdatePalette()
         {
             initfastcolorlookup2();
+            needPaletteUpdate = true;            
+        }
+
+        public void UpdatePaletteMainThread()
+        {
+            if (!needPaletteUpdate)
+                return;
+
+            if (paletteTexture == null)
+            {
+                paletteTexture = new Texture2D(256, 1, TextureFormat.RGBA32, false);
+            }
+
+            byte[] tempbuffer = new byte[256 * 4];
+            for (int i = 0; i < 256; i++)
+            {
+                tempbuffer[(i * 4) + 0] = palette[(i * 3) + 0];
+                tempbuffer[(i * 4) + 1] = palette[(i * 3) + 1];
+                tempbuffer[(i * 4) + 2] = palette[(i * 3) + 2];
+                tempbuffer[(i * 4) + 3] = 255;
+            }
+
+            paletteTexture.LoadRawTextureData(tempbuffer);
+            paletteTexture.Apply();
+
+            needPaletteUpdate = false;
         }
 
         //

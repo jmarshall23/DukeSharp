@@ -14,11 +14,30 @@ namespace Build
             public Vector2[] st;
             public int[] indexes;
             public GameObject planeGameObject;
+            public Texture2D texture;
 
             public void Init(int vertexcount)
             {
                 xyz = new Vector3[vertexcount];
                 st = new Vector2[vertexcount];                
+            }
+
+            public void InitTexture(int tileNum)
+            {
+                if (Engine.waloff[tileNum] == null)
+                {
+                    Engine.loadtile((short)tileNum);
+                }
+
+                if (Engine.waloff[tileNum] == null)
+                    return;
+                 
+                if (Engine.waloff[tileNum].texture == null)
+                {
+                    Engine.waloff[tileNum].texture = Tile.LoadTile(tileNum);
+                }
+
+                texture = Engine.waloff[tileNum].texture;
             }
 
             public void Build()
@@ -36,7 +55,13 @@ namespace Build
                 mf.mesh = mesh;
 
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
-                renderer.material = new Material(Shader.Find("Transparent/Diffuse"));
+
+                // Each plane needs its own material.
+                Material mat = new Material(Shader.Find("Unlit/Polymer"));
+                mat.SetTexture("_MainTex", texture);
+                mat.SetTexture("_PaletteTex", Engine.palette.paletteTexture);
+
+                renderer.material = mat;
 
                 planeGameObject.transform.localScale = new Vector3(-(1.0f / 1000.0f), 1.0f / 1000.0f, 1.0f / 1000.0f);
             }
@@ -331,6 +356,7 @@ namespace Build
                     w.wall.xyz[2] = ns.floor.xyz[nwallnum - nsec.wallptr];
                     w.wall.xyz[3] = ns.floor.xyz[nnwallnum - nsec.wallptr];
 
+                    w.wall.InitTexture(wallpicnum);
                     w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
 
                     if ((wal.cstat & 2) != 0)
@@ -433,6 +459,7 @@ namespace Build
                     w.over.xyz[0] = ns.ceil.xyz[nnwallnum - nsec.wallptr]; // Bmemcpy(w.over.buffer, ns.ceil.buffer[nnwallnum - nsec.wallptr], sizeof(GLfloat) * 3);
                     w.over.xyz[1] = ns.ceil.xyz[nwallnum - nsec.wallptr]; // Bmemcpy(w.over.buffer[1], ns.ceil.buffer[nwallnum - nsec.wallptr], sizeof(GLfloat) * 3);
                     w.over.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+                    w.over.InitTexture(walloverpicnum);
 
                     if (s.ceil.xyz[wal.point2 - sec.wallptr].y > ns.ceil.xyz[nwallnum - nsec.wallptr].y)
                     {
@@ -919,6 +946,9 @@ namespace Build
             {
                 buildfloor(sectnum);
             }
+
+            s.ceil.InitTexture(sec.ceilingpicnum);
+            s.floor.InitTexture(sec.floorpicnum);
 
             //finish:
             //

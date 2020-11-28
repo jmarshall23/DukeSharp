@@ -33,6 +33,7 @@ namespace Build
         public class tilecontainer
         {
             public byte[] memory;
+            public Texture2D texture;
         }
 
         public static int randomseed = 17;
@@ -636,7 +637,7 @@ palette:
 
             waloff[tilenume].memory =  new byte[tempbuf.Length * 2];
             Array.Copy(tempbuf, 0, waloff[tilenume].memory, 0, tempbuf.Length);
-            Array.Copy(tempbuf, 0, waloff[tilenume].memory, tempbuf.Length, tempbuf.Length);
+            Array.Copy(tempbuf, 0, waloff[tilenume].memory, tempbuf.Length, tempbuf.Length);            
 
             //faketimerhandler();
             artfilplc = tilefileoffs[tilenume] + dasiz;
