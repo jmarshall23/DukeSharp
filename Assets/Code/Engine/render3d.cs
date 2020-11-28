@@ -38,7 +38,7 @@ namespace Build
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
                 renderer.material = new Material(Shader.Find("Transparent/Diffuse"));
 
-                planeGameObject.transform.localScale = new Vector3(1.0f / 1000.0f, 1.0f / 1000.0f, 1.0f / 1000.0f);
+                planeGameObject.transform.localScale = new Vector3(-(1.0f / 1000.0f), 1.0f / 1000.0f, 1.0f / 1000.0f);
             }
         }
         private class Sector3D
