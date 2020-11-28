@@ -329,6 +329,10 @@ namespace Build
                     i++;
                 }
 
+
+                w.wall.InitTexture(curpicnum);
+                w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+
                 w.underover |= 1;
             }
             else
