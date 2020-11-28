@@ -699,8 +699,16 @@ namespace Build
             tess.Tessellate(LibTessDotNet.WindingRule.Positive, LibTessDotNet.ElementType.Polygons, 3);
 
             s.indicescount = tess.Elements.Length;
-            s.ceil.indexes = new int[tess.Elements.Length];
-            s.floor.indexes = new int[tess.Elements.Length];
+
+            if (!sec.IsCeilParalaxed())
+            {
+                s.ceil.indexes = new int[tess.Elements.Length];
+            }
+
+            if (!sec.IsFloorParalaxed())
+            {
+                s.floor.indexes = new int[tess.Elements.Length];
+            }
 
             //for(int f = 0; f < tess.Vertices.Length; f++)
             //{
@@ -728,8 +736,15 @@ namespace Build
             i = 0;
             while (i < s.indicescount)
             {
-                s.ceil.indexes[i] = _remap[tess.Elements[i]];
-                s.floor.indexes[s.indicescount - i - 1] = _remap[tess.Elements[i]];
+                if (!sec.IsCeilParalaxed())
+                {
+                    s.ceil.indexes[i] = _remap[tess.Elements[i]];
+                }
+
+                if (!sec.IsFloorParalaxed())
+                {
+                    s.floor.indexes[s.indicescount - i - 1] = _remap[tess.Elements[i]];
+                }
 
                 i++;
             }
