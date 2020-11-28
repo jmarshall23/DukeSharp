@@ -6129,6 +6129,9 @@ namespace Build
 
         }
 
+        public bool IsCeilParalaxed() { return (ceilingstat & 1) != 0; }
+        public bool IsFloorParalaxed() { return (floorstat & 1) != 0; }
+
         public void copyto(ref sectortype sector)
         {
             if (sector == null)

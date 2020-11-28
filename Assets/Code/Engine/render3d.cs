@@ -208,6 +208,14 @@ namespace Build
             wallpicnum = wal.picnum;
             DO_TILE_ANIM(ref wallpicnum, wallnum + 16384);
 
+
+            sectortype neighborsector = null;
+
+            if (wal.nextsector >= 0)
+            {
+                neighborsector = board.sector[wal.nextsector];
+            }
+
             walloverpicnum = wal.overpicnum;
             if (walloverpicnum >= 0)
             {
@@ -453,7 +461,8 @@ namespace Build
                     overwall = (char)1;
                 }
 
-                if ((overwall != 0) || (wal.cstat & 48) != 0)
+                bool parralaxCeiling = (neighborsector != null && neighborsector.IsCeilParalaxed() && neighborsector.IsCeilParalaxed());
+                if (((overwall != 0) || (wal.cstat & 48) != 0) && !parralaxCeiling)
                 {
                     if (w.over.xyz == null)
                     {
