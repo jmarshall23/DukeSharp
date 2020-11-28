@@ -360,9 +360,6 @@ namespace Build
                     w.wall.xyz[2] = ns.floor.xyz[nwallnum - nsec.wallptr];
                     w.wall.xyz[3] = ns.floor.xyz[nnwallnum - nsec.wallptr];
 
-                    w.wall.InitTexture(wallpicnum);
-                    w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
-
                     if ((wal.cstat & 2) != 0)
                     {
                         refwall = nwallnum;
@@ -378,7 +375,10 @@ namespace Build
                     curxpanning = (char)board.wall[refwall].xpanning;
                     curypanning = (char)board.wall[refwall].ypanning;
 
-                   // w.wall.bucket = polymer_getbuildmaterial(w.wall.material, curpicnum, curpal, curshade, sec.visibility, DAMETH_WALL);
+                    w.wall.InitTexture(curpicnum);
+                    w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+
+                    // w.wall.bucket = polymer_getbuildmaterial(w.wall.material, curpicnum, curpal, curshade, sec.visibility, DAMETH_WALL);
 
                     if ((board.wall[refwall].cstat & 4) == 0)
                     {
