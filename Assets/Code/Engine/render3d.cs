@@ -331,6 +331,8 @@ namespace Build
                     w.wall.xyz[2] = ns.floor.xyz[nwallnum - nsec.wallptr];
                     w.wall.xyz[3] = ns.floor.xyz[nnwallnum - nsec.wallptr];
 
+                    w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+
                     if ((wal.cstat & 2) != 0)
                     {
                         refwall = nwallnum;
@@ -395,6 +397,8 @@ namespace Build
                         w.underover |= 1;
                     }
 
+               //     w.mask.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+
                     w.mask.xyz[0] = w.wall.xyz[3];
                     w.mask.st[0] = w.wall.st[3];
 
@@ -408,7 +412,7 @@ namespace Build
 
                     w.mask.xyz[1] = s.floor.xyz[wal.point2 - sec.wallptr];
                     w.mask.st[1] = s.floor.st[wal.point2 - sec.wallptr];
-
+                  //  w.mask.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
 
                     //Bmemcpy(w.mask.buffer, s.floor.buffer[wallnum - sec.wallptr], sizeof(GLfloat) * 5);
                     //Bmemcpy(w.mask.buffer[1], s.floor.buffer[wal.point2 - sec.wallptr], sizeof(GLfloat) * 5);
@@ -428,7 +432,7 @@ namespace Build
 
                     w.over.xyz[0] = ns.ceil.xyz[nnwallnum - nsec.wallptr]; // Bmemcpy(w.over.buffer, ns.ceil.buffer[nnwallnum - nsec.wallptr], sizeof(GLfloat) * 3);
                     w.over.xyz[1] = ns.ceil.xyz[nwallnum - nsec.wallptr]; // Bmemcpy(w.over.buffer[1], ns.ceil.buffer[nwallnum - nsec.wallptr], sizeof(GLfloat) * 3);
-
+                    w.over.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
 
                     if (s.ceil.xyz[wal.point2 - sec.wallptr].y > ns.ceil.xyz[nwallnum - nsec.wallptr].y)
                     {
