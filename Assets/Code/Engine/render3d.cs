@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using LibTessDotNet;
 
@@ -12,11 +13,32 @@ namespace Build
             public Vector3[] xyz;
             public Vector2[] st;
             public int[] indexes;
+            public GameObject planeGameObject;
 
             public void Init(int vertexcount)
             {
                 xyz = new Vector3[vertexcount];
-                st = new Vector2[vertexcount];
+                st = new Vector2[vertexcount];                
+            }
+
+            public void Build()
+            {
+                if (indexes == null)
+                    return;
+
+                planeGameObject = new GameObject();
+
+                MeshFilter mf = planeGameObject.AddComponent<MeshFilter>();
+                UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+                mesh.vertices = xyz;
+                mesh.uv = st;
+                mesh.triangles = indexes;
+                mf.mesh = mesh;
+
+                MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
+                renderer.material = new Material(Shader.Find("Transparent/Diffuse"));
+
+                planeGameObject.transform.localScale = new Vector3(1.0f / 1000.0f, 1.0f / 1000.0f, 1.0f / 1000.0f);
             }
         }
         private class Sector3D
@@ -35,8 +57,6 @@ namespace Build
             public float floorpal;
             public float floorpicnum;
             public float ceilingpicnum;
-
-            public float[] verts;
 
             public int indicescount;
 
@@ -75,6 +95,9 @@ namespace Build
             {
                 InitSector(i);
                 UpdateSector((short)i);
+
+                sector3D[i].floor.Build();
+                sector3D[i].ceil.Build();
             }
 
             wall3D = new Wall3D[board.numwalls];
@@ -85,6 +108,9 @@ namespace Build
                 wall3D[i].over.Init(4);
                 wall3D[i].mask.Init(4);
                 UpdateWall((short)i);
+                wall3D[i].wall.Build();
+                wall3D[i].over.Build();
+                wall3D[i].mask.Build();
             }
         }
 
@@ -210,6 +236,8 @@ namespace Build
                 w.wall.xyz[1] = s.floor.xyz[wal.point2 - sec.wallptr];
                 w.wall.xyz[2] = s.ceil.xyz[wal.point2 - sec.wallptr];
                 w.wall.xyz[3] = s.ceil.xyz[wallnum - sec.wallptr];
+
+                w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
 
                 if (wal.nextsector < 0)
                 {
@@ -580,7 +608,6 @@ namespace Build
         private void InitSector(int sectnum)
         {
             sector3D[sectnum] = new Sector3D();
-            sector3D[sectnum].verts = new float[board.sector[sectnum].wallnum * 3];
             sector3D[sectnum].floor.Init(board.sector[sectnum].wallnum * 5);
             sector3D[sectnum].ceil.Init(board.sector[sectnum].wallnum * 5);
         }
@@ -602,29 +629,61 @@ namespace Build
            // }
 
             LibTessDotNet.Tess tess = new Tess();
-
-            int numPoints = s.verts.Length / 3;
-            var contour = new LibTessDotNet.ContourVertex[numPoints];
+            List<LibTessDotNet.ContourVertex> contour = new List<ContourVertex>();
 
             i = 0;
             while (i < sec.wallnum)
             {
-                contour[i].Position = new LibTessDotNet.Vec3(s.verts[(i * 3) + 0], s.verts[(i * 3) + 2], 0);
+                LibTessDotNet.ContourVertex c = new ContourVertex();
+                c.Position = new LibTessDotNet.Vec3();
+                c.Position.X = s.floor.xyz[i].x;
+                c.Position.Y = s.floor.xyz[i].z;
+                contour.Add(c);
+
+                if ((i != (sec.wallnum - 1)) && ((sec.wallptr + i) > board.wall[sec.wallptr + i].point2))
+                {
+                    tess.AddContour(contour.ToArray(), LibTessDotNet.ContourOrientation.Clockwise);
+                    contour = new List<ContourVertex>();
+                }
 
                 i++;
             }
 
-            tess.AddContour(contour, LibTessDotNet.ContourOrientation.Clockwise);
+            tess.AddContour(contour.ToArray(), LibTessDotNet.ContourOrientation.Clockwise);
             tess.Tessellate(LibTessDotNet.WindingRule.Positive, LibTessDotNet.ElementType.Polygons, 3);
 
             s.indicescount = tess.Elements.Length;
-            s.ceil.indexes = tess.Elements;
-            s.floor.indexes = new int[s.ceil.indexes.Length];
+            s.ceil.indexes = new int[tess.Elements.Length];
+            s.floor.indexes = new int[tess.Elements.Length];
+
+            //for(int f = 0; f < tess.Vertices.Length; f++)
+            //{
+            //    s.floor.xyz[f].x = tess.Vertices[f].Position.X;
+            //    s.floor.xyz[f].z = tess.Vertices[f].Position.Y;
+            //    s.ceil.xyz[f].x = tess.Vertices[f].Position.X;
+            //    s.ceil.xyz[f].z = tess.Vertices[f].Position.Y;
+            //}
+            // Vertex order changes, so we need to remap the new indexes to the old vertex layout.
+
+            int[] _remap = new int[tess.Vertices.Length];
+            for(int x = 0; x < tess.Vertices.Length; x++)
+            {
+                for(int y = 0; y < tess.Vertices.Length; y++)
+                {
+                    if(tess.Vertices[x].Position.X == s.floor.xyz[y].x && tess.Vertices[x].Position.Y == s.floor.xyz[y].z)
+                    {
+                        _remap[x] = y;
+                        break;
+                    }
+                }
+            }
+
 
             i = 0;
             while (i < s.indicescount)
             {
-                s.floor.indexes[s.indicescount - i - 1] = s.ceil.indexes[i];
+                s.ceil.indexes[i] = _remap[tess.Elements[i]];
+                s.floor.indexes[s.indicescount - i - 1] = _remap[tess.Elements[i]];
 
                 i++;
             }
@@ -675,14 +734,14 @@ namespace Build
             while (i < sec.wallnum)
             {
                 wal = board.wall[sec.wallptr + i];
-                if ((-wal.x != s.verts[(i * 3) + 2]))
+                if ((-wal.x != s.floor.xyz[i].z))
                 {
-                    s.verts[(i * 3) + 2] = s.floor.xyz[i].z = s.ceil.xyz[i].z = -(float)wal.x;
+                    s.floor.xyz[i].z = s.ceil.xyz[i].z = -(float)wal.x;
                     needfloor = wallinvalidate = 1;
                 }
-                if ((wal.y != s.verts[i * 3]))
+                if ((wal.y != s.floor.xyz[i].x))
                 {
-                    s.verts[i * 3] = s.floor.xyz[i].x = s.ceil.xyz[i].x = (float)wal.y;
+                    s.floor.xyz[i].x = s.ceil.xyz[i].x = (float)wal.y;
                     needfloor = wallinvalidate = 1;
                 }
 

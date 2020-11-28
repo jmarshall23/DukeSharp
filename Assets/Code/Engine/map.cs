@@ -13,7 +13,6 @@ namespace Build
     public class bMap
     {
         private int mapversion;
-        private Render3D render3D;
 
         public bMap()
         {
@@ -6080,8 +6079,12 @@ namespace Build
 
             fil.Close();
 
-            render3D = new Render3D();
-            render3D.LoadBoard(this);
+            Engine.initPolymerMainThread = true;
+
+            while(Engine.initPolymerMainThread)
+            {
+                System.Threading.Thread.Sleep(1);
+            }
 
             return (0);
         }

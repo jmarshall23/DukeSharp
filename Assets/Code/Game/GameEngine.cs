@@ -58,6 +58,8 @@ public class GameEngine : MonoBehaviour
     public UIButton mobilePrevButton;
     public UIButton mobileNextButton;
 
+    private Render3D render3D;
+
     public static string AppPath;
 
     private bool delayedStart = true;
@@ -117,6 +119,13 @@ public class GameEngine : MonoBehaviour
         {
             DelayedStart();
             delayedStart = false;
+        }
+
+        if(Engine.initPolymerMainThread)
+        {
+            render3D = new Render3D();
+            render3D.LoadBoard(Engine.board);
+            Engine.initPolymerMainThread = false;
         }
 
 

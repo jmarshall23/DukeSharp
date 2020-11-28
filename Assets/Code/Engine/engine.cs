@@ -39,6 +39,8 @@ namespace Build
 
         public static int myconnectindex = 0;
 
+        public static bool initPolymerMainThread = false;
+
 
         public static short[] tilesizx = new short[MAXTILES];
         public static short[] tilesizy = new short[MAXTILES];
