@@ -33,7 +33,7 @@ Shader "Unlit/Polymer"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                nointerpolation float4 depth : TEXCOORD1;
+                 float4 depth : TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
             texture2D _PaletteTex;
@@ -55,7 +55,8 @@ Shader "Unlit/Polymer"
                 v2f o;
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.depth.x = linearize_depth(o.vertex.z / o.vertex.w, 0.001, 3000);
+                o.depth.x = o.vertex.z / (1.0 / o.vertex.w); // linearize_depth(o.vertex.z / o.vertex.w, 0.001, 3000);
+                o.depth.x = o.depth.x * 2 - 0.5;
 
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                  
@@ -65,13 +66,13 @@ Shader "Unlit/Polymer"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                float visibility =  _MaterialParams.x;
+                float visibility =  (_MaterialParams.x + 1);
                 float shadeOffset =  _MaterialParams.y;
                 float palette =  _MaterialParams.z;
                 float curbasepal =  _MaterialParams.w;
 
-                float shadeLookup = i.depth.x / 1.024 * visibility;
-                shadeLookup = min(max(shadeLookup + shadeOffset, 0), 30);
+                float shadeLookup = i.depth.x / 1.07 * visibility;
+               shadeLookup = min(max(shadeLookup + shadeOffset, 0), 30);
 
                 // sample the texture
                 float colorIndex = tex2D(_MainTex, i.uv).r * 256;
