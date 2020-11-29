@@ -7,14 +7,39 @@ namespace Build
 {
     class Render3D
     {
+        public List<Plane3D> planes = new List<Plane3D>();
 
-        private class Plane3D
+        public class Plane3D
         {
             public Vector3[] xyz;
             public Vector2[] st;
             public int[] indexes;
             public GameObject planeGameObject;
             public Texture2D texture;
+            private UnityEngine.Mesh mesh;
+            private Render3D parent;
+
+            public Plane3D(Render3D parent)
+            {
+                this.parent = parent;
+                parent.planes.Add(this);
+            }
+
+            public void Hide()
+            {
+                if (!planeGameObject)
+                    return;
+
+                planeGameObject.SetActive(false);
+            }
+
+            public void Show()
+            {
+                if (!planeGameObject)
+                    return;
+
+                planeGameObject.SetActive(true);
+            }
 
             public void Init(int vertexcount)
             {
@@ -40,6 +65,14 @@ namespace Build
                 texture = Engine.waloff[tileNum].texture;
             }
 
+            public void Update()
+            {
+                if (mesh == null)
+                    return;
+
+                mesh.vertices = xyz;
+            }
+
             public void Build()
             {
                 if (indexes == null)
@@ -48,7 +81,7 @@ namespace Build
                 planeGameObject = new GameObject();
 
                 MeshFilter mf = planeGameObject.AddComponent<MeshFilter>();
-                UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+                mesh = new UnityEngine.Mesh();
                 mesh.vertices = xyz;
                 mesh.uv = st;
                 mesh.triangles = indexes;
@@ -85,8 +118,8 @@ namespace Build
 
             public int indicescount;
 
-            public Plane3D floor = new Plane3D();
-            public Plane3D ceil = new Plane3D();
+            public Plane3D floor;
+            public Plane3D ceil;
         }
 
         private class Wall3D
@@ -101,9 +134,9 @@ namespace Build
             public int underover;
 
 
-            public Plane3D wall = new Plane3D();
-            public Plane3D over = new Plane3D();
-            public Plane3D mask = new Plane3D();
+            public Plane3D wall;
+            public Plane3D over;
+            public Plane3D mask;
         }
 
         private bMap board;
@@ -129,6 +162,11 @@ namespace Build
             for (int i = 0; i < board.numwalls; i++)
             {
                 wall3D[i] = new Wall3D();
+                wall3D[i].wall = new Plane3D(this);
+                wall3D[i].over = new Plane3D(this);
+                wall3D[i].mask = new Plane3D(this);
+
+
                 wall3D[i].wall.Init(4);
                 wall3D[i].over.Init(4);
                 wall3D[i].mask.Init(4);
@@ -144,7 +182,7 @@ namespace Build
             //if (Engine.picanm[Picnum] & PICANM_ANIMTYPE_MASK) Picnum += animateoffs(Picnum, Fakevar);
         }
 
-        private void UpdateWall(short wallnum)
+        private void UpdateWall(short wallnum, bool force = false)
         {
 			short nwallnum;
             short nnwallnum;
@@ -232,24 +270,30 @@ namespace Build
                 nwallpicnum = 0;
             }
 
-            if ((wallpicnum == w.picnum_anim) && (walloverpicnum == w.overpicnum_anim) && ((nwallnum < 0 || nwallnum > board.numwalls) || ((nwallpicnum == w.nwallpicnum) && (board.wall[nwallnum].xpanning == w.nwallxpanning) && (board.wall[nwallnum].ypanning == w.nwallypanning) && (board.wall[nwallnum].cstat == w.nwallcstat) && (board.wall[nwallnum].shade == w.nwallshade))))
+           // if ((wallpicnum == w.picnum_anim) && (walloverpicnum == w.overpicnum_anim) && ((nwallnum < 0 || nwallnum > board.numwalls) || ((nwallpicnum == w.nwallpicnum) && (board.wall[nwallnum].xpanning == w.nwallxpanning) && (board.wall[nwallnum].ypanning == w.nwallypanning) && (board.wall[nwallnum].cstat == w.nwallcstat) && (board.wall[nwallnum].shade == w.nwallshade))))
+           // {
+           //     //w.flags.uptodate = 1;
+           //     return; // screw you guys I'm going home
+           // }
+           // else
+            if(wal.changed == false /*&& (wallpicnum == w.picnum_anim) && (walloverpicnum == w.overpicnum_anim) && ((nwallnum < 0 || nwallnum > board.numwalls) || ((nwallpicnum == w.nwallpicnum) && (board.wall[nwallnum].xpanning == w.nwallxpanning) && (board.wall[nwallnum].ypanning == w.nwallypanning) && (board.wall[nwallnum].cstat == w.nwallcstat) && (board.wall[nwallnum].shade == w.nwallshade)))*/)
             {
-                //w.flags.uptodate = 1;
-                return; // screw you guys I'm going home
-            }
-            else
-            { 
-                w.picnum_anim = wallpicnum;
-                w.overpicnum_anim = walloverpicnum;
-
-                if (nwallnum >= 0 && nwallnum < board.numwalls)
+                if (!force)
                 {
-                    w.nwallpicnum = nwallpicnum;
-                    w.nwallxpanning = board.wall[nwallnum].xpanning;
-                    w.nwallypanning = board.wall[nwallnum].ypanning;
-                    w.nwallcstat = board.wall[nwallnum].cstat;
-                    w.nwallshade = board.wall[nwallnum].shade;
+                    return;
                 }
+            }
+            wal.changed = false;
+            w.picnum_anim = wallpicnum;
+            w.overpicnum_anim = walloverpicnum;
+
+            if (nwallnum >= 0 && nwallnum < board.numwalls)
+            {
+                w.nwallpicnum = nwallpicnum;
+                w.nwallxpanning = board.wall[nwallnum].xpanning;
+                w.nwallypanning = board.wall[nwallnum].ypanning;
+                w.nwallcstat = board.wall[nwallnum].cstat;
+                w.nwallshade = board.wall[nwallnum].shade;
             }
 
             w.underover = underwall = overwall = (char)0;
@@ -340,6 +384,7 @@ namespace Build
 
                 w.wall.InitTexture(curpicnum);
                 w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+                w.wall.Update();
 
                 w.underover |= 1;
             }
@@ -385,6 +430,7 @@ namespace Build
 
                     w.wall.InitTexture(curpicnum);
                     w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
+                    w.wall.Update();
 
                     // w.wall.bucket = polymer_getbuildmaterial(w.wall.material, curpicnum, curpal, curshade, sec.visibility, DAMETH_WALL);
 
@@ -494,6 +540,7 @@ namespace Build
 
                     w.over.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
                     w.over.InitTexture(curpicnum);
+                    w.over.Update();
 
                     //w.over.bucket = polymer_getbuildmaterial(w.over.material, curpicnum, wal.pal, wal.shade, sec.visibility, DAMETH_WALL);
                     //
@@ -654,7 +701,10 @@ namespace Build
         private void InitSector(int sectnum)
         {
             sector3D[sectnum] = new Sector3D();
+            sector3D[sectnum].floor = new Plane3D(this);
             sector3D[sectnum].floor.Init(board.sector[sectnum].wallnum * 5);
+
+            sector3D[sectnum].ceil = new Plane3D(this);
             sector3D[sectnum].ceil.Init(board.sector[sectnum].wallnum * 5);
         }
 
@@ -748,6 +798,110 @@ namespace Build
 
                 i++;
             }
+        }
+
+        private void PokeSector(short sectnum)
+        {
+            sectortype sec = board.sector[sectnum];
+            Sector3D s = sector3D[sectnum];
+            walltype wal = board.wall[sec.wallptr];
+            int i = 0;
+
+            bool forceUpdate = sec.changed || sec.neighborChanged;
+            bool neighborChanged = sec.neighborChanged;
+
+            //if (!s->flags.uptodate)
+            UpdateSector(sectnum);
+
+            do
+            {
+                //if ((wal->nextsector >= 0) && (!prsectors[wal->nextsector]->flags.uptodate))
+                if (wal.nextsector >= 0 && forceUpdate && !neighborChanged)
+                    board.sector[wal.nextsector].neighborChanged = true;
+                //    UpdateSector(wal.nextsector);
+                //if (!prwalls[sec->wallptr + i]->flags.uptodate)
+                    
+                UpdateWall((short)(sec.wallptr + i), forceUpdate);
+
+                i++;
+                wal = board.wall[sec.wallptr + i];
+            } while (i < sec.wallnum);
+        }
+
+        short[] sectorqueue = new short[bMap.MAXSECTORS];
+
+        public void DisplayRoom(short dacursectnum)
+        {
+            for(int i = 0; i < board.numsectors; i++)
+            {
+                PokeSector((short)i);
+            }
+
+            //int front = 0;
+            //int back = 1;
+            //int i;
+            //short[] drawingstate = new short[board.numsectors];
+            //Sector3D s;
+            //
+            //// Hide all the planes.
+            //foreach(Plane3D p in planes)
+            //{
+            //    p.Hide();
+            //}
+            //
+            //sectortype sec;
+            //
+            //sectorqueue[0] = dacursectnum;
+            //drawingstate[dacursectnum] = 1;
+            //
+            //while (front != back)
+            //{
+            //    sec = board.sector[sectorqueue[front]];
+            //    s = sector3D[sectorqueue[front]];
+            //
+            //    // Update the sector.                
+            //    PokeSector(sectorqueue[front]);
+            //
+            //    // Show the floor and ceiling.
+            //    s.floor.Show();
+            //    s.ceil.Show();
+            //
+            //    i = sec.wallnum - 1;
+            //    do
+            //    {
+            //        if (board.wallvisible(board.globalposx, board.globalposy, sec.wallptr + i)) 
+            //        {
+            //            if (wall3D[sec.wallptr + i].wall != null)
+            //                wall3D[sec.wallptr + i].wall.Show();
+            //
+            //            if (wall3D[sec.wallptr + i].mask != null)
+            //                wall3D[sec.wallptr + i].mask.Show();
+            //
+            //            if (wall3D[sec.wallptr + i].over != null)
+            //                wall3D[sec.wallptr + i].over.Show();
+            //        }
+            //    }
+            //    while (--i >= 0);
+            //
+            //
+            //    i = sec.wallnum - 1;
+            //    do
+            //    {
+            //        if (sec.wallptr + i >= board.wall.Length)
+            //            break;
+            //
+            //        if (board.wall[sec.wallptr + i].nextsector == -1)
+            //            continue;
+            //
+            //        if (drawingstate[board.wall[sec.wallptr + i].nextsector] == 0)
+            //        {
+            //            sectorqueue[back++] = board.wall[sec.wallptr + i].nextsector;
+            //            drawingstate[board.wall[sec.wallptr + i].nextsector] = 1;
+            //        }
+            //    } while (--i >= 0);
+            //
+            //    front++;
+            //}
         }
 
         private int UpdateSector(short sectnum)
@@ -972,9 +1126,14 @@ namespace Build
             s.floorpicnum = floorpicnum;
             s.ceilingpicnum = ceilingpicnum;
 
-            if (needfloor != 0)
+            if (sec.changed || sec.neighborChanged)
             {
+                sec.changed = false;
+                sec.neighborChanged = false;
                 buildfloor(sectnum);
+
+                s.ceil.Update();
+                s.floor.Update();
             }
 
             s.ceil.InitTexture(sec.ceilingpicnum);

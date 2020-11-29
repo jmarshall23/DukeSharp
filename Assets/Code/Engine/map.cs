@@ -96,8 +96,8 @@ namespace Build
         private int[] clipobjectval = new int[MAXCLIPNUM];
         private int[] clipsectorlist = new int[MAXCLIPNUM];
 
-        private int globalposx, globalposy, globalposz, globalhoriz;
-        private short globalang, globalcursectnum;
+        public int globalposx, globalposy, globalposz, globalhoriz;
+        public short globalang, globalcursectnum;
         public int globalpal, cosglobalang, singlobalang;
         private int cosviewingrangeglobalang, sinviewingrangeglobalang;
         private int globaluclip, globaldclip, globvis;
@@ -240,7 +240,19 @@ namespace Build
 			return(1);
 		}
 
-		public int neartag (int xs, int ys, int zs, short sectnum, short ange, ref short neartagsector, ref short neartagwall, ref short neartagsprite, ref int neartaghitdist, int neartagrange, int tagsearch)
+        public bool wallvisible(int x, int y, int wallnum)
+        {
+            // 1 if wall is in front of player 0 otherwise
+            walltype w1 = wall[wallnum];
+            walltype w2 = wall[w1.point2];
+        
+                int a1 = Engine.getangle(w1.x - x, w1.y - y);
+                int a2 = Engine.getangle(w2.x - x, w2.y - y);
+        
+            return (((a2 + (2048 - a1)) & 2047) <= 1024);
+        }
+
+    public int neartag (int xs, int ys, int zs, short sectnum, short ange, ref short neartagsector, ref short neartagwall, ref short neartagsprite, ref int neartaghitdist, int neartagrange, int tagsearch)
 		{
 			walltype wal, wal2;
 			spritetype spr;
@@ -6113,7 +6125,7 @@ namespace Build
     public class sectortype
     {
         public short wallptr, wallnum;
-        public int ceilingz, floorz;
+        public int _ceilingz, _floorz;
         public short ceilingstat, floorstat;
         public short ceilingpicnum, ceilingheinum;
         public sbyte ceilingshade;
@@ -6123,6 +6135,37 @@ namespace Build
         public byte floorpal, floorxpanning, floorypanning;
         public byte visibility, filler;
         public short lotag, hitag, extra;
+        public bool changed;
+        public bool neighborChanged;
+        public int ceilingz
+        {
+            get
+            {
+                return _ceilingz;
+            }
+            set
+            {
+                if(_ceilingz != value)
+                    changed = true;
+
+                _ceilingz = value;
+                
+            }
+        }
+
+        public int floorz
+        {
+            get
+            {
+                return _floorz;
+            }
+            set
+            {
+                if (_floorz != value)
+                    changed = true;
+                _floorz = value;
+            }
+        }
 
         public sectortype()
         {
@@ -6263,15 +6306,45 @@ namespace Build
     //32 bytes
     public class walltype
     {
-        public int x, y;
+        public int _x, _y;
         public short point2, nextwall, nextsector, cstat;
         public short picnum, overpicnum;
         public sbyte shade;
         public byte pal, xrepeat, yrepeat, xpanning, ypanning;
         public short lotag, hitag, extra;
+        public bool changed;
         public walltype()
         {
+            changed = false;
+        }
 
+        public int x
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                if (_x != value)
+                    changed = true;
+                _x = value;                
+            }
+        }
+
+        public int y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                if (_y != value)
+                    changed = true;
+
+                _y = value;
+            }
         }
 
         public void copyto(ref walltype wall)
