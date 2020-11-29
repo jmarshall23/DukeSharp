@@ -18,6 +18,7 @@ namespace Build
             public Texture2D texture;
             private UnityEngine.Mesh mesh;
             private Render3D parent;
+            private Material mat;
 
             public Plane3D(Render3D parent)
             {
@@ -65,12 +66,14 @@ namespace Build
                 texture = Engine.waloff[tileNum].texture;
             }
 
-            public void Update()
+            public void Update(float visibility, float shadeOffset, float palette, float curbasepal)
             {
                 if (mesh == null)
                     return;
 
                 mesh.vertices = xyz;
+
+                mat.SetVector("_MaterialParams", new Vector4(visibility, shadeOffset, palette, curbasepal));
             }
 
             public void Build()
@@ -90,9 +93,10 @@ namespace Build
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
 
                 // Each plane needs its own material.
-                Material mat = new Material(Shader.Find("Unlit/Polymer"));
+                mat = new Material(Shader.Find("Unlit/Polymer"));
                 mat.SetTexture("_MainTex", texture);
                 mat.SetTexture("_PaletteTex", Engine.palette.paletteTexture);
+                mat.SetTexture("_LookupTex", Engine.palette.palookupTexture);
 
                 renderer.material = mat;
 
@@ -384,7 +388,7 @@ namespace Build
 
                 w.wall.InitTexture(curpicnum);
                 w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
-                w.wall.Update();
+                w.wall.Update(sec.visibility, 0, wal.pal, 0);
 
                 w.underover |= 1;
             }
@@ -430,7 +434,7 @@ namespace Build
 
                     w.wall.InitTexture(curpicnum);
                     w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
-                    w.wall.Update();
+                    w.wall.Update(sec.visibility, 0, wal.pal, 0);
 
                     // w.wall.bucket = polymer_getbuildmaterial(w.wall.material, curpicnum, curpal, curshade, sec.visibility, DAMETH_WALL);
 
@@ -540,7 +544,7 @@ namespace Build
 
                     w.over.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
                     w.over.InitTexture(curpicnum);
-                    w.over.Update();
+                    w.over.Update(sec.visibility, 0, wal.pal, 0);
 
                     //w.over.bucket = polymer_getbuildmaterial(w.over.material, curpicnum, wal.pal, wal.shade, sec.visibility, DAMETH_WALL);
                     //
@@ -1132,8 +1136,8 @@ namespace Build
                 sec.neighborChanged = false;
                 buildfloor(sectnum);
 
-                s.ceil.Update();
-                s.floor.Update();
+                s.ceil.Update(sec.visibility, 0, sec.ceilingpal, 0);
+                s.floor.Update(sec.visibility, 0, sec.floorpal, 0);
             }
 
             s.ceil.InitTexture(sec.ceilingpicnum);

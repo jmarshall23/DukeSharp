@@ -23,6 +23,7 @@ namespace Build
         private int _currentpal = 0;
 
         public Texture2D paletteTexture;
+        public Texture2D palookupTexture;
 
         public int currentpal
         {
@@ -55,6 +56,8 @@ namespace Build
         public int[] colscan = new int[27];
 
         private bool needPaletteUpdate = false;
+
+        const int MAXPALOOKUPS = 256;
 
         public int getpalookup(int davis, int dashade)
         {
@@ -119,6 +122,24 @@ namespace Build
 
             paletteTexture.LoadRawTextureData(tempbuffer);
             paletteTexture.Apply();
+
+            byte[] palookuptable = new byte[MAXPALOOKUPS * (256 * (32))];
+            int x = 0;            
+            for (int p = 0; p < MAXPALOOKUPS; p++)
+            {
+                for (int i = 0; i < 256 * 32; ++i, x++)
+                {
+                    if (_palookup[p].palookup != null)
+                    {
+                        palookuptable[x] = _palookup[p].palookup[i];
+                    }
+                }
+            }
+
+            palookupTexture = new Texture2D(256, 8192, TextureFormat.R8, false);
+            palookupTexture.filterMode = FilterMode.Point;
+            palookupTexture.LoadRawTextureData(palookuptable);
+            palookupTexture.Apply();
 
             needPaletteUpdate = false;
         }

@@ -84,7 +84,7 @@ public class GameEngine : MonoBehaviour
         AppPath = Application.dataPath;
 
         GlobalMembers.ud.warp_on = 1;
-        GlobalMembers.boardfilename = "_zoo.map";
+        GlobalMembers.boardfilename = "e1l2.map";
 
         // Init the build engine.
         Engine.Init();
@@ -121,7 +121,12 @@ public class GameEngine : MonoBehaviour
             delayedStart = false;
         }
 
-        if(Engine.initPolymerMainThread)
+        if (Engine.palette != null)
+        {
+            Engine.palette.UpdatePaletteMainThread();
+        }
+
+        if (Engine.initPolymerMainThread)
         {
             render3D = new Render3D();
             render3D.LoadBoard(Engine.board);
@@ -241,6 +246,11 @@ public class GameEngine : MonoBehaviour
         GlobalMembers.faketimerhandler();
 
         Engine._device._screenbuffer.mut.WaitOne();
+
+        if (render3D != null)
+        {
+            render3D.DisplayRoom(Engine.board.globalcursectnum);
+        }
 
         GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
         try
