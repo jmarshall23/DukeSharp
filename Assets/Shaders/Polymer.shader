@@ -44,12 +44,18 @@ Shader "Unlit/Polymer"
             float4 _MainTex_ST;
             float4 _MaterialParams;
 
+            float linearize_depth(float d, float zNear, float zFar)
+            {
+                return zNear * zFar / (zFar + d * (zNear - zFar));
+            }
+
+
             v2f vert (appdata v)
             {
                 v2f o;
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.depth.x = o.vertex.z / o.vertex.w;
+                o.depth.x = linearize_depth(o.vertex.z / o.vertex.w, 0.001, 3000);
 
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                  
@@ -83,7 +89,7 @@ Shader "Unlit/Polymer"
                 float3 tileArtColored = lerp(texelNear, texelFar, frac(shadeLookup));
 
 
-                return float4(tileArtColored.x, tileArtColored.y, tileArtColored.z, 1);
+                return float4(tileArtColored.x, tileArtColored.y, tileArtColored.z, 1) * 2;
             }
             ENDHLSL
         }

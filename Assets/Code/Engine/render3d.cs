@@ -19,7 +19,7 @@ namespace Build
             private UnityEngine.Mesh mesh;
             private Render3D parent;
             private Material mat;
-
+            private Vector4 _parms;
             public Plane3D(Render3D parent)
             {
                 this.parent = parent;
@@ -73,10 +73,30 @@ namespace Build
 
                 mesh.vertices = xyz;
 
+                Vector4 newParms = new Vector4(visibility, shadeOffset, palette, curbasepal);
+                if (_parms == newParms)
+                    return;
+
+                _parms = newParms;
+
                 mat.SetVector("_MaterialParams", new Vector4(visibility, shadeOffset, palette, curbasepal));
             }
 
-            public void Build()
+            public void UpdateMaterial(float visibility, float shadeOffset, float palette, float curbasepal)
+            {
+                if (mat == null || mesh == null)
+                    return;
+
+                Vector4 newParms = new Vector4(visibility, shadeOffset, palette, curbasepal);
+                if (_parms == newParms)
+                    return;
+
+                _parms = newParms;
+
+                mat.SetVector("_MaterialParams", newParms);
+            }
+
+            public void Build(float visibility, float shadeOffset, float palette, float curbasepa)
             {
                 if (indexes == null)
                     return;
@@ -97,6 +117,7 @@ namespace Build
                 mat.SetTexture("_MainTex", texture);
                 mat.SetTexture("_PaletteTex", Engine.palette.paletteTexture);
                 mat.SetTexture("_LookupTex", Engine.palette.palookupTexture);
+                mat.SetVector("_MaterialParams", new Vector4(visibility, shadeOffset, palette, curbasepa));
 
                 renderer.material = mat;
 
@@ -155,16 +176,21 @@ namespace Build
 
             for(int i = 0; i < board.numsectors; i++)
             {
+                sectortype s = board.sector[i];
+
                 InitSector(i);
                 UpdateSector((short)i);
 
-                sector3D[i].floor.Build();
-                sector3D[i].ceil.Build();
+                sector3D[i].floor.Build(s.visibility, s.floorshade, s.floorpal, 0);
+                sector3D[i].ceil.Build(s.visibility, s.ceilingshade, s.floorpal, 0);
             }
 
             wall3D = new Wall3D[board.numwalls];
             for (int i = 0; i < board.numwalls; i++)
             {
+                int sectofwall = board.sectorofwall((short)i);
+                sectortype s = board.sector[sectofwall];
+
                 wall3D[i] = new Wall3D();
                 wall3D[i].wall = new Plane3D(this);
                 wall3D[i].over = new Plane3D(this);
@@ -175,9 +201,9 @@ namespace Build
                 wall3D[i].over.Init(4);
                 wall3D[i].mask.Init(4);
                 UpdateWall((short)i);
-                wall3D[i].wall.Build();
-                wall3D[i].over.Build();
-                wall3D[i].mask.Build();
+                wall3D[i].wall.Build(s.visibility, board.wall[i].shade, board.wall[i].pal, 0);
+                wall3D[i].over.Build(s.visibility, board.wall[i].shade, board.wall[i].pal, 0);
+                wall3D[i].mask.Build(s.visibility, board.wall[i].shade, board.wall[i].pal, 0);
             }
         }
 
@@ -284,6 +310,9 @@ namespace Build
             {
                 if (!force)
                 {
+                    w.wall.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
+                    w.over.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
+                    w.mask.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
                     return;
                 }
             }
@@ -388,7 +417,7 @@ namespace Build
 
                 w.wall.InitTexture(curpicnum);
                 w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
-                w.wall.Update(sec.visibility, 0, wal.pal, 0);
+                w.wall.Update(sec.visibility, wal.shade, wal.pal, 0);
 
                 w.underover |= 1;
             }
@@ -434,7 +463,7 @@ namespace Build
 
                     w.wall.InitTexture(curpicnum);
                     w.wall.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
-                    w.wall.Update(sec.visibility, 0, wal.pal, 0);
+                    w.wall.Update(sec.visibility, wal.shade, wal.pal, 0);
 
                     // w.wall.bucket = polymer_getbuildmaterial(w.wall.material, curpicnum, curpal, curshade, sec.visibility, DAMETH_WALL);
 
@@ -544,7 +573,7 @@ namespace Build
 
                     w.over.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
                     w.over.InitTexture(curpicnum);
-                    w.over.Update(sec.visibility, 0, wal.pal, 0);
+                    w.over.Update(sec.visibility, wal.shade, wal.pal, 0);
 
                     //w.over.bucket = polymer_getbuildmaterial(w.over.material, curpicnum, wal.pal, wal.shade, sec.visibility, DAMETH_WALL);
                     //
@@ -1136,8 +1165,13 @@ namespace Build
                 sec.neighborChanged = false;
                 buildfloor(sectnum);
 
-                s.ceil.Update(sec.visibility, 0, sec.ceilingpal, 0);
-                s.floor.Update(sec.visibility, 0, sec.floorpal, 0);
+                s.ceil.Update(sec.visibility, sec.ceilingshade, sec.ceilingpal, 0);
+                s.floor.Update(sec.visibility, sec.floorshade, sec.floorpal, 0);
+            }
+            else
+            {
+                s.ceil.UpdateMaterial(sec.visibility, sec.ceilingshade, sec.ceilingpal, 0);
+                s.floor.UpdateMaterial(sec.visibility, sec.floorshade, sec.ceilingpal, 0);
             }
 
             s.ceil.InitTexture(sec.ceilingpicnum);
