@@ -28,6 +28,7 @@ namespace Build
             }
 
             Texture2D texture = new Texture2D(Engine.tilesizx[tileNum], Engine.tilesizy[tileNum], TextureFormat.R8, false);
+            texture.filterMode = FilterMode.Point;
             texture.LoadRawTextureData(tempbuffer);
             texture.Apply();
             return texture;

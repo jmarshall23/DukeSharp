@@ -105,6 +105,7 @@ namespace Build
             if (paletteTexture == null)
             {
                 paletteTexture = new Texture2D(256, 1, TextureFormat.RGBA32, false);
+                paletteTexture.filterMode = FilterMode.Point;
             }
 
             byte[] tempbuffer = new byte[256 * 4];
