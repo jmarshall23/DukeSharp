@@ -919,7 +919,7 @@ namespace Build
             {
                 spritetype2 tsprite = board.tsprite[i];
                 GameObject spriteObject = spriteGameObjects[i];
-                float _ang;
+                float _ang = 0;
 
                 const int SPR_ALIGN_MASK = 32 + 16;
                 const int SPR_WALL = 16;
@@ -967,8 +967,12 @@ namespace Build
                         yoff -= (int)(ysize / 2);
                     else
                         centeryoff = (int)(ysize / 2);
-                }                
+                }
 
+                Vector3 spriteRotation = Vector3.zero;
+
+                // Do we need this shit anymore??
+                bool stupidfloor = false;
                 switch (tsprite.cstat & SPR_ALIGN_MASK)
                 {
                     case 0:
@@ -990,6 +994,7 @@ namespace Build
                         //sprite->isWallSprite = true;
                         break;
                     case SPR_FLOOR:
+                        stupidfloor = true;
                         _ang = (float)((tsprite.ang + 1024) & 2047) / (2048.0f / 360.0f);
 
                         modelMatrix = modelMatrix * Matrix4x4.Translate(spos);
@@ -1003,7 +1008,14 @@ namespace Build
                 modelMatrix = modelMatrix.transpose;
                 Vector3 rot = pragmas.MatrixToRotation(modelMatrix).eulerAngles;
 
-                spriteObject.transform.eulerAngles = new Vector3(rot.x, rot.y, rot.z);
+                if (!stupidfloor)
+                {
+                    spriteObject.transform.eulerAngles = new Vector3(0, _ang + 180, 0);
+                }
+                else
+                {
+                    spriteObject.transform.eulerAngles = new Vector3(rot.x, rot.y, rot.z);
+                }
 
                 modelMatrix = modelMatrix.transpose;
                 Vector3 translation = pragmas.ExtractPosition(modelMatrix);
@@ -1032,7 +1044,7 @@ namespace Build
             //_math_matrix_rotate(ref rotationMatrix, ang, 0.0f, 1.0f, 0.0f);            
 
             //Camera.main.transform.eulerAngles = pragmas.MatrixToRotation(rotationMatrix.transpose).eulerAngles;
-            Camera.main.transform.eulerAngles = new Vector3(0, ang + 180, 0);
+            Camera.main.transform.eulerAngles = new Vector3(horizang * (360.0f / 2048.0f), ang + 180, -tiltang);
             Camera.main.transform.position = new Vector3(-board.globalposy * (1.0f / 1000.0f), (-board.globalposz / 16) * (1.0f / 1000.0f), -board.globalposx * (1.0f / 1000.0f));
 
             //int front = 0;
