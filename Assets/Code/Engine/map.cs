@@ -6573,6 +6573,9 @@ namespace Build
         public object obj;
         // jv end
 
+
+        public UnityEngine.Vector4 materialparms;
+
         public void Copy(spritetype t)
         {
             x = t.x;

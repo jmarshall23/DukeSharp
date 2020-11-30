@@ -70,12 +70,26 @@ Cull Off
                 float shadeOffset =  _MaterialParams.y;
                 float palette =  _MaterialParams.z;
                 float curbasepal =  _MaterialParams.w;
+                float flipx = curbasepal < 0;
+
+                curbasepal = 0; // abs(curbasepal) - 1;
 
                 float shadeLookup = i.depth.x / 1.07 * visibility;
                shadeLookup = min(max(shadeLookup + shadeOffset, 0), 30);
 
                 // sample the texture
-                float colorIndex = tex2D(_MainTex, i.uv).r * 256;
+                float colorIndex = 0;
+               
+                if (flipx == 0)
+                {
+                    colorIndex = tex2D(_MainTex, i.uv).r * 256;
+                }
+                else
+                {
+                    float2 uv = i.uv;
+                    uv.x = 1 - uv.x;
+                    colorIndex = tex2D(_MainTex, uv).r * 256;
+                }
                 if (colorIndex == 256)
                     discard;
 

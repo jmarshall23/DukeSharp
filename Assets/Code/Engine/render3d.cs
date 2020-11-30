@@ -932,7 +932,21 @@ namespace Build
 
                 Vector3 spos = new Vector3(tsprite.y, -tsprite.z / 16.0f, -tsprite.x);
 
-                spriteObject.GetComponentInChildren<MeshRenderer>().material.SetTexture("_MainTex", Tile.LoadTile(tsprite.picnum));
+                Material mat = spriteObject.GetComponentInChildren<MeshRenderer>().material;
+                mat.SetTexture("_MainTex", Tile.LoadTile(tsprite.picnum));
+
+                Vector4 parms;
+                if((tsprite.cstat & 4) != 0) // XFLIP
+                    parms = new Vector4(board.sector[tsprite.sectnum].visibility, tsprite.shade, tsprite.pal, 1);
+                else
+                    parms = new Vector4(board.sector[tsprite.sectnum].visibility, tsprite.shade, tsprite.pal, -1);
+
+                if(parms != board.tsprite[i].materialparms)
+                {
+                    board.tsprite[i].materialparms = parms;
+                    mat.SetVector("_MaterialParams", parms);
+                }
+                //mat.SetVector("_MaterialParams2", new Vector4(board.sector[tsprite.sectnum].visibility, tsprite.shade, tsprite.pal, 0));
 
                 float xsize = Engine.tilesizx[tsprite.picnum];
                 float ysize = Engine.tilesizy[tsprite.picnum];
