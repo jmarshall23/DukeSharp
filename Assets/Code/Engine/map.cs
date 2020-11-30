@@ -81,6 +81,8 @@ namespace Build
         private int[] ryi = new int[8];
         private int[] rzi = new int[8];
 
+        public Render3D render3D;
+
         private int[] xsi = new int[8];
         private int[] ysi = new int[8];
         private int[] zsi = new int[8];
@@ -6098,12 +6100,10 @@ namespace Build
 
             fil.Close();
 
-            Engine.initPolymerMainThread = true;
+            Render3D.InitOnce();
 
-            while(Engine.initPolymerMainThread)
-            {
-                System.Threading.Thread.Sleep(1);
-            }
+            render3D = new Render3D();
+            render3D.LoadBoard(Engine.board);
 
             return (0);
         }

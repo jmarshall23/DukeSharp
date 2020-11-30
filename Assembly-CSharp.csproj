@@ -95,6 +95,7 @@
     <Compile Include="Assets\Code\Game\Game.cs" />
     <Compile Include="Assets\Code\Game\GameEngine.cs" />
     <Compile Include="Assets\Code\Game\GameMain.cs" />
+    <Compile Include="Assets\Code\Game\GameState.cs" />
     <Compile Include="Assets\Code\Game\Globals.cs" />
     <Compile Include="Assets\Code\Game\Menus.cs" />
     <Compile Include="Assets\Code\Game\Player.cs" />

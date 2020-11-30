@@ -58,17 +58,10 @@ public class GameEngine : MonoBehaviour
     public UIButton mobilePrevButton;
     public UIButton mobileNextButton;
 
-    private Render3D render3D;
-
     public static string AppPath;
 
     private bool delayedStart = true;
-
-    private static void DukeThread()
-    {
-        GlobalMembers.DukeMain("");
-    }
-
+    
     // Start is called before the first frame update
     public void Start()
     {
@@ -103,11 +96,9 @@ public class GameEngine : MonoBehaviour
 
         canvasImage.texture = _texture;
 
-        // Load in the tiles.
-        //  Engine.loadpics("tiles000.art");
+        GlobalMembers.DukeMain(""); // Get everything setup.
 
-        Thread dukeThread = new Thread(new ThreadStart(DukeThread));
-        dukeThread.Start();
+        Engine.palette.UpdatePaletteMainThread();
     }
 
     static float dukeClock = 0.0f;
@@ -120,21 +111,6 @@ public class GameEngine : MonoBehaviour
             DelayedStart();
             delayedStart = false;
         }
-
-        if (Engine.palette != null)
-        {
-            Engine.palette.UpdatePaletteMainThread();
-        }
-
-        if (Engine.initPolymerMainThread)
-        {
-            Render3D.InitOnce();
-
-            render3D = new Render3D();
-            render3D.LoadBoard(Engine.board);
-            Engine.initPolymerMainThread = false;
-        }
-
 
         GlobalMembers.anyKeyDown = Input.anyKeyDown;
 #if !(UNITY_STANDALONE || UNITY_EDITOR)
@@ -245,16 +221,13 @@ public class GameEngine : MonoBehaviour
             GlobalMembers.totalclock = (int)(dukeClock * 120.0f);
         }
 
-        GlobalMembers.faketimerhandler();
+        GlobalMembers.RunState();
 
-        while(Engine._device._screenbuffer.renderReady == false && Engine.initPolymerMainThread == false)
-        {
-            System.Threading.Thread.Sleep(1);
-        }
+        GlobalMembers.faketimerhandler();        
 
-        if (render3D != null)
+        if (Engine.board != null && Engine.board.render3D != null)
         {
-            render3D.DisplayRoom(Engine.board.globalcursectnum);
+            Engine.board.render3D.DisplayRoom(Engine.board.globalcursectnum);
         }
 
         GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
@@ -271,7 +244,5 @@ public class GameEngine : MonoBehaviour
                 handle.Free();
             }
         }
-
-        Engine._device._screenbuffer.renderReady = false;
     }
 }

@@ -14,7 +14,6 @@ namespace Build
         //public Texture2D _texture;
         public int[] Pixels;
         public int[] PresentedPixels;
-        public bool renderReady;
 
         public int _width;
         public int _height;
@@ -26,18 +25,16 @@ namespace Build
 
             _width = width;
             _height = height;
-
-            renderReady = false;
         }
 
         public void Present()
         {            
             Array.Copy(Pixels, PresentedPixels, PresentedPixels.Length);
-            renderReady = true;
-            while(renderReady)
-            {
-                System.Threading.Thread.Sleep(1);
-            }
+           // renderReady = true;
+           // while(renderReady)
+           // {
+           //     System.Threading.Thread.Sleep(1);
+           // }
         }
     }
 

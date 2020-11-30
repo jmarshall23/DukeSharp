@@ -5,7 +5,7 @@ using LibTessDotNet;
 
 namespace Build
 {
-    class Render3D
+    public class Render3D
     {
         public List<Plane3D> planes = new List<Plane3D>();
 
@@ -61,6 +61,11 @@ namespace Build
             {
                 this.parent = parent;
                 parent.planes.Add(this);
+            }
+
+            public void Destroy()
+            {
+                GameObject.Destroy(planeGameObject);
             }
 
             public void Hide()
@@ -206,6 +211,15 @@ namespace Build
         private bMap board;
         private Sector3D[] sector3D;
         private Wall3D[] wall3D;
+
+        public void FreeBoard()
+        {
+            foreach (Plane3D p in planes)
+            {
+                p.Destroy();
+            }
+            planes.Clear();
+        }
 
         public void LoadBoard(bMap board)
         {

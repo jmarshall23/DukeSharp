@@ -40,7 +40,7 @@ namespace Build
 
         public static int myconnectindex = 0;
 
-        public static bool initPolymerMainThread = false;
+        //public static bool initPolymerMainThread = false;
 
 
         public static short[] tilesizx = new short[MAXTILES];
@@ -430,11 +430,20 @@ palette:
         public static int loadboard(string filename, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum)
         {
             kFile fil;
-            board = null;
             GC.Collect();
 
             if (filename.Length <= 0)
                 return 0;
+
+            if (board != null)
+            {
+                if (board.render3D != null)
+                {
+                    board.render3D.FreeBoard();
+                }
+
+                board = null;
+            }
 
             board = new bMap();
             Engine.Printf("bMap::LoadBoard: Loading " + filename);

@@ -1724,6 +1724,168 @@ public partial class GlobalMembers
         return (char)0;
     }
 
+    private static void playback_setup()
+    {
+        int i;
+        int j;
+        int k;
+        int l;
+        int t;
+        short p;
+        char foundemo;
+
+        foundemo = (char)0;
+
+        RECHECK:
+
+        in_menu = (ps[myconnectindex].gm & DefineConstants.MODE_MENU) != 0;
+
+        pub = (char)DefineConstants.NUMPAGES;
+        pus = (char)DefineConstants.NUMPAGES;
+
+        flushperms();
+
+        // jmarshall - demos
+        /*
+                if (numplayers < 2)
+                {
+                    foundemo = opendemoread(which_demo);
+                }
+
+                if (foundemo == 0)
+                {
+                    if (which_demo > 1)
+                    {
+                        which_demo = 1;
+                        goto RECHECK;
+                    }
+                    for (t = 0; t < 63; t += 7)
+                    {
+                        palto(0, 0, 0, t);
+                    }
+                    drawbackground();
+                    menus();
+                    ps[myconnectindex].palette = palette;
+                    nextpage();
+                    for (t = 63; t > 0; t -= 7)
+                    {
+                        palto(0, 0, 0, t);
+                    }
+                    ud.reccnt = 0;
+                }
+                else
+                {
+                    ud.recstat = 2;
+                    which_demo++;
+                    if (which_demo == 10)
+                    {
+                        which_demo = 1;
+                    }
+                    enterlevel(DefineConstants.MODE_DEMO);
+                }
+        */
+        for (t = 0; t < 63; t += 7)
+        {
+            palto(0, 0, 0, t);
+        }
+        drawbackground();
+        menus();
+        // ps[myconnectindex].palette = palette; // palette
+       // Engine.NextPage();
+        for (t = 63; t > 0; t -= 7)
+        {
+            palto(0, 0, 0, t);
+        }
+        ud.reccnt = 0;
+        // jmarshall end
+        if (foundemo == 0 || in_menu || KB_KeyWaiting() != null || numplayers > 1)
+        {
+            FX_StopAllSounds();
+            clearsoundlocks();
+            ps[myconnectindex].gm |= DefineConstants.MODE_MENU;
+        }
+
+        ready2send = (char)0;
+        i = 0;
+
+        KB_FlushKeyboardQueue();
+
+    }
+
+    private static bool playback_state()
+    {
+        {
+            drawbackground();
+        }
+        
+        if ((ps[myconnectindex].gm & DefineConstants.MODE_MENU) != 0 && (ps[myconnectindex].gm & DefineConstants.MODE_EOL) != 0)
+        {
+            currentStage = GameStateType.GAME_STATE_MENU_NOGAME_SETUP;
+            return false;
+        }
+
+        if ((KB_KeyDown[(DefineConstants.sc_Escape)] != false))
+        {
+            {
+                KB_KeyDown[(DefineConstants.sc_Escape)] = (!(1 == 1));
+            };
+            FX_StopAllSounds();
+            clearsoundlocks();
+            ps[myconnectindex].gm |= DefineConstants.MODE_MENU;
+            cmenu(0);
+            intomenusounds();
+        }
+
+        if ((ps[myconnectindex].gm & DefineConstants.MODE_TYPE) != 0)
+        {
+            //typemode();
+            if ((ps[myconnectindex].gm & DefineConstants.MODE_TYPE) != DefineConstants.MODE_TYPE)
+            {
+                ps[myconnectindex].gm = DefineConstants.MODE_MENU;
+            }
+        }
+        else
+        {
+            menus();
+        }
+
+        operatefta();
+
+        if (ud.last_camsprite != ud.camerasprite)
+        {
+            ud.last_camsprite = ud.camerasprite;
+            ud.camera_time = totalclock + (DefineConstants.TICRATE * 2);
+        }
+
+#if VOLUMEONE
+			if (ud.show_help == 0 && (ps[myconnectindex].gm & DefineConstants.MODE_MENU) == 0)
+			{
+				Engine.rotatesprite((320 - 50) << 16,9 << 16,65536,0,DefineConstants.BETAVERSION,0,0,2 + 8 + 16 + 128,0,0,Engine.xdim - 1,Engine.ydim - 1);
+			}
+#endif
+        getpackets();
+        Engine.NextPage();
+
+        if (ps[myconnectindex].gm == DefineConstants.MODE_END || ps[myconnectindex].gm == DefineConstants.MODE_GAME)
+        {
+            // jmarshall - demo
+            //if (foundemo)
+            //{
+            //    kclose(recfilep);
+            //}
+            // jmarshall end
+            return true;
+        }
+
+        if ((ps[myconnectindex].gm & DefineConstants.MODE_MENU) != 0)
+        {
+            currentStage = GameStateType.GAME_STATE_MENU_NOGAME_SETUP;
+            return false;
+        }
+
+        return true;
+    }
+
     private static int playback()
     {
         int i;
@@ -1941,7 +2103,7 @@ public partial class GlobalMembers
         return 1;
     }
 
-
+/*
     private static void Logo()
     {
         short i;
@@ -2099,7 +2261,7 @@ public partial class GlobalMembers
         palto(0, 0, 0, 0);
 		Engine.clearview();
     }
-
+*/
     /*
 	===================
 	=
@@ -2318,7 +2480,7 @@ public partial class GlobalMembers
         //}
 
         //    getpackets();
-
+#if false
         MAIN_LOOP_RESTART:
 
 		if (ud.warp_on == 0)
@@ -2452,5 +2614,110 @@ public partial class GlobalMembers
 		}
 
 		gameexit(" ");
+#endif
 	}
+
+    private static void DukeCoreLoop()
+    {
+        int i;
+        if (ud.recstat == 2 || ud.multimode > 1 || (ud.show_help == 0 && (ps[myconnectindex].gm & DefineConstants.MODE_MENU) != DefineConstants.MODE_MENU))
+        {
+            if ((ps[myconnectindex].gm & DefineConstants.MODE_GAME) != 0)
+            {
+                if (moveloop() != 0)
+                {
+                    return;
+                }
+            }
+        }
+
+        if ((ps[myconnectindex].gm & DefineConstants.MODE_EOL) != 0 || (ps[myconnectindex].gm & DefineConstants.MODE_RESTART) != 0)
+        {
+            if ((ps[myconnectindex].gm & DefineConstants.MODE_EOL) != 0)
+            {
+#if ONELEVELDEMO
+					gameexit(" ");
+#endif
+                //closedemowrite(); // jmarshall : demo
+
+                ready2send = (char)0;
+
+                i = ud.screen_size;
+                ud.screen_size = 0;
+                vscrn();
+                ud.screen_size = i;
+             //   dobonus((char)0); // jmarshall: end screens
+
+                if (ud.eog != 0)
+                {
+                    ud.eog = 0;
+                    if (ud.multimode < 2)
+                    {
+                        //#if DEMO
+                        //							doorders();
+                        //#endif
+                        ps[myconnectindex].gm = DefineConstants.MODE_MENU;
+                        cmenu(0);
+                        probey = 0;
+                        currentStage = GameStateType.GAME_STATE_LOGO_LOGOANIM;
+                    }
+                    else
+                    {
+                        ud.m_level_number = 0;
+                        ud.level_number = 0;
+                    }
+                }
+            }
+
+            ready2send = (char)0;
+            if (numplayers > 1)
+            {
+                ps[myconnectindex].gm = DefineConstants.MODE_GAME;
+            }
+            enterlevel((char)ps[myconnectindex].gm);
+            return;
+        }
+
+        //cheats();
+        //nonsharedkeys(); // jmarshall: hot keys
+
+        if ((ud.show_help == 0 && ud.multimode < 2 && 0 == (ps[myconnectindex].gm & DefineConstants.MODE_MENU)) || ud.multimode > 1 || ud.recstat == 2)
+        {
+            i = Mathf.Min(Mathf.Max((totalclock - ototalclock) * (65536 / (DefineConstants.TICRATE / 26)), 0), 65536);
+        }
+        else
+        {
+            i = 65536;
+        }
+
+        displayrooms(screenpeek, i);
+        displayrest(i);
+
+        //        if( KB_KeyPressed(sc_F) )
+        //        {
+        //            KB_ClearKeyDown(sc_F);
+        //            addplayer();
+        //        }
+
+        if ((ps[myconnectindex].gm & DefineConstants.MODE_DEMO) != 0)
+        {
+            currentStage = GameStateType.GAME_STATE_LOGO_MOVIE;
+            return;
+        }
+
+        //if (debug_on)
+        //{
+        //	caches();
+        //}
+
+        checksync();
+
+#if VOLUMEONE
+			if (ud.show_help == 0 && show_shareware > 0 && (ps[myconnectindex].gm & DefineConstants.MODE_MENU) == 0)
+			{
+				Engine.rotatesprite((320 - 50) << 16,9 << 16,65536,0,DefineConstants.BETAVERSION,0,0,2 + 8 + 16 + 128,0,0,Engine.xdim - 1,Engine.ydim - 1);
+			}
+#endif
+        Engine.NextPage();
+    }
 }
