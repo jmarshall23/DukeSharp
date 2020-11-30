@@ -74,7 +74,7 @@ Cull Off
                 curbasepal = 0; // abs(curbasepal) - 1;
 
                 float shadeLookup = i.depth.x / 0.2 * (visibility + shadeOffset);
-               shadeLookup = min(max(shadeLookup, 0), 30);
+               shadeLookup = min(max(shadeLookup, 0), 23);
 
                 // sample the texture
                 float colorIndex = 0;

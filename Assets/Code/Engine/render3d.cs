@@ -111,11 +111,12 @@ namespace Build
                 mesh.uv = st;
                 mesh.vertices = xyz;
 
-                Vector4 newParms = new Vector4(visibility, shadeOffset, palette, curbasepal);
+                Vector4 newParms = new Vector4(visibility / 30.0f, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
                     return;
 
                 _parms = newParms;
+
 
                 mat.SetVector("_MaterialParams", new Vector4(visibility, shadeOffset, palette, curbasepal));
             }
@@ -125,7 +126,7 @@ namespace Build
                 if (mat == null || mesh == null)
                     return;
 
-                Vector4 newParms = new Vector4(visibility, shadeOffset, palette, curbasepal);
+                Vector4 newParms = new Vector4(visibility / 30.0f, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
                     return;
 

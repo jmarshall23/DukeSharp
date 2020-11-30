@@ -6144,6 +6144,8 @@ namespace Build
         public short lotag, hitag, extra;
         public bool changed;
         public bool neighborChanged;
+
+
         public int ceilingz
         {
             get

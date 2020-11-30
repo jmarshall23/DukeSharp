@@ -83,8 +83,8 @@ public class GameEngine : MonoBehaviour
     {
         AppPath = Application.dataPath;
 
-        GlobalMembers.ud.warp_on = 1;
-        GlobalMembers.boardfilename = "e1l2.map";
+        //GlobalMembers.ud.warp_on = 1;
+        //GlobalMembers.boardfilename = "e1l2.map";
 
         // Init the build engine.
         Engine.Init();
