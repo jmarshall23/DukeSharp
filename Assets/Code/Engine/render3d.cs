@@ -108,6 +108,7 @@ namespace Build
                 if (mesh == null)
                     return;
 
+                mesh.uv = st;
                 mesh.vertices = xyz;
 
                 Vector4 newParms = new Vector4(visibility, shadeOffset, palette, curbasepal);
