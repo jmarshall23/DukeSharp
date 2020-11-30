@@ -42,7 +42,7 @@ namespace Build
         private const uint MAXYSAVES = ((VgaDevice.MAXXDIM * MAXSPRITES) >> 7);
         // jv end
         public const int MAXWALLSB = 2048;
-        private const int MAXSPRITESONSCREEN = 1024;
+        public const int MAXSPRITESONSCREEN = 1024;
 
         public int numsectors = 0;
         public int numwalls = 0;
@@ -147,6 +147,7 @@ namespace Build
 
         private int numhits = 0, numscans = 0, numbunches = 0;
         public int maskwallcnt, smostwallcnt, smostcnt, spritesortcnt;
+        public int framesortcnt;
         private int[] maskwall = new int[MAXWALLSB];
 
         private int palookupoffse = 0;
@@ -1611,6 +1612,7 @@ namespace Build
 
             sectorborder[0] = sectnum;
             sectorbordercnt = 1;
+
             do
             {
                 sectnum = sectorborder[--sectorbordercnt];
@@ -5127,6 +5129,7 @@ namespace Build
                     drawmaskwall((short)--maskwallcnt);
                 }
             }
+            framesortcnt = spritesortcnt;
             while (spritesortcnt > 0) drawsprite(--spritesortcnt);
             while (maskwallcnt > 0) drawmaskwall((short)--maskwallcnt);
 

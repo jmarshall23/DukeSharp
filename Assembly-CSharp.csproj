@@ -118,6 +118,7 @@
     <None Include="Assets\Shaders\Polymer.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexColorRounding.shader" />
+    <None Include="Assets\Shaders\Sky.shader" />
     <None Include="Assets\ShaderForge\Readme.txt" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexAnimation.shader" />

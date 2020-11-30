@@ -84,7 +84,7 @@ public class GameEngine : MonoBehaviour
         AppPath = Application.dataPath;
 
         GlobalMembers.ud.warp_on = 1;
-        GlobalMembers.boardfilename = "e1l2.map";
+        GlobalMembers.boardfilename = "e1l1.map";
 
         // Init the build engine.
         Engine.Init();
@@ -128,6 +128,8 @@ public class GameEngine : MonoBehaviour
 
         if (Engine.initPolymerMainThread)
         {
+            Render3D.InitOnce();
+
             render3D = new Render3D();
             render3D.LoadBoard(Engine.board);
             Engine.initPolymerMainThread = false;
@@ -245,7 +247,10 @@ public class GameEngine : MonoBehaviour
 
         GlobalMembers.faketimerhandler();
 
-        Engine._device._screenbuffer.mut.WaitOne();
+        while(Engine._device._screenbuffer.renderReady == false)
+        {
+            System.Threading.Thread.Sleep(1);
+        }
 
         if (render3D != null)
         {
@@ -267,6 +272,6 @@ public class GameEngine : MonoBehaviour
             }
         }
 
-        Engine._device._screenbuffer.mut.ReleaseMutex();
+        Engine._device._screenbuffer.renderReady = false;
     }
 }

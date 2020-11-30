@@ -7,6 +7,12 @@ namespace Build
     {
         public static Texture2D LoadTile(int tileNum)
         {
+            if (Engine.waloff[tileNum] == null)
+                Engine.loadtile((short)tileNum);
+
+            if (Engine.waloff[tileNum] == null)
+                return null;
+
             byte[] tilebuffer = Engine.waloff[tileNum].memory;
             if (tilebuffer == null)
                 return null;
