@@ -151,7 +151,7 @@ MonoBehaviour:
   m_RenderPipelineResources: {fileID: 11400000, guid: 3ce144cff5783da45aa5d4fdc2da14b7,
     type: 2}
   m_RenderPipelineRayTracingResources: {fileID: 0}
-  m_DefaultVolumeProfile: {fileID: 11400000, guid: fe7706b908da8124591051621b20ae08,
+  m_DefaultVolumeProfile: {fileID: 11400000, guid: 25c42ea2182fdcd4da059d0a5a087c62,
     type: 2}
   m_DefaultLookDevProfile: {fileID: 11400000, guid: 254c4fe87beb7be4fa72e1681edbed02,
     type: 2}

@@ -55,8 +55,7 @@ Cull Off
                 v2f o;
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.depth.x = o.vertex.z / (1.0 / o.vertex.w); // linearize_depth(o.vertex.z / o.vertex.w, 0.001, 3000);
-                o.depth.x = o.depth.x * 2 - 0.5;
+                o.depth.x = (o.vertex.z / (1.0 / o.vertex.w));
 
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                  
@@ -74,8 +73,8 @@ Cull Off
 
                 curbasepal = 0; // abs(curbasepal) - 1;
 
-                float shadeLookup = i.depth.x / 1.07 * visibility;
-               shadeLookup = min(max(shadeLookup + shadeOffset, 0), 30);
+                float shadeLookup = i.depth.x / 0.2 * (visibility + shadeOffset);
+               shadeLookup = min(max(shadeLookup, 0), 30);
 
                 // sample the texture
                 float colorIndex = 0;
@@ -93,18 +92,12 @@ Cull Off
                 if (colorIndex == 256)
                     discard;
 
-                float colorIndexNear = _LookupTex.Load(int3(colorIndex, shadeLookup + (32 * palette), 0 )).r * 256;
-                float colorIndexFar = _LookupTex.Load(int3(colorIndex, shadeLookup + (32 * palette) + 1, 0)).r * 256;
+                float lookupIndex = _LookupTex.Load(int3(colorIndex, shadeLookup + (32 * palette), 0 )).r * 256;
+                float3 texelNear = _PaletteTex.Load(int3(lookupIndex, curbasepal, 0)).xyz;
 
+                float lum = saturate(Luminance(texelNear.rgb) * 4);
 
-
-                float3 texelNear = _PaletteTex.Load(int3(colorIndexNear, curbasepal, 0)).xyz;
-                float3 texelFar = _PaletteTex.Load(int3(colorIndexFar, curbasepal, 0)).xyz;
-
-                float3 tileArtColored = lerp(texelNear, texelFar, frac(shadeLookup));
-
-
-                return float4(tileArtColored.x, tileArtColored.y, tileArtColored.z, 1) * 2;
+                return float4(texelNear.rgb * (lum * 256), 0.5);
             }
             ENDHLSL
         }
