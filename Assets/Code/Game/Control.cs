@@ -119,6 +119,8 @@ public partial class GlobalMembers
 
     public static int KB_KeyWaiting()
     {
+        Engine.NextPage();
+
         if (anyKeyDown)
             return 1;
 

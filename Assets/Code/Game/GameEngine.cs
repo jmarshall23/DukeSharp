@@ -83,8 +83,8 @@ public class GameEngine : MonoBehaviour
     {
         AppPath = Application.dataPath;
 
-        GlobalMembers.ud.warp_on = 1;
-        GlobalMembers.boardfilename = "e1l1.map";
+       // GlobalMembers.ud.warp_on = 1;
+       // GlobalMembers.boardfilename = "e1l1.map";
 
         // Init the build engine.
         Engine.Init();
@@ -247,7 +247,7 @@ public class GameEngine : MonoBehaviour
 
         GlobalMembers.faketimerhandler();
 
-        while(Engine._device._screenbuffer.renderReady == false)
+        while(Engine._device._screenbuffer.renderReady == false && Engine.initPolymerMainThread == false)
         {
             System.Threading.Thread.Sleep(1);
         }

@@ -468,8 +468,11 @@ public partial class GlobalMembers
             //se40code(s.x, s.y, s.z, cang, s.yvel, smoothratio); // jmarshall se40.
 
             Engine.board.drawrooms(s.x, s.y, s.z - (4 << 8), cang, s.yvel, s.sectnum);
+
+            A.forceRenderBlack = true;
             animatesprites(s.x, s.y, cang, smoothratio);
             Engine.board.drawmasks();
+            A.forceRenderBlack = false;
         }
         else
         {
@@ -663,10 +666,13 @@ public partial class GlobalMembers
             }
 
             Engine.board.drawrooms(cposx, cposy, cposz, cang, choriz, sect);
+
+            A.forceRenderBlack = true;
             animatesprites(cposx, cposy, cang, smoothratio);
             Engine.board.drawmasks();
+            A.forceRenderBlack = false;
 
-// jmarshall - screen capt
+            // jmarshall - screen capt
             //if (screencapt == 1)
             //{
             //    setviewback();
@@ -698,7 +704,7 @@ public partial class GlobalMembers
             //    Engine.rotatesprite(160 << 16, 100 << 16, i, tang + 512, DefineConstants.MAXTILES - 2, 0, 0, 4 + 2 + 64, Engine._device.windowx1, Engine._device.windowy1, Engine._device.windowx2, Engine._device.windowy2);
             //    walock[DefineConstants.MAXTILES - 2] = 199;
             //}
-// jmarshall end
+            // jmarshall end
         }
 
         restoreinterpolations();

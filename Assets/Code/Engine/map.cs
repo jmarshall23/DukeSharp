@@ -5839,6 +5839,8 @@ namespace Build
             int i, j, z, cz = 0, fz = 0, closest;
             int shortptr1, shortptr2;
 
+            A.forceRenderBlack = true;
+
             Engine.beforedrawrooms = false;
             Engine.BeginDrawing();  //{{{
 
@@ -5988,6 +5990,8 @@ namespace Build
             }
 
             Engine.EndDrawing();
+
+            A.forceRenderBlack = false;
         }
 
         public void saveboard(System.IO.BinaryWriter fil, int daposx, int daposy, int daposz, short daang, short dacursectnum)

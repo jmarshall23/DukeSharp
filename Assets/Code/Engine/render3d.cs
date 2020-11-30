@@ -919,7 +919,7 @@ namespace Build
             {
                 spritetype2 tsprite = board.tsprite[i];
                 GameObject spriteObject = spriteGameObjects[i];
-                float ang;
+                float _ang;
 
                 const int SPR_ALIGN_MASK = 32 + 16;
                 const int SPR_WALL = 16;
@@ -972,28 +972,28 @@ namespace Build
                 switch (tsprite.cstat & SPR_ALIGN_MASK)
                 {
                     case 0:
-                        ang = (float)(viewangle & 2047) / (2048.0f / 360.0f);
+                        _ang = (float)(viewangle & 2047) / (2048.0f / 360.0f);
 
                         modelMatrix = modelMatrix * Matrix4x4.Translate(spos);
-                        _math_matrix_rotate(ref modelMatrix, -ang, 0.0f, 1.0f, 0.0f);
+                        _math_matrix_rotate(ref modelMatrix, -_ang, 0.0f, 1.0f, 0.0f);
                         _math_matrix_rotate(ref modelMatrix, -horizang, 1.0f, 0.0f, 0.0f);
                         modelMatrix = modelMatrix * Matrix4x4.Translate(new Vector3((float)(-xoff), (float)(yoff), 0.0f));
                         modelMatrix = modelMatrix * Matrix4x4.Scale(new Vector3((float)(xsize), (float)(ysize), 1.0f));
                         break;
                     case SPR_WALL:
-                        ang = (float)((tsprite.ang + 1024) & 2047) / (2048.0f / 360.0f);
+                        _ang = (float)((tsprite.ang + 1024) & 2047) / (2048.0f / 360.0f);
 
                         modelMatrix = modelMatrix * Matrix4x4.Translate(spos);
-                        _math_matrix_rotate(ref modelMatrix, -ang, 0.0f, 1.0f, 0.0f);
+                        _math_matrix_rotate(ref modelMatrix, -_ang, 0.0f, 1.0f, 0.0f);
                         modelMatrix = modelMatrix * Matrix4x4.Translate(new Vector3((float)(-xoff), (float)(yoff - centeryoff), 0.0f));
                         modelMatrix = modelMatrix * Matrix4x4.Scale(new Vector3((float)(xsize), (float)(ysize), 1.0f));
                         //sprite->isWallSprite = true;
                         break;
                     case SPR_FLOOR:
-                        ang = (float)((tsprite.ang + 1024) & 2047) / (2048.0f / 360.0f);
+                        _ang = (float)((tsprite.ang + 1024) & 2047) / (2048.0f / 360.0f);
 
                         modelMatrix = modelMatrix * Matrix4x4.Translate(spos);
-                        _math_matrix_rotate(ref modelMatrix, -ang, 0.0f, 1.0f, 0.0f);
+                        _math_matrix_rotate(ref modelMatrix, -_ang, 0.0f, 1.0f, 0.0f);
                         modelMatrix = modelMatrix * Matrix4x4.Translate(new Vector3((float)(-xoff), 1.0f, (float)(yoff)));
                         modelMatrix = modelMatrix * Matrix4x4.Scale(new Vector3((float)(xsize), 1.0f, (float)(ysize)));
 
@@ -1022,6 +1022,18 @@ namespace Build
 
                 spriteObject.SetActive(true);
             }
+
+            Matrix4x4 rotationMatrix = Matrix4x4.identity;
+            float tiltang = 0; // (board.gtang * 90.0f);
+            float ang = (board.globalang & 2047) * (360.0f / 2048.0f);
+
+            //_math_matrix_rotate(ref rotationMatrix, tiltang, 0.0f, 0.0f, -1.0f);
+            //_math_matrix_rotate(ref rotationMatrix, horizang, 1.0f, 0.0f, 0.0f);
+            //_math_matrix_rotate(ref rotationMatrix, ang, 0.0f, 1.0f, 0.0f);            
+
+            //Camera.main.transform.eulerAngles = pragmas.MatrixToRotation(rotationMatrix.transpose).eulerAngles;
+            Camera.main.transform.eulerAngles = new Vector3(0, ang + 180, 0);
+            Camera.main.transform.position = new Vector3(-board.globalposy * (1.0f / 1000.0f), (-board.globalposz / 16) * (1.0f / 1000.0f), -board.globalposx * (1.0f / 1000.0f));
 
             //int front = 0;
             //int back = 1;

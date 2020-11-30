@@ -37,6 +37,8 @@ namespace Build
         public static void settransnormal() { transmode = 0; }
         public static void settransreverse() { transmode = 1; }
 
+        public static bool forceRenderBlack = false;
+
 
 	        //Ceiling/floor horizontal line functions
         public static void sethlinesizes(int logx, int logy, byte[] bufplc, int bufpos)
@@ -69,8 +71,14 @@ namespace Build
         
 	        for(;cnt>=0;cnt--)
 	        {
-                //Engine._device.SetScreenPixel(pbase, Engine.palette._palookup[Engine.globalpal].palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]);
-                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.palette.globalpalwritten].palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]];
+                if (forceRenderBlack)
+                {
+                    Engine._device._screenbuffer.Pixels[pbase] = 0;
+                }
+                else
+                {
+                    Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.palette.globalpalwritten].palookup[(ghlinepalpos + paloffs) + gbuf[gbufpos + ((bx >> (32 - glogx) << glogy) + (by >> (32 - glogy)))]]];
+                }
 		        bx -=(uint)gbxinc;
                 by -= (uint)gbyinc;
                 pbase--;
@@ -103,8 +111,12 @@ namespace Build
                 u = (uint)(bx + globalx3 * i);
                 v = (uint)(by + globaly3 * i);
 
-                //Engine._device.SetScreenPixel(ppos, pal[gbuf[gbufpos + ((u >> (32 - glogx)) << glogy) + (v >> (32 - glogy))] + slopalptr2[slopalbase]]);
-                Engine._device._screenbuffer.Pixels[ppos] = Engine._device._palette._palettebuffer[pal[gbuf[gbufpos + ((u >> (32 - glogx)) << glogy) + (v >> (32 - glogy))] + slopalptr2[slopalbase]]];
+                if (forceRenderBlack)
+                {
+                    Engine._device._screenbuffer.Pixels[ppos] = 0;
+                }
+                else
+                    Engine._device._screenbuffer.Pixels[ppos] = Engine._device._palette._palettebuffer[pal[gbuf[gbufpos + ((u >> (32 - glogx)) << glogy) + (v >> (32 - glogy))] + slopalptr2[slopalbase]]];
                 slopalbase--;
 		        //p += gpinc;
                 ppos += gpinc;
@@ -126,7 +138,12 @@ namespace Build
                 if (pos < 0)
                     continue;
 
-                Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + gbuf[pos]]];
+                if (forceRenderBlack)
+                {
+                    Engine._device._screenbuffer.Pixels[pbase] = 0;
+                }
+                else
+                    Engine._device._screenbuffer.Pixels[pbase] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + gbuf[pos]]];
                 pbase += bpl;
                 vplc += (uint)vinc;
 	        }
@@ -150,8 +167,12 @@ namespace Build
                 ch = gbuf[pos];
                 if (ch != 255)
                 {
-                    //Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + ch]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + ch]];
+                    if (forceRenderBlack)
+                    {
+                        Engine._device._screenbuffer.Pixels[p] = 0;
+                    }
+                    else
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + ch]];
                 }
 		        p += bpl;
                 vplc += (uint)vinc;
@@ -175,8 +196,12 @@ namespace Build
                     ch = gbuf[bufplcbase + (vplc >> glogy)];
                     if (ch != 255)
                     {
-                        //   Engine._device.SetScreenPixel(p, gtrans[p/*.memory*/+ (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]];
+                        if (forceRenderBlack)
+                        {
+                            Engine._device._screenbuffer.Pixels[p] = 0;
+                        }
+                        else
+                            Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]];
                     }
 			        p += bpl;
                     vplc += (uint)vinc;
@@ -195,7 +220,12 @@ namespace Build
                         {
                             int d = gtrans[c];
                             if (d < Engine._device._palette._palettebuffer.Length)
-                                Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[d];
+                                if (forceRenderBlack)
+                                {
+                                    Engine._device._screenbuffer.Pixels[p] = 0;
+                                }
+                                else
+                                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[d];
                         }
                     }
 			        p += bpl;
@@ -220,8 +250,13 @@ namespace Build
                 ch = gbuf[gbufpos + ((bx>>(32-glogx))<<glogy)+(by>>(32-glogy))];
                 if (ch != 255)
                 {
-                 //   Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
+                    //   Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]);
+                    if (forceRenderBlack)
+                    {
+                        Engine._device._screenbuffer.Pixels[p] = 0;
+                    }
+                    else
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
                 }
                 bx += (uint)asm1;
                 by += (uint)asm2;
@@ -252,7 +287,13 @@ namespace Build
                     {
                         int _pallookup = Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8;
                         byte trans = gtrans[(_pallookup) + gtranspos];
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[trans];
+
+                        if (forceRenderBlack)
+                        {
+                            Engine._device._screenbuffer.Pixels[p] = 0;
+                        }
+                        else
+                            Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[trans];
                     }
                     bx += (uint)asm1;
                     by += (uint)asm2;
@@ -267,7 +308,13 @@ namespace Build
 			        if (ch != 255) /// jv
                     {
                         //Engine._device.SetScreenPixel(p, gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]];
+
+                        if (forceRenderBlack)
+                        {
+                            Engine._device._screenbuffer.Pixels[p] = 0;
+                        }
+                        else
+                            Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]];
                     }
                     bx += (uint)asm1;
                     by += (uint)asm2;
@@ -298,7 +345,13 @@ namespace Build
                 if(ch != 255)
                 {
                     //Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
+
+                    if (forceRenderBlack)
+                    {
+                        Engine._device._screenbuffer.Pixels[p] = 0;
+                    }
+                    else
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
                 }
 		        bx += gbxinc;
 		        by += gbyinc;
@@ -327,7 +380,13 @@ namespace Build
                 if (ch != 255)
                 {
                     //   Engine._device.SetScreenPixel(p, Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]);
-                    Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
+
+                    if (forceRenderBlack)
+                    {
+                        Engine._device._screenbuffer.Pixels[p] = 0;
+                    }
+                    else
+                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos]];
                 }
 		        bx += gbxinc;
 		        by += gbyinc;
@@ -362,7 +421,13 @@ namespace Build
                     if (ch != 255)
                     {
                         //Engine._device.SetScreenPixel(p, gtrans[(p/*.memory*/) + (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(p/*.memory*/) + (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]];
+
+                        if (forceRenderBlack)
+                        {
+                            Engine._device._screenbuffer.Pixels[p] = 0;
+                        }
+                        else
+                            Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[(p/*.memory*/) + (Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] << 8) + gtranspos]];
                     }
 			        bx += gbxinc;
 			        by += gbyinc;
@@ -377,7 +442,13 @@ namespace Build
                     if (ch != 255)
                     {
                         //   Engine._device.SetScreenPixel(p, gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]);
-                        Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]];
+
+                        if (forceRenderBlack)
+                        {
+                            Engine._device._screenbuffer.Pixels[p] = 0;
+                        }
+                        else
+                            Engine._device._screenbuffer.Pixels[p] = Engine._device._palette._palettebuffer[gtrans[((p/*.memory*/) << 8) + Engine.palette._palookup[Engine.globalpal].palookup[ch + gpalpos] + gtranspos]];
                     }
 			        bx += gbxinc;
 			        by += gbyinc;
@@ -401,8 +472,13 @@ namespace Build
             {
                 for (x = 0; x < dx; x++)
                 {
-                 //   Engine._device.SetScreenPixel((p + x), Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + vptr[(v >> 16) + vptrpos]]);
-                    Engine._device._screenbuffer.Pixels[p + x] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + vptr[(v >> 16) + vptrpos]]];
+                    //   Engine._device.SetScreenPixel((p + x), Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + vptr[(v >> 16) + vptrpos]]);
+                    if (forceRenderBlack)
+                    {
+                        Engine._device._screenbuffer.Pixels[p] = 0;
+                    }
+                    else
+                        Engine._device._screenbuffer.Pixels[p + x] = Engine._device._palette._palettebuffer[Engine.palette._palookup[Engine.globalpal].palookup[gpalpos + vptr[(v >> 16) + vptrpos]]];
                 }
                 p += bpl; v += vi; dy--;
             }
