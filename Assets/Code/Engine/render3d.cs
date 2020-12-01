@@ -113,6 +113,7 @@ namespace Build
 
                 mesh.uv = st;
                 mesh.vertices = xyz;
+                mesh.RecalculateBounds();
 
                 Vector4 newParms = new Vector4(visibility / 30.0f, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
