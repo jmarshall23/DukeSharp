@@ -151,8 +151,10 @@ namespace Build
                 mesh.vertices = xyz;
                 mesh.uv = st;
                 mesh.triangles = indexes;
-                mf.mesh = mesh;
+                mesh.RecalculateBounds();
 
+                mf.mesh = mesh;
+                
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
 
                 // Each plane needs its own material.
@@ -261,7 +263,7 @@ namespace Build
 
         private void DO_TILE_ANIM(ref short Picnum, int fakevar)
         {
-            //if (Engine.picanm[Picnum] & PICANM_ANIMTYPE_MASK) Picnum += animateoffs(Picnum, Fakevar);
+            Picnum += (short)Engine.animateoffs(Picnum, (short)fakevar);
         }
 
         private void UpdateWall(short wallnum, bool force = false)
@@ -274,8 +276,8 @@ namespace Build
             short nwallpicnum;
             char curxpanning;
             char curypanning;
-            char underwall;
-            char overwall;
+            byte underwall;
+            byte overwall;
             char curpal;
             sbyte curshade;
             walltype wal;
@@ -381,7 +383,7 @@ namespace Build
                 w.nwallshade = board.wall[nwallnum].shade;
             }
 
-            w.underover = underwall = overwall = (char)0;
+            w.underover = underwall = overwall = 0;
 
             if ((wal.cstat & 8) != 0)
             {
@@ -479,9 +481,11 @@ namespace Build
             {
                 nnwallnum = board.wall[nwallnum].point2;
 
-                if ((s.floor.xyz[wallnum - sec.wallptr].y < ns.floor.xyz[nnwallnum - nsec.wallptr].y) || (s.floor.xyz[wal.point2 - sec.wallptr].y < ns.floor.xyz[nwallnum - nsec.wallptr].y))
+                // jmarshall: I didn't use this check in PolymerNG, needs evaluatioN!
+                // if ((s.floor.xyz[wallnum - sec.wallptr].y < ns.floor.xyz[nnwallnum - nsec.wallptr].y) ||
+                //     (s.floor.xyz[wal.point2 - sec.wallptr].y < ns.floor.xyz[nwallnum - nsec.wallptr].y))
                 {
-                    underwall = (char)1;
+                    underwall = 1;
                 }
 
                 if ((underwall) != 0 || (wal.cstat & 16) != 0 || (wal.cstat & 32) != 0)
@@ -591,7 +595,7 @@ namespace Build
 
                 if ((s.ceil.xyz[wallnum - sec.wallptr].y > ns.ceil.xyz[nnwallnum - nsec.wallptr].y) || (s.ceil.xyz[wal.point2 - sec.wallptr].y > ns.ceil.xyz[nwallnum - nsec.wallptr].y))
                 {
-                    overwall = (char)1;
+                    overwall = 1;
                 }
 
                 bool parralaxCeiling = (neighborsector != null && neighborsector.IsCeilParalaxed() && neighborsector.IsCeilParalaxed());
