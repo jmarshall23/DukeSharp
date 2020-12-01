@@ -102,11 +102,6 @@ namespace Build
 
                 if (Engine.waloff[tileNum] == null)
                     return;
-                 
-                if (Engine.waloff[tileNum].texture == null)
-                {
-                    Engine.waloff[tileNum].texture = Tile.LoadTile(tileNum);
-                }
 
                 texture = Engine.waloff[tileNum].texture;
             }
@@ -1024,7 +1019,16 @@ namespace Build
                 Vector3 spos = new Vector3(tsprite.y, -tsprite.z / 16.0f, -tsprite.x);
 
                 Material mat = spriteObject.GetComponentInChildren<MeshRenderer>().material;
-                mat.SetTexture("_MainTex", Tile.LoadTile(tsprite.picnum));
+
+                if (Engine.waloff[tsprite.picnum] == null || Engine.waloff[tsprite.picnum].texture == null)
+                {
+                    Engine.loadtile(tsprite.picnum);
+                }
+
+                if (Engine.waloff[tsprite.picnum] == null || Engine.waloff[tsprite.picnum].texture == null)
+                    continue;
+
+                mat.SetTexture("_MainTex", Engine.waloff[tsprite.picnum].texture);
 
                 Vector4 parms;
                 if((tsprite.cstat & 4) != 0) // XFLIP

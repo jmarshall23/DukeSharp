@@ -650,6 +650,8 @@ palette:
 
             //faketimerhandler();
             artfilplc = tilefileoffs[tilenume] + dasiz;
+
+            waloff[tilenume].texture = Tile.LoadTile(tilenume);
         }
 
 
