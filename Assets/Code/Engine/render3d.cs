@@ -632,7 +632,7 @@ namespace Build
                     if ((wal.cstat & 48) != 0)
                     {
                         w.mask.indexes = new int[] { 0, 1, 2, 0, 2, 3 };
-                        w.mask.InitTexture(curpicnum);
+                        w.mask.InitTexture(wal.overpicnum);
                         w.mask.Update(sec.visibility, wal.shade, wal.pal, 0);
                     }
 
