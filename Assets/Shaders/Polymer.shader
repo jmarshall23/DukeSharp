@@ -97,7 +97,7 @@ Cull Off
 
                 float lum = saturate(Luminance(texelNear.rgb) * 4);
 
-                return float4(texelNear.rgb * (lum * 256), 0.5);
+                return float4(texelNear.rgb * (lum * 256), 0.5) * 2;
             }
             ENDHLSL
         }
