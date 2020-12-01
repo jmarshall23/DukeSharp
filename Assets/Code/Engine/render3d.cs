@@ -870,14 +870,18 @@ namespace Build
             int[] _remap = new int[tess.Vertices.Length];
             for(int x = 0; x < tess.Vertices.Length; x++)
             {
-                for(int y = 0; y < tess.Vertices.Length; y++)
-                {
+                bool found = false;
+                for (int y = 0; y <= s.floor.xyz.Length; y++)
+                {                    
                     if(tess.Vertices[x].Position.X == s.floor.xyz[y].x && tess.Vertices[x].Position.Y == s.floor.xyz[y].z)
                     {
                         _remap[x] = y;
+                        found = true;
                         break;
-                    }
+                    }                    
                 }
+                if (!found)
+                    Debug.LogError("Tesselation had new random vertexes?");
             }
 
 
