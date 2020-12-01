@@ -151,6 +151,12 @@ public class SoundEngine : MonoBehaviour
 
     public void PlaySound(int index, int volume = 0, int pan = 0)
     {
+        if (index >= audioClips.Length)
+        {
+            Debug.LogWarning("PlaySound: FAILED to due out of clip range!");
+            return;
+        }
+
         mut.WaitOne();
         AudioEntry entry = new AudioEntry();
         entry.clip = audioClips[index];

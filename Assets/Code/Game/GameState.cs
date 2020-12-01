@@ -64,6 +64,7 @@ public partial class GlobalMembers
                     {
                         currentStage = GameStateType.GAME_STATE_LOGO_BETASCREEN;
                         ps[myconnectindex].palette = titlepal;
+                        palto(0, 0, 0, 63);
                         flushperms();
                         totalclock = 0;
                     }
@@ -153,6 +154,7 @@ public partial class GlobalMembers
 
             case GameStateType.GAME_STATE_MENU_NOGAME_SETUP:
                 //tempautorun = ud.auto_run;
+                palto(0, 0, 0, 63);
                 ud.warp_on = 0;
                 playback_setup();
 

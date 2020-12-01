@@ -1950,6 +1950,7 @@ public partial class GlobalMembers
 		currentStage = GameStateType.GAME_STATE_INGAME;
 		ps[myconnectindex].gm = DefineConstants.MODE_GAME;
 		in_menu = false;
+		KB_FlushKeyboardQueue();
 	}
 
 	/*

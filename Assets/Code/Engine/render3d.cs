@@ -81,6 +81,9 @@ namespace Build
                 if (!planeGameObject)
                     return;
 
+                if (indexes == null)
+                    return;
+
                 planeGameObject.SetActive(true);
             }
 
@@ -393,7 +396,9 @@ namespace Build
                 xref = 0;
             }
 
-            if ((uint)wal.nextsector >= (uint)board.numsectors || ns == null)
+            bool parralaxFloor = (neighborsector != null && sec.IsFloorParalaxed() && neighborsector.IsFloorParalaxed());
+
+            if (((uint)wal.nextsector >= (uint)board.numsectors || ns == null) && !parralaxFloor)
             {
                 w.wall.xyz[0] = s.floor.xyz[wallnum - sec.wallptr];
                 w.wall.xyz[1] = s.floor.xyz[wal.point2 - sec.wallptr];
@@ -474,7 +479,7 @@ namespace Build
 
                 w.underover |= 1;
             }
-            else
+            else if(!parralaxFloor)
             {
                 nnwallnum = board.wall[nwallnum].point2;
 
@@ -832,7 +837,7 @@ namespace Build
             }
 
             tess.AddContour(contour.ToArray(), LibTessDotNet.ContourOrientation.Clockwise);
-            tess.Tessellate(LibTessDotNet.WindingRule.Positive, LibTessDotNet.ElementType.Polygons, 3);
+            tess.Tessellate(LibTessDotNet.WindingRule.EvenOdd, LibTessDotNet.ElementType.Polygons, 3);
 
             s.indicescount = tess.Elements.Length;
 
@@ -916,15 +921,85 @@ namespace Build
 
         short[] sectorqueue = new short[bMap.MAXSECTORS];
 
+        private void DisplaySectors(short dacursectnum)
+        {
+            int front = 0;
+            int back = 1;
+            int i;
+            short[] drawingstate = new short[board.numsectors];
+            Sector3D s;
+
+            // Hide all the planes.
+            foreach (Plane3D p in planes)
+            {
+                p.Hide();
+            }
+
+            sectortype sec;
+
+            sectorqueue[0] = dacursectnum;
+            drawingstate[dacursectnum] = 1;
+
+            while (front != back)
+            {
+                sec = board.sector[sectorqueue[front]];
+                s = sector3D[sectorqueue[front]];
+
+                // Update the sector.                
+                PokeSector(sectorqueue[front]);
+
+                // Show the floor and ceiling.
+                s.floor.Show();
+                s.ceil.Show();
+
+                i = sec.wallnum - 1;
+                do
+                {
+                    if (board.wallvisible(board.globalposx, board.globalposy, sec.wallptr + i))
+                    {
+                        if (wall3D[sec.wallptr + i].wall != null)
+                            wall3D[sec.wallptr + i].wall.Show();
+
+                        if (wall3D[sec.wallptr + i].mask != null)
+                            wall3D[sec.wallptr + i].mask.Show();
+
+                        if (wall3D[sec.wallptr + i].over != null)
+                            wall3D[sec.wallptr + i].over.Show();
+                    }
+                }
+                while (--i >= 0);
+
+
+                i = sec.wallnum - 1;
+                do
+                {
+                    if (sec.wallptr + i >= board.wall.Length)
+                        break;
+
+                    if (board.wall[sec.wallptr + i].nextsector == -1)
+                        continue;
+
+                    if (drawingstate[board.wall[sec.wallptr + i].nextsector] == 0)
+                    {
+                        sectorqueue[back++] = board.wall[sec.wallptr + i].nextsector;
+                        drawingstate[board.wall[sec.wallptr + i].nextsector] = 1;
+                    }
+                } while (--i >= 0);
+
+                front++;
+            }
+        }
+
         public void DisplayRoom(short dacursectnum)
         {
             float M_1_PI = 0.318309886183790671538f;
             float horizang = -(float)Mathf.Atan2(pragmas.fix16_to_float(board.globalhoriz) - 100.0f, 128.0f) * (180.0f * (float)M_1_PI);
 
-            for (int i = 0; i < board.numsectors; i++)
-            {
-                PokeSector((short)i);
-            }
+            // for (int i = 0; i < board.numsectors; i++)
+            // {
+            //     PokeSector((short)i);
+            // }
+            DisplaySectors(dacursectnum);
 
             foreach (GameObject obj in spriteGameObjects)
             {
@@ -1075,73 +1150,7 @@ namespace Build
 
             //Camera.main.transform.eulerAngles = pragmas.MatrixToRotation(rotationMatrix.transpose).eulerAngles;
             Camera.main.transform.eulerAngles = new Vector3(horizang * (360.0f / 2048.0f), ang + 180, -tiltang);
-            Camera.main.transform.position = new Vector3(-board.globalposy * (1.0f / 1000.0f), (-board.globalposz / 16) * (1.0f / 1000.0f), -board.globalposx * (1.0f / 1000.0f));
-
-            //int front = 0;
-            //int back = 1;
-            //int i;
-            //short[] drawingstate = new short[board.numsectors];
-            //Sector3D s;
-            //
-            //// Hide all the planes.
-            //foreach(Plane3D p in planes)
-            //{
-            //    p.Hide();
-            //}
-            //
-            //sectortype sec;
-            //
-            //sectorqueue[0] = dacursectnum;
-            //drawingstate[dacursectnum] = 1;
-            //
-            //while (front != back)
-            //{
-            //    sec = board.sector[sectorqueue[front]];
-            //    s = sector3D[sectorqueue[front]];
-            //
-            //    // Update the sector.                
-            //    PokeSector(sectorqueue[front]);
-            //
-            //    // Show the floor and ceiling.
-            //    s.floor.Show();
-            //    s.ceil.Show();
-            //
-            //    i = sec.wallnum - 1;
-            //    do
-            //    {
-            //        if (board.wallvisible(board.globalposx, board.globalposy, sec.wallptr + i)) 
-            //        {
-            //            if (wall3D[sec.wallptr + i].wall != null)
-            //                wall3D[sec.wallptr + i].wall.Show();
-            //
-            //            if (wall3D[sec.wallptr + i].mask != null)
-            //                wall3D[sec.wallptr + i].mask.Show();
-            //
-            //            if (wall3D[sec.wallptr + i].over != null)
-            //                wall3D[sec.wallptr + i].over.Show();
-            //        }
-            //    }
-            //    while (--i >= 0);
-            //
-            //
-            //    i = sec.wallnum - 1;
-            //    do
-            //    {
-            //        if (sec.wallptr + i >= board.wall.Length)
-            //            break;
-            //
-            //        if (board.wall[sec.wallptr + i].nextsector == -1)
-            //            continue;
-            //
-            //        if (drawingstate[board.wall[sec.wallptr + i].nextsector] == 0)
-            //        {
-            //            sectorqueue[back++] = board.wall[sec.wallptr + i].nextsector;
-            //            drawingstate[board.wall[sec.wallptr + i].nextsector] = 1;
-            //        }
-            //    } while (--i >= 0);
-            //
-            //    front++;
-            //}
+            Camera.main.transform.position = new Vector3(-board.globalposy * (1.0f / 1000.0f), (-board.globalposz / 16) * (1.0f / 1000.0f), -board.globalposx * (1.0f / 1000.0f));            
         }
 
         private int UpdateSector(short sectnum)

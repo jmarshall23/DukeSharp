@@ -61,7 +61,8 @@ public class GameEngine : MonoBehaviour
     public static string AppPath;
 
     private bool delayedStart = true;
-    
+    private GCHandle handle;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -76,8 +77,8 @@ public class GameEngine : MonoBehaviour
     {
         AppPath = Application.dataPath;
 
-        //GlobalMembers.ud.warp_on = 1;
-        //GlobalMembers.boardfilename = "e1l2.map";
+       // GlobalMembers.ud.warp_on = 1;
+       // GlobalMembers.boardfilename = "e1l1.map";
 
         // Init the build engine.
         Engine.Init();
@@ -99,6 +100,8 @@ public class GameEngine : MonoBehaviour
         GlobalMembers.DukeMain(""); // Get everything setup.
 
         Engine.palette.UpdatePaletteMainThread();
+
+        handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
     }
 
     static float dukeClock = 0.0f;
@@ -113,6 +116,7 @@ public class GameEngine : MonoBehaviour
         }
 
         GlobalMembers.anyKeyDown = Input.anyKeyDown;
+
 #if !(UNITY_STANDALONE || UNITY_EDITOR)
         GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = mobileUpButton.buttonPressed;
         GlobalMembers.KB_KeyDown[(DefineConstants.sc_DownArrow)] = mobileDownButton.buttonPressed;
@@ -124,9 +128,9 @@ public class GameEngine : MonoBehaviour
         GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = mobilePrevButton.buttonPressed;
         GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = mobileNextButton.buttonPressed;
 #else
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftShift)] = true;
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftShift)] = false;
 
 
@@ -135,77 +139,77 @@ public class GameEngine : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Escape))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Escape)] = false;
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKey(KeyCode.Return))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Return)] = true;
-        else if (Input.GetKeyUp(KeyCode.Return))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Return)] = false;
 
-        if (Input.GetKeyDown(KeyCode.LeftBracket))
+        if (Input.GetKey(KeyCode.LeftBracket))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_OpenBracket)] = true;
-        else if (Input.GetKeyUp(KeyCode.LeftBracket))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_OpenBracket)] = false;
 
-        if (Input.GetKeyDown(KeyCode.RightBracket))
+        if (Input.GetKey(KeyCode.RightBracket))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_CloseBracket)] = true;
-        else if (Input.GetKeyUp(KeyCode.RightBracket))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_CloseBracket)] = false;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = true;
-        else if (Input.GetKeyUp(KeyCode.UpArrow))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = false;
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_DownArrow)] = true;
-        else if (Input.GetKeyUp(KeyCode.DownArrow))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_DownArrow)] = false;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftArrow)] = true;
-        else if (Input.GetKeyUp(KeyCode.LeftArrow))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftArrow)] = false;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_RightArrow)] = true;
-        else if (Input.GetKeyUp(KeyCode.RightArrow))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_RightArrow)] = false;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Space)] = true;
-        else if (Input.GetKeyUp(KeyCode.Space))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_Space)] = false;
 
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_C)] = true;
-        else if (Input.GetKeyUp(KeyCode.C))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_C)] = false;
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftControl)] = true;
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftControl)] = false;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = true;
-        else if (Input.GetKeyUp(KeyCode.E))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = false;
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.R))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = true;
-        else if (Input.GetKeyUp(KeyCode.R))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = false;
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKey(KeyCode.T))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = true;
-        else if (Input.GetKeyUp(KeyCode.T))
+        else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = false;
 #endif
         for (int i = 0; i <= 9; i++)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+            if (Input.GetKey(KeyCode.Alpha0 + i))
                 GlobalMembers.KB_KeyDown[(DefineConstants.sc_0 + i)] = true;
-            else if (Input.GetKeyUp(KeyCode.Alpha0 + i))
+            else
                 GlobalMembers.KB_KeyDown[(DefineConstants.sc_0 + i)] = false;
         }
 
@@ -230,19 +234,9 @@ public class GameEngine : MonoBehaviour
             Engine.board.render3D.DisplayRoom(Engine.board.globalcursectnum);
         }
 
-        GCHandle handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
-        try
-        {
-            IntPtr pointer = handle.AddrOfPinnedObject();
-            _texture.LoadRawTextureData(pointer, Engine._device._screenbuffer._width * Engine._device._screenbuffer._height * 4);
-            _texture.Apply();
-        }
-        finally
-        {
-            if (handle.IsAllocated)
-            {
-                handle.Free();
-            }
-        }
+
+        IntPtr pointer = handle.AddrOfPinnedObject();
+        _texture.LoadRawTextureData(pointer, Engine._device._screenbuffer._width * Engine._device._screenbuffer._height * 4);
+        _texture.Apply();
     }
 }

@@ -3867,6 +3867,8 @@ public partial class GlobalMembers
 			cameraclock = totalclock;
 			cameradist = 65536;
 		}
+
+		KB_FlushKeyboardQueue();
 	}
 
 	public static void palto(int r, int g, int b, int e)

@@ -110,6 +110,8 @@ public partial class GlobalMembers
         anyKeyDown = false;
         for (int i = 0; i < KB_KeyDown.Length; i++)
             KB_KeyDown[i] = false;
+
+        Input.ResetInputAxes();
     }
 
     public static void CONTROL_DefineFlag(int which, bool toggle)
