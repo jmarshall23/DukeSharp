@@ -616,6 +616,9 @@ palette:
             if (tilenume >= MAXTILES) 
                 return;
 
+            if (waloff[tilenume] != null && waloff[tilenume].texture != null)
+                return;
+
             dasiz = tilesizx[tilenume] * tilesizy[tilenume];
             if (dasiz <= 0) return;
 

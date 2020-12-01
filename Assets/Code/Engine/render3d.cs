@@ -7,6 +7,7 @@ namespace Build
 {
     public class Render3D
     {
+        public int displayFrameId = 0;
         public List<Plane3D> planes = new List<Plane3D>();
 
         private static GameObject[] spriteGameObjects;
@@ -57,9 +58,15 @@ namespace Build
             private Render3D parent;
             private Material mat;
             private Vector4 _parms;
+            private Vector3[] cached_xyz;
+            private bool isVisible;
+            public int displayFrameId;
+
             public Plane3D(Render3D parent)
             {
                 this.parent = parent;
+                isVisible = true;
+                displayFrameId = 0;
                 parent.planes.Add(this);
             }
 
@@ -70,19 +77,33 @@ namespace Build
 
             public void Hide()
             {
+                displayFrameId = -1;
+
                 if (!planeGameObject)
+                    return;                
+
+                if (!isVisible)
                     return;
+
+                isVisible = false;                
 
                 planeGameObject.SetActive(false);
             }
 
             public void Show()
             {
+                displayFrameId = parent.displayFrameId;
+
                 if (!planeGameObject)
                     return;
 
                 if (indexes == null)
+                    return;                
+
+                if (isVisible)
                     return;
+
+                isVisible = true;                
 
                 planeGameObject.SetActive(true);
             }
@@ -111,9 +132,27 @@ namespace Build
                 if (mesh == null)
                     return;
 
-                mesh.uv = st;
-                mesh.vertices = xyz;
-                mesh.RecalculateBounds();
+                bool changed = false;
+                for (int i = 0; i < cached_xyz.Length; i++)
+                {
+                    if(cached_xyz[i] != xyz[i])
+                    {
+                        changed = true;
+                        break;
+                    }
+                }
+
+                if (changed)
+                {
+                    mesh.uv = st;
+                    mesh.vertices = xyz;
+                    mesh.RecalculateBounds();
+
+                    for (int i = 0; i < cached_xyz.Length; i++)
+                    {
+                        cached_xyz[i] = xyz[i];
+                    }
+                }
 
                 Vector4 newParms = new Vector4(visibility / 30.0f, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
@@ -154,7 +193,13 @@ namespace Build
                 mesh.RecalculateBounds();
 
                 mf.mesh = mesh;
-                
+
+                cached_xyz = new Vector3[xyz.Length];
+                for(int i = 0; i < cached_xyz.Length; i++)
+                {
+                    cached_xyz[i] = xyz[i];
+                }
+
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
 
                 // Each plane needs its own material.
@@ -360,16 +405,16 @@ namespace Build
            //     return; // screw you guys I'm going home
            // }
            // else
-            if(wal.changed == false /*&& (wallpicnum == w.picnum_anim) && (walloverpicnum == w.overpicnum_anim) && ((nwallnum < 0 || nwallnum > board.numwalls) || ((nwallpicnum == w.nwallpicnum) && (board.wall[nwallnum].xpanning == w.nwallxpanning) && (board.wall[nwallnum].ypanning == w.nwallypanning) && (board.wall[nwallnum].cstat == w.nwallcstat) && (board.wall[nwallnum].shade == w.nwallshade)))*/)
-            {
-                if (!force)
-                {
-                    w.wall.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
-                    w.over.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
-                    w.mask.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
-                    return;
-                }
-            }
+            //if(wal.changed == false /*&& (wallpicnum == w.picnum_anim) && (walloverpicnum == w.overpicnum_anim) && ((nwallnum < 0 || nwallnum > board.numwalls) || ((nwallpicnum == w.nwallpicnum) && (board.wall[nwallnum].xpanning == w.nwallxpanning) && (board.wall[nwallnum].ypanning == w.nwallypanning) && (board.wall[nwallnum].cstat == w.nwallcstat) && (board.wall[nwallnum].shade == w.nwallshade)))*/)
+            //{
+            //    if (!force)
+            //    {
+            //        w.wall.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
+            //        w.over.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
+            //        w.mask.UpdateMaterial(sec.visibility, wal.shade, wal.pal, 0);
+            //        return;
+            //    }
+            //}
             wal.changed = false;
             w.picnum_anim = wallpicnum;
             w.overpicnum_anim = walloverpicnum;
@@ -939,13 +984,7 @@ namespace Build
             int i;
             short[] drawingstate = new short[board.numsectors];
             Sector3D s;
-
-            // Hide all the planes.
-            foreach (Plane3D p in planes)
-            {
-                p.Hide();
-            }
-
+            
             sectortype sec;
 
             sectorqueue[0] = dacursectnum;
@@ -998,6 +1037,13 @@ namespace Build
                 } while (--i >= 0);
 
                 front++;
+            }
+
+            // Hide all hidden bits.
+            foreach (Plane3D p in planes)
+            {
+                if (p.displayFrameId != displayFrameId)
+                    p.Hide();
             }
         }
 
@@ -1170,7 +1216,9 @@ namespace Build
 
             //Camera.main.transform.eulerAngles = pragmas.MatrixToRotation(rotationMatrix.transpose).eulerAngles;
             Camera.main.transform.eulerAngles = new Vector3(horizang * (360.0f / 2048.0f), ang + 180, -tiltang);
-            Camera.main.transform.position = new Vector3(-board.globalposy * (1.0f / 1000.0f), (-board.globalposz / 16) * (1.0f / 1000.0f), -board.globalposx * (1.0f / 1000.0f));            
+            Camera.main.transform.position = new Vector3(-board.globalposy * (1.0f / 1000.0f), (-board.globalposz / 16) * (1.0f / 1000.0f), -board.globalposx * (1.0f / 1000.0f));
+
+            displayFrameId++;
         }
 
         private int UpdateSector(short sectnum)

@@ -3386,6 +3386,9 @@ namespace Build
             int voxptr, voxend, oand, oand16, oand32;
             Engine.bVoxelMipmap davoxptr;
 
+// jmarshall - convert to 3d
+            return;
+// jmarshall end
             cosang = Engine.table.sintable[(globalang + 512) & 2047];
             sinang = Engine.table.sintable[globalang & 2047];
             sprcosang = Engine.table.sintable[(dasprang + 512) & 2047];
