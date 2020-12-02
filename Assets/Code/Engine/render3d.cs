@@ -1361,10 +1361,12 @@ namespace Build
                         curypanning = sec.ceilingypanning;
                     }
 
-                   // if (!waloff[curpicnum])
-                   // {
-                   //     loadtile(curpicnum);
-                   // }
+                    if (((sec.floorstat & 64) != 0 || (sec.ceilingstat & 64) != 0) && ((secangcos == 2) && (secangsin == 2)))
+                    {
+                        ang = (Engine.getangle(board.wall[wal.point2].x - wal.x, board.wall[wal.point2].y - wal.y) + 512) & 2047;
+                        secangcos = (float)(Engine.table.sintable[(ang + 512) & 2047]) / 16383.0f;
+                        secangsin = (float)(Engine.table.sintable[ang & 2047]) / 16383.0f;
+                    }
 
                     // relative texturing
                     if ((curstat & 64) != 0)
@@ -1383,8 +1385,11 @@ namespace Build
 
                     if ((curstat & (2 + 64)) == (2 + 64))
                     {
-                        heidiff = (int)(curbuffer.st[i].y - curbuffer.st[0].y);
-                        tey = (int)Mathf.Sqrt((tey * tey) + (heidiff * heidiff));
+                        heidiff = (int)(curbuffer.xyz[i].y - curbuffer.xyz[0].y);
+                        if (tey >= 0)
+                            tey = (int)Mathf.Sqrt((tey * tey) + (heidiff * heidiff));
+                        else
+                            tey = (int)-Mathf.Sqrt((tey * tey) + (heidiff * heidiff));
                     }
 
                     if ((curstat & 4) != 0)
