@@ -8,6 +8,7 @@ Shader "Unlit/Polymer"
         _PaletteTex("_PaletteTex", 2D) = "white" {}
         _LookupTex("_LookupTex", 2D) = "white" {}
         _MaterialParams("_MaterialParams", Vector) = (1, 0, 0, 0)
+        _MaterialParams2("_MaterialParams2", Vector) = (1, 0, 0, 0)
     }
     SubShader
     {
@@ -43,6 +44,7 @@ Cull Off
 
             float4 _MainTex_ST;
             float4 _MaterialParams;
+            float4 _MaterialParams2;
 
             float linearize_depth(float d, float zNear, float zFar)
             {
@@ -59,17 +61,31 @@ Cull Off
 
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                  
+                bool isSprite = _MaterialParams2.x == -1;
+
+                if (isSprite)
+                {
+                    o.vertex.w -= 0.0005;
+                }
 
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_Target
+            struct fragmentOutput
             {
+                half4 color : COLOR;
+                float depth : DEPTH;
+            };
+
+            fragmentOutput frag(v2f i) : SV_Target
+            {
+                fragmentOutput o;
                 float visibility =  (_MaterialParams.x + 1);
                 float shadeOffset =  _MaterialParams.y;
                 float palette =  _MaterialParams.z;
                 float curbasepal =  _MaterialParams.w;
                 float flipx = curbasepal < 0;
+                
 
                 curbasepal = 0; // abs(curbasepal) - 1;
 
@@ -97,7 +113,10 @@ Cull Off
 
                 float lum = saturate(Luminance(texelNear.rgb) * 4);
 
-                return float4(texelNear.rgb * (lum * 256), 0.5) * 2;
+                o.color = float4(texelNear.rgb * (lum * 256), 0.5) * 2;
+
+
+                return o;
             }
             ENDHLSL
         }

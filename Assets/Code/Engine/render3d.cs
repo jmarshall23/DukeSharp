@@ -37,6 +37,7 @@ namespace Build
                 Material mat = new Material(Shader.Find("Unlit/Polymer"));                
                 mat.SetTexture("_PaletteTex", Engine.palette.paletteTexture);
                 mat.SetTexture("_LookupTex", Engine.palette.palookupTexture);
+                mat.SetVector("_MaterialParams2", new Vector4(-1, 0, 0, 0));
 
                 //mat.SetTexture("_MainTex", texture);
                 //mat.SetVector("_MaterialParams", new Vector4(visibility, shadeOffset, palette, curbasepa));
@@ -59,6 +60,7 @@ namespace Build
             private Material mat;
             private Vector4 _parms;
             private Vector3[] cached_xyz;
+            private Vector2[] cached_uv;
             private bool isVisible;
             public int displayFrameId;
 
@@ -133,18 +135,31 @@ namespace Build
                     return;
 
                 bool changed = false;
+                bool changed_uvs = false;
                 for (int i = 0; i < cached_xyz.Length; i++)
                 {
                     if(cached_xyz[i] != xyz[i])
                     {
-                        changed = true;
-                        break;
+                        changed = true;                
+                    }
+
+                    if(cached_uv[i] != st[i])
+                    {
+                        changed_uvs = true;
+                    }
+                }
+
+                if(changed_uvs)
+                {
+                    mesh.uv = st;
+                    for (int i = 0; i < cached_xyz.Length; i++)
+                    {
+                        cached_uv[i] = st[i];
                     }
                 }
 
                 if (changed)
-                {
-                    mesh.uv = st;
+                {                    
                     mesh.vertices = xyz;
                     mesh.RecalculateBounds();
 
@@ -198,6 +213,12 @@ namespace Build
                 for(int i = 0; i < cached_xyz.Length; i++)
                 {
                     cached_xyz[i] = xyz[i];
+                }
+
+                cached_uv = new Vector2[xyz.Length];
+                for (int i = 0; i < cached_uv.Length; i++)
+                {
+                    cached_uv[i] = st[i];
                 }
 
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
