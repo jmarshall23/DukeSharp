@@ -171,7 +171,7 @@ namespace Build
                     }
                 }
 
-                Vector4 newParms = new Vector4(visibility + 16.0f / 16.0f, shadeOffset, palette, curbasepal);
+                Vector4 newParms = new Vector4(visibility, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
                     return;
 
@@ -186,7 +186,7 @@ namespace Build
                 if (mat == null || mesh == null)
                     return;
 
-                Vector4 newParms = new Vector4(visibility + 16.0f / 16.0f, shadeOffset, palette, curbasepal);
+                Vector4 newParms = new Vector4(visibility, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
                     return;
 
@@ -232,7 +232,7 @@ namespace Build
                 mat.SetTexture("_LookupTex", Engine.palette.palookupTexture);
                 mat.SetVector("_MaterialParams", new Vector4(visibility, shadeOffset, palette, curbasepa));
 
-                renderer.material = mat;
+                renderer.material = mat; 
 
                 planeGameObject.transform.localScale = new Vector3(-(1.0f / 1000.0f), 1.0f / 1000.0f, 1.0f / 1000.0f);
             }
@@ -334,6 +334,9 @@ namespace Build
         private Texture2D LoadHDImage(string path)
         {
             path = Application.streamingAssetsPath + path;
+            if (!System.IO.File.Exists(path))
+                return null;
+
             Texture2D texture = new Texture2D(2, 2);
             byte[] fileData = System.IO.File.ReadAllBytes(path);
             texture.LoadImage(fileData);

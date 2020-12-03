@@ -80,7 +80,7 @@ Cull Off
             fragmentOutput frag(v2f i) : SV_Target
             {
                 fragmentOutput o;
-                float visibility =  (_MaterialParams.x + 1);
+                float visibility =  (_MaterialParams.x + 16.0f) / 16.0f;
                 float shadeOffset =  _MaterialParams.y;
                 float palette =  _MaterialParams.z;
                 float curbasepal =  _MaterialParams.w;
@@ -89,8 +89,8 @@ Cull Off
 
                 curbasepal = 0; // abs(curbasepal) - 1;
 
-                float shadeLookup = i.depth.x / 0.2 * (visibility + shadeOffset);
-               shadeLookup = min(max(shadeLookup, 0), 23);
+                float shadeLookup = i.depth.x / 1.024 * (visibility);
+               shadeLookup = max(shadeLookup + shadeOffset, 0);
 
                 // sample the texture
                 float colorIndex = 0;

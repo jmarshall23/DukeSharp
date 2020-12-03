@@ -81,6 +81,8 @@ public class GameEngine : MonoBehaviour
         // Init the build engine.
         Engine.skyMaterial = skyMaterial;
         Engine.Init();
+        //GlobalMembers.ud.warp_on = 1;
+        //GlobalMembers.boardfilename = "e3l8.map";
 
         // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
         GlobalMembers.conScript = new ConScript(new TrapEngine());
