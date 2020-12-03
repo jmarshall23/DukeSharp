@@ -63,9 +63,10 @@ namespace Build
 
         public static void hlineasm4(int cnt, int skiploadincs, int paloffs, uint by, uint bx, int pbase)
         {
-	     //   if (skiploadincs == 0) 
-        //    { 
-                gbxinc = asm1; 
+#if false
+            //   if (skiploadincs == 0) 
+            //    { 
+            gbxinc = asm1; 
                 gbyinc = asm2; 
          //   }
         
@@ -83,6 +84,7 @@ namespace Build
                 by -= (uint)gbyinc;
                 pbase--;
 	        }
+#endif
         }
 
         
@@ -96,6 +98,7 @@ namespace Build
         }
         public static void slopevlin(int startpos, int i, int[] slopalptr2, int slopalbase, int cnt, int bx, int by)
         {
+#if false
             int bz;
             int bzinc;
 	        uint u, v;
@@ -121,6 +124,7 @@ namespace Build
 		        //p += gpinc;
                 ppos += gpinc;
 	        }
+#endif
         }
 
 
@@ -128,7 +132,8 @@ namespace Build
         public static void setupvlineasm(int neglogy) { glogy = neglogy; }
         public static void vlineasm1(int vinc, int paloffs, int cnt, uint vplc, byte[] gbuf2, int basebuf, int pbase)
         {
-	        gbuf = gbuf2;
+#if false
+            gbuf = gbuf2;
             gbufpos = basebuf;   
             gpalpos = paloffs;
 
@@ -147,12 +152,14 @@ namespace Build
                 pbase += bpl;
                 vplc += (uint)vinc;
 	        }
+#endif
         }
 
         public static void setupmvlineasm(int neglogy) { glogy = neglogy; }
         public static void mvlineasm1(int vinc, byte[] paloffs, int paloffspos, int cnt, uint vplc, byte[] bufplc, int bufplcpos, int bufplcbase, int p, int tsizx, int tsizy)
         {
-	        byte ch;
+#if false
+            byte ch;
 
 	        gbuf = bufplc;
             gbufpos = bufplcpos;
@@ -177,12 +184,14 @@ namespace Build
 		        p += bpl;
                 vplc += (uint)vinc;
 	        }
+#endif
         }
 
         public static void setuptvlineasm(int neglogy) { glogy = neglogy; }
         public static void tvlineasm1(int vinc, byte[] paloffs, int paloffspos, int cnt, uint vplc, byte[] bufplc, int bufplcbase, int p)
         {
-	        byte ch;
+#if false
+            byte ch;
 
 	        gbuf = bufplc;
             gbufpos = bufplcbase;
@@ -232,13 +241,15 @@ namespace Build
                     vplc += (uint)vinc;
 		        }
 	        }
+#endif
         }
 
 	        //Floor sprite horizontal line functions
         public static void msethlineshift(int logx, int logy) { glogx = logx; glogy = logy; }
         public static void mhline(byte[] bufplc, int bufplcpos, uint bx, int cntup16, int junk, uint by, int p)
         {
-	        byte ch;
+#if false
+            byte ch;
 
 	        gbuf = bufplc;
             gbufpos = bufplcpos;
@@ -262,6 +273,7 @@ namespace Build
                 by += (uint)asm2;
 		        p++;
 	        }
+#endif
         }
 
         public static void tsethlineshift(int logx, int logy) 
@@ -272,7 +284,8 @@ namespace Build
 
         public static void thline(byte[] bufplc, int bufplcbase, uint bx, int cntup16, int junk, uint by, int p)
         {
-	        byte ch;
+#if false
+            byte ch;
 
 	        gbuf = bufplc;
             gbufpos = bufplcbase;
@@ -321,6 +334,7 @@ namespace Build
 			        p++;
 		        }
 	        }
+#endif
         }
 
 
@@ -370,6 +384,7 @@ namespace Build
         }
         public static void mspritevline(int bx, int by, int cnt, byte[] bufplc, int bufplcbase, int p)
         {
+
 	        byte ch;
 
 	        gbuf = bufplc;
@@ -392,6 +407,7 @@ namespace Build
 		        by += gbyinc;
 		        p += bpl;
 	        }
+
         }
 
         public static void DrawPixelPallete(int pos, byte ch)
@@ -401,17 +417,19 @@ namespace Build
 
         public static void tsetupspritevline(byte[] paloffs, int paloffspos, int bxinc, int byinc, int ysiz)
         {
+            /*
 	      //  gpal = paloffs;
             gpalpos = paloffspos;
 	        gbxinc = bxinc;
 	        gbyinc = byinc;
 	        glogy = ysiz;
+            */
         }
         public static void tspritevline(int bx, int by, int cnt, byte[] bufplc, int bufplcbase, int p)
         {
 	        byte ch;
-
-	        gbuf = bufplc;
+#if false
+            gbuf = bufplc;
             gbufpos = bufplcbase;
 	        if (transmode != 0)
 	        {
@@ -455,6 +473,7 @@ namespace Build
 			        p += bpl;
 		        }
 	        }
+#endif
         }
 
         public static void setupdrawslab(int dabpl, int pal, int offset)
