@@ -169,7 +169,7 @@ namespace Build
                     }
                 }
 
-                Vector4 newParms = new Vector4(visibility / 30.0f, shadeOffset, palette, curbasepal);
+                Vector4 newParms = new Vector4(visibility + 16.0f / 16.0f, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
                     return;
 
@@ -184,7 +184,7 @@ namespace Build
                 if (mat == null || mesh == null)
                     return;
 
-                Vector4 newParms = new Vector4(visibility / 30.0f, shadeOffset, palette, curbasepal);
+                Vector4 newParms = new Vector4(visibility + 16.0f / 16.0f, shadeOffset, palette, curbasepal);
                 if (_parms == newParms)
                     return;
 
