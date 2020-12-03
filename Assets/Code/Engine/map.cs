@@ -214,7 +214,7 @@ namespace Build
         private int frameoffset;
         private int globalorientation, globalpicnum, globalshade;
         private int globalx, globaly, globalx1, globaly1, globalx2, globaly2, globalzd, globalzx, globalz;
-        public int parallaxtype = 2, parallaxyoffs = 0, parallaxyscale = 65536;
+        public int parallaxtype = 2, parallaxyoffs = 0, parallaxyscale = 65536;        
 
 		public int lintersect(int x1, int y1, int z1, int x2, int y2, int z2, int x3, int y3, int x4, int y4, ref int intx, ref int inty, ref int intz)
 		{     //p1 to p2 is a line segment

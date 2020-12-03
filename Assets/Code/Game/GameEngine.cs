@@ -57,6 +57,7 @@ public class GameEngine : MonoBehaviour
     public UIButton mobileOpenButton;
     public UIButton mobilePrevButton;
     public UIButton mobileNextButton;
+    public Material skyMaterial;
 
     public static string AppPath;
 
@@ -77,10 +78,8 @@ public class GameEngine : MonoBehaviour
     {
         AppPath = Application.dataPath;
 
-       // GlobalMembers.ud.warp_on = 1;
-       // GlobalMembers.boardfilename = "_se.map";
-
         // Init the build engine.
+        Engine.skyMaterial = skyMaterial;
         Engine.Init();
 
         // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
@@ -92,7 +91,7 @@ public class GameEngine : MonoBehaviour
         //
 
         // Init the device
-        Engine.setgamemode(0, 640, 480, 8);
+        Engine.setgamemode(0, Screen.width / 2, Screen.height / 2, 8);
         _texture = new Texture2D(Engine._device._screenbuffer._width, Engine._device._screenbuffer._height, TextureFormat.BGRA32, false);
 
         canvasImage.texture = _texture;
@@ -238,5 +237,7 @@ public class GameEngine : MonoBehaviour
         IntPtr pointer = handle.AddrOfPinnedObject();
         _texture.LoadRawTextureData(pointer, Engine._device._screenbuffer._width * Engine._device._screenbuffer._height * 4);
         _texture.Apply();
+
+        Array.Clear(Engine._device._screenbuffer.Pixels, 0, Engine._device._screenbuffer.Pixels.Length);
     }
 }

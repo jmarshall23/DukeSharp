@@ -15,6 +15,9 @@ namespace Build
 
         public static bool editstatus = false;
 
+        public static Material skyMaterial;
+        public static Texture2D[,] skyTextures = new Texture2D[MAXTILES, 6];
+
         public const int MAXTILES = 9216;
         public const int STATUS2DSIZ = 144;
         public static byte[] pow2char = new byte[]{1,2,4,8,16,32,64,128};

@@ -10,6 +10,8 @@ namespace Build
         public int displayFrameId = 0;
         public List<Plane3D> planes = new List<Plane3D>();
 
+        private int skyTexture = -1;
+
         private static GameObject[] spriteGameObjects;
 
         public static void InitOnce()
@@ -305,6 +307,8 @@ namespace Build
                 sector3D[i].ceil.Build(s.visibility, s.ceilingshade, s.floorpal, 0);
             }
 
+            LoadSky();
+
             wall3D = new Wall3D[board.numwalls];
             for (int i = 0; i < board.numwalls; i++)
             {
@@ -325,6 +329,44 @@ namespace Build
                 wall3D[i].over.Build(s.visibility, board.wall[i].shade, board.wall[i].pal, 0);
                 wall3D[i].mask.Build(s.visibility, board.wall[i].shade, board.wall[i].pal, 0);
             }
+        }
+
+        private Texture2D LoadHDImage(string path)
+        {
+            path = Application.streamingAssetsPath + path;
+            Texture2D texture = new Texture2D(2, 2);
+            byte[] fileData = System.IO.File.ReadAllBytes(path);
+            texture.LoadImage(fileData);
+            return texture;
+        }
+
+        private void LoadSky()
+        {
+            if (skyTexture == -1)
+                return;
+
+            string[] skyTextureList = new string[] { "front", "back", "left", "right", "top", "down" };
+
+            if (Engine.skyTextures[skyTexture, 0] == null)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (skyTexture < 100)
+                        Engine.skyTextures[skyTexture, i] = LoadHDImage("/skies/00" + skyTexture + "_" + skyTextureList[i] + ".png");
+                    else if (skyTexture < 1000)
+                        Engine.skyTextures[skyTexture, i] = LoadHDImage("/skies/0" + skyTexture + "_" + skyTextureList[i] + ".png");
+                    else
+                        Engine.skyTextures[skyTexture, i] = LoadHDImage("/skies/" + skyTexture + "_" + skyTextureList[i] + ".png");
+
+                }
+            }
+
+            Engine.skyMaterial.SetTexture("_FrontTex", Engine.skyTextures[skyTexture,0]);
+            Engine.skyMaterial.SetTexture("_BackTex", Engine.skyTextures[skyTexture, 1]);
+            Engine.skyMaterial.SetTexture("_LeftTex", Engine.skyTextures[skyTexture, 2]);
+            Engine.skyMaterial.SetTexture("_RightTex", Engine.skyTextures[skyTexture, 3]);
+            Engine.skyMaterial.SetTexture("_UpTex", Engine.skyTextures[skyTexture, 4]);
+            Engine.skyMaterial.SetTexture("_DownTex", Engine.skyTextures[skyTexture, 5]);
         }
 
         private void DO_TILE_ANIM(ref short Picnum, int fakevar)
@@ -958,10 +1000,18 @@ namespace Build
                 {
                     s.ceil.indexes[i] = _remap[tess.Elements[i]];
                 }
+                else
+                {
+                    skyTexture = sec.floorpicnum;
+                }
 
                 if (!sec.IsFloorParalaxed())
                 {
                     s.floor.indexes[s.indicescount - i - 1] = _remap[tess.Elements[i]];
+                }
+                else
+                {
+                    skyTexture = sec.ceilingpicnum;
                 }
 
                 i++;

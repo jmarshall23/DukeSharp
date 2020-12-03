@@ -113,7 +113,7 @@ Cull Off
 
                 float lum = saturate(Luminance(texelNear.rgb) * 4);
 
-                o.color = float4(texelNear.rgb * (lum * 256), 0.5) * 2;
+                o.color = float4(texelNear.rgb, 1.0) * 4;
 
 
                 return o;
