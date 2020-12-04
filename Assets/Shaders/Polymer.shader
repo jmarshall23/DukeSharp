@@ -51,6 +51,10 @@ Cull Off
                 return zNear * zFar / (zFar + d * (zNear - zFar));
             }
 
+            float fogFactorLinear(const float dist, const float start, const float end) {
+                return 1.0 - clamp((end - dist) / (end - start), 0.0, 1.0);
+            }
+
 
             v2f vert (appdata v)
             {
@@ -115,6 +119,14 @@ Cull Off
 
                 o.color = float4(texelNear.rgb, 1.0) * 4;
 
+                // 
+                if (shadeOffset > 0)
+                {       
+                    if (_MaterialParams.x <= 239)
+                    {
+                        o.color.xyz *= clamp(1.0 - ((i.depth.x) * (shadeOffset / 8)), 0.0, 1.0);
+                    }
+                }
 
                 return o;
             }
