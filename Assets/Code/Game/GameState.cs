@@ -1,4 +1,5 @@
 ﻿using Build;
+using UnityEngine;
 
 public partial class GlobalMembers
 {
@@ -35,6 +36,12 @@ public partial class GlobalMembers
         {
             case GameStateType.GAME_STATE_LOGO_MOVIE:
                 ps[myconnectindex].palette = drealms;
+                Engine.skyMaterial.SetTexture("_FrontTex", Texture2D.blackTexture);
+                Engine.skyMaterial.SetTexture("_BackTex", Texture2D.blackTexture);
+                Engine.skyMaterial.SetTexture("_LeftTex", Texture2D.blackTexture);
+                Engine.skyMaterial.SetTexture("_RightTex", Texture2D.blackTexture);
+                Engine.skyMaterial.SetTexture("_UpTex", Texture2D.blackTexture);
+                Engine.skyMaterial.SetTexture("_DownTex", Texture2D.blackTexture);
 // jmarshall - todo implemente movie bits
                 //playanm("logo.anm", 5);
                 //if (KB_KeyWaiting() != 0)
