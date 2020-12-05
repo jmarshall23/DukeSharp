@@ -15,6 +15,8 @@ namespace Build
 
         public static bool editstatus = false;
 
+        public static string mapname;
+
         public static Material skyMaterial;
         public static Texture2D[,] skyTextures = new Texture2D[MAXTILES, 6];
 
@@ -430,13 +432,15 @@ palette:
         //
         // loadboard
         //
-        public static int loadboard(string filename, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum)
+        public static int loadboard(string filename, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum, bool editorMode = false)
         {
             kFile fil;
             GC.Collect();
 
             if (filename.Length <= 0)
                 return 0;
+
+            mapname = filename;
 
             if (board != null)
             {
@@ -457,7 +461,7 @@ palette:
                 return (-1);
             }
 
-            if (board.loadboard(fil, ref daposx, ref daposy, ref daposz, ref daang, ref dacursectnum) == -1)
+            if (board.loadboard(fil, ref daposx, ref daposy, ref daposz, ref daang, ref dacursectnum, editorMode) == -1)
             {
                 throw new Exception("loadboard: failed to load board " + filename);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using LibTessDotNet;
@@ -9,10 +10,15 @@ namespace Build
     {
         public int displayFrameId = 0;
         public List<Plane3D> planes = new List<Plane3D>();
+        public List<Light> lights = new List<Light>();
 
         private int skyTexture = -1;
 
         private static GameObject[] spriteGameObjects;
+
+        private bool editorMode;
+
+        private bool isUsingLighting = false;
 
         public static void InitOnce()
         {
@@ -87,6 +93,9 @@ namespace Build
                     return;                
 
                 if (!isVisible)
+                    return;
+
+                if(parent.editorMode)
                     return;
 
                 isVisible = false;                
@@ -164,6 +173,8 @@ namespace Build
                 {                    
                     mesh.vertices = xyz;
                     mesh.RecalculateBounds();
+                    mesh.RecalculateNormals();
+                    mesh.RecalculateTangents();
 
                     for (int i = 0; i < cached_xyz.Length; i++)
                     {
@@ -208,6 +219,8 @@ namespace Build
                 mesh.uv = st;
                 mesh.triangles = indexes;
                 mesh.RecalculateBounds();
+                mesh.RecalculateNormals();
+                mesh.RecalculateTangents();
 
                 mf.mesh = mesh;
 
@@ -226,7 +239,14 @@ namespace Build
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
 
                 // Each plane needs its own material.
-                mat = new Material(Shader.Find("Unlit/Polymer"));
+                if (!parent.isUsingLighting)
+                {
+                    mat = new Material(Shader.Find("Unlit/Polymer"));
+                }
+                else
+                {
+                    mat = new Material(Shader.Find("PolymerPBR"));
+                }
                 mat.SetTexture("_MainTex", texture);
                 mat.SetTexture("_PaletteTex", Engine.palette.paletteTexture);
                 mat.SetTexture("_LookupTex", Engine.palette.palookupTexture);
@@ -288,11 +308,83 @@ namespace Build
                 p.Destroy();
             }
             planes.Clear();
+
+            foreach(Light l in lights)
+            {
+                GameObject.Destroy(l.gameObject);
+            }
+            lights.Clear();
         }
 
-        public void LoadBoard(bMap board)
+        private void LoadNGEntities(string mapname)
+        {
+            if (!File.Exists(Application.streamingAssetsPath + "/" + mapname))
+                return;
+
+            using (FileStream f = File.OpenRead(Application.streamingAssetsPath + "/" + mapname))
+            {
+                using (BinaryReader reader = new BinaryReader(f))
+                {
+                    int numLights = reader.ReadInt32();
+
+                    isUsingLighting = true;
+
+                    for (int i = 0; i < numLights; i++)
+                    {
+                        string name = reader.ReadString();
+
+                        // Make a game object
+                        GameObject lightGameObject = new GameObject(name);
+
+                        // Add the light component
+                        Light lightComp = lightGameObject.AddComponent<Light>();
+
+                        lightComp.type = (LightType)reader.ReadInt32();
+                        lightComp.range = (float)reader.ReadDouble();
+                        lightComp.intensity = (float)reader.ReadDouble();
+                        Vector4 color = new Vector4();
+                        color.x = (float)reader.ReadDouble();
+                        color.y = (float)reader.ReadDouble();
+                        color.z = (float)reader.ReadDouble();
+                        color.w = (float)reader.ReadDouble();
+                        lightComp.color = color;
+                        Vector3 position = new Vector3();
+                        position.x = (float)reader.ReadDouble();
+                        position.y = (float)reader.ReadDouble();
+                        position.z = (float)reader.ReadDouble();
+                        lightComp.transform.position = position;
+
+                        Vector3 angles = new Vector3();
+                        angles.x = (float)reader.ReadDouble();
+                        angles.y = (float)reader.ReadDouble();
+                        angles.z = (float)reader.ReadDouble();
+                        lightComp.transform.eulerAngles = angles;
+
+                        lightComp.shadows = (LightShadows)reader.ReadInt32();
+
+                        lights.Add(lightComp);
+                    }
+                }
+            }
+        }
+
+        public void LoadBoard(bMap board, bool editorMode)
         {
             this.board = board;
+            this.editorMode = editorMode;
+
+            if(editorMode)
+            {
+                isUsingLighting = true;
+            }
+            else
+            {
+                string path = Engine.mapname;
+                path = Path.ChangeExtension(path, ".entities");
+
+                isUsingLighting = false;
+                LoadNGEntities(path);
+            }
 
             sector3D = new Sector3D[board.numsectors];
 
@@ -364,12 +456,15 @@ namespace Build
                 }
             }
 
-            Engine.skyMaterial.SetTexture("_FrontTex", Engine.skyTextures[skyTexture,0]);
-            Engine.skyMaterial.SetTexture("_BackTex", Engine.skyTextures[skyTexture, 1]);
-            Engine.skyMaterial.SetTexture("_LeftTex", Engine.skyTextures[skyTexture, 2]);
-            Engine.skyMaterial.SetTexture("_RightTex", Engine.skyTextures[skyTexture, 3]);
-            Engine.skyMaterial.SetTexture("_UpTex", Engine.skyTextures[skyTexture, 4]);
-            Engine.skyMaterial.SetTexture("_DownTex", Engine.skyTextures[skyTexture, 5]);
+            if (Engine.skyTextures != null && Engine.skyMaterial != null)
+            {
+                Engine.skyMaterial.SetTexture("_FrontTex", Engine.skyTextures[skyTexture, 0]);
+                Engine.skyMaterial.SetTexture("_BackTex", Engine.skyTextures[skyTexture, 1]);
+                Engine.skyMaterial.SetTexture("_LeftTex", Engine.skyTextures[skyTexture, 2]);
+                Engine.skyMaterial.SetTexture("_RightTex", Engine.skyTextures[skyTexture, 3]);
+                Engine.skyMaterial.SetTexture("_UpTex", Engine.skyTextures[skyTexture, 4]);
+                Engine.skyMaterial.SetTexture("_DownTex", Engine.skyTextures[skyTexture, 5]);
+            }
         }
 
         private void DO_TILE_ANIM(ref short Picnum, int fakevar)

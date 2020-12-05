@@ -67,7 +67,7 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        bGrpArchive._defaultGrpFile = _defaultGrpFile;
+        bGrpArchive._defaultGrpFile = _defaultGrpFile;        
 
 #if (UNITY_STANDALONE || UNITY_EDITOR)
         mobileCanvas.enabled = false;

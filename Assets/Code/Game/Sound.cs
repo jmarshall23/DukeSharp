@@ -224,7 +224,10 @@ public partial class GlobalMembers
 
     public static void FX_StopAllSounds()
     {
-        SoundEngine.globalSoundEngine.StopAllSounds();
+        if (SoundEngine.globalSoundEngine != null)
+        {
+            SoundEngine.globalSoundEngine.StopAllSounds();
+        }
     }
 
     public static void clearsoundlocks()

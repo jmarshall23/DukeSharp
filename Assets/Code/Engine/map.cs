@@ -6053,11 +6053,14 @@ namespace Build
 
         }
 
-        public int loadboard(kFile fil, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum)
+        public int loadboard(kFile fil, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum, bool editorMode)
         {
             short numsprites;
 
-            dosetaspect(true);
+            if (!editorMode)
+            {
+                dosetaspect(true);
+            }
 
             fil.kreadint(out mapversion);
 
@@ -6106,7 +6109,7 @@ namespace Build
             Render3D.InitOnce();
 
             render3D = new Render3D();
-            render3D.LoadBoard(Engine.board);
+            render3D.LoadBoard(Engine.board, editorMode);
 
             return (0);
         }

@@ -317,7 +317,12 @@ namespace Build
         public byte[] ReadContentFile(string filepath)
         {
             byte[] buffer = null;
-            string fullFilePath = Engine.GetStreamingAssetsPath() + filepath;
+            string fullFilePath = filepath;
+
+            if(filepath.Contains(".grp") || filepath.Contains(".GRP"))
+            {
+                fullFilePath = Engine.GetStreamingAssetsPath() + filepath;
+            }
 
             using(FileStream file = File.OpenRead(fullFilePath))
             {
@@ -349,21 +354,33 @@ namespace Build
         //
         // ContentFileExists
         //
-        private bool ContentFileExists(string filepath)
+        private string ContentFileExists(string filepath)
         {
 #if UNITY_STANDALONE || UNITY_EDITOR // External file loading only supported on PC platforms.
             string fullFilePath = Engine.GetStreamingAssetsPath() + filepath;
-            return File.Exists(fullFilePath);
+            if(!File.Exists(fullFilePath))
+            {
+                if(File.Exists(filepath))
+                {
+                    return filepath;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            return fullFilePath;
 #else
             return false;
 #endif
         }
         public byte[] kreadfile(string name)
         {
-       //    
-            if (ContentFileExists(name))
+            string p = ContentFileExists(name);
+            if (p != null)
             {
-                return ReadContentFile(name);
+                return ReadContentFile(p);
             }
   
       //      }
@@ -389,9 +406,10 @@ namespace Build
 
         public kFile kopen4load(string name)
         {
-            if(ContentFileExists(name))
+            string p = ContentFileExists(name);
+            if (p != null)
             {
-                return new kFile(ReadContentFile(name));
+                return new kFile(ReadContentFile(p));
             }
 
             name = name.ToUpper();
