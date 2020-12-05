@@ -1240,11 +1240,11 @@ Shader "PolymerPBR"
 					UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
 				#endif
 
-				#if defined(_SPECULAR_SETUP)
+				//#if defined(_SPECULAR_SETUP)
 					SurfaceOutputStandardSpecular o = (SurfaceOutputStandardSpecular)0;
-				#else
-					SurfaceOutputStandard o = (SurfaceOutputStandard)0;
-				#endif
+				//#else
+				//	SurfaceOutputStandard o = (SurfaceOutputStandard)0;
+				//#endif
 				float3 WorldTangent = float3(IN.tSpace0.x,IN.tSpace1.x,IN.tSpace2.x);
 				float3 WorldBiTangent = float3(IN.tSpace0.y,IN.tSpace1.y,IN.tSpace2.y);
 				float3 WorldNormal = float3(IN.tSpace0.z,IN.tSpace1.z,IN.tSpace2.z);
@@ -1257,11 +1257,11 @@ Shader "PolymerPBR"
 				o.Albedo = tex2D( _PaletteTex, ( tex2D( _MainTex, uv_MainTex ).r * float2( 1,0 ) ) ).rgb;
 				o.Normal = fixed3( 0, 0, 1 );
 				o.Emission = half3( 0, 0, 0 );
-				#if defined(_SPECULAR_SETUP)
+				//#if defined(_SPECULAR_SETUP)
 					o.Specular = fixed3( 0, 0, 0 );
-				#else
-					o.Metallic = 0.0;
-				#endif
+				//#else
+				//	o.Metallic = 0.0;
+				//#endif
 				o.Smoothness = 0;
 				o.Occlusion = 1;
 				o.Alpha = 1;
@@ -1325,11 +1325,11 @@ Shader "PolymerPBR"
 					giInput.probePosition[1] = unity_SpecCube1_ProbePosition;
 				#endif
 
-				#if defined(_SPECULAR_SETUP)
+				//#if defined(_SPECULAR_SETUP)
 					LightingStandardSpecular_GI( o, giInput, gi );
-				#else
-					LightingStandard_GI( o, giInput, gi );
-				#endif
+				//#else
+				//	LightingStandard_GI( o, giInput, gi );
+				//#endif
 
 				#ifdef ASE_BAKEDGI
 					gi.indirect.diffuse = BakedGI;
@@ -1339,11 +1339,11 @@ Shader "PolymerPBR"
 					gi.indirect.diffuse = 0;
 				#endif
 
-				#if defined(_SPECULAR_SETUP)
+				//#if defined(_SPECULAR_SETUP)
 					outEmission = LightingStandardSpecular_Deferred( o, worldViewDir, gi, outGBuffer0, outGBuffer1, outGBuffer2 );
-				#else
-					outEmission = LightingStandard_Deferred( o, worldViewDir, gi, outGBuffer0, outGBuffer1, outGBuffer2 );
-				#endif
+				//#else
+				//	outEmission = LightingStandard_Deferred( o, worldViewDir, gi, outGBuffer0, outGBuffer1, outGBuffer2 );
+				//#endif
 
 				#if defined(SHADOWS_SHADOWMASK) && (UNITY_ALLOWED_MRT_COUNT > 4)
 					outShadowMask = UnityGetRawBakedOcclusions (IN.lmap.xy, float3(0, 0, 0));
