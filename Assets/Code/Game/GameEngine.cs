@@ -40,6 +40,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.XR;
 
 public class GameEngine : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class GameEngine : MonoBehaviour
 
     private bool delayedStart = true;
     private GCHandle handle;
+    public GameObject xrRigObject;
 
     // Start is called before the first frame update
     public void Start()
@@ -74,15 +76,23 @@ public class GameEngine : MonoBehaviour
 #endif
     }
 
+    void LateUpdate()
+    {
+      //  Camera.main.transform.eulerAngles += Engine.vrSmoothTurnAngles;
+    }
+
     private void DelayedStart()
     {
         AppPath = Application.dataPath;
 
         // Init the build engine.
         Engine.skyMaterial = skyMaterial;
+        Engine.xrRigObject = xrRigObject;
         Engine.Init();
-        //GlobalMembers.ud.warp_on = 1;
-        //GlobalMembers.boardfilename = "e3l8.map";
+        GlobalMembers.ud.warp_on = 1;
+        GlobalMembers.boardfilename = "e1l1.map";
+
+        //UnityEngine.XR.XRSettings.enabled = true;
 
         // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
         GlobalMembers.conScript = new ConScript(new TrapEngine());

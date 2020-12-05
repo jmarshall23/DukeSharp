@@ -17,6 +17,8 @@ namespace Build
 
         public static string mapname;
 
+        public static GameObject xrRigObject;
+
         public static Material skyMaterial;
         public static Texture2D[,] skyTextures = new Texture2D[MAXTILES, 6];
 

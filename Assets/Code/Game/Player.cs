@@ -1666,7 +1666,7 @@ public partial class GlobalMembers
 	public static void getinput(short snum)
 	{
 		short j;
-		short daang;
+		short daang = 0;
 		// MED
 		//ControlInfo info = new ControlInfo();
 		int tics;
@@ -2026,7 +2026,7 @@ public partial class GlobalMembers
 			horiz = DefineConstants.MAXHORIZ;
 		}
 
-// jmarshall: automap
+		// jmarshall: automap
 		//if (ud.scrollmode && ud.overhead_on)
 		//{
 		//	ud.folfvel = vel;
@@ -2037,15 +2037,30 @@ public partial class GlobalMembers
 		//	loc.horz = 0;
 		//	return;
 		//}
-// jmarshall end
+		// jmarshall end
 
-		if (numplayers > 1)
+		if (UnityEngine.XR.XRSettings.enabled == false)
 		{
-			daang = myang;
+			if (numplayers > 1)
+			{
+				daang = myang;
+			}
+			else
+			{
+				daang = p.ang;
+			}
 		}
 		else
-		{
-			daang = p.ang;
+        {
+			//
+			//
+			float yaw = pragmas.Clamp0360(Camera.main.transform.eulerAngles.y - 180);
+			//
+			p.ang = daang = (short)((short)(((yaw * (2048.0f / 360.0f)))));
+
+			Vector3 newRotation = Engine.xrRigObject.transform.eulerAngles;
+			newRotation.y += angvel * (360.0f / 2048.0f);
+			Engine.xrRigObject.transform.eulerAngles = newRotation;
 		}
 
 		momx = pragmas.mulscale9(vel, Engine.table.sintable[(daang + 2560) & 2047]);

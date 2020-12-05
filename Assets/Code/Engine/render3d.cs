@@ -20,6 +20,17 @@ namespace Build
 
         private bool isUsingLighting = false;
 
+        public static float WorldScale
+        {
+            get
+            {
+                if (UnityEngine.XR.XRSettings.enabled)
+                    return 1.0f / 400.0f;
+                else
+                    return 1.0f / 1000.0f;
+            }
+        }
+
         public static void InitOnce()
         {
             if (spriteGameObjects != null)
@@ -254,7 +265,7 @@ namespace Build
 
                 renderer.material = mat; 
 
-                planeGameObject.transform.localScale = new Vector3(-(1.0f / 1000.0f), 1.0f / 1000.0f, 1.0f / 1000.0f);
+                planeGameObject.transform.localScale = new Vector3(-WorldScale, WorldScale, WorldScale);
             }
         }
         private class Sector3D
@@ -1360,13 +1371,13 @@ namespace Build
                 modelMatrix = modelMatrix.transpose;
                 Vector3 translation = pragmas.ExtractPosition(modelMatrix);
                 Vector3 scale = pragmas.ExtractScale(modelMatrix);
-                scale.x *= -(1.0f / 1000.0f);
-                scale.y *= 1.0f / 1000.0f;
-                scale.z *= 1.0f / 1000.0f;
+                scale.x *= -WorldScale;
+                scale.y *= WorldScale;
+                scale.z *= WorldScale;
 
-                translation.x *= -(1.0f / 1000.0f);
-                translation.y *= 1.0f / 1000.0f;
-                translation.z *= 1.0f / 1000.0f;
+                translation.x *= -WorldScale;
+                translation.y *= WorldScale;
+                translation.z *= WorldScale;
 
                 spriteObject.transform.position = translation;
 
@@ -1385,7 +1396,7 @@ namespace Build
 
             //Camera.main.transform.eulerAngles = pragmas.MatrixToRotation(rotationMatrix.transpose).eulerAngles;
             Camera.main.transform.eulerAngles = new Vector3(horizang * (360.0f / 2048.0f), ang + 180, -tiltang);
-            Camera.main.transform.position = new Vector3(-board.globalposy * (1.0f / 1000.0f), (-board.globalposz / 16) * (1.0f / 1000.0f), -board.globalposx * (1.0f / 1000.0f));
+            Camera.main.transform.position = new Vector3(-board.globalposy * WorldScale, (-board.globalposz / 16) * WorldScale, -board.globalposx * WorldScale);
 
             displayFrameId++;
         }
