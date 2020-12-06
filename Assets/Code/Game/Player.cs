@@ -31,6 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Build;
+using UnityEngine.Rendering.Universal;
 
 public partial class GlobalMembers
 {
@@ -2061,6 +2062,15 @@ public partial class GlobalMembers
 			Vector3 newRotation = Engine.xrRigObject.transform.eulerAngles;
 			newRotation.y += angvel * (360.0f / 2048.0f);
 			Engine.xrRigObject.transform.eulerAngles = newRotation;
+
+			if(angvel == 0)
+            {
+				Engine.xrPostProcess.SetActive(false);
+			}
+			else
+            {
+				Engine.xrPostProcess.SetActive(true);
+			}
 		}
 
 		momx = pragmas.mulscale9(vel, Engine.table.sintable[(daang + 2560) & 2047]);

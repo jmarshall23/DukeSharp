@@ -65,6 +65,7 @@ public class GameEngine : MonoBehaviour
     private bool delayedStart = true;
     private GCHandle handle;
     public GameObject xrRigObject;
+    public GameObject xrPostProcess;
 
     // Start is called before the first frame update
     public void Start()
@@ -88,9 +89,10 @@ public class GameEngine : MonoBehaviour
         // Init the build engine.
         Engine.skyMaterial = skyMaterial;
         Engine.xrRigObject = xrRigObject;
+        Engine.xrPostProcess = xrPostProcess;
         Engine.Init();
         GlobalMembers.ud.warp_on = 1;
-        GlobalMembers.boardfilename = "e1l1.map";
+        GlobalMembers.boardfilename = "e4l1.map";
 
         //UnityEngine.XR.XRSettings.enabled = true;
 
