@@ -1828,8 +1828,7 @@ public partial class GlobalMembers
 			sprintf(tempbuf,"Map %s not found!",level_file_names[(ud.volume_number * 11) + ud.level_number]);
 			gameexit(ref tempbuf);
 		}
-#endif
-
+#endif		
 		Array.Clear(Engine.board.gotpic, 0, Engine.board.gotpic.Length);
 
 		prelevel(g);
@@ -1951,9 +1950,18 @@ public partial class GlobalMembers
 		ps[myconnectindex].gm = DefineConstants.MODE_GAME;
 		in_menu = false;
 		KB_FlushKeyboardQueue();
-	}
 
-	/*
+        if (boardfilename.Length != 0)
+        {
+            conScript.Event_EnterLevel(boardfilename, ps[i].i);
+        }
+        else
+        {
+            conScript.Event_EnterLevel(level_file_names[(ud.volume_number * 11) + ud.level_number], ps[i].i);
+        }
+    }
+
+    /*
 	Duke Nukem V
 	
 	Layout:

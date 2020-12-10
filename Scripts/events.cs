@@ -19,4 +19,9 @@
 
         return false;
     }
+
+    public void Event_EnterLevel(string mapname, int playerSpriteID)
+    {
+
+    }
 }
