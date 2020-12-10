@@ -1,6 +1,198 @@
 ﻿using Build;
 public class TrapEngine : ConTraps
 {
+    public override int GetGlobalSpriteID()
+    {
+        return GlobalMembers.g_i;
+    }
+
+    public override int GetSpriteX(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].x;
+    }
+    public override int GetSpriteY(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].y;
+    }
+    public override int GetSpriteZ(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].z;
+    }
+    public override int GetCStat(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].cstat;
+    }
+    public override int GetPicNum(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].picnum;
+    }
+    public override int GetShade(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].shade;
+    }
+    public override int GetPal(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].pal;
+    }
+    public override int GetClipDist(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].clipdist;
+    }
+    public override int GetFiller(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].filler;
+    }
+    public override int GetXRepeat(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].xrepeat;
+    }
+    public override int GetYRepeat(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].yrepeat;
+    }
+    public override int GetXOffset(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].xoffset;
+    }
+    public override int GetYOffset(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].yoffset;
+    }
+    public override int GetSectNum(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].sectnum;
+    }
+    public override int GetStatNum(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].statnum;
+    }
+    public override int GetAng(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].ang;
+    }
+    public override int GetOwner(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].owner;
+    }
+    public override int GetXVel(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].xvel;
+    }
+    public override int GetYVel(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].yvel;
+    }
+    public override int GetZVel(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].zvel;
+    }
+    public override int GetLotag(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].lotag;
+    }
+    public override int GetHitag(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].hitag;
+    }
+    public override int GetExtra(int spriteId)
+    {
+        return Engine.board.sprite[spriteId].extra;
+    }
+
+    public override void SetSpriteX(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].x = value;
+    }
+    public override void SetSpriteY(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].y = value;
+    }
+    public override void SetSpriteZ(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].z = value;
+    }
+
+    public override void SetCStat(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].cstat = (short)value;
+    }
+    public override void SetPicNum(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].picnum = (short)value;
+    }
+    public override void SetShade(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].shade = (sbyte)value;
+    }
+    public override void SetPal(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].pal = (byte)value;
+    }
+    public override void SetClipDist(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].clipdist = (byte)value;
+    }
+    public override void SetFiller(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].filler = (byte)value;
+    }
+    public override void SetXRepeat(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].xrepeat = (byte)value;
+    }
+    public override void SetYRepeat(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].yrepeat = (byte)value;
+    }
+    public override void SetXOffset(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].xoffset = (sbyte)value;
+    }
+    public override void SetYOffset(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].yoffset = (sbyte)value;
+    }
+    public override void SetSectNum(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].sectnum = (short)value;
+    }
+    public override void SetStatNum(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].statnum = (short)value;
+    }
+    public override void SetAng(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].ang = (short)value;
+    }
+    public override void SetOwner(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].owner = (short)value;
+    }
+    public override void SetXVel(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].xvel = (short)value;
+    }
+    public override void SetYVel(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].yvel = (short)value;
+    }
+    public override void SetZVel(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].zvel = (short)value;
+    }
+    public override void SetLotag(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].lotag = (short)value;
+    }
+    public override void SetHitag(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].hitag = (short)value;
+    }
+    public override void SetExtra(int spriteId, int value)
+    {
+        Engine.board.sprite[spriteId].extra = (short)value;
+    }
+
     public override void RegisterVoxel(string voxel)
     {
         string temp = "";

@@ -2554,6 +2554,14 @@ public partial class GlobalMembers
 
         i &= (DefineConstants.MAXSPRITES - 1);
 
+        g_i = (short)i;
+//      g_p = snum;
+        g_x = Engine.board.sprite[i].extra;
+        g_sp = Engine.board.sprite[i];
+
+        if (conScript.Event_HitSprite(i, sn))
+            return;
+
         switch (Engine.board.sprite[i].picnum)
         {
             case DefineConstants.OCEANSPRITE1:
@@ -2801,18 +2809,6 @@ public partial class GlobalMembers
                 spritesound(DefineConstants.GLASS_HEAVYBREAK, i);
                 break;
 
-            case DefineConstants.HYDRENT:
-                Engine.board.sprite[i].picnum = DefineConstants.BROKEFIREHYDRENT;
-                spawn(i, DefineConstants.TOILETWATER);
-
-                //            for(k=0;k<5;k++)
-                //          {
-                //            j = EGS(SECT,SX,SY,SZ-(TRAND%(48<<8)),SCRAP3+(TRAND&3),-8,48,48,TRAND&2047,(TRAND&63)+64,-(TRAND&4095)-(sprite[i].zvel>>2),i,5);
-                //          sprite[j].pal = 2;
-                //    }
-                spritesound(DefineConstants.GLASS_HEAVYBREAK, i);
-                break;
-
             case DefineConstants.GRATE1:
                 Engine.board.sprite[i].picnum = DefineConstants.BGRATE1;
                 Engine.board.sprite[i].cstat &= unchecked((short)(65535 - 256 - 1));
@@ -2904,11 +2900,6 @@ public partial class GlobalMembers
                 guts(Engine.board.sprite[i], DefineConstants.JIBS3, 6, myconnectindex);
                 sound(DefineConstants.SQUISHED);
                 Engine.board.deletesprite(i);
-                break;
-            case DefineConstants.CHAIR1:
-            case DefineConstants.CHAIR2:
-                Engine.board.sprite[i].picnum = DefineConstants.BROKENCHAIR;
-                Engine.board.sprite[i].cstat = 0;
                 break;
             case DefineConstants.CHAIR3:
             case DefineConstants.MOVIECAMERA:

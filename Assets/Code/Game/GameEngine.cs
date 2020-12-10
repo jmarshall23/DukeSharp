@@ -91,8 +91,8 @@ public class GameEngine : MonoBehaviour
         Engine.xrRigObject = xrRigObject;
         Engine.xrPostProcess = xrPostProcess;
         Engine.Init();
-        GlobalMembers.ud.warp_on = 1;
-        GlobalMembers.boardfilename = "e4l1.map";
+        //GlobalMembers.ud.warp_on = 1;
+        //GlobalMembers.boardfilename = "e4l1.map";
 
         //UnityEngine.XR.XRSettings.enabled = true;
 

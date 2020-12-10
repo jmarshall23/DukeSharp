@@ -80,6 +80,57 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract int GetGlobalSpriteID();
+// Sprite Accessor Functions
+    public abstract int GetSpriteX(int spriteId);
+    public abstract int GetSpriteY(int spriteID);
+    public abstract int GetSpriteZ(int spriteID);
+    public abstract int GetCStat(int spriteID);
+    public abstract int GetPicNum(int spriteID);
+    public abstract int GetShade(int spriteID);
+    public abstract int GetPal(int spriteID);
+    public abstract int GetClipDist(int spriteID);
+    public abstract int GetFiller(int spriteID);
+    public abstract int GetXRepeat(int spriteID);
+    public abstract int GetYRepeat(int spriteID);
+    public abstract int GetXOffset(int spriteID);
+    public abstract int GetYOffset(int spriteID);
+    public abstract int GetSectNum(int spriteID);
+    public abstract int GetStatNum(int spriteID);
+    public abstract int GetAng(int spriteID);
+    public abstract int GetOwner(int spriteID);
+    public abstract int GetXVel(int spriteID);
+    public abstract int GetYVel(int spriteID);
+    public abstract int GetZVel(int spriteID);
+    public abstract int GetLotag(int spriteID);
+    public abstract int GetHitag(int spriteID);
+    public abstract int GetExtra(int spriteID);
+    public abstract void SetSpriteX(int spriteId, int value);
+    public abstract void SetSpriteY(int spriteID, int value);
+    public abstract void SetSpriteZ(int spriteID, int value);
+    public abstract void SetCStat(int spriteID, int value);
+    public abstract void SetPicNum(int spriteID, int value);
+    public abstract void SetShade(int spriteID, int value);
+    public abstract void SetPal(int spriteID, int value);
+    public abstract void SetClipDist(int spriteID, int value);
+    public abstract void SetFiller(int spriteID, int value);
+    public abstract void SetXRepeat(int spriteID, int value);
+    public abstract void SetYRepeat(int spriteID, int value);
+    public abstract void SetXOffset(int spriteID, int value);
+    public abstract void SetYOffset(int spriteID, int value);
+    public abstract void SetSectNum(int spriteID, int value);
+    public abstract void SetStatNum(int spriteID, int value);
+    public abstract void SetAng(int spriteID, int value);
+    public abstract void SetOwner(int spriteID, int value);
+    public abstract void SetXVel(int spriteID, int value);
+    public abstract void SetYVel(int spriteID, int value);
+    public abstract void SetZVel(int spriteID, int value);
+    public abstract void SetLotag(int spriteID, int value);
+    public abstract void SetHitag(int spriteID, int value);
+    public abstract void SetExtra(int spriteID, int value);
+ // Sprite Accessor Functions End
+
+
     public abstract void RegisterVoxel(string voxel);
     public abstract void tripbombresetposz();
     public abstract void chaingunprojectileshift(int sprite);

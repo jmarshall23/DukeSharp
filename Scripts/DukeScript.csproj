@@ -42,6 +42,7 @@
     <Compile Include="actor_player.cs" />
     <Compile Include="actor_register.cs" />
     <Compile Include="Defs.cs" />
+    <Compile Include="events.cs" />
     <Compile Include="females.cs" />
     <Compile Include="items.cs" />
     <Compile Include="jibs.cs" />
