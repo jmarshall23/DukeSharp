@@ -1,6 +1,191 @@
 ﻿using Build;
 public class TrapEngine : ConTraps
 {
+    public override void SetSectorWallPtr(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].wallptr = (short)value;
+    }
+    public override void SetSectorWallNum(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].wallnum = (short)value;
+    }
+    public override void SetSectorCeilingZ(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingz = (short)value;
+    }
+    public override void SetSectorFloorZ(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorz = value;
+    }
+    public override void SetSectorCeilingStat(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingstat = (short)value;
+    }
+    public override void SetSectorFloorStat(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorstat = (short)value;
+    }
+    public override void SetSectorCeilingPicNum(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingpicnum = (short)value;
+    }
+    public override void SetSectorCeilingHeinum(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingheinum = (short)value;
+    }
+    public override void SetSectorCeilingShade(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingshade = (sbyte)value;
+    }
+    public override void SetSectorCeilingPal(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingpal = (byte)value;
+    }
+    public override void SetSectorCeilingxpanning(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingxpanning = (byte)value;
+    }
+    public override void SetSectorCeilingypanning(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].ceilingypanning = (byte)value;
+    }
+    public override void SetSectorFloorPicnum(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorpicnum = (short)value;
+    }
+    public override void SetSectorFloorheinum(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorheinum = (short)value;
+    }
+    public override void SetSectorFloorShade(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorshade = (sbyte)value;
+    }
+    public override void SetSectorFloorpal(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorpal = (byte)value;
+    }
+    public override void SetSectorFloorxpanning(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorxpanning = (byte)value;
+    }
+    public override void SetSectorFloorypanning(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].floorypanning = (byte)value;
+    }
+    public override void SetSectorVisbility(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].visibility = (byte)value;
+    }
+    public override void SetSectorFiller(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].filler = (byte)value;
+    }
+    public override void SetSectorLotag(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].lotag = (short)value;
+    }
+    public override void SetSectorHitag(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].hitag = (short)value;
+    }
+    public override void SetSectorExtra(int sectNum, int value)
+    {
+        Engine.board.sector[sectNum].extra = (short)value;
+    }
+
+    public override int GetSectorWallPtr(int sectNum)
+    {
+        return Engine.board.sector[sectNum].wallptr;
+    }
+    public override int GetSectorWallNum(int sectNum)
+    {
+        return Engine.board.sector[sectNum].wallnum;
+    }
+    public override int GetSectorCeilingZ(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingz;
+    }
+    public override int GetSectorFloorZ(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorz;
+    }
+    public override int GetSectorCeilingStat(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingstat;
+    }
+    public override int GetSectorFloorStat(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorstat;
+    }
+    public override int GetSectorCeilingPicNum(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingpicnum;
+    }
+    public override int GetSectorCeilingHeinum(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingheinum;
+    }
+    public override int GetSectorCeilingShade(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingshade;
+    }
+    public override int GetSectorCeilingPal(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingpal;
+    }
+    public override int GetSectorCeilingxpanning(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingxpanning;
+    }
+    public override int GetSectorCeilingypanning(int sectNum)
+    {
+        return Engine.board.sector[sectNum].ceilingypanning;
+    }
+    public override int GetSectorFloorPicnum(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorpicnum;
+    }
+    public override int GetSectorFloorheinum(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorheinum;
+    }
+    public override int GetSectorFloorShade(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorshade;
+    }
+    public override int GetSectorFloorpal(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorpal;
+    }
+    public override int GetSectorFloorxpanning(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorxpanning;
+    }
+    public override int GetSectorFloorypanning(int sectNum)
+    {
+        return Engine.board.sector[sectNum].floorypanning;
+    }
+    public override int GetSectorVisbility(int sectNum)
+    {
+        return Engine.board.sector[sectNum].visibility;
+    }
+    public override int GetSectorFiller(int sectNum)
+    {
+        return Engine.board.sector[sectNum].filler;
+    }
+    public override int GetSectorLotag(int sectNum)
+    {
+        return Engine.board.sector[sectNum].lotag;
+    }
+    public override int GetSectorHitag(int sectNum)
+    {
+        return Engine.board.sector[sectNum].hitag;
+    }
+    public override int GetSectorExtra(int sectNum)
+    {
+        return Engine.board.sector[sectNum].extra;
+    }
     public override double DeltaTime()
     {
         return UnityEngine.Time.deltaTime;

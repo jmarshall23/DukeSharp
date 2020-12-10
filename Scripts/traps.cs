@@ -80,6 +80,57 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    // Sector Accessor Functions
+    public abstract void SetSectorWallPtr(int sectNum, int value);
+    public abstract void SetSectorWallNum(int sectNum, int value);
+    public abstract void SetSectorCeilingZ(int sectNum, int value);
+    public abstract void SetSectorFloorZ(int sectNum, int value);
+    public abstract void SetSectorCeilingStat(int sectNum, int value);
+    public abstract void SetSectorFloorStat(int sectNum, int value);
+    public abstract void SetSectorCeilingPicNum(int sectNum, int value);
+    public abstract void SetSectorCeilingHeinum(int sectNum, int value);
+    public abstract void SetSectorCeilingShade(int sectNum, int value);
+    public abstract void SetSectorCeilingPal(int sectNum, int value);
+    public abstract void SetSectorCeilingxpanning(int sectNum, int value);
+    public abstract void SetSectorCeilingypanning(int sectNum, int value);
+    public abstract void SetSectorFloorPicnum(int sectNum, int value);
+    public abstract void SetSectorFloorheinum(int sectNum, int value);
+    public abstract void SetSectorFloorShade(int sectNum, int value);
+    public abstract void SetSectorFloorpal(int sectNum, int value);
+    public abstract void SetSectorFloorxpanning(int sectNum, int value);
+    public abstract void SetSectorFloorypanning(int sectNum, int value);
+    public abstract void SetSectorVisbility(int sectNum, int value);
+    public abstract void SetSectorFiller(int sectNum, int value);
+    public abstract void SetSectorLotag(int sectNum, int value);
+    public abstract void SetSectorHitag(int sectNum, int value);
+    public abstract void SetSectorExtra(int sectNum, int value);
+
+
+    public abstract int GetSectorWallPtr(int sectNum);
+    public abstract int GetSectorWallNum(int sectNum);
+    public abstract int GetSectorCeilingZ(int sectNum);
+    public abstract int GetSectorFloorZ(int sectNum);
+    public abstract int GetSectorCeilingStat(int sectNum);
+    public abstract int GetSectorFloorStat(int sectNum);
+    public abstract int GetSectorCeilingPicNum(int sectNum);
+    public abstract int GetSectorCeilingHeinum(int sectNum);
+    public abstract int GetSectorCeilingShade(int sectNum);
+    public abstract int GetSectorCeilingPal(int sectNum);
+    public abstract int GetSectorCeilingxpanning(int sectNum);
+    public abstract int GetSectorCeilingypanning(int sectNum);
+    public abstract int GetSectorFloorPicnum(int sectNum);
+    public abstract int GetSectorFloorheinum(int sectNum);
+    public abstract int GetSectorFloorShade(int sectNum);
+    public abstract int GetSectorFloorpal(int sectNum);
+    public abstract int GetSectorFloorxpanning(int sectNum);
+    public abstract int GetSectorFloorypanning(int sectNum);
+    public abstract int GetSectorVisbility(int sectNum);
+    public abstract int GetSectorFiller(int sectNum);
+    public abstract int GetSectorLotag(int sectNum);
+    public abstract int GetSectorHitag(int sectNum);
+    public abstract int GetSectorExtra(int sectNum);
+// Sector Accessor Functions end
+
     public abstract double DeltaTime();
     public abstract int GetGlobalSpriteID();
 // Sprite Accessor Functions

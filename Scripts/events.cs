@@ -24,4 +24,16 @@
     {
 
     }
+
+    public bool Event_CheckSectors(int spriteNum, int cursectnum)
+    {
+        int sectorLotag = traps.GetSectorLotag(cursectnum);
+        if(sectorLotag >= 10000 && sectorLotag < 16383)
+        {
+            traps.sound(sectorLotag - 10000);
+            traps.SetSectorLotag(cursectnum, 0);
+        }
+
+        return false;
+    }
 }

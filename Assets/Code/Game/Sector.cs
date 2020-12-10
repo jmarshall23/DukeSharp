@@ -3767,14 +3767,10 @@ public partial class GlobalMembers
                 p.customexitsound = Engine.board.sector[p.cursectnum].hitag;
                 return;
             default:
-                if (Engine.board.sector[p.cursectnum].lotag >= 10000 && Engine.board.sector[p.cursectnum].lotag < 16383)
-                {
-                    if (snum == screenpeek || ud.coop == 1)
-                    {
-                        spritesound(Engine.board.sector[p.cursectnum].lotag - 10000, p.i);
-                    }
-                    Engine.board.sector[p.cursectnum].lotag = 0;
-                }
+                g_i = (short)p.i;
+                g_p = snum;
+                g_sp = Engine.board.sprite[g_i];
+                conScript.Event_CheckSectors(p.i, p.cursectnum);                
                 break;
 
         }

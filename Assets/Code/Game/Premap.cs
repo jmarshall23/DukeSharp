@@ -1803,6 +1803,11 @@ public partial class GlobalMembers
 		ud.screen_size = i;
 
 #if !VOLUMEONE
+		string _mapName = boardfilename;
+		if(boardfilename.Length == 0)
+        {
+			_mapName = level_file_names[(ud.volume_number * 11) + ud.level_number];
+		}
 
 		if (boardfilename.Length != 0 && ud.m_level_number == 7 && ud.m_volume_number == 0)
 		{
@@ -1951,15 +1956,8 @@ public partial class GlobalMembers
 		in_menu = false;
 		KB_FlushKeyboardQueue();
 
-        if (boardfilename.Length != 0)
-        {
-            conScript.Event_EnterLevel(boardfilename, ps[i].i);
-        }
-        else
-        {
-            conScript.Event_EnterLevel(level_file_names[(ud.volume_number * 11) + ud.level_number], ps[i].i);
-        }
-    }
+		conScript.Event_EnterLevel(_mapName, ps[0].i);
+	}
 
     /*
 	Duke Nukem V
