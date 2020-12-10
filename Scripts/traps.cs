@@ -80,6 +80,7 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract double DeltaTime();
     public abstract int GetGlobalSpriteID();
 // Sprite Accessor Functions
     public abstract int GetSpriteX(int spriteId);

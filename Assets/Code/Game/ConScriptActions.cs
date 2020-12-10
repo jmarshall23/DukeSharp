@@ -1,6 +1,11 @@
 ﻿using Build;
 public class TrapEngine : ConTraps
 {
+    public override double DeltaTime()
+    {
+        return UnityEngine.Time.deltaTime;
+    }
+
     public override int GetGlobalSpriteID()
     {
         return GlobalMembers.g_i;
