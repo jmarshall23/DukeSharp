@@ -48,16 +48,6 @@ public class GameEngine : MonoBehaviour
     public RawImage canvasImage;
     public Texture2D _texture;
     public TextAsset _defaultGrpFile; // Only used on non PC platforms
-    public Canvas mobileCanvas;
-    public UIButton mobileUpButton;
-    public UIButton mobileDownButton;
-    public UIButton mobileLeftButton;
-    public UIButton mobileRightButton;
-    public UIButton mobileFireButton;
-    public UIButton mobileJumpButton;
-    public UIButton mobileOpenButton;
-    public UIButton mobilePrevButton;
-    public UIButton mobileNextButton;
     public Material skyMaterial;
 
     public static string AppPath;
@@ -72,9 +62,6 @@ public class GameEngine : MonoBehaviour
     {
         bGrpArchive._defaultGrpFile = _defaultGrpFile;        
 
-#if (UNITY_STANDALONE || UNITY_EDITOR)
-        mobileCanvas.enabled = false;
-#endif
     }
 
     void LateUpdate()
@@ -130,17 +117,6 @@ public class GameEngine : MonoBehaviour
 
         GlobalMembers.anyKeyDown = Input.anyKeyDown;
 
-#if !(UNITY_STANDALONE || UNITY_EDITOR)
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_UpArrow)] = mobileUpButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_DownArrow)] = mobileDownButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftArrow)] = mobileLeftButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_RightArrow)] = mobileRightButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftControl)] = mobileFireButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_Space)] = mobileJumpButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_E)] = mobileOpenButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_R)] = mobilePrevButton.buttonPressed;
-        GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = mobileNextButton.buttonPressed;
-#else
         if (Input.GetKey(KeyCode.LeftShift))
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_LeftShift)] = true;
         else
@@ -217,7 +193,7 @@ public class GameEngine : MonoBehaviour
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = true;
         else
             GlobalMembers.KB_KeyDown[(DefineConstants.sc_T)] = false;
-#endif
+
         for (int i = 0; i <= 9; i++)
         {
             if (Input.GetKey(KeyCode.Alpha0 + i))
