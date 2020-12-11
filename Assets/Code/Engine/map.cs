@@ -6053,6 +6053,14 @@ namespace Build
 
         }
 
+        public void Init3D(bool editorMode)
+        {
+            Render3D.InitOnce();
+
+            render3D = new Render3D();
+            render3D.LoadBoard(Engine.board, editorMode);
+        }
+
         public int loadboard(kFile fil, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum, bool editorMode)
         {
             short numsprites;
@@ -6106,10 +6114,7 @@ namespace Build
 
             fil.Close();
 
-            Render3D.InitOnce();
-
-            render3D = new Render3D();
-            render3D.LoadBoard(Engine.board, editorMode);
+            Init3D(editorMode);
 
             return (0);
         }

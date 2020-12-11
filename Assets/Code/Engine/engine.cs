@@ -118,6 +118,11 @@ namespace Build
             }
         }
 
+        public static void AllocateTile(int tileNum, byte[] buffer, int width, int height)
+        {
+            Tile.LoadTile(tileNum, buffer, width, height);
+        }
+
         public static void copybufreverse<T>(int base_s, T[] S, int base_d, T[] D, long c)
         {
             while ((c--) > 0)
@@ -427,6 +432,16 @@ palette:
         {
             board = null;
             GC.Collect();
+
+            if (board != null)
+            {
+                if (board.render3D != null)
+                {
+                    board.render3D.FreeBoard();
+                }
+
+                board = null;
+            }
 
             board = new bMap();
             board.initspritelists();

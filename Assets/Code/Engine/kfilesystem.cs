@@ -193,6 +193,14 @@ namespace Build
                     ptr[startpos + i] = (T)val;
                 }
             }
+            else if (typeof(T) == typeof(int))
+            {
+                for (int i = 0; i < size / sizeof(int); i++)
+                {
+                    object val = _reader.ReadInt32();
+                    ptr[startpos + i] = (T)val;
+                }
+            }
             else if (typeof(T) == typeof(byte))
             {
                 for (int i = 0; i < size / sizeof(byte); i++)

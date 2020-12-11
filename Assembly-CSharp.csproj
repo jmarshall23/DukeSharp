@@ -98,6 +98,7 @@
     <Compile Include="Assets\Code\Engine\Vga.cs" />
     <Compile Include="Assets\Code\Engine\LibTessDotNet\PriorityHeap.cs" />
     <Compile Include="Assets\Code\Engine\parser.cs" />
+    <Compile Include="Assets\Code\Game\Savegame.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\StreamingAssets\duke3d_grp_goes_here.txt" />
