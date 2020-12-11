@@ -2288,7 +2288,14 @@ public partial class GlobalMembers
 					}
 
 					Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 1, -32, 0, 2 + 4 + 8 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-					ud.savegame[current_menu - 360] = "SAVEGAME_0";
+					{
+						string _mapName = boardfilename;
+						if (boardfilename.Length == 0)
+						{
+							_mapName = level_names[(ud.volume_number * 11) + ud.level_number];
+						}
+						ud.savegame[current_menu - 360] = _mapName;
+					}
 					dispnames();
 					Engine.rotatesprite(c + 67 + ud.savegame[current_menu - 360].Length * 4 << 16, (50 + 12 * probey) << 16, 32768 - 10240, 0, DefineConstants.SPINNINGNUKEICON + (((totalclock) >> 3) % 7), 0, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 					break;
@@ -2311,7 +2318,7 @@ public partial class GlobalMembers
 						Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 						_loadstr2 = string.Format("PLAYERS: {0}", numplr);
 						gametext(160, 158, _loadstr2, 0, (short)(2 + 8 + 16));
-						_loadstr2 = string.Format("EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + volnum, 1 + levnum, plrskl);
+						_loadstr2 = string.Format("EPISODE: {0} / LEVEL: {1} / SKILL: {2}", 1 + volnum, 1 + levnum, plrskl);
 						gametext(160, 170, _loadstr2, 0, (short)(2 + 8 + 16));
 					}
 					else

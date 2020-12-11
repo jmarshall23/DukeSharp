@@ -8,10 +8,27 @@ using UnityEngine;
 
 public partial class GlobalMembers
 {
-    public static bool SaveFileExists(int i)
+    public static string SaveFileExists(int i)
     {
-        string fn = Application.persistentDataPath + "/" + "game" + i + ".sav";
-        return File.Exists(fn);
+        string fn = Application.streamingAssetsPath + "/" + "game" + i + ".sav";
+        if (!File.Exists(fn))
+            return null;
+
+        FileStream fs = File.OpenRead(fn);
+
+        if (fn == null)
+        {
+            return null;
+        }
+        
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        int bv = (int)formatter.Deserialize(fs);
+        string _mapname = (string)formatter.Deserialize(fs);
+
+        fs.Close();
+
+        return _mapname;
     }
 	public static bool loadpheader(int spot, ref int vn, ref int ln, ref int psk, ref int nump)
 	{
@@ -30,7 +47,7 @@ public partial class GlobalMembers
 
         waitforeverybody();
 
-        fn = Application.persistentDataPath + "/" + fn.Replace('0', (char)('0' + spot));
+        fn = Application.streamingAssetsPath + "/" + fn.Replace('0', (char)('0' + spot));
 
         FileStream fs = File.OpenRead(fn);
 
@@ -43,7 +60,9 @@ public partial class GlobalMembers
         BinaryFormatter formatter = new BinaryFormatter();
 
 		bv = (int)formatter.Deserialize(fs);
-		nump = (int)formatter.Deserialize(fs);
+        string _mapname = (string)formatter.Deserialize(fs);
+
+        nump = (int)formatter.Deserialize(fs);
 		vn = (int)formatter.Deserialize(fs);
 		ln = (int)formatter.Deserialize(fs);
 		psk = (int)formatter.Deserialize(fs);
@@ -70,7 +89,7 @@ public partial class GlobalMembers
 
         waitforeverybody();
 
-        fn = Application.persistentDataPath + "/" + fn.Replace('0', (char)('0' + spot));
+        fn = Application.streamingAssetsPath + "/" + fn.Replace('0', (char)('0' + spot));
 
         FileStream fs = File.OpenRead(fn);
 
@@ -83,10 +102,11 @@ public partial class GlobalMembers
         BinaryFormatter formatter = new BinaryFormatter();
 
         bv = (int)formatter.Deserialize(fs); // dfwrite(bv, 4, 1, fil);
+        string _mapname = (string)formatter.Deserialize(fs);
         ud.multimode = (int)formatter.Deserialize(fs); // dfwrite(ud.multimode, sizeof(ud.multimode), 1, fil);		
 
         //dfwrite(ud.savegame[spot][0], 19, 1, fil);
-        ud.savegame[spot] = "SAVE_" + spot;
+        ud.savegame[spot] = _mapname;
         ud.volume_number = (int)formatter.Deserialize(fs); //dfwrite(ud.volume_number, sizeof(ud.volume_number), 1, fil);
         ud.level_number = (int)formatter.Deserialize(fs); //dfwrite(ud.level_number, sizeof(ud.level_number), 1, fil);
         ud.player_skill = (int)formatter.Deserialize(fs);//dfwrite(ud.player_skill, sizeof(ud.player_skill), 1, fil);
@@ -254,7 +274,7 @@ public partial class GlobalMembers
 
 		waitforeverybody();
 
-        fn = Application.persistentDataPath + "/" + fn.Replace('0', (char)('0' + spot));
+        fn = Application.streamingAssetsPath + "/" + fn.Replace('0', (char)('0' + spot));
 
 		FileStream fs = File.OpenWrite(fn);
 
@@ -266,8 +286,17 @@ public partial class GlobalMembers
         ready2send = (char)0;
 		BinaryFormatter formatter = new BinaryFormatter();
 
-		formatter.Serialize(fs, bv); // dfwrite(bv, 4, 1, fil);
-		formatter.Serialize(fs, ud.multimode); // dfwrite(ud.multimode, sizeof(ud.multimode), 1, fil);		
+        string _mapName = boardfilename;
+        if (boardfilename.Length == 0)
+        {
+            _mapName = level_names[(ud.volume_number * 11) + ud.level_number];
+        }
+
+        ud.savegame[spot] = _mapName;
+
+        formatter.Serialize(fs, bv); // dfwrite(bv, 4, 1, fil);
+        formatter.Serialize(fs, _mapName);
+        formatter.Serialize(fs, ud.multimode); // dfwrite(ud.multimode, sizeof(ud.multimode), 1, fil);		        
 
         //dfwrite(ud.savegame[spot][0], 19, 1, fil);
 

@@ -2392,9 +2392,10 @@ public partial class GlobalMembers
 
         for (int d = 0; d < 10; d++)
         {
-            if (SaveFileExists(d))
+            string savname = SaveFileExists(d);
+            if (savname != null)
             {
-                ud.savegame[d] = "savegame_" + d;
+                ud.savegame[d] = savname;
             }
             else
             {
