@@ -8,7 +8,11 @@ using UnityEngine;
 
 public partial class GlobalMembers
 {
-
+    public static bool SaveFileExists(int i)
+    {
+        string fn = Application.persistentDataPath + "/" + "game" + i + ".sav";
+        return File.Exists(fn);
+    }
 	public static bool loadpheader(int spot, ref int vn, ref int ln, ref int psk, ref int nump)
 	{
         int i;
@@ -82,6 +86,7 @@ public partial class GlobalMembers
         ud.multimode = (int)formatter.Deserialize(fs); // dfwrite(ud.multimode, sizeof(ud.multimode), 1, fil);		
 
         //dfwrite(ud.savegame[spot][0], 19, 1, fil);
+        ud.savegame[spot] = "SAVE_" + spot;
         ud.volume_number = (int)formatter.Deserialize(fs); //dfwrite(ud.volume_number, sizeof(ud.volume_number), 1, fil);
         ud.level_number = (int)formatter.Deserialize(fs); //dfwrite(ud.level_number, sizeof(ud.level_number), 1, fil);
         ud.player_skill = (int)formatter.Deserialize(fs);//dfwrite(ud.player_skill, sizeof(ud.player_skill), 1, fil);
@@ -93,6 +98,11 @@ public partial class GlobalMembers
                                                                   //formatter.Serialize(fs, Engine.board.numsprites);
         Engine.board.sector = (Build.sectortype[])formatter.Deserialize(fs); // dfwrite(sector[0], sizeof(sectortype), DefineConstants.MAXSECTORS, fil);
         Engine.board.sprite = (Build.spritetype[])formatter.Deserialize(fs); // dfwrite(Engine.board.sprite[0], sizeof(spritetype), DefineConstants.MAXSPRITES, fil);
+
+        for(int d = 0; d < Engine.board.numsectors; d++)
+        {
+            Engine.board.sector[d].changed = true;
+        }
 
 
         Engine.board.headspritesect = (int[])formatter.Deserialize(fs); //dfwrite(headspritesect[0], 2, DefineConstants.MAXSECTORS + 1, fil);
@@ -172,6 +182,58 @@ public partial class GlobalMembers
 
         Engine.board.Init3D(false);
 
+
+        resetmys();
+        // jmarshall - palette
+        ps[myconnectindex].palette = palette;
+        palto(0, 0, 0, 0);
+        //
+        //setpal(ps[myconnectindex]);
+        // jmarshall end
+        flushperms();
+
+        everyothertime = (char)0;
+        global_random = 0;
+
+        ud.last_level = (short)(ud.level_number + 1);
+
+        clearfifo();
+
+        for (i = (short)(numinterpolations - 1); i >= 0; i--)
+        {
+            bakipos[i] = curipos[i].Value;
+        }
+
+        // jmarshall - palette and networking
+        //restorepalette = 1;
+        //
+        //flushpackets();
+        // jmarshall end
+        waitforeverybody();
+
+
+        palto(0, 0, 0, 0);
+        vscrn();
+        Engine.clearview();
+        drawbackground();
+
+        // jmarshall - clear?
+        //clearbufbyte(playerquitflag, DefineConstants.MAXPLAYERS, 0x01010101);
+        Array.Clear(playerquitflag, 0, playerquitflag.Length);
+        // jmarshall end
+        ps[myconnectindex].over_shoulder_on = 0;
+
+        clearfrags();
+
+        resettimevars(); // Here we go
+
+        currentStage = GameStateType.GAME_STATE_INGAME;
+        ps[myconnectindex].gm = DefineConstants.MODE_GAME;
+        in_menu = false;
+        KB_FlushKeyboardQueue();
+
+       // conScript.Event_EnterLevel(_mapName, ps[0].i);
+
         return true;
 	}
 
@@ -207,8 +269,9 @@ public partial class GlobalMembers
 		formatter.Serialize(fs, bv); // dfwrite(bv, 4, 1, fil);
 		formatter.Serialize(fs, ud.multimode); // dfwrite(ud.multimode, sizeof(ud.multimode), 1, fil);		
 
-		//dfwrite(ud.savegame[spot][0], 19, 1, fil);
-		formatter.Serialize(fs, ud.volume_number); //dfwrite(ud.volume_number, sizeof(ud.volume_number), 1, fil);
+        //dfwrite(ud.savegame[spot][0], 19, 1, fil);
+
+        formatter.Serialize(fs, ud.volume_number); //dfwrite(ud.volume_number, sizeof(ud.volume_number), 1, fil);
 		formatter.Serialize(fs, ud.level_number); //dfwrite(ud.level_number, sizeof(ud.level_number), 1, fil);
 		formatter.Serialize(fs, ud.player_skill);//dfwrite(ud.player_skill, sizeof(ud.player_skill), 1, fil);
 												 //dfwrite((string)waloff[DefineConstants.MAXTILES - 1], 160, 100, fil);
@@ -311,6 +374,8 @@ public partial class GlobalMembers
 
 		ototalclock = totalclock;
 
-		return true;
+       // conScript.Event_EnterLevel("", ps[0].i);
+
+        return true;
 	}
 }

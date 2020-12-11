@@ -26,6 +26,8 @@ Original Source: 1996 - Todd Replogle
 Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 */
 //-------------------------------------------------------------------------
+using System;
+
 public class SOUNDOWNER
 {
     public short i;
@@ -59,6 +61,7 @@ public struct SAMPLE
     public int num;
 }
 
+[Serializable]
 public class animwalltype
 {
     public short wallnum;
@@ -78,6 +81,7 @@ public class user_defs
     public string[] user_name = new string[DefineConstants.MAXPLAYERS];
     public char[,] ridecule = new char[10, 40];
     public string[] savegame = new string[10];
+    public int currentSaveId = 0;
     public string pwlockout = new string(new char[128]);
     public string rtsname = new string(new char[128]);
     public char overhead_on;
@@ -144,6 +148,7 @@ public class user_defs
 
 }
 
+[Serializable]
 public class player_orig
 {
     public int ox;
@@ -153,6 +158,7 @@ public class player_orig
     public short os;
 }
 
+[Serializable]
 public class player_struct
 {
     public int zoom;
@@ -301,6 +307,7 @@ public class player_struct
     public char return_to_center;
 }
 
+[Serializable]
 public class weaponhit
 {
     public char cgg;

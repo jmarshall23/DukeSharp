@@ -2388,7 +2388,19 @@ public partial class GlobalMembers
 		//	printf("Using %ld bytes for heap.\n", totalmemory);
 		//}
 
-		Startup();        
+		Startup();
+
+        for (int d = 0; d < 10; d++)
+        {
+            if (SaveFileExists(d))
+            {
+                ud.savegame[d] = "savegame_" + d;
+            }
+            else
+            {
+                ud.savegame[d] = "";
+            }
+        }
 
         if (numplayers > 1)
 		{

@@ -1137,98 +1137,100 @@ public partial class GlobalMembers
 			case 1007:
 			case 1008:
 			case 1009:
-				// jmarshall - load game
-				/*
-								Engine.rotatesprite(160 << 16, 200 << 15, 65536, 0, DefineConstants.MENUSCREEN, 16, 0, 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-								Engine.rotatesprite(160 << 16, 19 << 16, 65536, 0, DefineConstants.MENUBAR, 16, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-								menutext(160, 24, 0, 0, "LOAD GAME");
-								Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				string _loadgamestr = "";
+				Engine.rotatesprite(160 << 16, 200 << 15, 65536, 0, DefineConstants.MENUSCREEN, 16, 0, 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				Engine.rotatesprite(160 << 16, 19 << 16, 65536, 0, DefineConstants.MENUBAR, 16, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				menutext(160, 24, 0, 0, "LOAD GAME");
+				Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 
-								dispnames();
+				dispnames();
 
-								sprintf(tempbuf, "PLAYERS: %-2d                      ", numplr);
-								gametext(160, 158, ref tempbuf, 0, (short)(2 + 8 + 16));
+				//sprintf(tempbuf, "PLAYERS: %-2d                      ", numplr);
+				_loadgamestr = "PLAYERS: " + numplr;
+				gametext(160, 158, _loadgamestr, 0, (short)(2 + 8 + 16));
 
-								sprintf(tempbuf, "EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + volnum, 1 + levnum, plrskl);
-								gametext(160, 170, ref tempbuf, 0, (short)(2 + 8 + 16));
+				//sprintf(tempbuf, "EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + volnum, 1 + levnum, plrskl);
+				_loadgamestr = string.Format("EPISODE: {0} / LEVEL: {1} / SKILL: {2}", 1 + volnum, 1 + levnum, plrskl);
+				gametext(160, 170, _loadgamestr, 0, (short)(2 + 8 + 16));
 
-								gametext(160, 90, "LOAD game:", 0, (short)(2 + 8 + 16));
-								sprintf(tempbuf, "\"%s\"", ud.savegame[current_menu - 1000]);
-								gametext(160, 99, ref tempbuf, 0, (short)(2 + 8 + 16));
-								gametext(160, 99 + 9, "(Y/N)", 0, (short)(2 + 8 + 16));
+				gametext(160, 90, "LOAD game:", 0, (short)(2 + 8 + 16));
+				//sprintf(tempbuf, "\"%s\"", ud.savegame[current_menu - 1000]);
+				_loadgamestr = string.Format("\"{0}\"", ud.savegame[current_menu - 1000]);
+				gametext(160, 99, _loadgamestr, 0, (short)(2 + 8 + 16));
+				gametext(160, 99 + 9, "(Y/N)", 0, (short)(2 + 8 + 16));
 
-								if ((KB_KeyDown[(DefineConstants.sc_Space)] != 0) || (KB_KeyDown[(DefineConstants.sc_Return)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_Enter)] != 0) || (KB_KeyDown[(DefineConstants.sc_Y)] != 0) || (buttonstat & 1) != 0)
+				if ((KB_KeyDown[(DefineConstants.sc_Space)] != false) || (KB_KeyDown[(DefineConstants.sc_Return)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_Enter)] != false) || (KB_KeyDown[(DefineConstants.sc_Y)] != false) || (buttonstat & 1) != 0)
+				{
+					lastsavedpos = (short)(current_menu - 1000);
+
+					KB_FlushKeyboardQueue();
+					if (ud.multimode < 2 && ud.recstat != 2)
+					{
+						ready2send = (char)1;
+						totalclock = ototalclock;
+					}
+
+					if (ud.multimode > 1)
+					{
+						if ((ps[myconnectindex].gm & DefineConstants.MODE_GAME) != 0)
+						{
+							loadplayer((sbyte)(-1 - lastsavedpos));
+							ps[myconnectindex].gm = DefineConstants.MODE_GAME;
+						}
+						else
+						{
+							tempbuf[0] = 126;
+							tempbuf[1] = (byte)lastsavedpos;
+							for (x = connecthead; x >= 0; x = connectpoint2[x])
+							{
+								if (x != myconnectindex)
 								{
-									lastsavedpos = current_menu - 1000;
-
-									KB_FlushKeyboardQueue();
-									if (ud.multimode < 2 && ud.recstat != 2)
-									{
-										ready2send = 1;
-										totalclock = ototalclock;
-									}
-
-									if (ud.multimode > 1)
-									{
-										if ((ps[myconnectindex].gm & DefineConstants.MODE_GAME) != 0)
-										{
-											loadplayer((sbyte)(-1 - lastsavedpos));
-											ps[myconnectindex].gm = DefineConstants.MODE_GAME;
-										}
-										else
-										{
-											tempbuf[0] = 126;
-											tempbuf[1] = lastsavedpos;
-											for (x = connecthead; x >= 0; x = connectpoint2[x])
-											{
-												if (x != myconnectindex)
-												{
-													sendpacket(x, tempbuf, 2);
-												}
-											}
-
-											getpackets();
-
-											loadplayer((sbyte)lastsavedpos);
-
-											multiflag = 0;
-										}
-									}
-									else
-									{
-										c = loadplayer(lastsavedpos);
-										if (c == 0)
-										{
-											ps[myconnectindex].gm = DefineConstants.MODE_GAME;
-										}
-									}
-
-									break;
+								//	sendpacket(x, tempbuf, 2);
 								}
-								if ((KB_KeyDown[(DefineConstants.sc_N)] != 0) || (KB_KeyDown[(DefineConstants.sc_Escape)] != 0) || (buttonstat & 2) != 0)
-								{
-									{
-										KB_KeyDown[(DefineConstants.sc_N)] = (!(1 == 1));
-									};
-									{
-										KB_KeyDown[(DefineConstants.sc_Escape)] = (!(1 == 1));
-									};
-									sound(DefineConstants.EXITMENUSOUND);
-									if ((ps[myconnectindex].gm & DefineConstants.MODE_DEMO) != 0)
-									{
-										cmenu(300);
-									}
-									else
-									{
-										ps[myconnectindex].gm &= ~DefineConstants.MODE_MENU;
-										if (ud.multimode < 2 && ud.recstat != 2)
-										{
-											ready2send = 1;
-											totalclock = ototalclock;
-										}
-									}
-								}
-				*/
+							}
+
+							getpackets();
+
+							loadplayer((sbyte)lastsavedpos);
+
+							multiflag = 0;
+						}
+					}
+					else
+					{
+						c = (short)(loadplayer((sbyte)lastsavedpos) ? 1 : 0);
+						if (c == 0)
+						{
+							ps[myconnectindex].gm = DefineConstants.MODE_GAME;
+						}
+					}
+
+					break;
+				}
+				if ((KB_KeyDown[(DefineConstants.sc_N)] != false) || (KB_KeyDown[(DefineConstants.sc_Escape)] != false) || (buttonstat & 2) != 0)
+				{
+					{
+						KB_KeyDown[(DefineConstants.sc_N)] = (!(1 == 1));
+					};
+					{
+						KB_KeyDown[(DefineConstants.sc_Escape)] = (!(1 == 1));
+					};
+					sound(DefineConstants.EXITMENUSOUND);
+					if ((ps[myconnectindex].gm & DefineConstants.MODE_DEMO) != 0)
+					{
+						cmenu(300);
+					}
+					else
+					{
+						ps[myconnectindex].gm &= ~DefineConstants.MODE_MENU;
+						if (ud.multimode < 2 && ud.recstat != 2)
+						{
+							ready2send = (char)1;
+							totalclock = ototalclock;
+						}
+					}
+				}
+
 				probe(186, 124 + 9, 0, 0);
 
 				break;
@@ -1273,46 +1275,45 @@ public partial class GlobalMembers
 			case 2007:
 			case 2008:
 			case 2009:
-				// jmarshall - save game
-				/*
-								Engine.rotatesprite(160 << 16, 200 << 15, 65536, 0, DefineConstants.MENUSCREEN, 16, 0, 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-								Engine.rotatesprite(160 << 16, 19 << 16, 65536, 0, DefineConstants.MENUBAR, 16, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-								menutext(160, 24, 0, 0, "SAVE GAME");
+				string _savegame2 = "";
+				Engine.rotatesprite(160 << 16, 200 << 15, 65536, 0, DefineConstants.MENUSCREEN, 16, 0, 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				Engine.rotatesprite(160 << 16, 19 << 16, 65536, 0, DefineConstants.MENUBAR, 16, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				menutext(160, 24, 0, 0, "SAVE GAME");
 
-								Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-								sprintf(tempbuf, "PLAYERS: %-2d                      ", ud.multimode);
-								gametext(160, 158, ref tempbuf, 0, (short)(2 + 8 + 16));
+				Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				_savegame2 = string.Format("PLAYERS: {0}", ud.multimode);
+				//sprintf(tempbuf, "PLAYERS: %-2d                      ", ud.multimode);
+				gametext(160, 158, _savegame2, 0, (short)(2 + 8 + 16));
 
-								sprintf(tempbuf, "EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + ud.volume_number, 1 + ud.level_number, ud.player_skill);
-								gametext(160, 170, ref tempbuf, 0, (short)(2 + 8 + 16));
+				_savegame2 = string.Format("EPISODE: {0} / LEVEL: {1} / SKILL: {2}", 1 + ud.volume_number, 1 + ud.level_number, ud.player_skill);
+				gametext(160, 170, _savegame2, 0, (short)(2 + 8 + 16));
 
-								dispnames();
+				dispnames();
 
-								gametext(160, 90, "OVERWRITE previous SAVED game?", 0, (short)(2 + 8 + 16));
-								gametext(160, 90 + 9, "(Y/N)", 0, (short)(2 + 8 + 16));
+				gametext(160, 90, "OVERWRITE previous SAVED game?", 0, (short)(2 + 8 + 16));
+				gametext(160, 90 + 9, "(Y/N)", 0, (short)(2 + 8 + 16));
 
-								if ((KB_KeyDown[(DefineConstants.sc_Space)] != 0) || (KB_KeyDown[(DefineConstants.sc_Return)] != 0) || (KB_KeyDown[(DefineConstants.sc_kpad_Enter)] != 0) || (KB_KeyDown[(DefineConstants.sc_Y)] != 0) || (buttonstat & 1) != 0)
-								{
-									KB_FlushKeyboardQueue();
-									inputloc = strlen(ud.savegame[current_menu - 2000][0]);
+				if ((KB_KeyDown[(DefineConstants.sc_Space)] != false) || (KB_KeyDown[(DefineConstants.sc_Return)] != false) || (KB_KeyDown[(DefineConstants.sc_kpad_Enter)] != false) || (KB_KeyDown[(DefineConstants.sc_Y)] != false) || (buttonstat & 1) != 0)
+				{
+					KB_FlushKeyboardQueue();
+					//inputloc = ud.savegame[current_menu - 2000].Length;
 
-									cmenu(current_menu - 2000 + 360);
+					cmenu((short)(current_menu - 2000 + 360));
 
-									KB_FlushKeyboardQueue();
-									break;
-								}
-								if ((KB_KeyDown[(DefineConstants.sc_N)] != 0) || (KB_KeyDown[(DefineConstants.sc_Escape)] != 0) || (buttonstat & 2) != 0)
-								{
-									{
-										KB_KeyDown[(DefineConstants.sc_N)] = (!(1 == 1));
-									};
-									{
-										KB_KeyDown[(DefineConstants.sc_Escape)] = (!(1 == 1));
-									};
-									cmenu(351);
-									sound(DefineConstants.EXITMENUSOUND);
-								}
-				*/
+					KB_FlushKeyboardQueue();
+					break;
+				}
+				if ((KB_KeyDown[(DefineConstants.sc_N)] != false) || (KB_KeyDown[(DefineConstants.sc_Escape)] != false) || (buttonstat & 2) != 0)
+				{
+					{
+						KB_KeyDown[(DefineConstants.sc_N)] = (!(1 == 1));
+					};
+					{
+						KB_KeyDown[(DefineConstants.sc_Escape)] = (!(1 == 1));
+					};
+					cmenu(351);
+					sound(DefineConstants.EXITMENUSOUND);
+				}
 				probe(186, 124, 0, 0);
 
 				break;
@@ -2204,13 +2205,7 @@ public partial class GlobalMembers
 				break;
 
 			case 350:
-				// jmarshall - unknown
-				//cmenu(351);
-				//screencapt = 1;
-				//Engine.displayrooms(myconnectindex, 65536);
-				//savetemp("duke3d.tmp", waloff[DefineConstants.MAXTILES - 1], 160 * 100);
-				//screencapt = 0;
-				// jmarshall end
+				cmenu(351);
 				break;
 
 			case 360:
@@ -2225,190 +2220,190 @@ public partial class GlobalMembers
 			case 369:
 			case 351:
 			case 300:
-				// jmarshall - load/save
-				/*
-								c = (short)(320 >> 1);
-								Engine.rotatesprite(c << 16, 200 << 15, 65536, 0, DefineConstants.MENUSCREEN, 16, 0, 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-								Engine.rotatesprite(c << 16, 19 << 16, 65536, 0, DefineConstants.MENUBAR, 16, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				string _loadstr2 = "";
+				c = (short)(320 >> 1);
+				Engine.rotatesprite(c << 16, 200 << 15, 65536, 0, DefineConstants.MENUSCREEN, 16, 0, 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+				Engine.rotatesprite(c << 16, 19 << 16, 65536, 0, DefineConstants.MENUBAR, 16, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
 
-								if (current_menu == 300)
-								{
-									menutext(c, 24, 0, 0, "LOAD GAME");
-								}
-								else
-								{
-									menutext(c, 24, 0, 0, "SAVE GAME");
-								}
+				if (current_menu == 300)
+				{
+					menutext(c, 24, 0, 0, "LOAD GAME");
+				}
+				else
+				{
+					menutext(c, 24, 0, 0, "SAVE GAME");
+				}
 
-								if (current_menu >= 360 && current_menu <= 369)
-								{
-									sprintf(tempbuf, "PLAYERS: %-2d                      ", ud.multimode);
-									gametext(160, 158, ref tempbuf, 0, (short)(2 + 8 + 16));
-									sprintf(tempbuf, "EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + ud.volume_number, 1 + ud.level_number, ud.player_skill);
-									gametext(160, 170, ref tempbuf, 0, (short)(2 + 8 + 16));
+				if (current_menu >= 360 && current_menu <= 369)
+				{
+					_loadstr2 = string.Format("PLAYERS: {0}", ud.multimode);
+					gametext(160, 158, _loadstr2, 0, (short)(2 + 8 + 16));
+					_loadstr2 = string.Format("EPISODE: {0} / LEVEL: {1} / SKILL: {2}", 1 + ud.volume_number, 1 + ud.level_number, ud.player_skill);
+					gametext(160, 170, _loadstr2, 0, (short)(2 + 8 + 16));
 
-									x = strget((short)(320 >> 1), 184, ref ud.savegame[current_menu - 360][0], 19, 999);
+					x = (short)(ud.savegame[current_menu - 360].Length > 0 ? 1 : 0);
 
-									if (x == -1)
-									{
-										//        readsavenames();
-										ps[myconnectindex].gm = DefineConstants.MODE_GAME;
-										if (ud.multimode < 2 && ud.recstat != 2)
-										{
-											ready2send = 1;
-											totalclock = ototalclock;
-										}
-										goto DISPLAYNAMES;
-									}
+					if (x == -1)
+					{
+						//        readsavenames();
+						ps[myconnectindex].gm = DefineConstants.MODE_GAME;
+						if (ud.multimode < 2 && ud.recstat != 2)
+						{
+							ready2send = (char)1;
+							totalclock = ototalclock;
+						}
+						goto DISPLAYNAMES;
+					}
 
-									if (x == 1)
-									{
-										if (ud.savegame[current_menu - 360][0] == 0)
-										{
-											KB_FlushKeyboardQueue();
-											cmenu(351);
-										}
-										else
-										{
-											if (ud.multimode > 1)
-											{
-												saveplayer(-1 - (current_menu - 360));
-											}
-											else
-											{
-												saveplayer(current_menu - 360);
-											}
-											lastsavedpos = current_menu - 360;
-											ps[myconnectindex].gm = DefineConstants.MODE_GAME;
+					if (x == 1)
+					{
+						if (ud.savegame[current_menu - 360][0] == 0)
+						{
+							KB_FlushKeyboardQueue();
+							cmenu(351);
+						}
+						else
+						{
+							if (ud.multimode > 1)
+							{
+								saveplayer((sbyte)(-1 - (current_menu - 360)));
+							}
+							else
+							{
+								saveplayer((sbyte)(current_menu - 360));
+							}
+							lastsavedpos = (sbyte)(current_menu - 360);
+							ps[myconnectindex].gm = DefineConstants.MODE_GAME;
 
-											if (ud.multimode < 2 && ud.recstat != 2)
-											{
-												ready2send = 1;
-												totalclock = ototalclock;
-											}
-											{
-												KB_KeyDown[(DefineConstants.sc_Escape)] = (!(1 == 1));
-											};
-											sound(DefineConstants.EXITMENUSOUND);
-										}
-									}
+							if (ud.multimode < 2 && ud.recstat != 2)
+							{
+								ready2send = (char)1;
+								totalclock = ototalclock;
+							}
+							{
+								KB_KeyDown[(DefineConstants.sc_Escape)] = (!(1 == 1));
+							};
+							sound(DefineConstants.EXITMENUSOUND);
+						}
+					}
 
-									Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 1, -32, 0, 2 + 4 + 8 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-									dispnames();
-									Engine.rotatesprite((c + 67 + strlen(ud.savegame[current_menu - 360][0]) * 4) << 16, (50 + 12 * probey) << 16, 32768 - 10240, 0, DefineConstants.SPINNINGNUKEICON + (((totalclock) >> 3) % 7), 0, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-									break;
-								}
+					Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 1, -32, 0, 2 + 4 + 8 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+					ud.savegame[current_menu - 360] = "SAVEGAME_0";
+					dispnames();
+					Engine.rotatesprite(c + 67 + ud.savegame[current_menu - 360].Length * 4 << 16, (50 + 12 * probey) << 16, 32768 - 10240, 0, DefineConstants.SPINNINGNUKEICON + (((totalclock) >> 3) % 7), 0, 0, 10, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+					break;
+				}
 
-								last_threehundred = probey;
+				last_threehundred = probey;
 
-								x = (short)probe(c + 68, 54, 12, 10);
+				x = (short)probe(c + 68, 54, 12, 10);
 
-								if (current_menu == 300)
-								{
-									if (ud.savegame[probey][0])
-									{
-										if (lastprobey != probey)
-										{
-											loadpheader(probey, ref volnum, ref levnum, ref plrskl, ref numplr);
-											lastprobey = probey;
-										}
+				if (current_menu == 300)
+				{
+					if (ud.savegame[probey].Length > 0)
+					{
+						if (lastprobey != probey)
+						{
+							loadpheader(probey, ref volnum, ref levnum, ref plrskl, ref numplr);
+							lastprobey = probey;
+						}
 
-										Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-										sprintf(tempbuf, "PLAYERS: %-2d                      ", numplr);
-										gametext(160, 158, ref tempbuf, 0, (short)(2 + 8 + 16));
-										sprintf(tempbuf, "EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + volnum, 1 + levnum, plrskl);
-										gametext(160, 170, ref tempbuf, 0, (short)(2 + 8 + 16));
-									}
-									else
-									{
-										menutext(69, 70, 0, 0, "EMPTY");
-									}
-								}
-								else
-								{
-									if (ud.savegame[probey][0])
-									{
-										if (lastprobey != probey)
-										{
-											loadpheader(probey, ref volnum, ref levnum, ref plrskl, ref numplr);
-										}
-										lastprobey = probey;
-										Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
-									}
-									else
-									{
-										menutext(69, 70, 0, 0, "EMPTY");
-									}
-									sprintf(tempbuf, "PLAYERS: %-2d                      ", ud.multimode);
-									gametext(160, 158, ref tempbuf, 0, (short)(2 + 8 + 16));
-									sprintf(tempbuf, "EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + ud.volume_number, 1 + ud.level_number, ud.player_skill);
-									gametext(160, 170, ref tempbuf, 0, (short)(2 + 8 + 16));
-								}
+						Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+						_loadstr2 = string.Format("PLAYERS: {0}", numplr);
+						gametext(160, 158, _loadstr2, 0, (short)(2 + 8 + 16));
+						_loadstr2 = string.Format("EPISODE: %-2d / LEVEL: %-2d / SKILL: %-2d", 1 + volnum, 1 + levnum, plrskl);
+						gametext(160, 170, _loadstr2, 0, (short)(2 + 8 + 16));
+					}
+					else
+					{
+						menutext(69, 70, 0, 0, "EMPTY");
+					}
+				}
+				else
+				{
+					if (ud.savegame[probey].Length > 0)
+					{
+						if (lastprobey != probey)
+						{
+							loadpheader(probey, ref volnum, ref levnum, ref plrskl, ref numplr);
+						}
+						lastprobey = probey;
+						Engine.rotatesprite(101 << 16, 97 << 16, 65536, 512, DefineConstants.MAXTILES - 3, -32, 0, 4 + 10 + 64, 0, 0, Engine.xdim - 1, Engine.ydim - 1);
+					}
+					else
+					{
+						menutext(69, 70, 0, 0, "EMPTY");
+					}
+					_loadstr2 = string.Format("PLAYERS: {0}", ud.multimode);
+					gametext(160, 158, _loadstr2, 0, (short)(2 + 8 + 16));
+					_loadstr2 = string.Format("EPISODE: {0} / LEVEL: {1} / SKILL: {2}", 1 + ud.volume_number, 1 + ud.level_number, ud.player_skill);
+					gametext(160, 170, _loadstr2, 0, (short)(2 + 8 + 16));
+				}
 
-								switch (x)
-								{
-									case -1:
-										if (current_menu == 300)
-										{
-											if ((ps[myconnectindex].gm & DefineConstants.MODE_GAME) != DefineConstants.MODE_GAME)
-											{
-												cmenu(0);
-												break;
-											}
-											else
-											{
-												ps[myconnectindex].gm &= ~DefineConstants.MODE_MENU;
-											}
-										}
-										else
-										{
-											ps[myconnectindex].gm = DefineConstants.MODE_GAME;
-										}
+				switch (x)
+				{
+					case -1:
+						if (current_menu == 300)
+						{
+							if ((ps[myconnectindex].gm & DefineConstants.MODE_GAME) != DefineConstants.MODE_GAME)
+							{
+								cmenu(0);
+								break;
+							}
+							else
+							{
+								ps[myconnectindex].gm &= ~DefineConstants.MODE_MENU;
+							}
+						}
+						else
+						{
+							ps[myconnectindex].gm = DefineConstants.MODE_GAME;
+						}
 
-										if (ud.multimode < 2 && ud.recstat != 2)
-										{
-											ready2send = 1;
-											totalclock = ototalclock;
-										}
+						if (ud.multimode < 2 && ud.recstat != 2)
+						{
+							ready2send = (char)1;
+							totalclock = ototalclock;
+						}
 
-										break;
-									case 0:
-									case 1:
-									case 2:
-									case 3:
-									case 4:
-									case 5:
-									case 6:
-									case 7:
-									case 8:
-									case 9:
-										if (current_menu == 300)
-										{
-											if (ud.savegame[x][0])
-											{
-												current_menu = (1000 + x);
-											}
-										}
-										else
-										{
-											if (ud.savegame[x][0] != 0)
-											{
-												current_menu = 2000 + x;
-											}
-											else
-											{
-												KB_FlushKeyboardQueue();
-												current_menu = (360 + x);
-												ud.savegame[x][0] = 0;
-												inputloc = 0;
-											}
-										}
-										break;
-								}
+						break;
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+						if (current_menu == 300)
+						{
+							if (ud.savegame[x].Length > 0)
+							{
+								current_menu = (1000 + x);
+							}
+						}
+						else
+						{
+							if (ud.savegame[x].Length > 0)
+							{
+								current_menu = 2000 + x;
+							}
+							else
+							{
+								KB_FlushKeyboardQueue();
+								current_menu = (360 + x);
+								ud.savegame[x] = "";
+								//inputloc = 0;
+							}
+						}
+						break;
+				}
 
-								DISPLAYNAMES:
-								dispnames();
-				*/
+				DISPLAYNAMES:
+				dispnames();
+
 				break;
 
 #if DEMO

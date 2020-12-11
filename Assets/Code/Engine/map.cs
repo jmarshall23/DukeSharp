@@ -6055,10 +6055,17 @@ namespace Build
 
         public void Init3D(bool editorMode)
         {
+            if (!editorMode)
+            {
+                dosetaspect(true);
+            }
+
             Render3D.InitOnce();
 
             render3D = new Render3D();
             render3D.LoadBoard(Engine.board, editorMode);
+
+            sector[MAXSECTORS] = new sectortype();
         }
 
         public int loadboard(kFile fil, ref int daposx, ref int daposy, ref int daposz, ref short daang, ref short dacursectnum, bool editorMode)
@@ -6140,6 +6147,7 @@ namespace Build
     //   bits 9-15: reserved
 
     //40 bytes
+    [Serializable]
     public class sectortype
     {
         public short wallptr, wallnum;
@@ -6324,6 +6332,7 @@ namespace Build
     //   bits 10-15: reserved
 
     //32 bytes
+    [Serializable]
     public class walltype
     {
         public int _x, _y;
@@ -6465,6 +6474,7 @@ namespace Build
     //   bit 15: 1 = Invisible sprite, 0 = not invisible
 
     //44 bytes
+    [Serializable]
     public class spritetype
     {
         public int x, y, z;
@@ -6569,7 +6579,7 @@ namespace Build
             extra = file.kreadshort();
         }
     };
-
+    [Serializable]
     public struct spritetype2
     {
         public int x, y, z;

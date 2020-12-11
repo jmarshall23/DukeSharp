@@ -1,4 +1,7 @@
-﻿public class ScriptActorRegistration
+﻿using System;
+
+[Serializable]
+public class ScriptActorRegistration
 {
     public delegate void Function_t();
     public Function_t func;
@@ -6,6 +9,7 @@
     public int aiType2;
     public ConAction action;
 }
+[Serializable]
 public class ConAction
 {
     public int startframe;
@@ -42,6 +46,7 @@ public class ConAction
     }
 }
 
+[Serializable]
 public class AIAction
 {
     public ConAction action;
@@ -55,6 +60,7 @@ public class AIAction
     }
 }
 
+[Serializable]
 public class MoveAction
 {
     public int horizontal;
