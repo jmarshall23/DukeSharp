@@ -3984,6 +3984,14 @@ public partial class GlobalMembers
 
             if (neartagsprite >= 0)
             {
+                g_i = (short)p.i;
+                g_p = snum;
+                g_sp = Engine.board.sprite[g_i];
+                if (conScript.Event_OperateSprite(neartagsprite))
+                {
+                    return;
+                }
+
                 if (checkhitswitch(snum, neartagsprite, (char)1))
                 {
                     return;

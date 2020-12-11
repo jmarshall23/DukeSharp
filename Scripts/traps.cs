@@ -80,6 +80,11 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract int FindEntityWithLotag(int picnum, int lotag);
+    public abstract int FindEntityWithHitag(int picnum, int hitag);
+
+    public abstract bool ParentalLockEnabled();
+
     // Sector Accessor Functions
     public abstract void SetSectorWallPtr(int sectNum, int value);
     public abstract void SetSectorWallNum(int sectNum, int value);

@@ -1,6 +1,35 @@
 ﻿using Build;
 public class TrapEngine : ConTraps
 {
+    public override int FindEntityWithLotag(int picnum, int lotag)
+    {
+        for(int i = 0; i < bMap.MAXSPRITES; i++)
+        {
+            if(Engine.board.sprite[i].picnum == picnum && Engine.board.sprite[i].lotag == lotag)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+    public override int FindEntityWithHitag(int picnum, int hitag)
+    {
+        for (int i = 0; i < bMap.MAXSPRITES; i++)
+        {
+            if (Engine.board.sprite[i].picnum == picnum && Engine.board.sprite[i].hitag == hitag)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public override bool ParentalLockEnabled()
+    {
+        return GlobalMembers.ud.lockout != 0;
+    }
     public override void SetSectorWallPtr(int sectNum, int value)
     {
         Engine.board.sector[sectNum].wallptr = (short)value;

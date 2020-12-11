@@ -36,4 +36,9 @@
 
         return false;
     }
+
+    public bool Event_OperateSprite(int neartagsprite)
+    {
+        return false;
+    }
 }
