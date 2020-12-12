@@ -468,8 +468,7 @@ public partial class GlobalMembers
 		}
 
         cw = p.curr_weapon;
-
-		Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
+		
 		if ((u & 4) != 0)
         {
             weaponnum999(DefineConstants.PISTOL_WEAPON, x, y, p.ammo_amount[DefineConstants.PISTOL_WEAPON], max_ammo_amount[DefineConstants.PISTOL_WEAPON], (char)(12 - 20 * ((cw == DefineConstants.PISTOL_WEAPON) ? 1 : 0)));
@@ -1059,10 +1058,12 @@ public partial class GlobalMembers
 		//15 - update kills
 		//16 - update FREEZE_WEAPON ammo
 
+		Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
+
 		if (u == 0xffffffff)
 		{
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(0, Engine.xdim, 320), pragmas.scale(0, Engine.ydim, 200), pragmas.scale(320, Engine.xdim, 320) - 1, pragmas.scale(200, Engine.ydim, 200) - 1);
+//				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(0, Engine.xdim, 320), pragmas.scale(0, Engine.ydim, 200), pragmas.scale(320, Engine.xdim, 320) - 1, pragmas.scale(200, Engine.ydim, 200) - 1);
 			};
 			if (ud.multimode > 1 && ud.coop != 1)
 			{
@@ -1075,7 +1076,7 @@ public partial class GlobalMembers
 			{
 				if (u != 0xffffffff)
 				{
-					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(276, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(299, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
+//					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(276, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(299, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 				};
 				digitalnumber(287, 200 - 17, Mathf.Max(p.frag - p.fraggedself, 0), -16, 10 + 16 + 128);
 			}
@@ -1086,7 +1087,7 @@ public partial class GlobalMembers
 			{
 				if (u != 0xffffffff)
 				{
-					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(275, Engine.xdim, 320), pragmas.scale(182, Engine.ydim, 200), pragmas.scale(299, Engine.xdim, 320) - 1, pragmas.scale(194, Engine.ydim, 200) - 1);
+//					Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(275, Engine.xdim, 320), pragmas.scale(182, Engine.ydim, 200), pragmas.scale(299, Engine.xdim, 320) - 1, pragmas.scale(194, Engine.ydim, 200) - 1);
 				};
 				if ((p.got_access & 4) != 0)
 				{
@@ -1102,6 +1103,8 @@ public partial class GlobalMembers
 				}
 			}
 		}
+
+
 		if ((u & (4 + 8 + 16 + 32 + 64 + 128 + 256 + 512 + 65536)) != 0)
 		{
 			weapon_amounts(p, 96, 182, (int)u);
@@ -1111,7 +1114,7 @@ public partial class GlobalMembers
 		{
 			if (u != 0xffffffff)
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(20, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(43, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
+	//			Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(20, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(43, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 			};
 			if (Engine.board.sprite[p.i].pal == 1 && p.last_extra < 2)
 			{
@@ -1126,7 +1129,7 @@ public partial class GlobalMembers
 		{
 			if (u != 0xffffffff)
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(52, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(75, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
+			//	Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(52, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(75, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 			};
 			digitalnumber(64, 200 - 17, p.shield_amount, -16, 10 + 16 + 128);
 		}
@@ -1135,7 +1138,7 @@ public partial class GlobalMembers
 		{
 			if (u != 0xffffffff)
 			{
-				Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(196, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(219, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
+			//	Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(196, Engine.xdim, 320), pragmas.scale(183, Engine.ydim, 200), pragmas.scale(219, Engine.xdim, 320) - 1, pragmas.scale(193, Engine.ydim, 200) - 1);
 			};
 			if (p.curr_weapon != DefineConstants.KNEE_WEAPON)
 			{
@@ -1158,13 +1161,13 @@ public partial class GlobalMembers
 				if ((u & (2048 + 4096)) != 0)
 				{
 					{
-						Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(231, Engine.xdim, 320), pragmas.scale(179, Engine.ydim, 200), pragmas.scale(265, Engine.xdim, 320) - 1, pragmas.scale(197, Engine.ydim, 200) - 1);
+					//	Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(231, Engine.xdim, 320), pragmas.scale(179, Engine.ydim, 200), pragmas.scale(265, Engine.xdim, 320) - 1, pragmas.scale(197, Engine.ydim, 200) - 1);
 					};
 				}
 				else
 				{
 					{
-						Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(250, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(261, Engine.xdim, 320) - 1, pragmas.scale(195, Engine.ydim, 200) - 1);
+					//	Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(250, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(261, Engine.xdim, 320) - 1, pragmas.scale(195, Engine.ydim, 200) - 1);
 					};
 				}
 			}
