@@ -1592,6 +1592,12 @@ public class TrapEngine : ConTraps
     {
         GlobalMembers.ps[GlobalMembers.g_p].tipincs = 26;
     }
+
+    public override void localsound(int val)
+    {
+        GlobalMembers.sound(val);
+    }
+
     public override void sound(int val)
     {
         GlobalMembers.spritesound(val, GlobalMembers.g_i);

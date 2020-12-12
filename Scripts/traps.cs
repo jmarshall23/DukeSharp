@@ -315,6 +315,7 @@ public abstract class ConTraps
     public abstract void sound(int val);
     public abstract void globalsound(int val);
     public abstract void stopsound(int val);
+    public abstract void localsound(int val);
     public abstract void soundonce(int val);
 
     public abstract void shoot(int val);

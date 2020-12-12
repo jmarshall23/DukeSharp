@@ -274,33 +274,7 @@ public partial class GlobalMembers
 
     public static bool isadoorwall(short dapic)
     {
-        switch (dapic)
-        {
-            case DefineConstants.DOORTILE1:
-            case DefineConstants.DOORTILE2:
-            case DefineConstants.DOORTILE3:
-            case DefineConstants.DOORTILE4:
-            case DefineConstants.DOORTILE5:
-            case DefineConstants.DOORTILE6:
-            case DefineConstants.DOORTILE7:
-            case DefineConstants.DOORTILE8:
-            case DefineConstants.DOORTILE9:
-            case DefineConstants.DOORTILE10:
-            case DefineConstants.DOORTILE11:
-            case DefineConstants.DOORTILE12:
-            case DefineConstants.DOORTILE14:
-            case DefineConstants.DOORTILE15:
-            case DefineConstants.DOORTILE16:
-            case DefineConstants.DOORTILE17:
-            case DefineConstants.DOORTILE18:
-            case DefineConstants.DOORTILE19:
-            case DefineConstants.DOORTILE20:
-            case DefineConstants.DOORTILE21:
-            case DefineConstants.DOORTILE22:
-            case DefineConstants.DOORTILE23:
-                return true;
-        }
-        return false;
+        return conScript.isadoorwall(dapic);
     }
 
     public static bool isanunderoperator(short lotag)

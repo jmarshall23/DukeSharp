@@ -61,6 +61,7 @@
     <Compile Include="monster_tank.cs" />
     <Compile Include="monster_troop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tiles.cs" />
     <Compile Include="toilet.cs" />
     <Compile Include="traps.cs" />
     <Compile Include="User.cs" />

@@ -1231,79 +1231,9 @@ public partial class GlobalMembers
 	{
 		if (Engine.board.sprite[i].extra > 0)
 		{
-			switch (Engine.board.sprite[i].picnum)
-			{
-			case DefineConstants.LIZTROOPONTOILET:
-			case DefineConstants.LIZTROOPJUSTSIT:
-			case DefineConstants.LIZTROOPSHOOT:
-			case DefineConstants.LIZTROOPJETPACK:
-			case DefineConstants.LIZTROOPDUCKING:
-			case DefineConstants.LIZTROOPRUNNING:
-			case DefineConstants.LIZTROOP:
-				spritesound(DefineConstants.PRED_RECOG, i);
-				break;
-			case DefineConstants.LIZMAN:
-			case DefineConstants.LIZMANSPITTING:
-			case DefineConstants.LIZMANFEEDING:
-			case DefineConstants.LIZMANJUMP:
-				spritesound(DefineConstants.CAPT_RECOG, i);
-				break;
-			case DefineConstants.PIGCOP:
-			case DefineConstants.PIGCOPDIVE:
-				spritesound(DefineConstants.PIG_RECOG, i);
-				break;
-			case DefineConstants.RECON:
-				spritesound(DefineConstants.RECO_RECOG, i);
-				break;
-			case DefineConstants.DRONE:
-				spritesound(DefineConstants.DRON_RECOG, i);
-				break;
-			case DefineConstants.COMMANDER:
-			case DefineConstants.COMMANDERSTAYPUT:
-				spritesound(DefineConstants.COMM_RECOG, i);
-				break;
-			case DefineConstants.ORGANTIC:
-				spritesound(DefineConstants.TURR_RECOG, i);
-				break;
-			case DefineConstants.OCTABRAIN:
-			case DefineConstants.OCTABRAINSTAYPUT:
-				spritesound(DefineConstants.OCTA_RECOG, i);
-				break;
-			case DefineConstants.BOSS1:
-				sound(DefineConstants.BOS1_RECOG);
-				break;
-			case DefineConstants.BOSS2:
-				if (Engine.board.sprite[i].pal == 1)
-				{
-					sound(DefineConstants.BOS2_RECOG);
-				}
-				else
-				{
-					sound(DefineConstants.WHIPYOURASS);
-				}
-				break;
-			case DefineConstants.BOSS3:
-				if (Engine.board.sprite[i].pal == 1)
-				{
-					sound(DefineConstants.BOS3_RECOG);
-				}
-				else
-				{
-					sound(DefineConstants.RIPHEADNECK);
-				}
-				break;
-			case DefineConstants.BOSS4:
-			case DefineConstants.BOSS4STAYPUT:
-				if (Engine.board.sprite[i].pal == 1)
-				{
-					sound(DefineConstants.BOS4_RECOG);
-				}
-				sound(DefineConstants.BOSS4_FIRSTSEE);
-				break;
-			case DefineConstants.GREENSLIME:
-				spritesound(DefineConstants.SLIM_RECOG, i);
-				break;
-			}
+			VMPushNewState(i, -1, Engine.board.sprite[i].extra);
+			conScript.Event_FTA_Sounds(i, Engine.board.sprite[i].picnum);
+			VMPopState();
 		}
 	}
 
