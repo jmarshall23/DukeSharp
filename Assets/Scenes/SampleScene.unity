@@ -1623,7 +1623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1441628951
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1847,16 +1847,6 @@ MonoBehaviour:
   canvasImage: {fileID: 1441628952}
   _texture: {fileID: 0}
   _defaultGrpFile: {fileID: 4900000, guid: a9f922c037492f64984f758fca5c71b1, type: 3}
-  mobileCanvas: {fileID: 0}
-  mobileUpButton: {fileID: 0}
-  mobileDownButton: {fileID: 0}
-  mobileLeftButton: {fileID: 0}
-  mobileRightButton: {fileID: 0}
-  mobileFireButton: {fileID: 0}
-  mobileJumpButton: {fileID: 0}
-  mobileOpenButton: {fileID: 0}
-  mobilePrevButton: {fileID: 0}
-  mobileNextButton: {fileID: 0}
   skyMaterial: {fileID: 2100000, guid: 15523335a647e44479bceb3f8d79c397, type: 2}
   xrRigObject: {fileID: 1242089900}
   xrPostProcess: {fileID: 2042979269}

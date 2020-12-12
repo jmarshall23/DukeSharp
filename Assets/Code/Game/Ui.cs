@@ -469,44 +469,26 @@ public partial class GlobalMembers
 
         cw = p.curr_weapon;
 
-        if ((u & 4) != 0)
+		Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
+		if ((u & 4) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
-            };
             weaponnum999(DefineConstants.PISTOL_WEAPON, x, y, p.ammo_amount[DefineConstants.PISTOL_WEAPON], max_ammo_amount[DefineConstants.PISTOL_WEAPON], (char)(12 - 20 * ((cw == DefineConstants.PISTOL_WEAPON) ? 1 : 0)));
         }
         if ((u & 8) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(184, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(184 + 6, Engine.ydim, 200) - 1);
-            };
             weaponnum999(DefineConstants.SHOTGUN_WEAPON, x, y + 6, p.ammo_amount[DefineConstants.SHOTGUN_WEAPON], max_ammo_amount[DefineConstants.SHOTGUN_WEAPON], (char)((temp_got_weapons2[DefineConstants.SHOTGUN_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.SHOTGUN_WEAPON) ? 1 : 0)));
         }
         if ((u & 16) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(96, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(96 + 12, Engine.xdim, 320) - 1, pragmas.scale(190 + 6, Engine.ydim, 200) - 1);
-            };
             weaponnum999(DefineConstants.CHAINGUN_WEAPON, x, y + 12, p.ammo_amount[DefineConstants.CHAINGUN_WEAPON], max_ammo_amount[DefineConstants.CHAINGUN_WEAPON], (char)((temp_got_weapons2[DefineConstants.CHAINGUN_WEAPON] * 9) + 12 - 18 * ((cw == DefineConstants.CHAINGUN_WEAPON) ? 1 : 0)));
         }
         if ((u & 32) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(135, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(135 + 8, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
-            };
             weaponnum(DefineConstants.RPG_WEAPON, x + 39, y, p.ammo_amount[DefineConstants.RPG_WEAPON], max_ammo_amount[DefineConstants.RPG_WEAPON], (char)((temp_got_weapons2[DefineConstants.RPG_WEAPON] * 9) + 12 - 19 * ((cw == DefineConstants.RPG_WEAPON) ? 1 : 0)));
         }
         if ((u & 64) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(135, Engine.xdim, 320), pragmas.scale(184, Engine.ydim, 200), pragmas.scale(135 + 8, Engine.xdim, 320) - 1, pragmas.scale(184 + 6, Engine.ydim, 200) - 1);
-            };
+
 			int _ammo1 = p.ammo_amount[DefineConstants.HANDBOMB_WEAPON];
 			if (_ammo1 == 0)
 				_ammo1 = temp_got_weapons2[DefineConstants.HANDBOMB_WEAPON];
@@ -516,10 +498,7 @@ public partial class GlobalMembers
         }
         if ((u & 128) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(135, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(135 + 8, Engine.xdim, 320) - 1, pragmas.scale(190 + 6, Engine.ydim, 200) - 1);
-            };
+
 
 #if VOLUMEONE
 			 orderweaponnum(DefineConstants.SHRINKER_WEAPON, x + 39, y + 12, p.ammo_amount[DefineConstants.SHRINKER_WEAPON], max_ammo_amount[DefineConstants.SHRINKER_WEAPON], (temp_got_weapons2[DefineConstants.SHRINKER_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.SHRINKER_WEAPON));
@@ -536,10 +515,7 @@ public partial class GlobalMembers
         }
         if ((u & 256) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(166, Engine.xdim, 320), pragmas.scale(178, Engine.ydim, 200), pragmas.scale(166 + 8, Engine.xdim, 320) - 1, pragmas.scale(178 + 6, Engine.ydim, 200) - 1);
-            };
+
 
 #if VOLUMEONE
 			orderweaponnum(DefineConstants.DEVISTATOR_WEAPON, x + 70, y, p.ammo_amount[DefineConstants.DEVISTATOR_WEAPON], max_ammo_amount[DefineConstants.DEVISTATOR_WEAPON], (temp_got_weapons2[DefineConstants.DEVISTATOR_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.DEVISTATOR_WEAPON));
@@ -549,10 +525,7 @@ public partial class GlobalMembers
         }
         if ((u & 512) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(166, Engine.xdim, 320), pragmas.scale(184, Engine.ydim, 200), pragmas.scale(166 + 8, Engine.xdim, 320) - 1, pragmas.scale(184 + 6, Engine.ydim, 200) - 1);
-            };
+
 #if VOLUMEONE
 			 orderweaponnum(DefineConstants.TRIPBOMB_WEAPON, x + 70, y + 6, p.ammo_amount[DefineConstants.TRIPBOMB_WEAPON], max_ammo_amount[DefineConstants.TRIPBOMB_WEAPON], (temp_got_weapons2[DefineConstants.TRIPBOMB_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.TRIPBOMB_WEAPON));
 #else
@@ -562,10 +535,7 @@ public partial class GlobalMembers
 
         if ((u & 65536) != 0)
         {
-            if (u != 0xffffffff)
-            {
-                Engine.rotatesprite(0, (200 - 34) << 16, 65536, 0, DefineConstants.BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, pragmas.scale(166, Engine.xdim, 320), pragmas.scale(190, Engine.ydim, 200), pragmas.scale(166 + 8, Engine.xdim, 320) - 1, pragmas.scale(190 + 6, Engine.ydim, 200) - 1);
-            };
+
 #if VOLUMEONE
 			orderweaponnum(-1, x + 70, y + 12, p.ammo_amount[DefineConstants.FREEZE_WEAPON], max_ammo_amount[DefineConstants.FREEZE_WEAPON], (temp_got_weapons2[DefineConstants.FREEZE_WEAPON] * 9) + 12 - 18 * (cw == DefineConstants.FREEZE_WEAPON));
 #else

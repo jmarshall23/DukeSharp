@@ -92,7 +92,7 @@ public class GameEngine : MonoBehaviour
         //
 
         // Init the device
-        Engine.setgamemode(0, Screen.width / 2, Screen.height / 2, 8);
+        Engine.setgamemode(0, 320, 200, 8);
         _texture = new Texture2D(Engine._device._screenbuffer._width, Engine._device._screenbuffer._height, TextureFormat.BGRA32, false);
 
         canvasImage.texture = _texture;
@@ -102,6 +102,11 @@ public class GameEngine : MonoBehaviour
         Engine.palette.UpdatePaletteMainThread();
 
         handle = GCHandle.Alloc(Engine._device._screenbuffer.PresentedPixels, GCHandleType.Pinned);
+    }
+
+    void OnGUI()
+    {
+        Engine.DelayedRotateSprites();
     }
 
     static float dukeClock = 0.0f;
@@ -114,6 +119,8 @@ public class GameEngine : MonoBehaviour
             DelayedStart();
             delayedStart = false;
         }
+
+        Engine.ClearDelayedRotateSprites();
 
         GlobalMembers.anyKeyDown = Input.anyKeyDown;
 
@@ -224,10 +231,10 @@ public class GameEngine : MonoBehaviour
         }
 
 
-        IntPtr pointer = handle.AddrOfPinnedObject();
-        _texture.LoadRawTextureData(pointer, Engine._device._screenbuffer._width * Engine._device._screenbuffer._height * 4);
-        _texture.Apply();
+       // IntPtr pointer = handle.AddrOfPinnedObject();
+       // _texture.LoadRawTextureData(pointer, Engine._device._screenbuffer._width * Engine._device._screenbuffer._height * 4);
+       // _texture.Apply();
 
-        Array.Clear(Engine._device._screenbuffer.Pixels, 0, Engine._device._screenbuffer.Pixels.Length);
+      //  Array.Clear(Engine._device._screenbuffer.Pixels, 0, Engine._device._screenbuffer.Pixels.Length);
     }
 }

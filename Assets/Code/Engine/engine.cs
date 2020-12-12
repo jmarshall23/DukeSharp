@@ -42,6 +42,7 @@ namespace Build
         {
             public byte[] memory;
             public Texture2D texture;
+            public Texture2D paltexture;
         }
 
         public static int randomseed = 17;
@@ -680,6 +681,7 @@ palette:
             artfilplc = tilefileoffs[tilenume] + dasiz;
 
             waloff[tilenume].texture = Tile.LoadTile(tilenume);
+            waloff[tilenume].paltexture = Tile.LoadTilePal(tilenume);
         }
 
 
@@ -1451,11 +1453,122 @@ palette:
             }
         }
 
+        private class DelayedRotateSpriteEntry
+        {
+            public int sx;
+            public int sy;
+            public Vector2 size;
+            public int picnum;
+            public float shade;
+            public float angle;
+        }
+
+        private static List<DelayedRotateSpriteEntry> delayedRotateSpriteEntries = new List<DelayedRotateSpriteEntry>();
+
+        public static void DelayedRotateSprites()
+        {            
+            float scale_x = Screen.height / 200.0f;
+            float scale_y = Screen.height / 200.0f;
+            foreach (DelayedRotateSpriteEntry en in delayedRotateSpriteEntries)
+            {
+                if (en.shade == 0)
+                {
+                    GUI.color = Color.white;
+                }
+                else
+                {
+                    float shade = Mathf.Clamp(0.5f + ((255.0f - (en.shade * 16.0f)) / 255.0f), 0.5f, 1.0f);
+                    Color c = new Color(shade, shade, shade);
+                    GUI.color = c;
+                }
+
+                Matrix4x4 backup = GUI.matrix;
+
+                Quaternion q = Quaternion.EulerAngles(en.angle, 0, 0);
+                GUI.matrix = Matrix4x4.Rotate(q);
+
+                // GUI.Box(new Rect((en.sx * scale_x), en.sy * scale_y, 5, 5), "anchor");
+                int center = (int)(Screen.width / 4.0f);
+                GUI.DrawTextureWithTexCoords(new Rect((center - 320) + (en.sx * scale_x), en.sy * scale_y, en.size.x * scale_x, en.size.y * scale_y), waloff[en.picnum].paltexture, new Rect(0, 0, 1, -1), true);
+
+                GUI.matrix = backup;
+            }
+        }
+
+        public static void ClearDelayedRotateSprites()
+        {
+            delayedRotateSpriteEntries.Clear();
+        }
+
+        public enum rotatespritestats
+        {
+            RS_TRANS1 = 1,
+            RS_AUTO = 2,
+            RS_YFLIP = 4,
+            RS_NOCLIP = 8,
+            RS_TOPLEFT = 16,
+            RS_TRANS2 = 32,
+            RS_NOMASK = 64,
+            RS_PERM = 128
+        }
+
         public static void rotatesprite(int sx, int sy, int z, short a, int picnum, sbyte dashade, byte dapalnum, byte dastat, int cx1, int cy1, int cx2, int cy2)
         {
-            _device.BeginDrawing();
-            dorotatesprite(sx, sy, z, a, (short)picnum, dashade, dapalnum, dastat, cx1, cy1, cx2, cy2, 0);
-            _device.EndDrawing();
+            //_device.BeginDrawing();
+            //dorotatesprite(sx, sy, z, a, (short)picnum, dashade, dapalnum, dastat, cx1, cy1, cx2, cy2, 0);
+            //_device.EndDrawing();
+
+            loadtile((short)picnum);
+
+            if (waloff[picnum] == null || waloff[picnum].texture == null)
+                return;
+            
+            DelayedRotateSpriteEntry entry = new DelayedRotateSpriteEntry();
+
+            float d = (float)z / 65536.0f;            
+
+            entry.sx = sx >> 16;
+            entry.sy = sy >> 16;
+
+            if ((dastat & (int)rotatespritestats.RS_TOPLEFT) == 0)
+            {
+                entry.sx -= (int)((waloff[picnum].texture.width / 2) * d);
+                entry.sy -= (int)((waloff[picnum].texture.height / 2) * d);
+            }
+
+            int xoff = 0, yoff = 0;
+            if ((dastat & 16) != 0) 
+            { 
+                xoff = 0; yoff = 0; 
+            }
+            else
+            {
+                xoff = (int)((sbyte)((picanm[picnum] >> 8) & 255));
+                yoff = (int)((sbyte)((picanm[picnum] >> 16) & 255));
+            }
+
+            if(dastat == 2)
+            {
+                yoff += (int)((waloff[picnum].texture.height / 4) * d);
+            }
+
+            
+            entry.sx -= xoff;
+            entry.sy -= yoff;
+
+            //entry.sx = (int)(entry.sx * d);
+            //entry.sy = (int)(entry.sy * d);
+
+            entry.picnum = picnum;
+
+            Vector2 siz = new Vector2(waloff[entry.picnum].texture.width, waloff[entry.picnum].texture.height);
+            siz.x *= d;
+            siz.y *= d;
+            entry.size = siz;
+            entry.shade = dashade;
+            entry.angle = (float)a * (2047.0f / 360.0f);
+            
+            delayedRotateSpriteEntries.Add(entry);
         }
         public static int loadpics(string filename)
         {
