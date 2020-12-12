@@ -1822,7 +1822,7 @@ public partial class GlobalMembers
 						Engine.NextPage();
 					}
 
-					newgame((char)ud.m_volume_number, (char)ud.m_level_number, (char)ud.m_player_skill);
+					newgame(ud.m_volume_number, ud.m_level_number, ud.m_player_skill);
 					enterlevel((char)DefineConstants.MODE_GAME);
 				}
 				else if (x == -1)
@@ -3008,7 +3008,7 @@ public partial class GlobalMembers
 							}
 						}
 
-						newgame((char)ud.m_volume_number, (char)ud.m_level_number, (char)(ud.m_player_skill + 1));
+						newgame(ud.m_volume_number, ud.m_level_number, (ud.m_player_skill + 1));
 						enterlevel((char)DefineConstants.MODE_GAME);
 
 						return;
@@ -3060,7 +3060,7 @@ public partial class GlobalMembers
 							}
 						}
 
-						newgame((char)ud.m_volume_number, (char)ud.m_level_number, (char)(ud.m_player_skill + 1));
+						newgame(ud.m_volume_number, ud.m_level_number, (ud.m_player_skill + 1));
 						enterlevel((char)DefineConstants.MODE_GAME);
 
 						return;

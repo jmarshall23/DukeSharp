@@ -1308,7 +1308,7 @@ public partial class GlobalMembers
 	}
 
 
-	public static void newgame(char vn, char ln, char sk)
+	public static void newgame(int vn, int ln, int sk)
 	{
 		player_struct p = ps[0];
 		short i;

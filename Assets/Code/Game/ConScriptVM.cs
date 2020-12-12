@@ -7,7 +7,13 @@ public partial class GlobalMembers
     internal static short g_i;
     internal static short g_p;
     internal static int g_x;
-    internal static spritetype g_sp;
+    internal static spritetype g_sp
+    {
+        get
+        {
+            return Engine.board.sprite[g_i];
+        }
+    }
 
     public static ConScript conScript;
     public static void loadefs(string filenam)
@@ -229,6 +235,28 @@ public partial class GlobalMembers
             }
         }
         return (short)(furthest_angle & 2047);
+    }
+
+    private static int _old_g_i = 0;
+    private static int _old_p_num = 0;
+    private static int _old_x = 0;
+
+    public static void VMPushNewState(int i, int snum, int extra)
+    {
+        _old_g_i = g_i;
+        _old_p_num = g_p;
+        _old_x = g_x;
+
+        g_i = (short)i;
+        g_p = (short)snum;
+        g_x = extra;        
+    }
+
+    public static void VMPopState()
+    {
+        g_i = (short)_old_g_i;
+        g_p = (short)_old_p_num;
+        g_x = _old_x;
     }
 
     public static short furthestcanseepoint(short i, spritetype ts, ref int dax, ref int day)
@@ -642,10 +670,11 @@ public partial class GlobalMembers
     {
         char done;
 
-        g_i = (short)i;
-        g_p = p;
-        g_x = x;
-        g_sp = Engine.board.sprite[g_i];
+        //g_i = (short)i;
+        //g_p = p;
+        //g_x = x;
+        //g_sp = Engine.board.sprite[g_i];
+        VMPushNewState(i, p, x);
 
         if (GlobalMembers.scriptActorRegPtr[g_sp.picnum] == null)
         {

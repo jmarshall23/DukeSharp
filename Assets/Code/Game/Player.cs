@@ -1587,10 +1587,10 @@ public partial class GlobalMembers
 		}
 
 // jmarshall - con vm support
-		g_i = (short)p.i;
-		g_p = snum;
-		g_x = Engine.board.sprite[p.i].extra;
-		g_sp = Engine.board.sprite[p.i];
+		//g_i = (short)p.i;
+		//g_p = snum;
+		//g_x = Engine.board.sprite[p.i].extra;
+		VMPushNewState(p.i, snum, Engine.board.sprite[p.i].extra);
 // jmarshall end
 
 		j = 14 - p.quick_kick;
@@ -1650,7 +1650,7 @@ public partial class GlobalMembers
 		}
 
 		displayloogie(snum);
-
+		VMPopState();
 	}
 
 	//C++ TO C# CONVERTER NOTE: The following #define macro was replaced in-line:
@@ -2390,7 +2390,8 @@ public partial class GlobalMembers
         g_i = (short)p.i;
         g_p = snum;
         g_x = Engine.board.sprite[p.i].extra;
-        g_sp = Engine.board.sprite[p.i];
+		//g_sp = Engine.board.sprite[p.i];
+		VMPushNewState(p.i, snum, Engine.board.sprite[p.i].extra);
 // jmarshall end
 
         psect = p.cursectnum;

@@ -25,7 +25,7 @@ public partial class GlobalMembers
         {
             if(ud.warp_on == 1)
             {
-                newgame((char)ud.m_volume_number, (char)ud.m_level_number, (char)ud.m_player_skill);
+                newgame(ud.m_volume_number, ud.m_level_number, ud.m_player_skill);
                 enterlevel((char)DefineConstants.MODE_GAME);
                 ud.warp_on = 0;
                 return;

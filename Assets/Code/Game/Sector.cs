@@ -2556,13 +2556,19 @@ public partial class GlobalMembers
 
         i &= (DefineConstants.MAXSPRITES - 1);
 
-        g_i = (short)i;
-//      g_p = snum;
-        g_x = Engine.board.sprite[i].extra;
-        g_sp = Engine.board.sprite[i];
+//        g_i = (short)i;
+////      g_p = snum;
+//        g_x = Engine.board.sprite[i].extra;
+//        g_sp = Engine.board.sprite[i];
+
+        VMPushNewState(i, -1, Engine.board.sprite[i].extra);
 
         if (conScript.Event_HitSprite(i, sn))
+        {
+            VMPopState();
             return;
+        }
+        VMPopState();
 
         switch (Engine.board.sprite[i].picnum)
         {
@@ -3768,11 +3774,10 @@ public partial class GlobalMembers
                 p.timebeforeexit = (short)(26 * 8);
                 p.customexitsound = Engine.board.sector[p.cursectnum].hitag;
                 return;
-            default:
-                g_i = (short)p.i;
-                g_p = snum;
-                g_sp = Engine.board.sprite[g_i];
-                conScript.Event_CheckSectors(p.i, p.cursectnum);                
+            default:                
+                VMPushNewState(p.i, snum, -1);
+                conScript.Event_CheckSectors(p.i, p.cursectnum);
+                VMPopState();
                 break;
 
         }
@@ -3985,14 +3990,14 @@ public partial class GlobalMembers
             }
 
             if (neartagsprite >= 0)
-            {
-                g_i = (short)p.i;
-                g_p = snum;
-                g_sp = Engine.board.sprite[g_i];
+            {                
+                VMPushNewState(p.i, snum, -1);
                 if (conScript.Event_OperateSprite(neartagsprite))
                 {
+                    VMPopState();
                     return;
                 }
+                VMPopState();
 
                 if (checkhitswitch(snum, neartagsprite, (char)1))
                 {
