@@ -20,6 +20,11 @@
         return false;
     }
 
+    public void Event_EntitySpawned(int spriteId)
+    {
+
+    }
+
     public void Event_FTA_Sounds(int spriteId, int picnum)
     {
         int pal = traps.getspritepal(spriteId);

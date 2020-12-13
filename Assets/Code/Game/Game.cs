@@ -1756,6 +1756,7 @@ public partial class GlobalMembers
 			s.extra = 0;
 			s.hitag = 0;
 		}
+
 // jmarshall - automap
 		//if ((show2dEngine.board.sector[Engine.board.sprite[i].sectnum >> 3] & (1 << (Engine.board.sprite[i].sectnum & 7))) != 0)
 		//{
@@ -1778,50 +1779,10 @@ public partial class GlobalMembers
 
 	public static char wallswitchcheck(short i)
 	{
-		switch (Engine.board.sprite[i].picnum)
-		{
-			case DefineConstants.HANDPRINTSWITCH:
-			case DefineConstants.HANDPRINTSWITCH + 1:
-			case DefineConstants.ALIENSWITCH:
-			case DefineConstants.ALIENSWITCH + 1:
-			case DefineConstants.MULTISWITCH:
-			case DefineConstants.MULTISWITCH + 1:
-			case DefineConstants.MULTISWITCH + 2:
-			case DefineConstants.MULTISWITCH + 3:
-			case DefineConstants.ACCESSSWITCH:
-			case DefineConstants.ACCESSSWITCH2:
-			case DefineConstants.PULLSWITCH:
-			case DefineConstants.PULLSWITCH + 1:
-			case DefineConstants.HANDSWITCH:
-			case DefineConstants.HANDSWITCH + 1:
-			case DefineConstants.SLOTDOOR:
-			case DefineConstants.SLOTDOOR + 1:
-			case DefineConstants.LIGHTSWITCH:
-			case DefineConstants.LIGHTSWITCH + 1:
-			case DefineConstants.SPACELIGHTSWITCH:
-			case DefineConstants.SPACELIGHTSWITCH + 1:
-			case DefineConstants.SPACEDOORSWITCH:
-			case DefineConstants.SPACEDOORSWITCH + 1:
-			case DefineConstants.FRANKENSTINESWITCH:
-			case DefineConstants.FRANKENSTINESWITCH + 1:
-			case DefineConstants.LIGHTSWITCH2:
-			case DefineConstants.LIGHTSWITCH2 + 1:
-			case DefineConstants.POWERSWITCH1:
-			case DefineConstants.POWERSWITCH1 + 1:
-			case DefineConstants.LOCKSWITCH1:
-			case DefineConstants.LOCKSWITCH1 + 1:
-			case DefineConstants.POWERSWITCH2:
-			case DefineConstants.POWERSWITCH2 + 1:
-			case DefineConstants.DIPSWITCH:
-			case DefineConstants.DIPSWITCH + 1:
-			case DefineConstants.DIPSWITCH2:
-			case DefineConstants.DIPSWITCH2 + 1:
-			case DefineConstants.TECHSWITCH:
-			case DefineConstants.TECHSWITCH + 1:
-			case DefineConstants.DIPSWITCH3:
-			case DefineConstants.DIPSWITCH3 + 1:
-				return (char)1;
-		}
+		if(conScript.wallswitchcheck(Engine.board.sprite[i].picnum))
+        {
+			return (char)1;
+        }
 		return (char)0;
 	}
 
@@ -1941,7 +1902,11 @@ public partial class GlobalMembers
 		sp = Engine.board.sprite[i];
 		sect = sp.sectnum;
 
-		switch (sp.picnum)
+        VMPushNewState(i, -1, Engine.board.sprite[i].extra);
+        conScript.Event_EntitySpawned(i);
+        VMPopState();
+
+        switch (sp.picnum)
 		{
 			default:
 
