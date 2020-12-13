@@ -850,6 +850,12 @@ public class TrapEngine : ConTraps
     {
         return (GlobalMembers.ceilingspace(GlobalMembers.g_sp.sectnum) != 0);
     }
+
+    public override void operatesector(int sector)
+    {
+        GlobalMembers.operatesectors((short)sector, GlobalMembers.g_i);
+    }
+
     public override void operate()
     {
         if (Engine.board.sector[GlobalMembers.g_sp.sectnum].lotag == 0)

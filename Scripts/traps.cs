@@ -86,6 +86,7 @@ public class MoveAction
 }
 public abstract class ConTraps
 {
+    public abstract void operatesector(int sector);
     public abstract int FindEntityWithLotag(int picnum, int lotag);
     public abstract int FindEntityWithHitag(int picnum, int hitag);
 
