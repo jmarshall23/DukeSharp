@@ -89,6 +89,7 @@ Cull Off
                 float palette =  _MaterialParams.z;
                 float curbasepal =  _MaterialParams.w;
                 float flipx = curbasepal < 0;
+                float highres = _MaterialParams2.y;
                 
 
                 curbasepal = 0; // abs(curbasepal) - 1;
@@ -99,25 +100,34 @@ Cull Off
                 // sample the texture
                 float colorIndex = 0;
                
-                if (flipx == 0)
+                if (highres != 0)
                 {
-                    colorIndex = tex2D(_MainTex, i.uv).r * 256;
+                    float2 _uv = i.uv;
+                    _uv.y = 1.0 - _uv.y;
+                    o.color = tex2D(_MainTex, _uv);
                 }
                 else
                 {
-                    float2 uv = i.uv;
-                    uv.x = 1 - uv.x;
-                    colorIndex = tex2D(_MainTex, uv).r * 256;
+                    if (flipx == 0)
+                    {
+                        colorIndex = tex2D(_MainTex, i.uv).r * 256;
+                    }
+                    else
+                    {
+                        float2 uv = i.uv;
+                        uv.x = 1 - uv.x;
+                        colorIndex = tex2D(_MainTex, uv).r * 256;
+                    }
+                    if (colorIndex == 256)
+                        discard;
+
+                    float lookupIndex = _LookupTex.Load(int3(colorIndex, shadeLookup + (32 * palette), 0)).r * 256;
+                    float3 texelNear = _PaletteTex.Load(int3(lookupIndex, curbasepal, 0)).xyz;
+
+                    float lum = saturate(Luminance(texelNear.rgb) * 4);
+
+                    o.color = float4(texelNear.rgb, 1.0) * 4;
                 }
-                if (colorIndex == 256)
-                    discard;
-
-                float lookupIndex = _LookupTex.Load(int3(colorIndex, shadeLookup + (32 * palette), 0 )).r * 256;
-                float3 texelNear = _PaletteTex.Load(int3(lookupIndex, curbasepal, 0)).xyz;
-
-                float lum = saturate(Luminance(texelNear.rgb) * 4);
-
-                o.color = float4(texelNear.rgb, 1.0) * 4;
 
                 // 
                 if (shadeOffset > 0)

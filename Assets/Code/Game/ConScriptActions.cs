@@ -856,6 +856,11 @@ public class TrapEngine : ConTraps
         GlobalMembers.operatesectors((short)sector, GlobalMembers.g_i);
     }
 
+    public override void precachemodel(int spritenum, string filename)
+    {
+        Engine.LoadSpriteMesh(spritenum, filename);
+    }
+
     public override void operate()
     {
         if (Engine.board.sector[GlobalMembers.g_sp.sectnum].lotag == 0)

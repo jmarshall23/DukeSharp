@@ -8,6 +8,7 @@
 
         Init();
         InitVoxels();
+        PrecacheModels();
         RegisterActors();
     }
 

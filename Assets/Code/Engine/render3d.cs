@@ -20,6 +20,8 @@ namespace Build
 
         private bool isUsingLighting = false;
 
+        private static UnityEngine.Mesh spriteMesh;
+
         public static float WorldScale
         {
             get
@@ -42,15 +44,16 @@ namespace Build
                 spriteGameObjects[i] = new GameObject("tsprite " + i);
             }
 
-            foreach(GameObject obj in spriteGameObjects)
+            spriteMesh = new UnityEngine.Mesh();
+            spriteMesh.vertices = new Vector3[] { new Vector3(-0.5f, 0.0f, 0.0f), new Vector3(0.5f, 0.0f, 0.0f), new Vector3(0.5f, 1.0f, 0.0f), new Vector3(-0.5f, 1.0f, 0.0f) };
+            spriteMesh.uv = new Vector2[] { new Vector2(0.0f, 1.0f), new Vector2(1.0f, 1.0f), new Vector2(1.0f, 0.0f), new Vector2(0.0f, 0.0f) };
+            spriteMesh.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
+
+            foreach (GameObject obj in spriteGameObjects)
             {
-                MeshFilter mf = obj.AddComponent<MeshFilter>();
-                UnityEngine.Mesh mesh = new UnityEngine.Mesh();
-                mesh.vertices = new Vector3[] { new Vector3(-0.5f, 0.0f, 0.0f), new Vector3(0.5f, 0.0f, 0.0f), new Vector3(0.5f, 1.0f, 0.0f), new Vector3(-0.5f, 1.0f, 0.0f) };
-                mesh.uv = new Vector2[] { new Vector2(0.0f, 1.0f), new Vector2(1.0f, 1.0f), new Vector2(1.0f, 0.0f), new Vector2(0.0f, 0.0f) };
-                mesh.triangles = new int[] { 0, 1, 2, 0, 2, 3 };                
+                MeshFilter mf = obj.AddComponent<MeshFilter>();             
                 
-                mf.mesh = mesh;
+                mf.mesh = spriteMesh;
 
                 MeshRenderer renderer = obj.AddComponent<MeshRenderer>();
                 Material mat = new Material(Shader.Find("Unlit/Polymer"));                
@@ -434,7 +437,7 @@ namespace Build
             }
         }
 
-        private Texture2D LoadHDImage(string path)
+        public static Texture2D LoadHDImage(string path)
         {
             path = Application.streamingAssetsPath + path;
             if (!System.IO.File.Exists(path))
@@ -1256,6 +1259,14 @@ namespace Build
                 int alignmask = (tsprite.cstat & SPR_ALIGN_MASK);
                 bool flooraligned = (alignmask == SPR_FLOOR);
 
+
+                UnityEngine.Mesh mesh = null;
+
+                if (Engine.spriteMeshes[tsprite.picnum] != null)
+                {
+                    mesh = Engine.spriteMeshes[tsprite.picnum].mesh;
+                }
+
                 Matrix4x4 modelMatrix = Matrix4x4.identity;
 
                 Vector3 spos = new Vector3(tsprite.y, -tsprite.z / 16.0f, -tsprite.x);
@@ -1268,9 +1279,7 @@ namespace Build
                 }
 
                 if (Engine.waloff[tsprite.picnum] == null || Engine.waloff[tsprite.picnum].texture == null)
-                    continue;
-
-                mat.SetTexture("_MainTex", Engine.waloff[tsprite.picnum].texture);
+                    continue;                
 
                 Vector4 parms;
                 if((tsprite.cstat & 4) != 0) // XFLIP
@@ -1278,12 +1287,30 @@ namespace Build
                 else
                     parms = new Vector4(board.sector[tsprite.sectnum].visibility, tsprite.shade, tsprite.pal, -1);
 
-                if(parms != board.tsprite[i].materialparms)
+              //  if(parms != board.tsprite[i].materialparms)
                 {
                     board.tsprite[i].materialparms = parms;
                     mat.SetVector("_MaterialParams", parms);
                 }
-                //mat.SetVector("_MaterialParams2", new Vector4(board.sector[tsprite.sectnum].visibility, tsprite.shade, tsprite.pal, 0));
+
+                Vector4 materialparms2 = new Vector4(-1, 0, 0, 0);
+                if (mesh != null)
+                {
+                    materialparms2.y = 1.0f;
+                }
+                else
+                {
+                    materialparms2.y = 0.0f;
+                }
+
+             //   if(materialparms2 != board.tsprite[i].materialparms2)
+                {
+                    board.tsprite[i].materialparms2 = materialparms2;
+                    mat.SetVector("_MaterialParams2", materialparms2);
+                }
+                
+
+                //
 
                 float xsize = Engine.tilesizx[tsprite.picnum];
                 float ysize = Engine.tilesizy[tsprite.picnum];
@@ -1322,12 +1349,21 @@ namespace Build
 
                 Vector3 spriteRotation = Vector3.zero;
 
+
+
                 // Do we need this shit anymore??
                 bool stupidfloor = false;
                 switch (tsprite.cstat & SPR_ALIGN_MASK)
                 {
                     case 0:
-                        _ang = (float)(viewangle & 2047) / (2048.0f / 360.0f);
+                        if (mesh == null)
+                        {
+                            _ang = (float)(viewangle & 2047) / (2048.0f / 360.0f);
+                        }
+                        else
+                        {
+                            _ang = (float)((tsprite.ang + 1024) & 2047) / (2048.0f / 360.0f);
+                        }
 
                         modelMatrix = modelMatrix * Matrix4x4.Translate(spos);
                         _math_matrix_rotate(ref modelMatrix, -_ang, 0.0f, 1.0f, 0.0f);
@@ -1371,13 +1407,33 @@ namespace Build
                 modelMatrix = modelMatrix.transpose;
                 Vector3 translation = pragmas.ExtractPosition(modelMatrix);
                 Vector3 scale = pragmas.ExtractScale(modelMatrix);
-                scale.x *= -WorldScale;
-                scale.y *= WorldScale;
-                scale.z *= WorldScale;
+
+                if (mesh == null)
+                {
+                    scale.x *= -WorldScale;
+                    scale.y *= WorldScale;
+                    scale.z *= WorldScale;
+                }
+                else
+                {
+                    scale = new Vector3(6, 6, 6);
+                }
 
                 translation.x *= -WorldScale;
                 translation.y *= WorldScale;
                 translation.z *= WorldScale;
+
+                MeshFilter mf = spriteObject.GetComponent<MeshFilter>();
+                if(mesh != null)
+                {
+                    mf.mesh = mesh;
+                    mat.SetTexture("_MainTex", Engine.spriteMeshes[tsprite.picnum].texture);
+                }
+                else
+                {
+                    mf.mesh = Render3D.spriteMesh;
+                    mat.SetTexture("_MainTex", Engine.waloff[tsprite.picnum].texture);
+                }
 
                 spriteObject.transform.position = translation;
 

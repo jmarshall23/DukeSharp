@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace Build
         public static bool editstatus = false;
 
         public static string mapname;
+
+        public static BuildMesh[] spriteMeshes = new BuildMesh[MAXTILES];
 
         public static GameObject xrRigObject;
         public static GameObject xrPostProcess;
@@ -110,6 +113,17 @@ namespace Build
         private static int curbrightness = 0;
 
         public const int MAXVOXMIPS = 5;
+
+        public static bool LoadSpriteMesh(int spriteNum, string filename)
+        {
+            if(!File.Exists(Application.streamingAssetsPath + "/" + filename))
+            {
+                return false;
+            }
+
+            spriteMeshes[spriteNum] = new BuildMesh(filename);
+            return true;
+        }
 
         public static void copybufint(int[] S, int base_s, int max, int val)
         {

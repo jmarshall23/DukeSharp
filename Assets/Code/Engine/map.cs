@@ -6598,6 +6598,7 @@ namespace Build
 
 
         public UnityEngine.Vector4 materialparms;
+        public UnityEngine.Vector4 materialparms2;
 
         public void Copy(spritetype t)
         {
