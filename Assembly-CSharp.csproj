@@ -105,7 +105,6 @@
      <None Include="Assets\StreamingAssets\duke3d_grp_goes_here.txt" />
      <None Include="Assets\Shaders\PolymerPBR.shader" />
      <None Include="Assets\StreamingAssets\sound\readme.txt" />
-     <None Include="Assets\StreamingAssets\voxels\readme.txt" />
      <None Include="Assets\Shaders\Polymer.shader" />
      <None Include="Assets\Shaders\Sky.shader" />
     <Reference Include="UnityEngine">
