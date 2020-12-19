@@ -1,11 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{E7E75686-0ACA-2F5D-3A10-965EDD620B8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmplifyShaderEditor", "AmplifyShaderEditor.csproj", "{0028B96E-404D-CA15-0054-D904C89C0E1F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DukeScript", "Scripts\DukeScript.csproj", "{F9BFDBB3-6C19-4EB0-8E36-E2A303491F12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{0028B96E-404D-CA15-0054-D904C89C0E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0028B96E-404D-CA15-0054-D904C89C0E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0028B96E-404D-CA15-0054-D904C89C0E1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9BFDBB3-6C19-4EB0-8E36-E2A303491F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9BFDBB3-6C19-4EB0-8E36-E2A303491F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9BFDBB3-6C19-4EB0-8E36-E2A303491F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9BFDBB3-6C19-4EB0-8E36-E2A303491F12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

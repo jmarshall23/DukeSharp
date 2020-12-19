@@ -149,6 +149,20 @@ Shader "Unlit/Polymer"
                     o.color = float4(texelNear.rgb, 1.0) * 4;
                 }
 
+                float3 diffuseColor = o.color;
+                
+                int additionalLightsCount = GetAdditionalLightsCount();
+                for (int d = 0; d < additionalLightsCount; ++d)
+                {
+                    // Similar to GetMainLight, but it takes a for-loop index. This figures out the
+                    // per-object light index and samples the light buffer accordingly to initialized the
+                    // Light struct. If _ADDITIONAL_LIGHT_SHADOWS is defined it will also compute shadows.
+                    Light light = GetAdditionalLight(d, i.worldVertex);
+
+                    // Same functions used to shade the main light.
+                    o.color.xyz += LightingLambert(light.color.xyz, light.direction.xyz, i.normal.xyz) * light.distanceAttenuation * diffuseColor; //LightingPhysicallyBased(brdfData, light, i.normal, viewDirectionWS);
+                }
+
                 // 
                 if (shadeOffset > 0)
                 {       
@@ -172,17 +186,6 @@ Shader "Unlit/Polymer"
 
                 //half3 viewDirectionWS = SafeNormalize(GetCameraPositionWS() - i.worldVertex);
 
-                int additionalLightsCount = GetAdditionalLightsCount();
-                for (int d = 0; d < additionalLightsCount; ++d)
-                {
-                    // Similar to GetMainLight, but it takes a for-loop index. This figures out the
-                    // per-object light index and samples the light buffer accordingly to initialized the
-                    // Light struct. If _ADDITIONAL_LIGHT_SHADOWS is defined it will also compute shadows.
-                    Light light = GetAdditionalLight(d, i.worldVertex);
-
-                    // Same functions used to shade the main light.
-                    o.color.xyz += LightingLambert(light.color.xyz, light.direction.xyz, i.normal.xyz) * light.distanceAttenuation; //LightingPhysicallyBased(brdfData, light, i.normal, viewDirectionWS);
-                }
 
                 return o;
             }

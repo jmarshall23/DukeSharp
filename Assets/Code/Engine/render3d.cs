@@ -253,14 +253,7 @@ namespace Build
                 MeshRenderer renderer = planeGameObject.AddComponent<MeshRenderer>();
 
                 // Each plane needs its own material.
-                if (!parent.isUsingLighting)
-                {
-                    mat = new Material(Shader.Find("Unlit/Polymer"));
-                }
-                else
-                {
-                    mat = new Material(Shader.Find("PolymerPBR"));
-                }
+                mat = new Material(Shader.Find("Unlit/Polymer"));
                 mat.SetTexture("_MainTex", texture);
                 mat.SetTexture("_PaletteTex", Engine.palette.paletteTexture);
                 mat.SetTexture("_LookupTex", Engine.palette.palookupTexture);
