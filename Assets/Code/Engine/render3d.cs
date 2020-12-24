@@ -189,7 +189,7 @@ namespace Build
                     mesh.RecalculateBounds();
                     mesh.RecalculateNormals();
                     mesh.RecalculateTangents();
-
+                    
                     for (int i = 0; i < cached_xyz.Length; i++)
                     {
                         cached_xyz[i] = xyz[i];

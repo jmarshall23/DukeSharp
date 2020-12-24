@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-// Upgrade NOTE: replaced 'samplerRECT' with 'sampler2D'
+﻿// Upgrade NOTE: replaced 'samplerRECT' with 'sampler2D'
 
 Shader "Unlit/Polymer"
 {
@@ -14,37 +12,29 @@ Shader "Unlit/Polymer"
     }
     SubShader
     {
-        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" "IgnoreProjector" = "True"}
+        Tags { "RenderType"="Opaque" }
         LOD 100
-        Cull Off
-
+Cull Off
         Pass
         {
-            Tags { "LightMode" = "UniversalForward" }
-
             HLSLPROGRAM
-            #pragma vertex LitPassVertex
-            #pragma fragment LitPassFragment
+            #pragma vertex vert
+            #pragma fragment frag
+            // make fog work
+            #pragma multi_compile_fog
 
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "UnityCG.cginc"
 
             struct appdata
             {
-                float4 positionOS   : POSITION;
-                float3 normalOS     : NORMAL;
-                float4 tangentOS    : TANGENT;
-                float2 uv           : TEXCOORD0;
-                float2 uvLM         : TEXCOORD1;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                float4 depth : TEXCOORD1;
-                float3 worldVertex : TEXCOORD2;
-                float3 normal : TEXCOORD3;
+                 float4 depth : TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
             texture2D _PaletteTex;
@@ -66,25 +56,14 @@ Shader "Unlit/Polymer"
             }
 
 
-            v2f LitPassVertex(appdata input)
+            v2f vert (appdata v)
             {
                 v2f o;
 
-                // VertexPositionInputs contains position in multiple spaces (world, view, homogeneous clip space)
-                // Our compiler will strip all unused references (say you don't use view space).
-                // Therefore there is more flexibility at no additional cost with this struct.
-                VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
-
-                // Similar to VertexPositionInputs, VertexNormalInputs will contain normal, tangent and bitangent
-                // in world space. If not used it will be stripped.
-                VertexNormalInputs vertexNormalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
-
-                o.normal = vertexNormalInput.normalWS;
-                o.worldVertex.xyz = vertexInput.positionWS.xyz;
-                o.vertex = vertexInput.positionCS;
+                o.vertex = UnityObjectToClipPos(v.vertex);
                 o.depth.x = (o.vertex.z / (1.0 / o.vertex.w));
 
-                o.uv = TRANSFORM_TEX(input.uv, _MainTex);
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                  
                 bool isSprite = _MaterialParams2.x == -1;
 
@@ -102,7 +81,7 @@ Shader "Unlit/Polymer"
                 float depth : DEPTH;
             };
 
-            fragmentOutput LitPassFragment(v2f i) : SV_Target
+            fragmentOutput frag(v2f i) : SV_Target
             {
                 fragmentOutput o;
                 float visibility =  (_MaterialParams.x + 16.0f) / 16.0f;
@@ -110,7 +89,8 @@ Shader "Unlit/Polymer"
                 float palette =  _MaterialParams.z;
                 float curbasepal =  _MaterialParams.w;
                 float flipx = curbasepal < 0;
-                float highres = _MaterialParams2.y;               
+                float highres = _MaterialParams2.y;
+                
 
                 curbasepal = 0; // abs(curbasepal) - 1;
 
@@ -149,20 +129,6 @@ Shader "Unlit/Polymer"
                     o.color = float4(texelNear.rgb, 1.0) * 4;
                 }
 
-                float3 diffuseColor = o.color;
-                
-                int additionalLightsCount = GetAdditionalLightsCount();
-                for (int d = 0; d < additionalLightsCount; ++d)
-                {
-                    // Similar to GetMainLight, but it takes a for-loop index. This figures out the
-                    // per-object light index and samples the light buffer accordingly to initialized the
-                    // Light struct. If _ADDITIONAL_LIGHT_SHADOWS is defined it will also compute shadows.
-                    Light light = GetAdditionalLight(d, i.worldVertex);
-
-                    // Same functions used to shade the main light.
-                    o.color.xyz += LightingLambert(light.color.xyz, light.direction.xyz, i.normal.xyz) * light.distanceAttenuation * diffuseColor; //LightingPhysicallyBased(brdfData, light, i.normal, viewDirectionWS);
-                }
-
                 // 
                 if (shadeOffset > 0)
                 {       
@@ -171,21 +137,6 @@ Shader "Unlit/Polymer"
                         o.color.xyz *= clamp(1.0 - ((i.depth.x) * (shadeOffset / 8)), 0.0, 1.0);
                     }
                 }
-
-                // Surface data contains albedo, metallic, specular, smoothness, occlusion, emission and alpha
-                // InitializeStandarLitSurfaceData initializes based on the rules for standard shader.
-                // You can write your own function to initialize the surface data of your shader.
-                //SurfaceData surfaceData;
-                //InitializeStandardLitSurfaceData(i.uv, surfaceData);
-                //
-                //// BRDFData holds energy conserving diffuse and specular material reflections and its roughness.
-                //// It's easy to plugin your own shading fuction. You just need replace LightingPhysicallyBased function
-                //// below with your own.
-                //BRDFData brdfData;
-                //InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);
-
-                //half3 viewDirectionWS = SafeNormalize(GetCameraPositionWS() - i.worldVertex);
-
 
                 return o;
             }
