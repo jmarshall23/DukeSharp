@@ -1255,10 +1255,10 @@ namespace Build
 
                 UnityEngine.Mesh mesh = null;
 
-                if (Engine.spriteMeshes[tsprite.picnum] != null)
-                {
-                    mesh = Engine.spriteMeshes[tsprite.picnum].mesh;
-                }
+               // if (Engine.spriteMeshes[tsprite.picnum] != null)
+               // {
+               //     mesh = Engine.spriteMeshes[tsprite.picnum].mesh;
+               // }
 
                 Matrix4x4 modelMatrix = Matrix4x4.identity;
 
@@ -1417,16 +1417,16 @@ namespace Build
                 translation.z *= WorldScale;
 
                 MeshFilter mf = spriteObject.GetComponent<MeshFilter>();
-                if(mesh != null)
-                {
-                    mf.mesh = mesh;
-                    mat.SetTexture("_MainTex", Engine.spriteMeshes[tsprite.picnum].texture);
-                }
-                else
-                {
+                //if(mesh != null)
+                //{
+                //    mf.mesh = mesh;
+                //    mat.SetTexture("_MainTex", Engine.spriteMeshes[tsprite.picnum].texture);
+                //}
+                //else
+                //{
                     mf.mesh = Render3D.spriteMesh;
                     mat.SetTexture("_MainTex", Engine.waloff[tsprite.picnum].texture);
-                }
+                //}
 
                 spriteObject.transform.position = translation;
 

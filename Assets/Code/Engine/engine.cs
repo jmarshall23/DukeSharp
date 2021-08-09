@@ -18,7 +18,7 @@ namespace Build
 
         public static string mapname;
 
-        public static BuildMesh[] spriteMeshes = new BuildMesh[MAXTILES];
+        //public static BuildMesh[] spriteMeshes = new BuildMesh[MAXTILES];
 
         public static GameObject xrRigObject;
         public static GameObject xrPostProcess;
@@ -116,13 +116,14 @@ namespace Build
 
         public static bool LoadSpriteMesh(int spriteNum, string filename)
         {
-            if(!File.Exists(Application.streamingAssetsPath + "/" + filename))
-            {
-                return false;
-            }
-
-            spriteMeshes[spriteNum] = new BuildMesh(filename);
-            return true;
+            // if(!File.Exists(Application.streamingAssetsPath + "/" + filename))
+            // {
+            //     return false;
+            // }
+            //
+            // spriteMeshes[spriteNum] = new BuildMesh(filename);
+            // return true;
+            return false;
         }
 
         public static void copybufint(int[] S, int base_s, int max, int val)
@@ -605,19 +606,7 @@ palette:
 
         public static string GetStreamingAssetsPath()
         {
-            string path;
-            #if UNITY_EDITOR
-            path = GameEngine.AppPath + "/StreamingAssets/";
-            #elif UNITY_ANDROID
-            path = "jar:file://"+ GameEngine.AppPath + "!/assets/";
-            #elif UNITY_IOS
-            path = "file:" + GameEngine.AppPath + "/Raw/";
-            #else
-            //Desktop (Mac OS or Windows)
-            path = GameEngine.AppPath + "/StreamingAssets/";
-            #endif
-            
-            return path;
+            return Application.streamingAssetsPath + "/";
         }
 
         //
@@ -1661,6 +1650,7 @@ palette:
 
         public static void Printf(string msg)
         {
+            UnityEngine.Debug.Log(msg);
             System.Diagnostics.Debug.WriteLine(msg);
         }
 

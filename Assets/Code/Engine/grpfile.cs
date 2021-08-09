@@ -177,7 +177,7 @@ namespace Build
         {
             int numFilesInGrp;
             Engine.Printf("bGrpArchive::Init: Loading " + grpFilePath);
-#if UNITY_STANDALONE || UNITY_EDITOR
+
             if (memstream != null)
             {
                 grpFile = new BinaryReader(memstream);
@@ -190,9 +190,6 @@ namespace Build
             {
                 throw new Exception("bGrpArchive::Init Failed to load " + grpFilePath);
             }
-#else
-            grpFile = new BinaryReader(new MemoryStream(_defaultGrpFile.bytes));
-#endif
 
             grpFile.BaseStream.Position = 0;
             grpBuffer = new BinaryReader(new MemoryStream(grpFile.ReadBytes((int)grpFile.BaseStream.Length)));

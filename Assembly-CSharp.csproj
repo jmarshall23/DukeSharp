@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{E7E75686-0ACA-2F5D-3A10-965EDD620B8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -102,11 +103,11 @@
     <Compile Include="Assets\Code\Game\ConScriptVM.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\StreamingAssets\duke3d_grp_goes_here.txt" />
-     <None Include="Assets\Shaders\PolymerPBR.shader" />
-     <None Include="Assets\StreamingAssets\sound\readme.txt" />
-     <None Include="Assets\Shaders\Polymer.shader" />
-     <None Include="Assets\Shaders\Sky.shader" />
+    <None Include="Assets\StreamingAssets\duke3d_grp_goes_here.txt" />
+    <None Include="Assets\Shaders\PolymerPBR.shader" />
+    <None Include="Assets\StreamingAssets\sound\readme.txt" />
+    <None Include="Assets\Shaders\Polymer.shader" />
+    <None Include="Assets\Shaders\Sky.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.2.1f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -794,12 +795,6 @@
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="AmplifyShaderEditor.csproj">
-      <Project>{0028B96E-404D-CA15-0054-D904C89C0E1F}</Project>
-      <Name>AmplifyShaderEditor</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
+using UnityEngine;
+
 namespace Build
 {
     
@@ -330,6 +332,8 @@ namespace Build
             if(filepath.Contains(".grp") || filepath.Contains(".GRP"))
             {
                 fullFilePath = Engine.GetStreamingAssetsPath() + filepath;
+
+                Debug.Log("Loading GRP from " + fullFilePath);
             }
 
             using(FileStream file = File.OpenRead(fullFilePath))
@@ -380,7 +384,7 @@ namespace Build
 
             return fullFilePath;
 #else
-            return false;
+            return null;
 #endif
         }
         public byte[] kreadfile(string name)

@@ -40,53 +40,48 @@ public class SoundEngine : MonoBehaviour
 
     public void LoadAllSounds()
     {
-        string filePath;
-
-        if (Application.platform == RuntimePlatform.IPhonePlayer)
-            filePath = "file:///" + Application.dataPath + "/Raw/";
-        else if (Application.platform == RuntimePlatform.OSXPlayer)
-            filePath = "file:///" + Application.dataPath + "/Data/StreamingAssets/";
-        else
-            filePath = "file:///" + Application.dataPath + "/StreamingAssets/";
-
-        for (int i = 0; i < DefineConstants.NUM_SOUNDS; i++)
-        {
-            if (GlobalMembers.sounds[i] == null || GlobalMembers.sounds[i].Length == 0)
-                continue;
-
-            string sound_name = filePath + "sound/" + GlobalMembers.sounds[i];
-            sound_name = sound_name.Replace(".voc", ".ogg");
-            sound_name = sound_name.Replace(".VOC", ".ogg");
-
-            WWW www = new WWW(sound_name);
-            while(!www.isDone) {  }
-
-            if (www.error != null)
-                Debug.Log(www.error);
-
-            audioClips[i] = www.GetAudioClip(false, true);            
-        }
-
-        for (int x = 0; x < 5; x++)
-        {
-            for(int y = 0; y < 64; y++)
-            {
-                if (GlobalMembers.music_fn[x, y] == null || GlobalMembers.music_fn[x, y].Length == 0)
-                    continue;
-
-                string sound_name = filePath + "music/" + GlobalMembers.music_fn[x, y];
-                sound_name = sound_name.Replace(".mid", ".ogg");
-                sound_name = sound_name.Replace(".MID", ".ogg");
-
-                WWW www = new WWW(sound_name);
-                while (!www.isDone) { }
-
-                if (www.error != null)
-                    Debug.Log(www.error);
-
-                musicClips[x, y] = www.GetAudioClip(false, true);
-            }
-        }
+       // string filePath;
+       //
+       // filePath = Engine.GetStreamingAssetsPath() + "/";
+       // 
+       // for (int i = 0; i < DefineConstants.NUM_SOUNDS; i++)
+       // {
+       //     if (GlobalMembers.sounds[i] == null || GlobalMembers.sounds[i].Length == 0)
+       //         continue;
+       //
+       //     string sound_name = filePath + "sound/" + GlobalMembers.sounds[i];
+       //     sound_name = sound_name.Replace(".voc", ".ogg");
+       //     sound_name = sound_name.Replace(".VOC", ".ogg");
+       //
+       //     WWW www = new WWW(sound_name);
+       //     while(!www.isDone) {  }
+       //
+       //     if (www.error != null)
+       //         Debug.Log(www.error);
+       //
+       //     audioClips[i] = www.GetAudioClip(false, true);            
+       // }
+       //
+       // for (int x = 0; x < 5; x++)
+       // {
+       //     for(int y = 0; y < 64; y++)
+       //     {
+       //         if (GlobalMembers.music_fn[x, y] == null || GlobalMembers.music_fn[x, y].Length == 0)
+       //             continue;
+       //
+       //         string sound_name = filePath + "music/" + GlobalMembers.music_fn[x, y];
+       //         sound_name = sound_name.Replace(".mid", ".ogg");
+       //         sound_name = sound_name.Replace(".MID", ".ogg");
+       //
+       //         WWW www = new WWW(sound_name);
+       //         while (!www.isDone) { }
+       //
+       //         if (www.error != null)
+       //             Debug.Log(www.error);
+       //
+       //         musicClips[x, y] = www.GetAudioClip(false, true);
+       //     }
+       // }
     }
 
     void Update()
