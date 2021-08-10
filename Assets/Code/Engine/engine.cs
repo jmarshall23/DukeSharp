@@ -1470,7 +1470,7 @@ palette:
 
         public static void DelayedRotateSprites()
         {            
-            float scale_x = Screen.height / 200.0f;
+            float scale_x = Screen.height / 240.0f;
             float scale_y = Screen.height / 200.0f;
             foreach (DelayedRotateSpriteEntry en in delayedRotateSpriteEntries)
             {
@@ -1491,8 +1491,8 @@ palette:
                 GUI.matrix = Matrix4x4.Rotate(q);
 
                 // GUI.Box(new Rect((en.sx * scale_x), en.sy * scale_y, 5, 5), "anchor");
-                int center = (int)(Screen.width / 4.0f);
-                GUI.DrawTextureWithTexCoords(new Rect((center - 320) + (en.sx * scale_x), en.sy * scale_y, en.size.x * scale_x, en.size.y * scale_y), waloff[en.picnum].paltexture, new Rect(0, 0, 1, -1), true);
+                int center = (int)(Screen.width);
+                GUI.DrawTextureWithTexCoords(new Rect((en.sx * scale_x), en.sy * scale_y, en.size.x * scale_x, en.size.y * scale_y), waloff[en.picnum].paltexture, new Rect(0, 0, 1, -1), true);
 
                 GUI.matrix = backup;
             }
