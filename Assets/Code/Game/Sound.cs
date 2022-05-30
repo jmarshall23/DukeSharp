@@ -37,7 +37,7 @@ public partial class GlobalMembers
     public static int numenvsnds = 0;
     public static int NumVoices = 32;
 
-    internal static int LOUDESTVOLUME = 150;
+    internal const int LOUDESTVOLUME = 150;
 
     public enum FX_ERRORS
     {
@@ -119,6 +119,11 @@ public partial class GlobalMembers
 
     public static int xyzsound(short num, short i, long x, long y, long z)
     {
+        SoundEngine.globalSoundEngine.PlaySound3D(num, i);
+        return 0;
+/*
+        return;
+
         int sndist, cx, cy, cz, j, k;
         short pitche, pitchs, cs;
         int voice, sndang, ca, pitch;
@@ -195,6 +200,7 @@ public partial class GlobalMembers
 
         SoundEngine.globalSoundEngine.PlaySound(num, sndist >> 6, sndang >> 6);
         return 0;
+*/
     }
 
     public static void sound(int x)

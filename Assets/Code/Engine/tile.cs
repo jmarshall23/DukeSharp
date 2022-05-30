@@ -140,7 +140,7 @@ namespace Build
             else
             {
                 texture = Engine.waloff[tileNum].texture;
-                texture.Resize(width, height);
+                texture.Reinitialize(width, height);
             }
             texture.filterMode = FilterMode.Point;
             texture.LoadRawTextureData(tempbuffer);

@@ -1245,6 +1245,8 @@ namespace Build
                 GameObject spriteObject = spriteGameObjects[i];
                 float _ang = 0;
 
+                board.sprite[tsprite.owner].currentRenderGameObject = spriteObject;
+
                 const int SPR_ALIGN_MASK = 32 + 16;
                 const int SPR_WALL = 16;
                 const int SPR_FLOOR = 32;

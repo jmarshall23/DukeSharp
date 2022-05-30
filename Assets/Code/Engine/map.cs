@@ -6491,6 +6491,8 @@ namespace Build
         public object obj;
         // jv end
 
+        public UnityEngine.GameObject currentRenderGameObject;
+
         public spritetype()
         {
 

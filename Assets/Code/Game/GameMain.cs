@@ -2367,28 +2367,29 @@ public partial class GlobalMembers
         ud.multimode = 1;
 
 		Engine.initgroupfile("duke3d.grp");
+        SoundEngine.globalSoundEngine.LoadAllSounds();
 
-		//checkcommandline(argc, argv);
-		//
-		//totalmemory = Z_AvailHeap();
-		//
-		//if (memorycheckoveride == 0)
-		//{
-		//	if (totalmemory < (3162000 - 350000))
-		//	{
-		//		puts("You don't have enough free memory to run Duke Nukem 3D.");
-		//		puts("The DOS \"mem\" command should report 6,800K (or 6.8 megs)");
-		//		puts("of \"total memory free\".\n");
-		//		printf("Duke Nukem 3D requires %ld more bytes to run.\n", 3162000 - 350000 - totalmemory);
-		//		exit(0);
-		//	}
-		//}
-		//else
-		//{
-		//	printf("Using %ld bytes for heap.\n", totalmemory);
-		//}
+        //checkcommandline(argc, argv);
+        //
+        //totalmemory = Z_AvailHeap();
+        //
+        //if (memorycheckoveride == 0)
+        //{
+        //	if (totalmemory < (3162000 - 350000))
+        //	{
+        //		puts("You don't have enough free memory to run Duke Nukem 3D.");
+        //		puts("The DOS \"mem\" command should report 6,800K (or 6.8 megs)");
+        //		puts("of \"total memory free\".\n");
+        //		printf("Duke Nukem 3D requires %ld more bytes to run.\n", 3162000 - 350000 - totalmemory);
+        //		exit(0);
+        //	}
+        //}
+        //else
+        //{
+        //	printf("Using %ld bytes for heap.\n", totalmemory);
+        //}
 
-		Startup();
+        Startup();
 
         for (int d = 0; d < 10; d++)
         {

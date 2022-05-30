@@ -57,11 +57,14 @@ public class GameEngine : MonoBehaviour
     public GameObject xrRigObject;
     public GameObject xrPostProcess;
 
+    public string DebugMapPath;
+
     // Start is called before the first frame update
     public void Start()
     {
-        bGrpArchive._defaultGrpFile = _defaultGrpFile;        
+        bGrpArchive._defaultGrpFile = _defaultGrpFile;
 
+        GlobalMembers.boardfilename = DebugMapPath;
     }
 
     void LateUpdate()
@@ -85,7 +88,6 @@ public class GameEngine : MonoBehaviour
 
         // This needs to be done in the main thread so we can do sound loading immediatly afterwords.
         GlobalMembers.conScript = new ConScript(new TrapEngine());
-        SoundEngine.globalSoundEngine.LoadAllSounds();
 
         // Load in the game data.
         //Engine.initgroupfile("data.grp");

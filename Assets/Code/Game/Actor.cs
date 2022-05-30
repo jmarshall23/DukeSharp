@@ -2973,7 +2973,9 @@ public partial class GlobalMembers
 
 							if (s.pal != 2 && s.hitag == 0)
 							{
-								spritesound(DefineConstants.SOMETHING_DRIPPING, i);
+// jmarshall - disable water drip because its fucking annoying
+//								spritesound(DefineConstants.SOMETHING_DRIPPING, i);
+// jmarshall end
 							}
 
 							if (Engine.board.sprite[s.owner].picnum != DefineConstants.WATERDRIP)

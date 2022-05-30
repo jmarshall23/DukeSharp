@@ -1824,8 +1824,8 @@ public partial class GlobalMembers
 
 					newgame(ud.m_volume_number, ud.m_level_number, ud.m_player_skill);
 					enterlevel((char)DefineConstants.MODE_GAME);
-				}
-				else if (x == -1)
+                }
+                else if (x == -1)
 				{
 					cmenu(100);
 					KB_FlushKeyboardQueue();
